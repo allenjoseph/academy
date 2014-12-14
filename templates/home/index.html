@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h1>Home</h1>
+<div class="jumbotron">
+    <div class="container">
+        <h1>{% trans "Bienvenido Allen Joseph!" %}</h1>
+        <p>
+        {% blocktrans %}        
+        Este es un bloque de bienvenida.
+        {% endblocktrans %}
+        </p>
+        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+      </div>
+    </div>
+</div>
 {% endblock %}
