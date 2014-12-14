@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Academy</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
+</head>
+<body>
+	<div class="row">
+    	{% block content %}{% endblock %}
+	</div>
+</body>
+</html>

@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__),os.pardir))
 
 # Application definition
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.home'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -85,3 +87,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = ( 
+    ROOT_DIR + '/static/',
+)
+
+TEMPLATE_DIRS = (
+    ROOT_DIR + '/templates',
+)
