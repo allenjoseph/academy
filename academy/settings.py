@@ -97,11 +97,15 @@ MEDIA_ROOT = BASE_DIR + '/media/'
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR + '/static/'
+# Descomnetar al ejecutar los comandos
+# python manage.py makemessages -l en
+# python manage.py compilemessages -l en
+#STATIC_ROOT = BASE_DIR + '/static/'
 
-#STATICFILES_DIRS = ( 
-#    BASE_DIR + '/static/',
-#)
+# Comnetar al ejecutar la internacionalizacion
+STATICFILES_DIRS = ( 
+    BASE_DIR + '/static/',
+)
 
 # Template files
 TEMPLATE_DIRS = (

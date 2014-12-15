@@ -2,13 +2,23 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Academy</title>
+	<title>Academy</title>	
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' type='text/css' />
 	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
 <body>
-	<div class="row">
-    	{% block content %}{% endblock %}
+	<div id="header" class="row">{% include "header.html" %}</div>
+	<div id="news" class="row">{% include "news.html" %}</div>
+	<div class="light-color">
+		<div class="row">
+			{% block content-light %}{% endblock %}
+		</div>		
 	</div>
+	<div class="row">
+		{% block content %}{% endblock %}
+	</div>
+	<div id="footer" class="row">{% include "footer.html" %}</div>
 </body>
 </html>

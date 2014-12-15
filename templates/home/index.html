@@ -1,17 +1,79 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block content-light %}
+<div class="larg-12 columns">
+	<div class="row">
+		<div class="larg-12 columns">
+			<h5>COURSES</h5>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns">
+			<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+				<li>
+					<div class="course-wrapper"></div>
+					<div class="course-content">
+						<h3 class="text-center">
+							Ciencias Politicas y Sociales
+						</h3>
+					</div>
+				</li>
+				<li>
+					<div class="course-wrapper"></div>
+				</li>
+				<li>
+					<div class="course-wrapper"></div>
+				</li>
+				<li>
+					<div class="course-wrapper"></div>
+				</li>
+				<li>
+					<div class="course-wrapper"></div>
+				</li>
+				<li>
+					<div class="course-wrapper"></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="medium-2 columns">ANTERIOR</div>
+		<div class="medium-8 columns">IV CICLO / 2020 - I</div>
+		<div class="medium-2 columns">SIGUIENTE</div>
+	</div>
+</div>
+{% endblock %}
 {% block content %}
-<div class="jumbotron">
-    <div class="container">
-        <h1>{% trans "Bienvenido Allen Joseph!" %}</h1>
-        <p>
-        {% blocktrans %}        
-        Este es un bloque de bienvenida.
-        {% endblocktrans %}
-        </p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-      </div>
-    </div>
+<div class="large-12 columns">
+	<div class="row">
+		<div class="larg-12 columns">
+			<h5>DISCUSES</h5>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-12 columns">
+			<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
+				<li>
+					<div class="panel shadow radius"></div>
+				</li>
+				<li>
+					<div class="panel shadow radius"></div>
+				</li>
+				<li>
+					<div class="panel shadow radius"></div>
+				</li>
+				<li>
+					<div class="panel shadow radius"></div>
+				</li>
+				<li>
+					<div class="panel shadow radius"></div>
+				</li>
+				<li>
+					<div class="panel shadow radius"></div>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
 {% endblock %}
