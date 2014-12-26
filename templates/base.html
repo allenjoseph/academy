@@ -9,16 +9,22 @@
 	<link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
 <body>
+
 	<div id="header" class="row">{% include "header.html" %}</div>
-	<div id="news" class="row">{% include "news.html" %}</div>
+
+	<div id="news" class="row hide">{% include "news.html" %}</div>
+
 	<div class="light-color">
 		<div class="row">
 			{% block content-light %}{% endblock %}
 		</div>		
 	</div>
+
 	<div class="row">
 		{% block content %}{% endblock %}
 	</div>
+
 	<div id="footer" class="row">{% include "footer.html" %}</div>
+	
 </body>
 </html>
