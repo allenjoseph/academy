@@ -10,30 +10,8 @@
 	</div>
 	<div class="row">
 		<div class="large-12 columns">
-			<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
-				<li>
-					<div class="course-wrapper"></div>
-					<div class="course-content">
-						<h3 class="text-center">
-							Ciencias Politicas y Sociales
-						</h3>
-					</div>
-				</li>
-				<li>
-					<div class="course-wrapper"></div>
-				</li>
-				<li>
-					<div class="course-wrapper"></div>
-				</li>
-				<li>
-					<div class="course-wrapper"></div>
-				</li>
-				<li>
-					<div class="course-wrapper"></div>
-				</li>
-				<li>
-					<div class="course-wrapper"></div>
-				</li>
+			<ul id="content-courses" class="small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+				
 			</ul>
 		</div>
 	</div>
@@ -43,7 +21,17 @@
 		<div class="medium-2 columns">SIGUIENTE</div>
 	</div>
 </div>
-{% endblock %}
+<script type="text/template" id="tpl-course">
+	<li>
+		<div class="course-wrapper"></div>
+		<div class="course-content">
+			<h3 class="text-center">
+				Ciencias Politicas y Sociales
+			</h3>
+		</div>
+	</li>
+	</script>
+	{% endblock %}
 {% block content %}
 <div class="large-12 columns">
 	<div class="row">
