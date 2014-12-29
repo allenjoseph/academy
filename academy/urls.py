@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 urlpatterns += i18n_patterns('',
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^courses/', include(admin.site.urls)),
 )
