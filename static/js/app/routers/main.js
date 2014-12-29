@@ -7,7 +7,6 @@
         },
 
         initialize : function(){
-            app.views.layout = new Views.Layout();
             Backbone.history.start({root: '/'});
         },
 
