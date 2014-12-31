@@ -7,4 +7,7 @@ class IndexView(JsonResponseMixin, TemplateView):
     template_name = 'home/index.html'
 
 class CoursesView(JsonResponseMixin):
-	return render_to_response({'id':123456});
+
+    def get_data(self):
+        data = {'id':123456}
+        return data
