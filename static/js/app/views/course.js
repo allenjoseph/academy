@@ -1,22 +1,43 @@
 (function(){
+
     Views.Course = Backbone.View.extend({
+
+        tagName : 'li',
+
+        events : {
+            'click' : 'clickCourse'
+        },
+
+        template : template('tpl-course'),
+
+        render : function(){
+            this.$el.html(this.template(this.model.attributes));
+            return this;
+        },
+
+        clickCourse : function(){
+        }
+
+    });
+
+    Views.Courses = Backbone.View.extend({
 
         el : '#content-courses',
 
         initialize : function(){
-            this.renderCollection();
-            this.listenTo( this.collection, 'add', this.render );
+            this.render();
+            this.listenTo( this.collection, 'add', this.renderCourse );
         },
 
-        renderCollection : function(){
+        render : function(){
             this.$el.empty();
             this.collection.each(function(course){
-                this.render(course);
+                this.renderCourse(course);
             }, this);
             return this;
         },
 
-        render : function( course ){
+        renderCourse : function( course ){
             var view = new Views.Course({ model : course });
             this.$el.append(view.render().el);
         }

@@ -7,7 +7,7 @@ from apps.home.views import IndexView, CoursesView
 urlpatterns = patterns('',
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^courses/', CoursesView, name='courses'),
+    url(r'^courses/', CoursesView.as_view(), name='courses'),
 )
 
 urlpatterns += i18n_patterns('',

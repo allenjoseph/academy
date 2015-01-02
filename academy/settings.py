@@ -103,7 +103,7 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = BASE_DIR + '/static/'
 
 # Comnetar al ejecutar la internacionalizacion
-STATICFILES_DIRS = ( 
+STATICFILES_DIRS = (
     BASE_DIR + '/static/',
 )
 

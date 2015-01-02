@@ -20,14 +20,29 @@
 
         fetchData : function(){
             var self = this;
-            $.get('courses')
+            $.get('courses?format=json')
                 .done(function(data){
-                    app.collections.courses = new window.Collections.Menus(data.courses);
+                    debugger;
+                    data = self.formatModelObject(data);
+                    app.collections.courses = new window.Collections.Courses(data);
                     app.views.courses = new window.Views.Courses({collection : app.collections.courses});
                 })
                 .fail(function(){
                     console.error('fail :(');
                 });
+        },
+        formatModelObject: function(array){
+            if(array && array.length){
+                var arrayFormated = [];
+                for (var i = array.length - 1; i >= 0; i--) {
+                    if(array[i].fields && array[i].pk){
+                        var elem = array[i].fields;
+                        elem.id = array[i].pk;
+                        arrayFormated.push(elem);
+                    }
+                }
+                return arrayFormated;
+            }
         }
     });
     window.Routers.App = routers;
