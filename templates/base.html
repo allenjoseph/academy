@@ -3,16 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Academy</title>
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' type='text/css' />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
 	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
 	<link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
 <body>
 
-	<div id="header" class="row">{% include "header.html" %}</div>
+	<div id="header" class="row">
+        {% include "header.html" %}
+    </div>
 
-	<div id="news" class="row hide">{% include "news.html" %}</div>
+	<div id="news" class="row hide">
+        {% include "news.html" %}
+    </div>
 
 	<div class="light-color">
 		<div class="row">

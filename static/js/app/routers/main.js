@@ -22,7 +22,6 @@
             var self = this;
             $.get('courses?format=json')
                 .done(function(data){
-                    debugger;
                     data = self.formatModelObject(data);
                     app.collections.courses = new window.Collections.Courses(data);
                     app.views.courses = new window.Views.Courses({collection : app.collections.courses});

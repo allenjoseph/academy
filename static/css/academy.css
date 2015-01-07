@@ -1,13 +1,13 @@
 body{
 	font-family: 'Open Sans Condensed';
 	background-color: #1E2035;
-	/*background-color: #343657;*/
 	color: #f2f2f2;
 }
 h1,h2,h3,h4,h5,h6{
 	font-family: 'Open Sans Condensed';
 	color: #f2f2f2;
 }
+/*course classes*/
 .course-wrapper{
 	margin: 10px auto;
 	display: table;
@@ -74,7 +74,16 @@ h1,h2,h3,h4,h5,h6{
 .light-color h6{
 	color: #222;
 }
-
+.margin-top-1em{
+    margin-top: 1em;
+}
+.margin-bottom-1em{
+    margin-bottom: 1em;
+}
+.margin-vertical-1em{
+    margin: 1em 0;
+}
+/*custom classes*/
 #content-courses li{
     position: relative;
 }
