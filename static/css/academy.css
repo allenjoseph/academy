@@ -1,3 +1,6 @@
+html{
+    overflow-y: scroll;
+}
 body{
 	font-family: 'Open Sans Condensed';
 	background-color: #1E2035;
@@ -16,10 +19,10 @@ h1,h2,h3,h4,h5,h6{
 .course-content{
 	position: absolute;
 	width: 240px;
-	margin: 15px 50px;
+	margin: 15px auto;
 	top: 0;
 	left: 0;
-	color: #f2f2f2!important;
+    right: 0;
 }
 .course-content h1,
 .course-content h2,
@@ -38,22 +41,114 @@ h1,h2,h3,h4,h5,h6{
 	border-top: 260px solid #1085AA;
 	width: 260px;
 }
-.course-wrapper:hover:before {
-	border-top-color: #18A6D5;
-	cursor: pointer;
-}
 .course-wrapper:after {
-	content: '';
-	display: block;
-	border-left: 105px solid transparent;
-	border-right: 105px solid transparent;
-	border-top: 30px solid #1085AA;
-	width: 0;
-	margin-left: 25px;
+    content: '';
+    display: block;
+    border-left: 105px solid transparent;
+    border-right: 105px solid transparent;
+    border-top: 30px solid #1085AA;
+    width: 0;
+    margin-left: 25px;
 }
-.course-wrapper:hover:after {
-	border-top-color: #18A6D5;
-	cursor: pointer;
+.row-shape{
+    content: '';
+    display: block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 40px solid #FFF;
+    position: absolute;
+    z-index: 1;
+    -webkit-filter: drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
+    -moz-filter:    drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
+    -ms-filter:     drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
+    -o-filter:      drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
+    filter:         drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
+}
+.row-content{
+    z-index: 2;
+    color: #222;
+    font-size: 1.5em;
+    position: relative;
+    text-align: center;
+}
+.row-shape.one{
+    border-top-color: #F0F3FA;
+    left: 2px;
+    width: 237px;
+}
+.row-shape.two{
+    border-top-color: #F0B546;
+    left: 5px;
+    width: 231px;
+}
+.row-shape.three{
+    border-top-color: #9679CC;
+    left: 8px;
+    width: 225px;
+}
+.row-separator{
+    background-color: #1085AA;
+    display: block;
+    height: 25px;
+    position: relative;
+    width: 100%;
+    z-index: 3;
+    -webkit-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, .25);
+    -moz-box-shadow:    0px -3px 5px 0px rgba(0, 0, 0, .25);
+    box-shadow:         0px -3px 5px 0px rgba(0, 0, 0, .25);
+}
+#content-courses li:hover{
+    cursor: default;
+}
+#content-courses li:hover .row-separator{
+    background-color: #18A6D5;
+}
+#content-courses li:hover .course-wrapper:before,
+#content-courses li:hover .course-wrapper:after {
+    border-top-color: #18A6D5;
+}
+
+/*hexagon*/
+.hexa {
+  width: 100px;
+  height: 50px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #FFF;
+  line-height: 50px;
+  font-size: 30px;
+  -webkit-filter: drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
+  text-shadow: 0 3px 5px rgba(0,0,0,.55);
+}
+.hexa img {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -35px 0 0 -35px;
+  -webkit-filter: brightness(100%) drop-shadow(rgba(0,0,0,.55) 0 3px 8px);
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.hexa:after,
+.hexa:before {
+  content: '';
+  width: 78px;
+  height: 78px;
+  position: absolute;
+  background: inherit;
+  top: -39px;
+  left: 50%;
+  margin-left: -39%;
+  z-index: -1;
+  border-radius: 13px 5px;
+  transform: scaleY(.5) rotate(-45deg);
+}
+.hexa:after {
+  top: auto;
+  bottom: -39px;
 }
 
 /*helper classes*/
@@ -86,4 +181,33 @@ h1,h2,h3,h4,h5,h6{
 /*custom classes*/
 #content-courses li{
     position: relative;
+}
+.menu-links h3{
+    float: left;
+}
+.menu-links a{
+    color: inherit;
+    display: block;
+    line-height: 2em;
+    margin: 0 10px;
+    text-decoration: none;
+    text-shadow: 0 3px 5px rgba(0,0,0,.55);
+}
+.menu-links img{
+    border-radius: 50%;
+    height: 50px;
+    margin: 15%;
+}
+.row-links{
+    text-align: center;
+}
+.row-links .link-icon{
+    display: inline;
+    margin: 0 10px;
+    font-size: 1.5em;
+    color: #666;
+    cursor: pointer;
+}
+.row-links .link-icon:hover{
+    color: #ccc;
 }
