@@ -10,6 +10,9 @@ h1,h2,h3,h4,h5,h6{
 	font-family: 'Open Sans Condensed';
 	color: #f2f2f2;
 }
+a {
+    color: #451A9B;
+}
 /*course classes*/
 .course-wrapper{
 	margin: 10px auto;
@@ -156,9 +159,9 @@ h1,h2,h3,h4,h5,h6{
 
 /*helper classes*/
 .shadow{
-	-webkit-box-shadow: -4px 4px 5px 0px rgba(50, 50, 50, 0.5);
-	-moz-box-shadow:    -4px 4px 5px 0px rgba(50, 50, 50, 0.5);
-	box-shadow:         -4px 4px 5px 0px rgba(50, 50, 50, 0.5);
+	-webkit-box-shadow: -3px 3px 8px 0px rgba(0, 0, 0, 0.6);
+	-moz-box-shadow:    -3px 3px 8px 0px rgba(0, 0, 0, 0.6);
+	box-shadow:         -3px 3px 8px 0px rgba(0, 0, 0, 0.6);
 }
 .light-color{
 	background-color: #f2f2f2;
@@ -256,8 +259,14 @@ h1,h2,h3,h4,h5,h6{
 }
 .discussion {
     padding: 0.5em 1em;
+    margin:0;
 }
-.discussion a {
+.discussion p {
+    margin-bottom: 0em;
+    height: 4em;
+    overflow: hidden;
+}
+.discussion p a {
     font-size: 1.2em;
     font-weight: bold;
 }
@@ -277,9 +286,12 @@ h1,h2,h3,h4,h5,h6{
 .discussion span{
     color: #666;
     font-size: 0.8em;
-    margin-top: 10px;
 }
 .discussion span.pull-right{
-    margin: 20px 0 0 5px;
+    margin: 10px 0 0 5px;
+}
+.submenu-dark{
+    border-bottom: 1px solid #23253D;
+    margin-bottom: 1em!important;
 }
 
