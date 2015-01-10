@@ -195,7 +195,17 @@ h1,h2,h3,h4,h5,h6{
     text-shadow: 0 2px 5px rgba(0,0,0,.6);
 }
 .menu-links h3{
-    float: left;
+    -o-transition: 0.2s background-color;
+    -ms-transition: 0.2s background-color;
+    -moz-transition: 0.2s background-color;
+    -webkit-transition: 0.2s background-color;
+    transition: 0.2s background-color;
+}
+.menu-links h3:hover{
+    background: #121425
+}
+.menu-links h3{
+    margin: 0;
 }
 .menu-links a{
     color: inherit;
@@ -205,10 +215,15 @@ h1,h2,h3,h4,h5,h6{
     text-decoration: none;
     text-shadow: 0 2px 5px rgba(0,0,0,.8);
 }
+.menu-links figure{
+    margin: 5px 0 0;
+}
 .menu-links img{
-    border-radius: 50%;
-    height: 50px;
-    margin: 15%;
+    height: 45px;
+    margin: auto;
+}
+.cicle{
+    border-radius: 50%!important;
 }
 .row-links{
     text-align: center;
@@ -239,3 +254,32 @@ h1,h2,h3,h4,h5,h6{
                 0 2.5px 2.5px rgba(0,0,0,.2),
                 0 5px 5px rgba(0,0,0,.15);
 }
+.discussion {
+    padding: 0.5em 1em;
+}
+.discussion a {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.discussion figure{
+    margin:0;
+    margin-top: 5px;
+}
+.discussion figure span{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.discussion figure img{
+    height: 24px;
+    margin-right: 3px;
+    margin-top: -10px;
+}
+.discussion span{
+    color: #666;
+    font-size: 0.8em;
+    margin-top: 10px;
+}
+.discussion span.pull-right{
+    margin: 20px 0 0 5px;
+}
+
