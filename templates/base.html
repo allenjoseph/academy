@@ -10,7 +10,6 @@
 	<link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
 <body>
-
 	<div id="header" class="row">
         {% include "header.html" %}
     </div>
@@ -19,13 +18,13 @@
         {% include "news.html" %}
     </div>
 
-	<div class="light-color">
+	<div id="first-content" class="light-color">
 		<div class="row">
 			{% block content-light %}{% endblock %}
 		</div>
 	</div>
 
-	<div class="row">
+	<div id="second-content" class="row">
 		{% block content %}{% endblock %}
 	</div>
 
