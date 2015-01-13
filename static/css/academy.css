@@ -175,14 +175,25 @@ a {
 .light-color h6{
 	color: #222;
 }
-.margin-top-1em{
+.mt1{
     margin-top: 1em;
 }
-.margin-bottom-1em{
+.mb1{
     margin-bottom: 1em;
 }
-.margin-vertical-1em{
-    margin: 1em 0;
+.mv1{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.pt1{
+    padding-top: 1em;
+}
+.pb1{
+    padding-bottom: 1em;
+}
+.pv1{
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 /*custom classes*/
 #content-courses li{
