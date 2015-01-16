@@ -313,3 +313,46 @@ a {
 .light-color.border-bottom{
     border-bottom :1px solid #E1E2F4;
 }
+/*comment modal*/
+.remodal-comment{
+    overflow: hidden;
+    display: block;
+    position:absolute;
+    height:auto;
+    bottom:0;
+    top:0;
+    left: 0;
+    right: 0;
+}
+.remodal-comment .comment-wrapper{
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.remodal-comment .comment-header{
+    padding: 0 0 20px;
+    overflow: hidden;
+    height: 10em;
+}
+.remodal-comment .comment-body-wrapper{
+    height: 100%;
+    margin-top: -20em;
+    overflow: hidden;
+    padding-top: 20em;
+    position: absolute;
+}
+.remodal-comment .comment-body-content{
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.remodal-comment .comment-footer{
+    bottom: 0;
+    display: block;
+    height: 10em;
+    position: absolute;
+    width: 100%;
+}
+.remodal-comment figure{
+    margin: 0;
+}
