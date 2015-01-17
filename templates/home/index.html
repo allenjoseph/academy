@@ -53,14 +53,17 @@
     </div>
     <div class="row pv1 light-color border-top">
         <div class="small-2 columns">
-            <a href="#!"><i class="fa fa-chevron-left fa-fw fa-2x"></i></a>
+            <a href="#!">
+                <i class="fa fa-chevron-left fa-fw"></i>
+            </a>
         </div>
         <div class="small-8 columns text-center">
-            <h3>
-                <a href="#!">IV CICLO / 2020 - I</a></div>
-            </h3>
+            <a href="#!">IV CICLO / 2020 - I</a>
+        </div>
         <div class="small-2 columns text-right">
-            <a href="#!"><i class="fa fa-chevron-right fa-fw fa-2x"></i></a>
+            <a href="#!">
+                <i class="fa fa-chevron-right fa-fw"></i>
+            </a>
         </div>
     </div>
 </div>
@@ -85,7 +88,7 @@
                         <div class="row">
                             <div class="small-12 columns">
                                 <p>
-                                    <a>Quien es el profesor encargado de la biblioteca de informatica?</a>
+                                    <a data-remodal-target="modal-add-comment">Quien es el profesor encargado de la biblioteca de informatica?</a>
                                 </p>
                             </div>
                         </div>
@@ -153,50 +156,115 @@
         </div>
     </div>
     <div data-remodal-id="modal-add-comment" class="remodal remodal-comment light-color bg">
-		<div>
+		<div class="comment-wrapper">
 			<div class="comment-header">
-				<h5>Quien es el profesor encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de informatica?</h5>
-                <div class="row">
-                    <div class="small-4 columns">
-                        <span class="pull-left">
+                <div class="row comment-header-top">
+                    <div class="small-12 columns">
+				        <a>Quien es el profesor encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de informatica?</a>
+                    </div>
+                </div>
+                <div class="row comment-header-footer">
+                    <div class="small-12 columns comment-header-footer-content">
+                        <span  class="pull-left"><strong>Hace 2 semanas</strong></span>
+                        <span  class="pull-right"><strong>24 comentarios</strong></span>
+                        <span>
                             <figure>
                                 <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                                <span>Allen Joseph</span>
                             </figure>
                         </span>
-                    </div>
-                    <div class="small-4 columns">
-                        <span>ayer</span>
-                    </div>
-                    <div class="small-4 columns">
-                        <span  class="pull-right"><strong>24 comentarios</strong></span>
                     </div>
                 </div>
             </div>
 			<div class="comment-body-wrapper">
-				<div class="comment-body-content">	
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic?
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
-					<br/>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni beatae, inventore pariatur totam reiciendis fugit molestiae veniam, fuga voluptatem nam et alias eveniet quas perspiciatis nisi id placeat aspernatur quaerat.
+				<div class="comment-body-content">
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row comment-entry">
+                        <div class="comment-entry-figure">
+                            <figure>
+                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                            </figure>
+                        </div>
+                        <div class="comment-entry-text">
+                            <span>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                            </span>
+                        </div>
+                    </div>
 				</div>
 			</div>
-			<div class="comment-footer">		
+			<div class="comment-footer">
+                <textarea class="comment-textarea"></textarea>
 			</div>
 		</div>
 	</div>
