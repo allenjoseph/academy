@@ -333,6 +333,7 @@ a {
     overflow: hidden;
     padding-top: 13em;
     position: absolute;
+    width: 100%;
 }
 .remodal-comment .comment-body-content{
     height: 100%;

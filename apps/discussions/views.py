@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.views.generic import TemplateView
 from academy.mixins import JsonResponseMixin
-from models import Discussion
+from models import Discussion, DiscussionComment
 from academy.serializers import ObjectSerializer
 import json
 
@@ -17,12 +17,15 @@ class DiscussionsView(JsonResponseMixin, TemplateView):
     def get_data(self):
         objects = Discussion.objects.all()
 
+
         objectSerializer = ObjectSerializer()
         discussions = objectSerializer.serialize(objects)
 
         for element in discussions:
             student = objectSerializer.serialize([objects.get(pk=element.get('id')).student,])
             element['student'] = student[0]
+            commentsCount = DiscussionComment.objects.filter(discussion = objects.get(pk=element.get('id'))).count()
+            element['comments'] = commentsCount
 
         data = json.dumps(discussions, default=date_handler)
         return data

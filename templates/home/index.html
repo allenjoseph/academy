@@ -97,12 +97,12 @@
                         <div class="row">
                             <div class="small-12 columns">
                                 <span class="pull-left">
-                                    <figure>
+                                    <figure title="<%= student.name %> <%= student.lastname %>">
                                         <img src="{% static ""%}<%= student.photo %>" class="cicle" />
                                         <span><%= student.name %> <%= student.lastname %></span>
                                     </figure>
                                 </span>
-                                <span  class="pull-right"><strong>2 comentarios</strong></span>
+                                <span  class="pull-right"><strong><%= comments %> comentarios</strong></span>
                                 <span class="pull-right"><%= dateCreation %></span>
                             </div>
                         </div>
@@ -111,48 +111,49 @@
             </ul>
         </div>
     </div>
-    <div data-remodal-id="modal-add-comment" class="remodal remodal-comment light-color bg">
-		<div class="comment-wrapper">
-			<div class="comment-header">
+    <script type="text/template" id="tpl-add-comment-modal">
+        <div class="comment-wrapper">
+            <div class="comment-header">
                 <div class="row comment-header-top">
                     <div class="small-12 columns">
-				        <a><%= discussion.question %></a>
+                        <a><%= question %></a>
                     </div>
                 </div>
                 <div class="row comment-header-footer">
                     <div class="small-12 columns comment-header-footer-content">
-                        <span  class="pull-left"><strong><%= discussion.dateCreation %></strong></span>
-                        <span  class="pull-right"><strong>24 comentarios</strong></span>
+                        <span  class="pull-left"><strong><%= dateCreation %></strong></span>
+                        <span  class="pull-right"><strong><%= comments %> comentarios</strong></span>
                         <span>
-                            <figure>
-                                <img src="{% static ""%}<%= discussion.student.photo %>" class="cicle" />
+                            <figure title="<%= student.name %> <%= student.lastname %>">
+                                <img src="{% static ""%}<%= student.photo %>" class="cicle" />
                             </figure>
                         </span>
                     </div>
                 </div>
             </div>
-			<div class="comment-body-wrapper">
-				<div class="comment-body-content">
-                    <script type="text/template" id="tpl-discussion-comment">
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
-                    </script>
-				</div>
-			</div>
-			<div class="comment-footer">
+            <div class="comment-body-wrapper">
+                <div id="discussion-comment-list" class="comment-body-content">
+                    <span>Cargando Comentarios</span>
+                </div>
+            </div>
+            <div class="comment-footer">
                 <textarea class="comment-textarea"></textarea>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="tpl-discussion-comment">
+        <div class="row comment-entry">
+            <div class="comment-entry-figure">
+                <figure title="<%= comment.student.name %> <%= comment.student.lastname %>">
+                    <img src="{% static ""%}<%= comment.student.photo %>" class="cicle" />
+                </figure>
+            </div>
+            <div class="comment-entry-text">
+                <span>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
+                </span>
+            </div>
+        </div>
+    </script>
 </div>
 {% endblock %}
