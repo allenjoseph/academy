@@ -82,13 +82,15 @@
     </div>
     <div class="row">
         <div class="large-12 columns">
-            <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
-                <li>
+            <ul id="content-discussions" class="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
+                <script type="text/template" id="tpl-discussion">
                     <div class="panel shadow radius discussion">
                         <div class="row">
                             <div class="small-12 columns">
                                 <p>
-                                    <a data-remodal-target="modal-add-comment">Quien es el profesor encargado de la biblioteca de informatica?</a>
+                                    <a class="discussion-question">
+                                    <%= question %>
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -96,62 +98,16 @@
                             <div class="small-12 columns">
                                 <span class="pull-left">
                                     <figure>
-                                        <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                                        <span>Allen Joseph</span>
+                                        <img src="{% static ""%}<%= student.photo %>" class="cicle" />
+                                        <span><%= student.name %> <%= student.lastname %></span>
                                     </figure>
                                 </span>
                                 <span  class="pull-right"><strong>2 comentarios</strong></span>
-                                <span class="pull-right">hace 1 semanas</span>
+                                <span class="pull-right"><%= dateCreation %></span>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <div class="panel shadow radius discussion">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <p>
-                                    <a>Quien es el profesor encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de informatica?</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <span class="pull-left">
-                                    <figure>
-                                        <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                                        <span>Allen Joseph</span>
-                                    </figure>
-                                </span>
-                                <span  class="pull-right"><strong>12 comentarios</strong></span>
-                                <span class="pull-right">hace 2 semanas</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="panel shadow radius discussion">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <p>
-                                    <a>Quien es el profesor encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de informatica?</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <span class="pull-left">
-                                    <figure>
-                                        <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                                        <span>Allen Joseph</span>
-                                    </figure>
-                                </span>
-                                <span  class="pull-right"><strong>24 comentarios</strong></span>
-                                <span class="pull-right">ayer</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                </script>
             </ul>
         </div>
     </div>
@@ -160,16 +116,16 @@
 			<div class="comment-header">
                 <div class="row comment-header-top">
                     <div class="small-12 columns">
-				        <a>Quien es el profesor encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de encargado de la biblioteca de informatica es el profesor encargado de la biblioteca de  biblioteca de informatica?</a>
+				        <a><%= discussion.question %></a>
                     </div>
                 </div>
                 <div class="row comment-header-footer">
                     <div class="small-12 columns comment-header-footer-content">
-                        <span  class="pull-left"><strong>Hace 2 semanas</strong></span>
+                        <span  class="pull-left"><strong><%= discussion.dateCreation %></strong></span>
                         <span  class="pull-right"><strong>24 comentarios</strong></span>
                         <span>
                             <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                                <img src="{% static ""%}<%= discussion.student.photo %>" class="cicle" />
                             </figure>
                         </span>
                     </div>
@@ -177,6 +133,7 @@
             </div>
 			<div class="comment-body-wrapper">
 				<div class="comment-body-content">
+                    <script type="text/template" id="tpl-discussion-comment">
                     <div class="row comment-entry">
                         <div class="comment-entry-figure">
                             <figure>
@@ -189,78 +146,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row comment-entry">
-                        <div class="comment-entry-figure">
-                            <figure>
-                                <img src="{% static "img/profile.jpg"%}" class="cicle" />
-                            </figure>
-                        </div>
-                        <div class="comment-entry-text">
-                            <span>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                            </span>
-                        </div>
-                    </div>
+                    </script>
 				</div>
 			</div>
 			<div class="comment-footer">

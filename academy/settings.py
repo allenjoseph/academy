@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.home'
+    'apps.home',
+    'apps.discussions'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,6 +106,7 @@ STATIC_URL = '/static/'
 # Comnetar al ejecutar la internacionalizacion
 STATICFILES_DIRS = (
     BASE_DIR + '/static/',
+    BASE_DIR + '/media/',
 )
 
 # Template files

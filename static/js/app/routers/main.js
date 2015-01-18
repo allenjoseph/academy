@@ -22,26 +22,20 @@
             var self = this;
             $.get('courses?format=json')
                 .done(function(data){
-                    data = self.formatModelObject(data);
                     app.collections.courses = new window.Collections.Courses(data);
                     app.views.courses = new window.Views.Courses({collection : app.collections.courses});
                 })
                 .fail(function(){
-                    console.error('fail :(');
+                    console.error('fail get Courses :(');
                 });
-        },
-        formatModelObject: function(array){
-            if(array && array.length){
-                var arrayFormated = [];
-                for (var i = array.length - 1; i >= 0; i--) {
-                    if(array[i].fields && array[i].pk){
-                        var elem = array[i].fields;
-                        elem.id = array[i].pk;
-                        arrayFormated.push(elem);
-                    }
-                }
-                return arrayFormated;
-            }
+            $.get('discussions?format=json')
+                .done(function(data){
+                    app.collections.discussions = new window.Collections.Discussions(data);
+                    app.views.discussions = new window.Views.Discussions({collection : app.collections.discussions});
+                })
+                .fail(function(){
+                    console.error('fail get Discussions :(');
+                });
         }
     });
     window.Routers.App = routers;

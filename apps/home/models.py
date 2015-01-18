@@ -39,7 +39,7 @@ class Course(models.Model):
 		return u'%s' % (self.name)
 
 def get_image_path(instance, filename):
-	return os.path.join('student', str(instance.id), filename)
+	return os.path.join('student', str(instance.provider)+'_'+str(instance.providerKey), filename)
 
 class Student(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -51,4 +51,5 @@ class Student(models.Model):
 	department = models.ForeignKey(Department)
 
 	def __unicode__(self):
-		return u'%s' % (self.name)
+		return u'%s %s' % (self.name,self.lastname)
+

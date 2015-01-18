@@ -3,6 +3,8 @@ from django.views.generic import TemplateView
 from academy.mixins import JsonResponseMixin
 from django.core import serializers
 from models import Course
+from academy.serializers import ObjectSerializer
+import json
 
 class IndexView(JsonResponseMixin, TemplateView):
     template_name = 'home/index.html'
@@ -14,5 +16,7 @@ class CoursesView(JsonResponseMixin, TemplateView):
         return self.response_handler()
 
     def get_data(self):
-        data = serializers.serialize('json', Course.objects.all())
+        objectSerializer = ObjectSerializer()
+        courses = objectSerializer.serialize(Course.objects.all())
+        data = json.dumps(courses)
         return data
