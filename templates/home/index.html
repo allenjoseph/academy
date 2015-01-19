@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="comment-body-wrapper">
-                <div id="discussion-comment-list" class="comment-body-content">
+                <div id="content-discussion-comments" class="comment-body-content">
                     <span>Cargando Comentarios</span>
                 </div>
             </div>
@@ -142,17 +142,14 @@
         </div>
     </script>
     <script type="text/template" id="tpl-discussion-comment">
-        <div class="row comment-entry">
-            <div class="comment-entry-figure">
-                <figure title="<%= comment.student.name %> <%= comment.student.lastname %>">
-                    <img src="{% static ""%}<%= comment.student.photo %>" class="cicle" />
-                </figure>
-            </div>
-            <div class="comment-entry-text">
-                <span>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam vel, quod. Maxime aliquid molestias sit, ex asperiores nam inventore, illum explicabo in assumenda facilis suscipit magni ullam quas nostrum hic
-                </span>
-            </div>
+        <div class="comment-entry-figure">
+            <figure title="<%= student.name %> <%= student.lastname %>">
+                <img src="{% static ""%}<%= student.photo %>" class="cicle" />
+            </figure>
+        </div>
+        <div class="comment-entry-text">
+            <span><%= comment %></span>
+            <small><%= dateCreation %></small>
         </div>
     </script>
 </div>

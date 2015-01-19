@@ -9,4 +9,8 @@
     });
     window.Collections.Discussions = discussions;
 
+    var comments = Backbone.Collection.extend({
+        model : Models.Comment
+    });
+    window.Collections.Comments = comments;
 })();

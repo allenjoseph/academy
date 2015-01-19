@@ -372,7 +372,8 @@ a {
 .comment-entry .comment-entry-figure{
     position: absolute;
     width: 35px;
-    top: 1em;
+    top: 0;
+    margin: 5px 0;
 }
 .comment-entry .comment-entry-text{
     margin-left: 40px;

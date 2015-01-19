@@ -4,4 +4,7 @@
 
     var discussion = Backbone.Model.extend();
     window.Models.Discussion = discussion;
+
+    var comment = Backbone.Model.extend();
+    window.Models.Comment = comment;
 })();

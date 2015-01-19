@@ -29,6 +29,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TIME_ZONE = 'America/Lima'
 
 # Application definition
 INSTALLED_APPS = (
@@ -77,8 +78,6 @@ LANGUAGES = (
 )
 
 LANGUAGE_CODE = 'es'
-
-TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
