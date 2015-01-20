@@ -20,6 +20,9 @@
 
         fetchData : function(){
             var self = this;
+
+            app.views.submenuDiscussions = new window.Views.SubmenuDiscussions();
+
             $.get('courses?format=json')
                 .done(function(data){
                     app.collections.courses = new window.Collections.Courses(data);

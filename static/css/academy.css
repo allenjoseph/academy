@@ -289,7 +289,7 @@ a {
 .discussion span.pull-right{
     margin: 10px 0 0 5px;
 }
-.submenu-dark{
+.border-bottom-dark{
     border-bottom: 1px solid #23253D;
     margin-bottom: 1em!important;
 }
@@ -337,7 +337,7 @@ a {
 }
 .remodal-comment .comment-body-content{
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 .remodal-comment figure{
@@ -393,4 +393,26 @@ a {
     width: 100%;
     height: 100%;
     margin: 0;
+}
+/* custom button color */
+  button.yellow, .button.yellow {
+    background-color: #F0B546;
+    border-color: #e59c13;
+    color: #FFFFFF;
+}
+button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:focus {
+    background-color: #e59c13;
+}
+button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:focus {
+    color: #FFFFFF;
+}
+/* end custom button color*/
+#submenu-discussions #form-add-discussion{
+    display: none;
+}
+#submenu-discussions.new-discussion #form-add-discussion{
+    display: block;
+}
+.submenu-dark-selected{
+    background-color: #121425
 }

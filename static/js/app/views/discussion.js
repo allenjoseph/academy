@@ -125,4 +125,64 @@
             return this;
         }
     });
+
+    Views.SubmenuDiscussions = Backbone.View.extend({
+
+        el : '#submenu-discussions',
+
+        events : {
+            'click #btn-new-discussion' : 'showAddDiscussion',
+            'click #btn-send-discussion' : 'sendDiscussion',
+            'keypress #input-question-discussion' : 'evalKeyEnter'
+        },
+
+        template : template('tpl-submenu-discussions'),
+
+        initialize : function(){
+            this.render();
+        },
+
+        render : function(){
+            this.$el.empty();
+            this.$el.html(this.template());
+        },
+
+        showAddDiscussion : function(){
+            if(this.$el.hasClass('new-discussion')){
+                this.$el.removeClass('new-discussion');
+                this.$el.find('#btn-new-discussion').parent().removeClass('submenu-dark-selected');
+            }else{
+                this.$el.addClass('new-discussion');
+                this.$el.find('#btn-new-discussion').parent().addClass('submenu-dark-selected');
+                this.$el.find('#input-question-discussion').val('').focus();
+            }
+        },
+
+        sendDiscussion : function(){
+            var question = this.$el.find('#input-question-discussion').val();
+            swal({
+                title: 'Seguro de publicar ?' ,
+                text: '" ' + question + ' "',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Sí, publícalo!',
+                closeOnConfirm: false,
+                cancelButtonText:'No, mejor no'
+            }, function(){
+                //save discussion
+                swal({
+                    title: "Publicado!",
+                    type: 'success',
+                    timer: 2000
+                });
+            });
+        },
+
+        evalKeyEnter : function(e){
+            if(e.which === 13){
+                this.sendDiscussion();
+            }
+        }
+    });
 })();
