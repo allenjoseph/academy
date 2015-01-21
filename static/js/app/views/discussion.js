@@ -85,6 +85,7 @@
 
         openModal : function(){
             this.modal.open();
+            this.$el.find('#add-comment-textarea').focus();
         }
     });
 
