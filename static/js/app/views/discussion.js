@@ -164,19 +164,23 @@
             swal({
                 title: 'Seguro de publicar ?' ,
                 text: '" ' + question + ' "',
-                type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Sí, publícalo!',
+                confirmButtonText: 'Sí, Publícalo!',
                 closeOnConfirm: false,
-                cancelButtonText:'No, mejor no'
+                cancelButtonText:'Mejor no'
             }, function(){
-                //save discussion
+
+                var iconLoading = '<div class="icon loading" style="color: #666;border: none;"><i class="fa fa-cog fa-spin fa-5x"></i></div>'
+                $('.sweet-alert.showSweetAlert.visible')
+                    .prepend(iconLoading)
+                    .find('h2').text('Publicando').end()
+                    .find('button').addClass('hide');
+                /*
                 swal({
-                    title: "Publicado!",
+                    title: "",
                     type: 'success',
                     timer: 2000
-                });
+                });*/
             });
         },
 

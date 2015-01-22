@@ -210,7 +210,7 @@
       // If getModal returns values then continue
       modalDependant.apply(this, args);
     } else {
-      // If getModal returns null i.e. no matches, then set up a interval event to check the return value until it is not null	
+      // If getModal returns null i.e. no matches, then set up a interval event to check the return value until it is not null
       var modalCheckInterval = setInterval(function() {
         if (getModal() !== null) {
           clearInterval(modalCheckInterval);
@@ -219,11 +219,11 @@
       }, 100);
     }
   };
-        
+
   function modalDependant() {
 
     var customizations = arguments[0];
-    
+
     /*
      * Use argument if defined or default value from params object otherwise.
      * Supports the case where a default value is boolean true and should be
@@ -233,16 +233,16 @@
       var args = customizations;
 
       if (typeof args[key] !== 'undefined') {
-        console.log(key + " is " + args[key]);
+        //console.log(key + " is " + args[key]);
         return args[key];
       } else {
-        console.log(key + " is " + defaultParams[key]);
+        //console.log(key + " is " + defaultParams[key]);
         return defaultParams[key];
       }
     }
 
     if (arguments[0] === undefined) {
-      window.console.error('SweetAlert expects at least 1 attribute!');
+      //window.console.error('SweetAlert expects at least 1 attribute!');
       return false;
     }
 
@@ -261,21 +261,21 @@
       // Ex: swal({title:"Hello", text: "Just testing", type: "info"});
       case 'object':
         if (arguments[0].title === undefined) {
-          window.console.error('Missing "title" argument!');
+          //window.console.error('Missing "title" argument!');
           return false;
         }
 
         params.title = arguments[0].title;
 
         var availableCustoms = [
-          'text', 
-          'type', 
-          'customClass', 
-          'allowOutsideClick', 
-          'showCancelButton', 
-          'closeOnConfirm', 
-          'closeOnCancel', 
-          'timer', 
+          'text',
+          'type',
+          'customClass',
+          'allowOutsideClick',
+          'showCancelButton',
+          'closeOnConfirm',
+          'closeOnCancel',
+          'timer',
           'confirmButtonColor',
           'cancelButtonText',
           'imageUrl',
@@ -294,11 +294,11 @@
 
         // Function to call when clicking on cancel/OK
         params.doneFunction       = arguments[1] || null;
-        
+
         break;
 
       default:
-        window.console.error('Unexpected type of argument! Expected "string" or "object", got ' + typeof arguments[0]);
+        //window.console.error('Unexpected type of argument! Expected "string" or "object", got ' + typeof arguments[0]);
         return false;
 
     }
@@ -322,22 +322,22 @@
       switch (e.type) {
         case ("mouseover"):
           if (targetedConfirm) {
-            target.style.backgroundColor = colorLuminance(params.confirmButtonColor, -0.04);
+            //target.style.backgroundColor = colorLuminance(params.confirmButtonColor, -0.04);
           }
           break;
         case ("mouseout"):
           if (targetedConfirm) {
-            target.style.backgroundColor = params.confirmButtonColor;
+            //target.style.backgroundColor = params.confirmButtonColor;
           }
           break;
         case ("mousedown"):
           if (targetedConfirm) {
-            target.style.backgroundColor = colorLuminance(params.confirmButtonColor, -0.14);
+            //target.style.backgroundColor = colorLuminance(params.confirmButtonColor, -0.14);
           }
           break;
         case ("mouseup"):
           if (targetedConfirm) {
-            target.style.backgroundColor = colorLuminance(params.confirmButtonColor, -0.04);
+            //target.style.backgroundColor = colorLuminance(params.confirmButtonColor, -0.04);
           }
           break;
         case ("focus"):
@@ -345,9 +345,9 @@
               $cancelButton  = modal.querySelector('button.cancel');
 
           if (targetedConfirm) {
-            $cancelButton.style.boxShadow = 'none';
+            //$cancelButton.style.boxShadow = 'none';
           } else {
-            $confirmButton.style.boxShadow = 'none';
+            //$confirmButton.style.boxShadow = 'none';
           }
           break;
         case ("click"):
@@ -554,7 +554,7 @@
 
     // Text
     $text.innerHTML = (params.html) ? params.text : escapeHtml(params.text || '').split("\n").join("<br>");
-    
+
     if (params.text) {
       show($text);
     }
@@ -581,7 +581,7 @@
         }
       }
       if (!validType) {
-        window.console.error('Unknown alert type: ' + params.type);
+        //window.console.error('Unknown alert type: ' + params.type);
         return false;
       }
       var $icon = modal.querySelector('.icon.' + params.type);
@@ -622,7 +622,7 @@
         var imgHeight = params.imageSize.split('x')[1];
 
         if (!imgWidth || !imgHeight) {
-          window.console.error("Parameter imageSize expects value with format WIDTHxHEIGHT, got " + params.imageSize);
+          //window.console.error("Parameter imageSize expects value with format WIDTHxHEIGHT, got " + params.imageSize);
         } else {
           _imgWidth  = imgWidth;
           _imgHeight = imgHeight;
@@ -653,7 +653,7 @@
     }
 
     // Set confirm button to selected background color
-    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
+    //$confirmBtn.style.backgroundColor = params.confirmButtonColor;
 
     // Set box-shadow to default focused button
     setFocusStyle($confirmBtn, params.confirmButtonColor);
@@ -718,7 +718,7 @@
   // Add box-shadow style to button (depending on its chosen bg-color)
   function setFocusStyle($button, bgColor) {
     var rgbColor = hexToRgb(bgColor);
-    $button.style.boxShadow = '0 0 2px rgba(' + rgbColor +', 0.8), inset 0 0 0 1px rgba(0, 0, 0, 0.05)';
+    //$button.style.boxShadow = '0 0 2px rgba(' + rgbColor +', 0.8), inset 0 0 0 1px rgba(0, 0, 0, 0.05)';
   }
 
 
