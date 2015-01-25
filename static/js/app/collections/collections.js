@@ -5,7 +5,8 @@
     window.Collections.Courses = courses;
 
     var discussions = Backbone.Collection.extend({
-        model : Models.Discussion
+        model : Models.Discussion,
+        url : '/discussions'
     });
     window.Collections.Discussions = discussions;
 

@@ -169,18 +169,19 @@
                 closeOnConfirm: false,
                 cancelButtonText:'Mejor no'
             }, function(){
-
-                var iconLoading = '<div class="icon loading" style="color: #666;border: none;"><i class="fa fa-cog fa-spin fa-5x"></i></div>'
-                $('.sweet-alert.showSweetAlert.visible')
-                    .prepend(iconLoading)
-                    .find('h2').text('Publicando').end()
-                    .find('button').addClass('hide');
-                /*
                 swal({
-                    title: "",
-                    type: 'success',
-                    timer: 2000
-                });*/
+                    title: "Publicando",
+                    imageUrl: "static/img/alert-loader.gif",
+                    hideConfirmButton: true
+                });
+
+
+
+                // swal({
+                //     title: "Hechó!",
+                //     type: 'success',
+                //     timer: 2000
+                // });
             });
         },
 

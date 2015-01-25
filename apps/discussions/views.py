@@ -13,6 +13,7 @@ class DiscussionsView(JsonResponseMixin, TemplateView):
     template_name = 'home/404.html'
 
     def get(self, request, *args, **kwargs):
+        print(self.request.session['student_id'])
         return self.response_handler()
 
     def get_data(self):

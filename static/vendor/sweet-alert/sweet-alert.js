@@ -23,7 +23,8 @@
         customClass: '',
         html: false,
         animation: true,
-        allowEscapeKey: true
+        allowEscapeKey: true,
+        hideConfirmButton: false
       };
 
 
@@ -282,7 +283,8 @@
           'imageSize',
           'html',
           'animation',
-          'allowEscapeKey'];
+          'allowEscapeKey',
+          'hideConfirmButton'];
 
         availableCustoms.forEach(function(customName) {
           params[customName] = argumentOrDefault(customName);
@@ -674,6 +676,11 @@
 
     // Close timer
     modal.setAttribute('data-timer', params.timer);
+
+    //hide confirm button
+    if(params.hideConfirmButton){
+        addClass($confirmBtn, 'hide');
+    }
   }
 
 
