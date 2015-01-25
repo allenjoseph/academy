@@ -1,9 +1,12 @@
 # -*- encoding: utf-8 -*-
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from academy.mixins import JsonResponseMixin
 from models import Discussion, DiscussionComment
+from apps.home.models import Department, Student
 from academy.serializers import ObjectSerializer
 from django.utils import timezone
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 def date_handler(obj):
@@ -53,3 +56,59 @@ class DiscussionCommentsView(JsonResponseMixin, TemplateView):
             data = json.dumps(comments, default=date_handler)
 
         return data
+
+class HttpError(Exception):
+    def __init__(self, message=None, status=500):
+        super(HttpError, self).__init__(message)
+        self.status = status
+
+    def __repr__(self):
+        return 'HttpError(%r, %r)' % (self.status, self.message)
+
+class DiscussionView(View):
+
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        print(request.POST)
+        method = request.method
+        request.method = 'POST'
+        request._load_post_and_files()
+        method_override = None
+
+        if request.POST and request.POST.get('_method', None):
+            request.POST._mutable = True
+            method_override = request.POST.pop('_method')[0].upper()
+            request.POST._mutable = False
+
+        #asigno el request method en post
+        request.method = method_override or method
+
+        #le asigno los valores del request al metodo post
+        if request.method not in ['POST', 'GET']:
+            setattr(request, request.method, request.POST)
+
+        try:
+            response = super(DiscussionView, self).dispatch(request, *args, **kwargs)
+        except HttpError, e:
+            response = HttpResponse(status=e.status)
+
+        return response
+
+    def post(self, request, *args, **kwargs):
+
+        print(request.POST.get('question', None))
+
+        department = Department.objects.get(pk=request.session['department_id'])
+        student = Student.objects.get(pk=request.session['student_id'])
+
+        #Discussion.objects.create(
+            #question = request.POST.get('question'),
+            #department = department,
+            #student = student)
+
+        return HttpResponse(status=201)
+
+    def delete(self, request, discussion_id):
+        discussion = Discussion.objects.get(pk=discussion_id)
+        discussion.delete()
+        return HttpResponse(status=200)

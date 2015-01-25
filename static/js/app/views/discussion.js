@@ -175,6 +175,10 @@
                     hideConfirmButton: true
                 });
 
+                var discussion = new Models.Discussion();
+                discussion.set('question', question);
+                discussion.save();
+
 
 
                 // swal({
