@@ -8,6 +8,7 @@
 
         initialize : function(){
             Backbone.history.start({root: '/'});
+            //Backbone.emulateJSON = true;
         },
 
         index : function(){

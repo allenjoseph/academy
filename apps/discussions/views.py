@@ -5,7 +5,7 @@ from models import Discussion, DiscussionComment
 from apps.home.models import Department, Student
 from academy.serializers import ObjectSerializer
 from django.utils import timezone
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -69,7 +69,6 @@ class DiscussionView(View):
 
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
-        print(request.POST)
         method = request.method
         request.method = 'POST'
         request._load_post_and_files()
@@ -95,18 +94,26 @@ class DiscussionView(View):
         return response
 
     def post(self, request, *args, **kwargs):
-
-        print(request.POST.get('question', None))
+        params = json.loads(request.body)
 
         department = Department.objects.get(pk=request.session['department_id'])
         student = Student.objects.get(pk=request.session['student_id'])
 
-        #Discussion.objects.create(
-            #question = request.POST.get('question'),
-            #department = department,
-            #student = student)
+        discussion = Discussion.objects.create(
+            question = params.get('question'),
+            department = department,
+            student = student)
 
-        return HttpResponse(status=201)
+        objectSerializer = ObjectSerializer()
+
+        dictElementStudent = objectSerializer.serialize([student])[0]
+        dictElementDiscussion = objectSerializer.serialize([discussion])[0]
+        dictElementDiscussion['student'] = dictElementStudent
+        dictElementDiscussion['comments'] = 0
+
+        jsonDiscussion = json.dumps(dictElementDiscussion, default=date_handler)
+
+        return JsonResponse(json.loads(jsonDiscussion),safe=False,status=201)
 
     def delete(self, request, discussion_id):
         discussion = Discussion.objects.get(pk=discussion_id)

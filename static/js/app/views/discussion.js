@@ -177,15 +177,23 @@
 
                 var discussion = new Models.Discussion();
                 discussion.set('question', question);
-                discussion.save();
-
-
-
-                // swal({
-                //     title: "Hechó!",
-                //     type: 'success',
-                //     timer: 2000
-                // });
+                discussion.save(null,{
+                    success : function(discussion){
+                        app.collections.discussions.add(discussion);
+                        swal({
+                            title: "Hechó!",
+                            type: 'success',
+                            timer: 2000
+                        });
+                    },
+                    error : function(){
+                        swal({
+                            title: "Falló!",
+                            type: 'error',
+                            timer: 2000
+                        });
+                    }
+                });
             });
         },
 
