@@ -66,7 +66,10 @@
         className : 'remodal remodal-comment light-color bg',
 
         events : {
-            'keypress #add-comment-textarea' : 'evalKeyEnter'
+            'keypress #add-comment-textarea' : 'enterPressed',
+            'keyup #add-comment-textarea' : 'countKeyPressed',
+            'click #button-cancel-comment' : 'cancelComment',
+            'click #button-add-comment' : 'addComment'
         },
 
         template : template('tpl-add-comment-modal'),
@@ -92,13 +95,31 @@
             this.$el.find('#add-comment-textarea').focus();
         },
 
+        countKeyPressed : function(){
+            var characters = $('#add-comment-textarea').val().length;
+            $('#counter-characters').text(150-characters);
+        },
+
+        enterPressed : function(e){
+            if(e.which === 13){
+                this.confirmComment();
+                return false;
+            }
+        },
+
+        confirmComment : function(){
+            $('#add-comment-textarea').prop('disabled',true);
+            $("#buttons-confirm-comment").show();
+        },
+
         addComment : function(){
             var comment = $('#add-comment-textarea').val();
             alert(comment);
         },
 
         cancelComment : function(){
-
+            $("#buttons-confirm-comment").hide();
+            $('#add-comment-textarea').prop('disabled',false).focus();
         }
     });
 

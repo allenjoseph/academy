@@ -158,8 +158,13 @@
             </div>
         </div>
         <div class="comment-footer">
-            <textarea id="add-comment-textarea" class="comment-textarea"></textarea>
-            <button class="button tiny">Enviar</button>
+            <span class="disclaimer">Presione enter para enviar.</span>
+            <span id="counter-characters" class="counter">150</span>
+            <textarea id="add-comment-textarea" class="comment-textarea" maxlength="150"></textarea>
+            <div id="buttons-confirm-comment" class="comment-footer-confirm">
+                <button id="button-add-comment" class="button tiny yellow mr1">Enviar Comentario</button>
+                <button id="button-cancel-comment" class="button tiny secondary">Cancelar</button>
+            </div>
         </div>
     </div>
 </script>
