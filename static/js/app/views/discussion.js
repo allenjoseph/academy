@@ -65,6 +65,10 @@
 
         className : 'remodal remodal-comment light-color bg',
 
+        events : {
+            'keypress #add-comment-textarea' : 'evalKeyEnter'
+        },
+
         template : template('tpl-add-comment-modal'),
 
         initialize : function(){
@@ -86,6 +90,15 @@
         openModal : function(){
             this.modal.open();
             this.$el.find('#add-comment-textarea').focus();
+        },
+
+        addComment : function(){
+            var comment = $('#add-comment-textarea').val();
+            alert(comment);
+        },
+
+        cancelComment : function(){
+
         }
     });
 
@@ -188,9 +201,9 @@
                     },
                     error : function(){
                         swal({
-                            title: "Falló!",
+                            title: "Algo falló, :/ ... vuelve a intentarlo! :)",
                             type: 'error',
-                            timer: 2000
+                            timer: 3000
                         });
                     }
                 });
