@@ -7,6 +7,8 @@
     });
     window.Models.Discussion = discussion;
 
-    var comment = Backbone.Model.extend();
+    var comment = Backbone.Model.extend({
+        urlRoot : '/comment'
+    });
     window.Models.Comment = comment;
 })();

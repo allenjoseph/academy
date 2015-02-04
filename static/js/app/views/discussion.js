@@ -24,7 +24,7 @@
             }
             window.app.views.addCommentModal.openModal();
 
-            $.get('comments?format=json&id='+ this.model.get('id'))
+            $.get('comments/?format=json&id='+ this.model.get('id'))
                 .done(function(data){
                     app.collections.comments = new window.Collections.Comments(data);
                     app.views.comments = new window.Views.Comments({collection : app.collections.comments});
@@ -53,7 +53,7 @@
         },
 
         renderDiscussion : function( discussion ){
-            discussion.set('dateCreation',moment(discussion.get('dateCreation')).startOf('hour').fromNow());
+            discussion.set('dateCreation',moment(discussion.get('dateCreation')).fromNow());
             var view = new Views.Discussion({ model : discussion });
             this.$el.append(view.render().el);
         }
@@ -96,29 +96,60 @@
         },
 
         countKeyPressed : function(){
+            //obtengo la cantidad de caracteres del comentario
             var characters = $('#add-comment-textarea').val().length;
+            //actualizo el numero de caracteres escritos
             $('#counter-characters').text(150-characters);
         },
 
         enterPressed : function(e){
             if(e.which === 13){
+                //si la tecla presionada es enter, muestra area de confirmacion
                 this.confirmComment();
                 return false;
             }
         },
 
         confirmComment : function(){
+            //deshabilito el textarea del comentario
             $('#add-comment-textarea').prop('disabled',true);
+            //muestro los botones de confirmacion
             $("#buttons-confirm-comment").show();
         },
 
         addComment : function(){
-            var comment = $('#add-comment-textarea').val();
-            alert(comment);
+            var self = this;
+            //obtengo el texto del comentario escrito
+            var text = $('#add-comment-textarea').val().trim();
+            //deshabilito los botones de confirmacion
+            $('#buttons-confirm-comment').find('button').prop('disabled',true);
+            //creo un modelo Commentario
+            var comment = new Models.Comment();
+            comment.set('comment', text);
+            comment.set('discussion', self.model.id);
+            //guardo el comentario
+            comment.save(null,{
+                success : function(comment){
+                    //agrego el nuevo comentario a la colleccion
+                    app.collections.comments.add(comment);
+                    //limpio la seccion del comentario
+                    $('#add-comment-textarea').val('');
+                    self.cancelComment();
+                },
+                error : function(){
+                    //cancelo el comentario
+                    self.cancelComment();
+                    //muestro alerta con el fallo
+                }
+            });
         },
 
         cancelComment : function(){
+            //oculto los botones de confirmacion
             $("#buttons-confirm-comment").hide();
+            //habilito los botones de confirmacion
+            $('#buttons-confirm-comment').find('button').prop('disabled',false);
+            //habilito el textarea del comentario
             $('#add-comment-textarea').prop('disabled',false).focus();
         }
     });
@@ -141,7 +172,7 @@
         },
 
         renderComment : function( comment ){
-            comment.set('dateCreation',moment(comment.get('dateCreation')).startOf('hour').fromNow());
+            comment.set('dateCreation',moment(comment.get('dateCreation')).fromNow());
             var view = new Views.Comment({ model : comment });
             this.$el.append(view.render().el);
         }
