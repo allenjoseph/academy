@@ -10,8 +10,17 @@
 
         template : template('tpl-discussion'),
 
+        initialize : function(){
+            this.model.on('change:comments', this.changeCounterComments, this);
+        },
+
         render : function(){
-            this.$el.html(this.template(this.model.attributes));
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        changeCounterComments : function(){
+            $('#discussion-counter-comments', this.$el).html(this.model.get('comments'));
             return this;
         },
 
@@ -85,8 +94,15 @@
         },
 
         render : function(){
+            this.model.on('change:comments', this.changeCounterComments, this);
+
             this.$el.find('.comment-wrapper').remove();
-            this.$el.append(this.template(this.model.attributes));
+            this.$el.append(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        changeCounterComments : function(){
+            $('#counter-comments', this.$el).html(this.model.get('comments'));
             return this;
         },
 
@@ -134,7 +150,13 @@
                     app.collections.comments.add(comment);
                     //limpio la seccion del comentario
                     $('#add-comment-textarea').val('');
+                    //reseteo el contador de caracteres
+                    $('#counter-characters').text(150);
+                    //oculto los botones de confirmacion
                     self.cancelComment();
+                    //actualizo el contador de comentarios
+                    var count = self.model.get('comments');
+                    self.model.set('comments',++count);
                 },
                 error : function(){
                     //cancelo el comentario
@@ -187,7 +209,7 @@
         template : template('tpl-discussion-comment'),
 
         render : function(){
-            this.$el.html(this.template(this.model.attributes));
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
     });

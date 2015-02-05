@@ -125,7 +125,10 @@
                         <span><%= student.name %> <%= student.lastname %></span>
                     </figure>
                 </span>
-                <span  class="pull-right"><strong><%= comments %> comentarios</strong></span>
+                <span class="pull-right">
+                <strong id="discussion-counter-comments"><%= comments %></strong>
+                    <strong> comentarios</strong></span>
+                </span>
                 <span class="pull-right"><%= dateCreation %></span>
             </div>
         </div>
@@ -142,8 +145,10 @@
             </div>
             <div class="row comment-header-footer">
                 <div class="small-12 columns comment-header-footer-content">
-                    <span  class="pull-left"><strong><%= dateCreation %></strong></span>
-                    <span  class="pull-right"><strong><%= comments %> comentarios</strong></span>
+                    <span class="pull-left"><strong><%= dateCreation %></strong></span>
+                    <span class="pull-right">
+                        <strong id="counter-comments"><%= comments %></strong>
+                        <strong> comentarios</strong></span>
                     <span>
                         <figure title="<%= student.name %> <%= student.lastname %>">
                             <img src="{% static ""%}<%= student.photo %>" class="cicle" />
