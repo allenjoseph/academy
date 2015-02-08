@@ -247,6 +247,7 @@
         },
 
         sendDiscussion : function(){
+            var self = this;
             var question = this.$el.find('#input-question-discussion').val();
             swal({
                 title: 'Seguro de publicar ?' ,
@@ -266,7 +267,11 @@
                 discussion.set('question', question);
                 discussion.save(null,{
                     success : function(discussion){
+                        //aniado la nueva discusion a la coleccion
                         app.collections.discussions.add(discussion);
+                        //cierro el menu para aniadir discussion
+                        self.showAddDiscussion();
+                        //muestro alerta satisfactoria
                         swal({
                             title: "Hechó!",
                             type: 'success',

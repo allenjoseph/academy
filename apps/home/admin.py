@@ -12,12 +12,12 @@ class FacultyAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('id','name','description','faculty',)
+    list_display = ('id','name','slug','description','faculty',)
     list_filter = ('faculty__university','faculty',)
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('id','name','description','department',)
+    list_display = ('id','name','slug','description','department',)
     list_filter = ('department__faculty','department',)
 
 @admin.register(Student)
