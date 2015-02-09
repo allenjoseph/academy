@@ -33,7 +33,44 @@
 
 	<div id="footer" class="row">{% include "footer.html" %}</div>
 
+    <script type="text/template" id="tpl-add-exam-modal">
+        <div class="exam-wrapper">
+            <div class="row">
+                <div class="small-12 columns">
+                    <h1>Compartir Examen</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <input type="file"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row collapse">
+                        <div class="small-10 columns">
+                            <input type="text" placeholder="Que examen es, Práctica, Parcial, Final... ?">
+                        </div>
+                        <div class="small-2 columns">
+                            <a class="button yellow postfix">Compartir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="tpl-upload">
+        <form method="post" action="upload" enctype="multipart/form-data">
+            <input type="file" name="uploadctl" multiple />
+            <ul>
+            <!-- The file list will be shown here -->
+            </ul>
+        </form>
+    </script>
+
     <script src="{% static "vendor/jquery/jquery.js"%}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.fileupload.js"></script>
     <script src="{% static "vendor/moment/moment-with-locales.js"%}"></script>
     <script src="{% static "vendor/remodal/jquery.remodal.js"%}"></script>
     <script src="{% static "vendor/sweet-alert/sweet-alert.js"%}"></script>

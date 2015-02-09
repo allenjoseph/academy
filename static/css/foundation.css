@@ -2752,7 +2752,8 @@ blockquote p {
     background-color: #f08a24;
     color: #FFFFFF; }
   .label.success {
-    background-color: #31C4C7;
+    /*background-color: #31C4C7;*/
+    background-color: #5da423;
     color: #FFFFFF; }
   .label.secondary {
     background-color: #e9e9e9;

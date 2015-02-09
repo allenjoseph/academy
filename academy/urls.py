@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
-from apps.home.views import IndexView, CoursesView
+from apps.home.views import IndexView, CoursesView, CourseView
 from apps.discussions.views import DiscussionsView, DiscussionCommentsView, DiscussionView, CommentView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -10,7 +10,10 @@ from django.conf.urls.static import static
 urlpatterns = patterns('',
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^courses/', CoursesView.as_view(), name='courses'),
+
+    url(r'^courses/$', CoursesView.as_view(), name='courses'),
+    url(r'^courses/(?P<slug>[-\w]+)/$', CourseView.as_view(), name='course'),
+
     url(r'^discussions/', DiscussionsView.as_view(), name='discussions'),
     url(r'^comments/', DiscussionCommentsView.as_view(), name='comments'),
     url(r'^discussion/?$', DiscussionView.as_view()),

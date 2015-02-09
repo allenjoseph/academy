@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+
 {% block content-light %}
 <div class="large-12 columns">
     <div class="row pt1">
@@ -60,15 +61,14 @@
                 <div class="row-separator">
                 </div>
                 <div class="row-links">
-                    <div class="link-icon"><i class="fa fa-cloud-upload fa-fw"></i></div>
-                    <div class="link-icon"><i class="fa fa-users fa-fw"></i></div>
-                    <div class="link-icon"><i class="fa fa-camera fa-fw"></i></div>
+                    <div class="link-icon" title="Solicitar Ayuda"><i class="fa fa-child fa-fw"></i></div>
+                    <div class="link-icon" title="Iniciar Reunion"><i class="fa fa-users fa-fw"></i></div>
+                    <div class="link-icon btn-add-exam" title="Agregar Examen"><i class="fa fa-camera fa-fw"></i></div>
                 </div>
             </div>
         </div>
     </div>
 </script>
-
 {% endblock %}
 
 {% block content %}

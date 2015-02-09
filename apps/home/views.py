@@ -28,3 +28,15 @@ class CoursesView(JsonResponseMixin, TemplateView):
         courses = objectSerializer.serialize(Course.objects.all())
         data = json.dumps(courses)
         return data
+
+class CourseView(TemplateView):
+    template_name = 'home/course.html'
+
+    def get(self, request, *args, **kwargs):
+        slug = kwargs.get('slug')
+        department = request.session['department_id']
+        print(department)
+        print(slug)
+
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)

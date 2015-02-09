@@ -436,6 +436,17 @@ button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:f
 button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:focus {
     color: #FFFFFF;
 }
+button.green, .button.green {
+background-color: #5da423;
+border-color: #4a831c;
+color: #FFFFFF;
+}
+button.green:hover, button.green:focus, .button.green:hover, .button.green:focus {
+background-color: #4a831c;
+}
+button.green:hover, button.green:focus, .button.green:hover, .button.green:focus {
+color: #FFFFFF;
+}
 /* end custom button color*/
 #submenu-discussions #form-add-discussion{
     display: none;

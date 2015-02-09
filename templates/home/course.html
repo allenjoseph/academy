@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block content-light %}
+<div class="large-12 columns" id="page-course">
+    <h1>Nombre del Curso</h1>
+    <h5 class="subheader">Docente del curso</h5>
+    <p><span class="label secondary"># alumnos inscritos</span><span class="label success"># enlinea</span></p>
+    <div class="row">
+        <div class="medium-4 columns">
+            <ul class="no-bullet">
+                <li>
+                    <a class="btn-add-exam">
+                        <i class="fa fa-camera fa-fw"></i>
+                        Compartir Exámen
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fa fa-users fa-fw"></i>
+                        Iniciar Reunión
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fa fa-child fa-fw"></i>
+                        Solicitar Ayuda
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fa fa-question-circle fa-fw"></i>
+                        Preguntar
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fa fa-file-text fa-fw"></i>
+                        Compartir Trabajo Encargado
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="medium-8 columns">
+            <ul class="no-bullet">
+                <li># examenes disponibles.</li>
+                <li># reuniones programadas, <a href="">asistir a alguna</a>.</li>
+                <li># solicitudes de ayuda, <a href="">brindar ayuda</a>.</li>
+                <li># preguntas activas.</li>
+                <li># trabajos encargados.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row light-color border-top">
+        <div class="large-12 columns">
+            <h2>Examenes</h2>
+        </div>
+    </div>
+    <div class="row light-color border-top">
+        <div class="large-12 columns">
+            <h2>Tareas</h2>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
