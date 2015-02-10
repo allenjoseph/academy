@@ -41,8 +41,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="small-12 columns">
-                    <input type="file"/>
+                <div class="small-12 columns fileupload-content">
                 </div>
             </div>
             <div class="row">
@@ -61,15 +60,19 @@
     </script>
 
     <script type="text/template" id="tpl-upload">
-        <form method="post" action="upload" enctype="multipart/form-data">
-            <input type="file" name="uploadctl" multiple />
-            <ul>
+        <form method="post" action="upload/" enctype="multipart/form-data" multiple>
+            <input type="file" name="file" multiple />
+            <div class="progress">
+                <span class="meter"></span>
+            </div>
+            <ul class='file-list'>
             <!-- The file list will be shown here -->
             </ul>
         </form>
     </script>
 
     <script src="{% static "vendor/jquery/jquery.js"%}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.fileupload.js"></script>
     <script src="{% static "vendor/moment/moment-with-locales.js"%}"></script>
     <script src="{% static "vendor/remodal/jquery.remodal.js"%}"></script>

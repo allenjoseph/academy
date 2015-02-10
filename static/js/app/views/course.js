@@ -21,7 +21,6 @@
             var view = new Views.Course({ model : course });
             this.$el.append(view.render().el);
         }
-
     });
 
     Views.Course = Backbone.View.extend({
@@ -53,7 +52,6 @@
             }
             window.app.views.addExamModal.openModal();
         }
-
     });
 
     Views.CoursePage = Backbone.View.extend({
@@ -96,49 +94,56 @@
         render : function(){
             this.$el.find('.exam-wrapper').remove();
             this.$el.append(this.template(this.model.toJSON()));
+
+            //Add fileUploadComponent
+            var fileupload = new Views.FileuploadComponent();
+            this.$el.find('.fileupload-content').html(fileupload.render().el);
+
             return this;
         },
 
         openModal : function(){
             this.modal.open();
         }
-
     });
 
-    Views.UploadComponent = Backbone.View.extend({
+    Views.FileuploadComponent = Backbone.View.extend({
 
-        className : 'upload-component',
+        className : 'fileupload-component',
 
         template : template('tpl-upload'),
 
         initialize : function(){
-            this.render();
-            this.$el.find('form').fileupload({
-                add : this.addFile,
-                progress : this.progress,
-                fail : this.failFile
-            });
-            this.modal = $.remodal.lookup[this.$el.data('remodal')];
         },
 
         render : function(){
             this.$el.empty();
-            this.$el.append(this.template(this.model.toJSON()));
+            this.$el.append(this.template());
+            this.$el.find('form').fileupload({
+                add : this.addFile,
+                progressall : this.progressall,
+                fail : this.failFile
+            });
             return this;
         },
 
         addFile: function(e,data){
-            debugger;
+            var element = $('<li></li>').append(data.files[0].name)
+            data.context = $(this).find('.file-list').append(element);
+            data.submit();
         },
 
-        progress: function(e,data){
-
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $(this).find('.progress .meter').css(
+                'width',
+                progress + '%'
+            );
         },
 
         failFile: function(e,data){
             debugger;
         }
-
     });
 
 })();

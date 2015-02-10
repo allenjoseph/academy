@@ -457,3 +457,6 @@ color: #FFFFFF;
 .submenu-dark-selected{
     background-color: #121425
 }
+.progress .meter{
+    width: 0;
+}
