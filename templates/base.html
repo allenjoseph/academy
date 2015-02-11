@@ -60,15 +60,15 @@
     </script>
 
     <script type="text/template" id="tpl-upload">
-        <form method="post" action="upload/" enctype="multipart/form-data" multiple>
-            <input type="file" name="file" multiple />
+        <div>
+            <input class="fileupload" type="file" name="file" multiple>
             <div class="progress">
                 <span class="meter"></span>
             </div>
             <ul class='file-list'>
             <!-- The file list will be shown here -->
             </ul>
-        </form>
+        </div>
     </script>
 
     <script src="{% static "vendor/jquery/jquery.js"%}"></script>
