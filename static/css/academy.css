@@ -460,3 +460,9 @@ color: #FFFFFF;
 .progress .meter{
     width: 0;
 }
+.text-danger {
+    color: #c60f13;
+}
+.text-success {
+    color: #5da423;
+}

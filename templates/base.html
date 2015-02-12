@@ -65,15 +65,19 @@
             <div class="progress">
                 <span class="meter"></span>
             </div>
-            <ul class='file-list'>
-            <!-- The file list will be shown here -->
+            <ul class='file-list no-bullet text-left'>
             </ul>
         </div>
     </script>
 
-    <script src="{% static "vendor/jquery/jquery.js"%}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.fileupload.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>
+    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>
+    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-validate.js"></script>
+
+
     <script src="{% static "vendor/moment/moment-with-locales.js"%}"></script>
     <script src="{% static "vendor/remodal/jquery.remodal.js"%}"></script>
     <script src="{% static "vendor/sweet-alert/sweet-alert.js"%}"></script>

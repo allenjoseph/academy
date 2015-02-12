@@ -61,9 +61,7 @@ def UploadFile(request):
     data = {
         'name': str(fileUploaded.name),
         'size': str(fileUploaded.file.size),
-        'url':'',
-        'delete_url':'delete/',
-        'delete_type':'POST',
+        'delete_url':'delete/'
     }
 
     # file_dict = {
