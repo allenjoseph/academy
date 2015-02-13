@@ -66,3 +66,12 @@ class Student(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.name,self.lastname)
 
+class Attachment(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100, blank=True)
+    dateCreation = models.DateTimeField(auto_now_add=True)
+    attachment = models.FileField(upload_to='attachment/%Y/%m/%d')
+
+    def __unicode__(self):
+        return u'%s' % (self.attachment.name)
+

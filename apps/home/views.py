@@ -2,13 +2,14 @@
 from django.views.generic import TemplateView
 from academy.mixins import JsonResponseMixin
 from django.core import serializers
-from models import Course, Student, Department
+from models import Course, Student, Department, Attachment
 from academy.serializers import ObjectSerializer
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import UploadedFile
 from django.http import JsonResponse
 import json
+import os
 
 class IndexView(TemplateView):
     template_name = 'home/index.html'
@@ -54,43 +55,38 @@ def UploadFile(request):
     if fileTemp == None:
         return HttpResponse(status=e.status)
 
-    #cargamos la imagen al server.
-
-    #devolvemos los datos de la imagen
+    #obtenemos la imagen
     fileUploaded = UploadedFile(fileTemp)
+
+    #guardamos la imagen.
+    attachment = Attachment()
+    attachment.title=str(fileUploaded.name)
+    attachment.attachment=fileUploaded
+    attachment.save()
+
+    #json de la instancia guardada
+    objectSerializer = ObjectSerializer()
+    dictElementAttachment = objectSerializer.serialize([attachment])[0]
+
     data = {
         'name': str(fileUploaded.name),
         'size': str(fileUploaded.file.size),
-        'delete_url':'delete/'
+        'model': dictElementAttachment
     }
-
-    # file_dict = {
-    #     'name' : file.path,
-    #     'size' : file.size,
-
-    #     'url': settings.MEDIA_URL + basename,
-    #     'thumbnailUrl': settings.MEDIA_URL + basename,
-
-    #     'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
-    #     'deleteType': 'POST',
-    # }
-
-    # files = file_dict if isinstance( file_dict, list ) else [ file_dict ]
-    # data  = { 'files' : files }
 
     return JsonResponse(data)
 
+@csrf_exempt
 @require_POST
 def DeleteUploadedFile(request, pk):
-    data = {
-        'success' : True
-    }
-    # try:
-    #     instance = YOURMODEL.objects.get( pk = pk )
-    #     os.unlink( instance.file.path )
-    #     instance.delete()
-    # except YOURMODEL.DoesNotExist:
-    #     success = False
+    success = False;
+    try:
+        instance = Attachment.objects.get( pk = pk )
+        os.unlink( instance.attachment.path )
+        instance.delete()
+        success = True
+    except Attachment.DoesNotExist:
+        success = False
 
-    return JsonResponse(data)
+    return JsonResponse({'success' : success})
 

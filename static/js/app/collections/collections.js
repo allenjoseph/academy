@@ -13,4 +13,9 @@
         model : Models.Comment
     });
     window.Collections.Comments = comments;
+
+    var attachments = Backbone.Collection.extend({
+        model : Models.Attachment
+    });
+    window.Collections.Attachments = attachments
 })();

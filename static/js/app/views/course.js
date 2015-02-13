@@ -79,6 +79,10 @@
 
         className : 'remodal remodal-exam light-color bg',
 
+        events: {
+            'click #btn-share-exam':'shareExamen'
+        },
+
         template : template('tpl-add-exam-modal'),
 
         initialize : function(){
@@ -96,7 +100,7 @@
             this.$el.append(this.template(this.model.toJSON()));
 
             //Add fileUploadComponent
-            var fileupload = new Views.FileuploadComponent();
+            var fileupload = new Views.FileuploadComponent({model:this.model});
             this.$el.find('.fileupload-content').html(fileupload.render().el);
 
             return this;
@@ -104,7 +108,12 @@
 
         openModal : function(){
             this.modal.open();
+        },
+
+        shareExamen : function(){
+
         }
+
     });
 
     Views.FileuploadComponent = Backbone.View.extend({
@@ -113,7 +122,20 @@
 
         template : template('tpl-upload'),
 
+        events : {
+            'click .btn-delete-file' : 'deleteFile'
+        },
+
+        options : {
+            url: 'upload/',
+            dataType: 'json',
+            autoUpload: true,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 5000000, // 5 MB
+        },
+
         initialize : function(){
+            this.model.set('files' , new window.Collections.Attachments());
         },
 
         render : function(){
@@ -123,57 +145,58 @@
 
             var fileUploadWrapper = self.$el;
 
-            self.$el.find('.fileupload').fileupload({
-                    url: 'upload/',
-                    dataType: 'json',
-                    autoUpload: true,
-                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-                    maxFileSize: 5000000, // 5 MB
-                }).on('fileuploadadd', function (e, data) {
+            self.$el.find('.fileupload').fileupload(self.options)
+                .on('fileuploadadd', function(e,data){
                     data.context = $('<li/>').appendTo(fileUploadWrapper.find('.file-list'));
                     $.each(data.files, function (index, file) {
-                        data.context.append($('<span class="file-name"/>').text(file.name + ' '));
-                        data.context.append($('<small class="file-uploading"/>').text('...subiendo'));
+                        data.context.append($('<span class="file-name"/>').text(file.name));
+                        data.context.append($('<small class="file-uploading"/>').text('   ...subiendo'));
                     });
-                }).on('fileuploadprocessalways', function (e, data) {
+                })
+                .on('fileuploadprocessalways', function(e,data){
                     var file = data.files[data.index];
                     data.context.find('.file-uploading').remove();
                     if (file.error) {
                         console.log(file.error+':','"'+file.name+'"');
                         data.context.remove();
                     }
-                }).on('fileuploadprogressall', function (e, data) {
+                })
+                .on('fileuploadprogressall', function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
                     fileUploadWrapper.find('.progress .meter').css(
                         'width',
                         progress + '%'
                     );
-                }).on('fileuploaddone', function (e, data) {
-                    data.context.append($('<small class="text-success"/>').text('cargado'));
-                }).on('fileuploadfail', function (e, data) {
-                    data.context.append($('<small class="text-success"/>').text('falló'));
-                }).prop('disabled', !$.support.fileInput)
+                })
+                .on('fileuploaddone', function(e,data){
+                    var model = data.result.model;
+                    self.model.get('files').add(model);
+                    data.context.append($('<small class="text-success"/>').text('   cargado.   '));
+                    data.context.append($('<a class="btn-delete-file text-danger" data-id="'+model.id+'"/>').text('borrar'));
+                })
+                .on('fileuploadfail', function(e,data){
+                    data.context.append($('<small class="text-success"/>').text('   falló.'));
+                })
+                .prop('disabled', !$.support.fileInput)
                     .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
             return self;
         },
 
-        addFile: function(e,data){
-            var element = $('<li></li>').append(data.files[0].name)
-            data.context = $(this).find('.file-list').append(element);
-            data.submit();
-        },
+        deleteFile: function(e){
+            var self = this;
+            var fileID = $(e.target).data('id');
 
-        progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $(this).find('.progress .meter').css(
-                'width',
-                progress + '%'
-            );
-        },
-
-        failFile: function(e,data){
-            debugger;
+            $.post('delete/'+fileID)
+                .done(function(data){
+                    var collection = self.model.get('files');
+                    var model = collection.get(fileID);
+                    collection.remove(model);
+                    self.$el.find('.file-list li a[data-id="'+fileID+'"]').parent().remove();
+                })
+                .fail(function(){
+                    console.error('fail delete file :(');
+                });
         }
     });
 

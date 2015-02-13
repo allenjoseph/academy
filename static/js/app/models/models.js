@@ -11,4 +11,7 @@
         urlRoot : '/comment'
     });
     window.Models.Comment = comment;
+
+    var attachment = Backbone.Model.extend();
+    window.Models.Attachment = attachment;
 })();
