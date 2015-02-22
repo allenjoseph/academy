@@ -61,3 +61,5 @@ apps/**/migrations/
 
 node_modules
 bower_modules
+
+media/
