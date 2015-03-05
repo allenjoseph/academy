@@ -1,11 +1,11 @@
 {
-  "name": "academy",
-  "version": "0.0.1",
-  "description": "academy",
-  "author": "Allen Joseph",
-  "dependencies": {
-    "jquery": null,
-    "underscore":null,
-    "backbone":null
-  }
+    "name": "academy",
+    "version": "0.0.1",
+    "description": "academy",
+    "author": "Allen Joseph",
+    "dependencies": {
+        "jquery": null,
+        "underscore":null,
+        "backbone":null
+    }
 }
