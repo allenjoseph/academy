@@ -25,12 +25,12 @@ class Department(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=300, blank=True)
     faculty = models.ForeignKey(Faculty)
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.name)
-        super(Course, self).save(*args, **kwargs)
+        super(Department, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return u'%s' % (self.name)
@@ -41,7 +41,7 @@ class Course(models.Model):
     term = models.PositiveSmallIntegerField()
     description = models.CharField(max_length=300, blank=True)
     department = models.ForeignKey(Department)
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
         if not self.id:
