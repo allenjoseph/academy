@@ -113,7 +113,6 @@
         shareExamen : function(){
 
         }
-
     });
 
     Views.FileuploadComponent = Backbone.View.extend({

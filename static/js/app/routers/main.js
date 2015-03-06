@@ -15,6 +15,10 @@
             this.fetchData();
         },
 
+        courses : function(){
+            debugger;
+        },
+
         default : function(otherRoute){
             this.navigate('');
         },

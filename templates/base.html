@@ -33,42 +33,7 @@
 
 	<div id="footer" class="row">{% include "footer.html" %}</div>
 
-    <script type="text/template" id="tpl-add-exam-modal">
-        <div class="exam-wrapper">
-            <div class="row">
-                <div class="small-12 columns">
-                    <h1>Compartir Examen</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns fileupload-content">
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <div class="row collapse">
-                        <div class="small-10 columns">
-                            <input type="text" placeholder="Que examen es, Práctica, Parcial, Final... ?">
-                        </div>
-                        <div class="small-2 columns">
-                            <a id="btn-share-exam" class="button yellow postfix">Compartir</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script type="text/template" id="tpl-upload">
-        <div>
-            <input class="fileupload" type="file" name="file" multiple>
-            <div class="progress">
-                <span class="meter"></span>
-            </div>
-            <ul class='file-list no-bullet text-left'>
-            </ul>
-        </div>
-    </script>
+    {% include "templates.html" %}    
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
@@ -77,18 +42,16 @@
     <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>
     <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-validate.js"></script>
 
-
     <script src="{% static "vendor/moment/moment-with-locales.js"%}"></script>
     <script src="{% static "vendor/remodal/jquery.remodal.js"%}"></script>
     <script src="{% static "vendor/sweet-alert/sweet-alert.js"%}"></script>
     <script src="{% static "vendor/underscore/underscore.js"%}"></script>
     <script src="{% static "vendor/backbone/backbone.js"%}"></script>
-    <script src="{% static "js/app/main.js"%}"></script>
+    <script src="{% static "js/app/app.js"%}"></script>
     <script src="{% static "js/app/models/models.js"%}"></script>
     <script src="{% static "js/app/collections/collections.js"%}"></script>
     <script src="{% static "js/app/views/course.js"%}"></script>
     <script src="{% static "js/app/views/discussion.js"%}"></script>
-    <script src="{% static "js/app/routers/main.js"%}"></script>
-    <script src="{% static "js/app/app.js"%}"></script>
+    {% block content-backbone-router %}{% endblock %}
 </body>
 </html>

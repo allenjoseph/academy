@@ -1,0 +1,180 @@
+{% load i18n %}
+{% load staticfiles %}
+
+<script type="text/template" id="tpl-add-exam-modal">
+    <div class="exam-wrapper">
+        <div class="row">
+            <div class="small-12 columns">
+                <h1>Compartir Examen</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 columns fileupload-content">
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 columns">
+                <div class="row collapse">
+                    <div class="small-10 columns">
+                        <input type="text" placeholder="Que examen es, Práctica, Parcial, Final... ?">
+                    </div>
+                    <div class="small-2 columns">
+                        <a id="btn-share-exam" class="button yellow postfix">Compartir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-upload">
+    <div>
+        <input class="fileupload" type="file" name="file" multiple>
+        <div class="progress">
+            <span class="meter"></span>
+        </div>
+        <ul class='file-list no-bullet text-left'>
+        </ul>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-course">
+    <div class="course-wrapper"></div>
+    <div class="course-content">
+        <div>
+            <h3 class="text-center">
+                <a><%= name %></a>
+            </h3>
+            <div class="course-rows">
+                <div class="row-one">
+                    <div class="row-shape one"></div>
+                    <div class="row-content one">
+                        35 Alumnos
+                    </div>
+                </div>
+                <div class="row-two">
+                    <div class="row-shape two"></div>
+                    <div class="row-content two">
+                        10 Trabajos
+                    </div>
+                </div>
+                <div class="row-three">
+                    <div class="row-shape three"></div>
+                    <div class="row-content three">
+                        5 Examenes
+                    </div>
+                </div>
+                <div class="row-separator">
+                </div>
+                <div class="row-links">
+                    <div class="link-icon" title="Solicitar Ayuda"><i class="fa fa-child fa-fw"></i></div>
+                    <div class="link-icon" title="Iniciar Reunion"><i class="fa fa-users fa-fw"></i></div>
+                    <div class="link-icon btn-add-exam" title="Agregar Examen"><i class="fa fa-camera fa-fw"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-submenu-discussions">
+    <div class="row border-bottom-dark">
+        <div class="small-12 columns">
+            <div class="menu-links">
+               <h3 class="pull-left"><a id="btn-new-discussion">NUEVA</a></h3>
+               <h3 class="pull-left"><a id="btn-search-discussion">BUSCAR</a></h3>
+            </div>
+        </div>
+    </div>
+    <div id="form-add-discussion" class="row border-bottom-dark">
+        <div class="small-12 columns">
+            <div class="row collapse">
+                <div class="small-10 columns">
+                    <input id="input-question-discussion" type="text" placeholder="Escribe tu pregunta aquí.">
+                </div>
+                <div class="small-2 columns">
+                    <a id="btn-send-discussion" class="button yellow postfix">Enviar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-discussion">
+    <div class="panel shadow radius discussion">
+        <div class="row">
+            <div class="small-12 columns">
+                <p>
+                    <a class="discussion-question">
+                    <%= question %>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 columns">
+                <span class="pull-left">
+                    <figure title="<%= student.name %> <%= student.lastname %>">
+                        <img src="{% static ""%}<%= student.photo %>" class="cicle" />
+                        <span><%= student.name %> <%= student.lastname %></span>
+                    </figure>
+                </span>
+                <span class="pull-right">
+                <strong id="discussion-counter-comments"><%= comments %></strong>
+                    <strong> comentarios</strong></span>
+                </span>
+                <span class="pull-right"><%= dateCreation %></span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-add-comment-modal">
+    <div class="comment-wrapper">
+        <div class="comment-header">
+            <div class="row comment-header-top">
+                <div class="small-12 columns">
+                    <a><%= question %></a>
+                </div>
+            </div>
+            <div class="row comment-header-footer">
+                <div class="small-12 columns comment-header-footer-content">
+                    <span class="pull-left"><strong><%= dateCreation %></strong></span>
+                    <span class="pull-right">
+                        <strong id="counter-comments"><%= comments %></strong>
+                        <strong> comentarios</strong></span>
+                    <span>
+                        <figure title="<%= student.name %> <%= student.lastname %>">
+                            <img src="{% static ""%}<%= student.photo %>" class="cicle" />
+                        </figure>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="comment-body-wrapper">
+            <div id="content-discussion-comments" class="comment-body-content">
+                <span>Cargando Comentarios</span>
+            </div>
+        </div>
+        <div class="comment-footer">
+            <span class="disclaimer">Presione enter para enviar.</span>
+            <span id="counter-characters" class="counter">150</span>
+            <textarea id="add-comment-textarea" class="comment-textarea" maxlength="150"></textarea>
+            <div id="buttons-confirm-comment" class="comment-footer-confirm">
+                <button id="button-add-comment" class="button tiny yellow mr1">Enviar Comentario</button>
+                <button id="button-cancel-comment" class="button tiny secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="tpl-discussion-comment">
+    <div class="comment-entry-figure">
+        <figure title="<%= student.name %> <%= student.lastname %>">
+            <img src="{% static ""%}<%= student.photo %>" class="cicle" />
+        </figure>
+    </div>
+    <div class="comment-entry-text">
+        <span><%= comment %></span>
+        <small><%= dateCreation %></small>
+    </div>
+</script>
