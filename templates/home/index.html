@@ -47,10 +47,9 @@
 {% endblock %}
 
 {% block content-backbone-router %}
-<script src="{% static "js/app/routers/main.js"%}"></script>
 <script>
     (function(){
-        app.routers.main = new window.Routers.App();
+        app.routers.main = new window.Routers.App('/');
     })();
 </script>
 {% endblock %}

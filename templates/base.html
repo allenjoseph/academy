@@ -1,58 +1,61 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Academy</title>
+    <meta charset="UTF-8">
+    <title>Academy</title>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
-	{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "vendor-bower/font-awesome/font-awesome.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/jquery.remodal.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/sweet-alert.css"%}">
-	<link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
 <body>
-	<div id="header" class="row">
+    <div id="header" class="row">
         {% include "header.html" %}
     </div>
     <div class="light-color bg">
-    	<div id="news" class="row">
+        <div id="news" class="row">
             {% include "news.html" %}
         </div>
     </div>
 
-	<div id="first-content" class="light-color bg">
-		<div class="row">
-			{% block content-light %}{% endblock %}
-		</div>
-	</div>
+    <div id="first-content" class="light-color bg">
+        <div class="row">
+            {% block content-light %}{% endblock %}
+        </div>
+    </div>
 
-	<div id="second-content" class="row">
-		{% block content %}{% endblock %}
-	</div>
+    <div id="second-content" class="row">
+        {% block content %}{% endblock %}
+    </div>
 
-	<div id="footer" class="row">{% include "footer.html" %}</div>
+    <div id="footer" class="row">{% include "footer.html" %}</div>
 
     {% include "templates.html" %}    
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
-    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>
-    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload.js"></script>
-    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>
-    <script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-validate.js"></script>
+    <script src="{% static "vendor-bower/jquery/jquery.js"%}"></script>
+    <script src="{% static "vendor-bower/jquery-ui/jquery-ui.js"%}"></script>
+    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.fileupload.js"%}"></script>
+    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.fileupload-process.js"%}"></script>
+    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.fileupload-validate.js"%}"></script>
+    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.iframe-transport.js"%}"></script>
+    <script src="{% static "vendor-bower/remodal/jquery.remodal.js"%}"></script>
 
     <script src="{% static "vendor/moment/moment-with-locales.js"%}"></script>
-    <script src="{% static "vendor/remodal/jquery.remodal.js"%}"></script>
     <script src="{% static "vendor/sweet-alert/sweet-alert.js"%}"></script>
-    <script src="{% static "vendor/underscore/underscore.js"%}"></script>
-    <script src="{% static "vendor/backbone/backbone.js"%}"></script>
-    
+
+    <script src="{% static "vendor-bower/underscore/underscore.js"%}"></script>
+    <script src="{% static "vendor-bower/backbone/backbone.js"%}"></script>
+    <script src="{% static "vendor-bower/backbone.unclassified/backbone.unclassified.js"%}"></script>
+
     <script src="{% static "js/app/app.js"%}"></script>
     <script src="{% static "js/app/models/models.js"%}"></script>
     <script src="{% static "js/app/collections/collections.js"%}"></script>
     <script src="{% static "js/app/views/course.js"%}"></script>
     <script src="{% static "js/app/views/discussion.js"%}"></script>
+    <script src="{% static "js/app/routers/main.js"%}"></script>
     {% block content-backbone-router %}{% endblock %}
 </body>
 </html>

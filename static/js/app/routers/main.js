@@ -1,13 +1,17 @@
 (function(){
     var routers = Backbone.Router.extend({
 
+        url_root : '/',
+
         routes : {
             '' : 'index',
             '*otherRoute' : 'default'
         },
 
-        initialize : function(){
-            Backbone.history.start({root: '/'});
+        initialize : function(url,model){
+            this.url_root = url;
+            this.model_root = model;
+            Backbone.history.start( { root : this.url_root } );
             //Backbone.emulateJSON = true;
         },
 
@@ -25,6 +29,12 @@
 
         fetchData : function(){
             var self = this;
+
+            if(self.url_root !== '/'){
+                var cursoModel = new window.Models.Course(self.model_root);
+                app.views.coursePage = new window.Views.CoursePage({ model : cursoModel });
+                return;
+            }
 
             app.views.submenuDiscussions = new window.Views.SubmenuDiscussions();
 

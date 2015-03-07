@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
-	grunt.initConfig({
+    grunt.initConfig({
 
         bower: {
             install: {
                 options: {
-                    targetDir: './static/vendor',
+                    targetDir: './static/vendor-bower',
                     layout:'byType',
                     install: true,
                     verbose: false,
@@ -14,9 +14,9 @@ module.exports = function(grunt) {
                 }
             }
         }
-	});
+    });
 
     grunt.loadNpmTasks('grunt-bower-task');
 
-	grunt.registerTask('default', ['bower']);
+    grunt.registerTask('default', ['bower']);
 };

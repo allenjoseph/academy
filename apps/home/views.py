@@ -40,8 +40,8 @@ class CourseView(TemplateView):
     def get(self, request, *args, **kwargs):
         slug = kwargs.get('slug')
         department = request.session['department_id']
-        print(department)
-        print(slug)
+        
+        #obtengo el curso y lo devuelvo a la vista
 
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)

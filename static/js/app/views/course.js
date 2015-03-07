@@ -28,7 +28,7 @@
         tagName : 'li',
 
         events : {
-            'click' : 'clickCourse',
+            'click .course-name' : 'clickCourse',
             'click .btn-add-exam' : 'clickAddExam'
         },
 
@@ -40,7 +40,7 @@
         },
 
         clickCourse : function(){
-
+            window.location.href = '/courses/'+ this.model.get('slug');
         },
 
         clickAddExam : function(){
@@ -64,7 +64,7 @@
 
         clickAddExam : function(){
             if(!window.app.views.addExamModal){
-                window.app.views.addExamModal = new Views.AddExamModal();
+                window.app.views.addExamModal = new Views.AddExamModal({ model : this.model });
             }else{
                 window.app.views.addExamModal.model = this.model
                 window.app.views.addExamModal.render();
@@ -148,7 +148,7 @@
                 .on('fileuploadadd', function(e,data){
                     data.context = $('<li/>').appendTo(fileUploadWrapper.find('.file-list'));
                     $.each(data.files, function (index, file) {
-                        data.context.append($('<span class="file-name"/>').text(file.name));
+                        data.context.append($('<span class="file-name mr1"/>').text(file.name));
                         data.context.append($('<small class="file-uploading"/>').text('   ...subiendo'));
                     });
                 })
@@ -170,8 +170,7 @@
                 .on('fileuploaddone', function(e,data){
                     var model = data.result.model;
                     self.model.get('files').add(model);
-                    data.context.append($('<small class="text-success"/>').text('   cargado.   '));
-                    data.context.append($('<a class="btn-delete-file text-danger" data-id="'+model.id+'"/>').text('borrar'));
+                    data.context.append($('<a class="btn-delete-file text-danger"/>').append('<i class="fa fa-trash-o" data-id="'+model.id+'"></i>'));
                 })
                 .on('fileuploadfail', function(e,data){
                     data.context.append($('<small class="text-success"/>').text('   falló.'));
@@ -191,7 +190,7 @@
                     var collection = self.model.get('files');
                     var model = collection.get(fileID);
                     collection.remove(model);
-                    self.$el.find('.file-list li a[data-id="'+fileID+'"]').parent().remove();
+                    self.$el.find('.file-list > li > a > i[data-id="'+fileID+'"]').parent().parent().remove();
                 })
                 .fail(function(){
                     console.error('fail delete file :(');
