@@ -5,7 +5,13 @@
     "author": "Allen Joseph",
     "dependencies": {
         "jquery": null,
+        "jquery-ui":null,
         "underscore":null,
-        "backbone":null
+        "backbone":null,
+        "blueimp-file-upload":null,
+        "moment":null,
+        "remodal":null,
+        "sweetalert":null,
+        "font-awesome":null
     }
 }
