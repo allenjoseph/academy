@@ -79,6 +79,11 @@
 
         className : 'remodal remodal-exam light-color bg',
 
+        ui : {
+            exam : '.exam-wrapper',
+            fileupload : '.fileupload-content'
+        },
+
         events: {
             'click #btn-share-exam':'shareExamen'
         },
@@ -96,12 +101,12 @@
         },
 
         render : function(){
-            this.$el.find('.exam-wrapper').remove();
+            this.ui.exam.remove();
             this.$el.append(this.template(this.model.toJSON()));
 
             //Add fileUploadComponent
             var fileupload = new Views.FileuploadComponent({model:this.model});
-            this.$el.find('.fileupload-content').html(fileupload.render().el);
+            this.ui.fileupload.html(fileupload.render().el);
 
             return this;
         },
