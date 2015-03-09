@@ -67,7 +67,9 @@
 {% block content-backbone-router %}
 <script>
     (function(){
-        var model = {"term":1,"description":"Comunicación integral","slug":"comunicacion-integral","department":1,"id":1,"name":"Comunicación Integral"};
+        {% autoescape off %}
+        var model = {{ course_json }};
+        {% endautoescape %}
         app.routers.courses = new window.Routers.App('/courses', model);
     })();
 </script>

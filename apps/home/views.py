@@ -45,7 +45,14 @@ class CourseView(TemplateView):
 
         #obtengo el curso y lo devuelvo a la vista
         try:
-            context['course'] = Course.objects.get(slug__exact=slug, department__id=department)
+            course = Course.objects.get(slug__exact=slug, department__id=department)
+
+            context['course'] = course
+
+            objectSerializer = ObjectSerializer()
+            courses = objectSerializer.serialize([course,])
+            context['course_json'] = json.dumps(courses[0])
+
         except MultipleObjectsReturned:
             print('course not exist')
 
