@@ -1,3 +1,7 @@
+html,body{
+    height: 100%;
+    width: 100%;
+}
 html{
     overflow-y: scroll!important;
 }
@@ -17,7 +21,23 @@ textarea:disabled,
 input:disabled{
     color: #aaa;
 }
-/*course classes*/
+
+/* layout */
+.layout-table{
+    display: table!important;
+}
+.layout-table > .header-group{
+    display: table-header-group!important;
+}
+.layout-table > .main-group{
+    display: table-row-group!important;
+}
+.layout-table > .footer-group{
+    display: table-footer-group!important;
+}
+/* end layout */
+
+/* course */
 .course-wrapper{
     margin: 10px auto;
     display: table;
@@ -39,7 +59,6 @@ input:disabled{
 .course-content h6{
     color: #f2f2f2!important;
 }
-
 .course-wrapper:before {
     content: '';
     display: block;
@@ -57,6 +76,9 @@ input:disabled{
     width: 0;
     margin-left: 25px;
 }
+/* end course */
+
+/* row-shape*/
 .row-shape{
     content: '';
     display: block;
@@ -70,13 +92,6 @@ input:disabled{
     -ms-filter:     drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
     -o-filter:      drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
     filter:         drop-shadow(rgba(0,0,0,.75) 0 3px 8px);
-}
-.row-content{
-    z-index: 2;
-    color: #222;
-    font-size: 1.5em;
-    position: relative;
-    text-align: center;
 }
 .row-shape.one{
     border-top-color: #F0F3FA;
@@ -93,6 +108,15 @@ input:disabled{
     left: 8px;
     width: 225px;
 }
+/* end row-shape */
+
+.row-content{
+    z-index: 2;
+    color: #222;
+    font-size: 1.5em;
+    position: relative;
+    text-align: center;
+}
 .row-separator{
     background-color: #1085AA;
     display: block;
@@ -103,6 +127,19 @@ input:disabled{
     -webkit-box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, .25);
     -moz-box-shadow:    0px -5px 5px 0px rgba(0, 0, 0, .25);
     box-shadow:         0px -5px 5px 0px rgba(0, 0, 0, .25);
+}
+
+#content-courses li{
+    position: relative;
+}
+#content-courses h3{
+    max-height: 2.5em;
+    overflow: hidden;
+}
+#content-courses a{
+    text-transform: none;
+    color: #ddd;
+    text-shadow: 0 2px 5px rgba(0,0,0,.6);
 }
 #content-courses li:hover{
     cursor: default;
@@ -160,8 +197,9 @@ input:disabled{
   top: auto;
   bottom: -39px;
 }
+/*end hexagon*/
 
-/*helper classes*/
+/* helper classes */
 .shadow{
     -webkit-box-shadow: -3px 3px 8px 0px rgba(0, 0, 0, 0.6);
     -moz-box-shadow:    -3px 3px 8px 0px rgba(0, 0, 0, 0.6);
@@ -190,47 +228,70 @@ input:disabled{
     padding-top: 1em;
     padding-bottom: 1em;
 }
-/*custom classes*/
-#content-courses li{
-    position: relative;
+.tar{
+    text-align: right;
 }
-#content-courses h3{
-    max-height: 2.5em;
-    overflow: hidden;
+.tal{
+    text-align: left;
 }
-#content-courses a{
-    text-transform: none;
-    color: #ddd;
-    text-shadow: 0 2px 5px rgba(0,0,0,.6);
+.border-bottom-dark{
+    border-bottom: 1px solid #23253D;
+    margin-bottom: 1em!important;
 }
-.menu-links h3{
+.light-color.bg{
+    background-color: #f2f2f2;
+    color: #222;
+}
+.light-color h1,
+.light-color h2,
+.light-color h3,
+.light-color h4,
+.light-color h5,
+.light-color h6{
+    color: #222;
+}
+.light-color.border-top{
+    border-top :1px solid #E1E2F4;
+}
+.light-color.border-bottom{
+    border-bottom :1px solid #E1E2F4;
+}
+.text-danger {
+    color: #c60f13;
+}
+.text-success {
+    color: #5da423;
+}
+/* end helper clases */
+
+/* menu-links */
+.menu-link{
     -o-transition: 0.2s background-color;
     -ms-transition: 0.2s background-color;
     -moz-transition: 0.2s background-color;
     -webkit-transition: 0.2s background-color;
     transition: 0.2s background-color;
 }
-.menu-links h3:hover{
+.menu-link:hover{
     background: #121425
 }
-.menu-links h3{
+.menu-link h3{
     margin: 0;
 }
-.menu-links a{
+.menu-link a{
     color: inherit;
     display: block;
     line-height: 2em;
-    margin: 0 10px;
     text-decoration: none;
     text-shadow: 0 2px 5px rgba(0,0,0,.8);
 }
-.menu-links figure{
-    margin: 8px 0 0;
+.menu-link img{
+    height: 1.6em;
+    position: absolute;
+    margin-top: 0.2em;
 }
-.menu-links img{
-    height: 32px;
-    margin: auto;
-}
+/* end menu-links */
+
 .cicle{
     border-radius: 50%!important;
 }
@@ -263,6 +324,8 @@ input:disabled{
                 0 2.5px 2.5px rgba(0,0,0,.2),
                 0 5px 5px rgba(0,0,0,.15);
 }
+
+/*discussion classes*/
 .discussion {
     padding: 0.5em 1em;
     margin:0;
@@ -296,28 +359,8 @@ input:disabled{
 .discussion span.pull-right{
     margin: 10px 0 0 5px;
 }
-.border-bottom-dark{
-    border-bottom: 1px solid #23253D;
-    margin-bottom: 1em!important;
-}
-.light-color.bg{
-    background-color: #f2f2f2;
-    color: #222;
-}
-.light-color h1,
-.light-color h2,
-.light-color h3,
-.light-color h4,
-.light-color h5,
-.light-color h6{
-    color: #222;
-}
-.light-color.border-top{
-    border-top :1px solid #E1E2F4;
-}
-.light-color.border-bottom{
-    border-bottom :1px solid #E1E2F4;
-}
+/*discussion classes*/
+
 /*comment modal*/
 .remodal-comment{
     overflow: hidden;
@@ -371,6 +414,14 @@ input:disabled{
 .remodal-comment .comment-header .comment-header-footer .comment-header-footer-content{
     font-size: 0.7em;
 }
+.remodal-comment .comment-footer{
+    bottom: 0;
+    display: block;
+    height: 5em;
+    position: absolute;
+    width: 100%;
+    padding: 1em 0 0;
+}
 .comment-entry{
     border-bottom: 1px solid #dfdfdf;
     position: relative;
@@ -387,14 +438,6 @@ input:disabled{
     font-size: 0.8em;
     color: #333;
     text-align: left;
-}
-.remodal-comment .comment-footer{
-    bottom: 0;
-    display: block;
-    height: 5em;
-    position: absolute;
-    width: 100%;
-    padding: 1em 0 0;
 }
 .comment-footer .comment-textarea{
     width: 100%;
@@ -424,8 +467,10 @@ input:disabled{
     margin: auto;
     display: none;
 }
+/*end comment modal*/
+
 /* custom button color */
-  button.yellow, .button.yellow {
+button.yellow, .button.yellow {
     background-color: #F0B546;
     border-color: #e59c13;
     color: #FFFFFF;
@@ -437,17 +482,19 @@ button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:f
     color: #FFFFFF;
 }
 button.green, .button.green {
-background-color: #5da423;
-border-color: #4a831c;
-color: #FFFFFF;
+    background-color: #5da423;
+    border-color: #4a831c;
+    color: #FFFFFF;
 }
 button.green:hover, button.green:focus, .button.green:hover, .button.green:focus {
-background-color: #4a831c;
+    background-color: #4a831c;
 }
 button.green:hover, button.green:focus, .button.green:hover, .button.green:focus {
-color: #FFFFFF;
+    color: #FFFFFF;
 }
 /* end custom button color*/
+
+
 #submenu-discussions #form-add-discussion{
     display: none;
 }
@@ -459,10 +506,4 @@ color: #FFFFFF;
 }
 .progress .meter{
     width: 0;
-}
-.text-danger {
-    color: #c60f13;
-}
-.text-success {
-    color: #5da423;
 }

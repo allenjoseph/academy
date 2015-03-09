@@ -1,17 +1,28 @@
 {% load staticfiles %}
 <div class="small-8 columns">
-    <div class="menu-links">
-       <h3 class="pull-left"><a href="">ACADEMY</a></h3>
-       <h3 class="pull-left"><a href="">CHAT</a></h3>
-       <h3 class="pull-left"><a href="">PREGUNTAS</a></h3>
+    <div class="row">
+        <div class="small-12 medium-3 columns menu-link">
+            <h3><a href="">ACADEMY</a></h3>
+        </div>
+        <div class="small-12 medium-3 columns menu-link">
+            <h3><a href="">CHAT</a></h3>
+        </div>
+        <div class="small-12 medium-3 columns end menu-link">
+            <h3><a href="">PREGUNTAS</a></h3>
+        </div>
     </div>
 </div>
 <div class="small-4 columns">
-    <div class="menu-links pull-right">
-        <a href="">
-            <figure>
-                <img src="{% static "img/profile.jpg"%}" class="cicle" />
+    <div class="menu-links row">
+        <div class="small-12 medium-6 columns menu-link">
+        </div>
+        <div class="small-12 medium-6 columns menu-link tar">
+            <h3>
+                <a href="" class="tal">
+                    Allen Joseph
+                    <img src="{% static "img/profile.jpg"%}" class="cicle" />
+                </a>
             </figure>
-        </a>
+        </div>
     </div>
 </div>

@@ -11,29 +11,42 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/sweet-alert.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
-<body>
-    <div id="header" class="row">
-        {% include "header.html" %}
-    </div>
-    <div class="light-color bg">
-        <div id="news" class="row">
-            {% include "news.html" %}
+<body class="layout-table">
+    <div class="header-group">
+        <div id="header">
+            <div class="row">
+                {% include "header.html" %}
+            </div>
+        </div>
+        <div id="news" class="light-color bg">
+            <div class="row">
+                {% include "news.html" %}
+            </div>
         </div>
     </div>
 
-    <div id="first-content" class="light-color bg">
-        <div class="row">
-            {% block content-light %}{% endblock %}
+    <div class="main-group">
+        <div id="first-content" class="light-color bg">
+            <div class="row">
+                {% block content-light %}{% endblock %}
+            </div>
+        </div>
+        <div id="second-content">
+            <div class="row">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
 
-    <div id="second-content" class="row">
-        {% block content %}{% endblock %}
+    <div class="footer-group">
+        <div id="footer">
+            <div class="row">
+                {% include "footer.html" %}
+            </div>
+        </div>
     </div>
 
-    <div id="footer" class="row">{% include "footer.html" %}</div>
-
-    {% include "templates.html" %}    
+    {% include "templates.html" %}
 
     <script src="{% static "vendor-bower/jquery/jquery.js"%}"></script>
     <script src="{% static "vendor-bower/jquery-ui/jquery-ui.js"%}"></script>
@@ -55,6 +68,7 @@
     <script src="{% static "js/app/collections/collections.js"%}"></script>
     <script src="{% static "js/app/views/course.js"%}"></script>
     <script src="{% static "js/app/views/discussion.js"%}"></script>
+    <script src="{% static "js/app/views/exam.js"%}"></script>
     <script src="{% static "js/app/routers/main.js"%}"></script>
     {% block content-backbone-router %}{% endblock %}
 </body>

@@ -40,10 +40,15 @@ class CourseView(TemplateView):
     def get(self, request, *args, **kwargs):
         slug = kwargs.get('slug')
         department = request.session['department_id']
-        
-        #obtengo el curso y lo devuelvo a la vista
 
         context = self.get_context_data(**kwargs)
+
+        #obtengo el curso y lo devuelvo a la vista
+        try:
+            context['course'] = Course.objects.get(slug__exact=slug, department__id=department)
+        except MultipleObjectsReturned:
+            print('course not exist')
+
         return self.render_to_response(context)
 
 @csrf_exempt

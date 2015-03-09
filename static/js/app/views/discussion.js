@@ -238,10 +238,10 @@
         showAddDiscussion : function(){
             if(this.$el.hasClass('new-discussion')){
                 this.$el.removeClass('new-discussion');
-                this.$el.find('#btn-new-discussion').parent().removeClass('submenu-dark-selected');
+                this.$el.find('#btn-new-discussion').parent().parent().removeClass('submenu-dark-selected');
             }else{
                 this.$el.addClass('new-discussion');
-                this.$el.find('#btn-new-discussion').parent().addClass('submenu-dark-selected');
+                this.$el.find('#btn-new-discussion').parent().parent().addClass('submenu-dark-selected');
                 this.$el.find('#input-question-discussion').val('').focus();
             }
         },
