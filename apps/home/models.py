@@ -2,6 +2,30 @@ import os
 from django.db import models
 from django.template.defaultfilters import slugify
 
+class Master(models.Model):
+    id = models.AutoField(primary_key=True)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.description)
+
+class Parameter(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20, blank=True)
+    description = models.CharField(max_length=100, blank=True)
+    master = models.ForeignKey(Master)
+
+    def __unicode__(self):
+        return u'%s' % (self.name)
+
+class AcademyYear(models.Model):
+    id = models.AutoField(primary_key=True)
+    year = models.PositiveSmallIntegerField(blank=True, null=True)
+    state = models.ForeignKey(Parameter)
+
+    def __unicode__(self):
+        return u'%s' % (self.year)
+
 class University(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -35,22 +59,6 @@ class Department(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
-class Course(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    term = models.PositiveSmallIntegerField()
-    description = models.CharField(max_length=300, blank=True)
-    department = models.ForeignKey(Department)
-    slug = models.SlugField(blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name)
-        super(Course, self).save(*args, **kwargs)
-
-    def __unicode__(self):
-        return u'%s' % (self.name)
-
 def get_image_path(instance, filename):
     return os.path.join('student', str(instance.provider)+'_'+str(instance.providerKey), filename)
 
@@ -62,6 +70,18 @@ class Student(models.Model):
     lastname = models.CharField(max_length=100)
     photo = models.ImageField(upload_to=get_image_path, blank=True, null=True)
     department = models.ForeignKey(Department)
+    dateCreation = models.DateTimeField(auto_now_add=True)
+    dateLastSeen = models.DateTimeField(blank=True, null=True)
+
+    def __unicode__(self):
+        return u'%s %s' % (self.name,self.lastname)
+
+class Profesor(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, blank=True)
+    photo = models.ImageField(upload_to=get_image_path, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.name,self.lastname)
@@ -69,9 +89,8 @@ class Student(models.Model):
 class Attachment(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, blank=True)
-    dateCreation = models.DateTimeField(auto_now_add=True)
     attachment = models.FileField(upload_to='attachment/%Y/%m/%d')
+    dateCreation = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return u'%s' % (self.attachment.name)
-

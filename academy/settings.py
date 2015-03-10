@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'apps.home',
+    'apps.courses',
     'apps.discussions'
 )
 

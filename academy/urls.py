@@ -2,7 +2,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
-from apps.home.views import IndexView, CoursesView, CourseView, UploadFile, DeleteUploadedFile
+from apps.courses.views import CoursesView, CourseView
+from apps.home.views import IndexView, UploadFile, DeleteUploadedFile
 from apps.discussions.views import DiscussionsView, DiscussionCommentsView, DiscussionView, CommentView
 from django.conf import settings
 from django.conf.urls.static import static

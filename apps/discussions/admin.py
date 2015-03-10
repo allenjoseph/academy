@@ -5,9 +5,9 @@ from models import Discussion, DiscussionComment
 class DiscussionAdmin(admin.ModelAdmin):
     list_display = ('id',
     'question',
-    'course',
-    'department',
+    'academyCourse',
     'student',
+    'state',
     'dateCreation',
     'dateLastModification',)
 
@@ -17,4 +17,5 @@ class DiscussionCommentAdmin(admin.ModelAdmin):
     'comment',
     'discussion',
     'student',
+    'state',
     'dateCreation',)
