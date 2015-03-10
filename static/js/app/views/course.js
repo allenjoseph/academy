@@ -40,7 +40,7 @@
         },
 
         clickCourse : function(){
-            window.location.href = '/courses/'+ this.model.get('slug');
+            window.location.href = '/courses/'+ this.model.get('course').slug;
         },
 
         clickAddExam : function(){

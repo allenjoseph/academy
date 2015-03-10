@@ -4,8 +4,8 @@
 
 {% block content-light %}
 <div class="large-12 columns" id="page-course">
-    <h1>{{ course.name }}</h1>
-    <h5 class="subheader">Docente del curso por contratar</h5>
+    <h1>{{ academyCourse.course.name }}</h1>
+    <h5 class="subheader">{{ academyCourse.profesor.name }} {{ academyCourse.profesor.lastname }}</h5>
     <p><span class="label secondary"># alumnos inscritos</span><span class="label success"># enlinea</span></p>
     <div class="row">
         <div class="medium-4 columns">
@@ -68,7 +68,7 @@
 <script>
     (function(){
         {% autoescape off %}
-        var model = {{ course_json }};
+        var model = {{ academyCourse_json }};
         {% endautoescape %}
         app.routers.courses = new window.Routers.App('/courses', model);
     })();
