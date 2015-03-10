@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 from django.views.generic import TemplateView, View
-from academy.mixins import JsonResponseMixin, RestServiceMixin
+from academy.mixins import JsonResponseMixin, RestServiceMixin, StateEnum
 from models import Discussion, DiscussionComment
-from apps.home.models import Department, Student
+from apps.home.models import Department, Student, Parameter
+from apps.courses.models import AcademyCourse
 from academy.serializers import ObjectSerializer
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
@@ -61,12 +62,17 @@ class DiscussionView(RestServiceMixin, View):
         params = json.loads(request.body)
 
         student = Student.objects.get(pk=request.session['student_id'])
-        department = Department.objects.get(pk=request.session['department_id'])
+        state = Parameter.objects.get(pk=int(StateEnum.ACTIVO))
+
+        academyCourse = None
+        if 'academyCourse_id' in request.session:
+            academyCourse = AcademyCourse.objects.get(pk=request.session['academyCourse_id'])
 
         discussion = Discussion.objects.create(
             question = params.get('question'),
-            department = department,
-            student = student)
+            academyCourse = academyCourse,
+            student = student,
+            state = state)
 
         objectSerializer = ObjectSerializer()
 
@@ -91,11 +97,13 @@ class CommentView(RestServiceMixin, View):
 
         student = Student.objects.get(pk=request.session['student_id'])
         discussion = Discussion.objects.get(pk=params.get('discussion'))
+        state = Parameter.objects.get(pk=int(StateEnum.ACTIVO))
 
         comment = DiscussionComment.objects.create(
             comment = params.get('comment'),
             discussion = discussion,
-            student = student)
+            student = student,
+            state = state)
 
         objectSerializer = ObjectSerializer()
         dictElementStudent = objectSerializer.serialize([student])[0]
