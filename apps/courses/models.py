@@ -32,7 +32,7 @@ class AcademyCourseStudent(models.Model):
     id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student)
     academyCourse = models.ForeignKey(AcademyCourse)
-    def __init__(self, arg):
-        super(AcademyCourseStudent, self).__init__()
-        self.arg = arg
+
+    def __unicode__(self):
+        return u'%s - %s' % (self.academyCourse.course.name,self.student.name)
 

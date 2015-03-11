@@ -38,12 +38,20 @@ class CourseView(TemplateView):
             course = Course.objects.get(slug__exact=kwargs.get('slug'), department__id=request.session['department_id'])
             academyCourse = AcademyCourse.objects.get(course=course,academyYear__id=request.session['academyYear_id'])
 
-            context['academyCourse'] = academyCourse
-
             objectSerializer = ObjectSerializer()
             academyCourses = objectSerializer.serialize([academyCourse,])
             (academyCourses[0])['course'] = objectSerializer.serialize([course,])[0]
+
             context['academyCourse_json'] = json.dumps(academyCourses[0])
+            context['academyCourse'] = academyCourse
+            context['studens_in_course'] = 10
+            context['studens_in_course_online'] = 5
+            context['exams_in_course'] = 0
+            context['meetings_in_course'] = 0
+            context['aid_in_course'] = 0
+            context['discussions_in_course'] = 1
+            context['homeworks_in_course'] = 0
+
 
         except MultipleObjectsReturned:
             print('academyCourse problem')

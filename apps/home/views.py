@@ -29,10 +29,10 @@ def UploadFile(request):
     if fileTemp == None:
         return HttpResponse(status=e.status)
 
-    #obtenemos la imagen
+    #obtenemos el archivo
     fileUploaded = UploadedFile(fileTemp)
 
-    #guardamos la imagen.
+    #guardamos el archivo.
     attachment = Attachment()
     attachment.title=str(fileUploaded.name)
     attachment.attachment=fileUploaded
@@ -55,8 +55,11 @@ def UploadFile(request):
 def DeleteUploadedFile(request, pk):
     success = False;
     try:
+        #obtenemos la instancia del archivo
         instance = Attachment.objects.get( pk = pk )
+        #eliminamos el archivo fisico
         os.unlink( instance.attachment.path )
+        #borramos la instancia de bd
         instance.delete()
         success = True
     except Attachment.DoesNotExist:
