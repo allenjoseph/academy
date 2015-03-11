@@ -42,7 +42,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'apps.home',
     'apps.courses',
-    'apps.discussions'
+    'apps.discussions',
+    'apps.exams'
 )
 
 MIDDLEWARE_CLASSES = (
