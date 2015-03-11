@@ -15,6 +15,7 @@ class IndexView(TemplateView):
 
         self.request.session['student_id'] = 1
         self.request.session['department_id'] = 1
+        self.request.session['academyYear_id'] = 1
 
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)

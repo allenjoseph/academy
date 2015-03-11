@@ -31,26 +31,22 @@ class CourseView(TemplateView):
     template_name = 'home/course.html'
 
     def get(self, request, *args, **kwargs):
-        slug = kwargs.get('slug')
-        department = request.session['department_id']
-
         context = self.get_context_data(**kwargs)
 
         #obtengo el curso y lo devuelvo a la vista
         try:
-            course = Course.objects.get(slug__exact=slug, department__id=department)
-            academyYear = AcademyYear.objects.get(year__exact=2015)
-            academyCourse = AcademyCourse.objects.get(course=course,academyYear=academyYear)
+            course = Course.objects.get(slug__exact=kwargs.get('slug'), department__id=request.session['department_id'])
+            academyCourse = AcademyCourse.objects.get(course=course,academyYear__id=request.session['academyYear_id'])
 
             context['academyCourse'] = academyCourse
 
             objectSerializer = ObjectSerializer()
-            courses = objectSerializer.serialize([academyCourse,])
-            (courses[0])['course'] = objectSerializer.serialize([academyCourse.course,])[0]
-            context['academyCourse_json'] = json.dumps(courses[0])
+            academyCourses = objectSerializer.serialize([academyCourse,])
+            (academyCourses[0])['course'] = objectSerializer.serialize([course,])[0]
+            context['academyCourse_json'] = json.dumps(academyCourses[0])
 
         except MultipleObjectsReturned:
-            print('academyCourse not exist')
+            print('academyCourse problem')
 
         return self.render_to_response(context)
 
