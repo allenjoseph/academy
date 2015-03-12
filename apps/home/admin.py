@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import AcademyYear, University, Faculty, Department, Student, Profesor, Parameter, Master
+from models import AcademyYear, University, Faculty, Department, Student, Profesor, Parameter, Master, Attachment
 
 
 @admin.register(AcademyYear)
@@ -38,3 +38,7 @@ class ParameterAdmin(admin.ModelAdmin):
 @admin.register(Master)
 class MasterAdmin(admin.ModelAdmin):
     list_display = ('id','description',)
+
+@admin.register(Attachment)
+class Attachment(admin.ModelAdmin):
+    list_display = ('id','title','attachment','dateCreation',)

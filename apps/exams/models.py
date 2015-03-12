@@ -10,4 +10,4 @@ class Exam(models.Model):
 class ExamAttachment(models.Model):
     id = models.AutoField(primary_key=True)
     exam = models.ForeignKey(Exam)
-    attachment = models.ForeignKey(Attachment)
+    attachment = models.OneToOneField(Attachment)

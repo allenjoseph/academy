@@ -34,7 +34,7 @@ def UploadFile(request):
 
     #guardamos el archivo.
     attachment = Attachment()
-    attachment.title=str(fileUploaded.name)
+    attachment.title=unicode(fileUploaded.name)
     attachment.attachment=fileUploaded
     attachment.save()
 
@@ -43,7 +43,7 @@ def UploadFile(request):
     dictElementAttachment = objectSerializer.serialize([attachment])[0]
 
     data = {
-        'name': str(fileUploaded.name),
+        'name': unicode(fileUploaded.name),
         'size': str(fileUploaded.file.size),
         'model': dictElementAttachment
     }
