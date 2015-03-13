@@ -57,7 +57,7 @@ class DiscussionCommentsView(JsonResponseMixin, TemplateView):
         return data
 
 class DiscussionView(RestServiceMixin, View):
-
+    #create and update
     def post(self, request, *args, **kwargs):
         params = json.loads(request.body)
 
@@ -75,7 +75,6 @@ class DiscussionView(RestServiceMixin, View):
             state = state)
 
         objectSerializer = ObjectSerializer()
-
         dictElementStudent = objectSerializer.serialize([student])[0]
         dictElementDiscussion = objectSerializer.serialize([discussion])[0]
         dictElementDiscussion['student'] = dictElementStudent

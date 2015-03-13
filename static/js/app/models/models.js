@@ -12,6 +12,11 @@
     });
     window.Models.Comment = comment;
 
+    var exam = Backbone.Model.extend({
+        urlRoot : '/exam'
+    });
+    window.Models.Exam = exam
+
     var attachment = Backbone.Model.extend();
     window.Models.Attachment = attachment;
 })();

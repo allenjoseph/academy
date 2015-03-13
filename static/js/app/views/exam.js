@@ -30,7 +30,7 @@
         },
 
         initModal : function(model){
-            this.model = model;
+            this.model = model;//Course model
             //Add fileUploadComponent
             var fileupload = new Views.FileuploadComponent({model:this.model});
             this.ui.fileupload.html(fileupload.render().el);
@@ -43,6 +43,10 @@
         },
 
         shareExamen : function(){
+            debugger;
+            var exam = new Models.Exam();
+            exam.set('course_id',this.model.id);
+            exam.set('description', '');
 
         }
     });
