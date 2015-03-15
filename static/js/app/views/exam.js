@@ -8,7 +8,8 @@
 
         ui : {
             exam : '.exam-wrapper',
-            fileupload : '.fileupload-content'
+            fileupload : '.fileupload-content',
+            description : '#input-exam-description'
         },
 
         events: {
@@ -44,10 +45,22 @@
 
         shareExamen : function(){
             debugger;
-            var exam = new Models.Exam();
-            exam.set('course_id',this.model.id);
-            exam.set('description', '');
 
+            var files = this.model.get('files');
+
+            var exam = new Models.Exam();
+            exam.set('course', this.model.id);
+            exam.set('description', this.ui.description.val());
+            exam.set('files', files.pluck("id"));
+
+            exam.save(null,{
+                success : function(exam){
+                    debugger;
+                },
+                error : function(){
+                    debugger;
+                }
+            });
         }
     });
 
