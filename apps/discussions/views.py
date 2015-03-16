@@ -4,7 +4,7 @@ from academy.mixins import JsonResponseMixin, RestServiceMixin, StateEnum
 from models import Discussion, DiscussionComment
 from apps.home.models import Department, Student, Parameter
 from apps.courses.models import AcademyCourse
-from academy.serializers import ObjectSerializer
+from academy.serializers import ObjectSerializer, JsonSerializer
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 import json
@@ -74,13 +74,7 @@ class DiscussionView(RestServiceMixin, View):
             student = student,
             state = state)
 
-        objectSerializer = ObjectSerializer()
-        dictElementStudent = objectSerializer.serialize([student])[0]
-        dictElementDiscussion = objectSerializer.serialize([discussion])[0]
-        dictElementDiscussion['student'] = dictElementStudent
-        dictElementDiscussion['comments'] = 0
-
-        jsonDiscussion = json.dumps(dictElementDiscussion, default=date_handler)
+        jsonDiscussion = JsonSerializer(discussion, student = student, comments = 0)
 
         return JsonResponse(json.loads(jsonDiscussion),safe=False,status=201)
 
@@ -104,11 +98,6 @@ class CommentView(RestServiceMixin, View):
             student = student,
             state = state)
 
-        objectSerializer = ObjectSerializer()
-        dictElementStudent = objectSerializer.serialize([student])[0]
-        dictElementComment = objectSerializer.serialize([comment])[0]
-        dictElementComment['student'] = dictElementStudent
-
-        jsonComment = json.dumps(dictElementComment, default=date_handler)
+        jsonComment = JsonSerializer(comment, student = student)
 
         return JsonResponse(json.loads(jsonComment),safe=False,status=201)
