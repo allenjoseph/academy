@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Course, AcademyCourse
+from models import Course, AcademyCourse, AcademyCourseStudent
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
@@ -12,3 +12,6 @@ class AcademyCourseAdmin(admin.ModelAdmin):
     list_filter = ('course__department__faculty','course__department',)
 
 
+@admin.register(AcademyCourseStudent)
+class AcademyCourseStudentAdmin(admin.ModelAdmin):
+    list_display = ('id','student','academyCourse',)
