@@ -507,3 +507,38 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
 .progress .meter{
     width: 0;
 }
+
+/* File button */
+.fileinput-button {
+  position: relative!important;
+  width: 210px!important;
+  margin: 0!important;
+}
+.fileinput-button::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.fileinput-button::before {
+    content: 'Seleccionar fotos del examen';
+    display: inline-block;
+    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+    width: 208px;
+}
+.fileinput-button:hover::before {
+    border-color: black;
+}
+.fileinput-button:active::before {
+    background: -webkit-linear-gradient(#e3e3e3, #f9f9f9);
+    background: -o-linear-gradient(#e3e3e3, #f9f9f9);
+    background: linear-gradient(#e3e3e3, #f9f9f9);
+}
+/* end File button */
