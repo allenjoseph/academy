@@ -1,5 +1,7 @@
 (function(){
-    var routers = Backbone.Router.extend({
+    var _Router = window.ACADEMY.backbone.router.constructors;
+
+    _Router.main = Backbone.Router.extend({
 
         url_root : '/',
 
@@ -28,10 +30,13 @@
         },
 
         fetchData : function(){
-            var self = this;
+            var self = this,
+                _Model = window.ACADEMY.backbone.model.constructors,
+                _Collection = window.ACADEMY.backbone.collection.constructors,
+                _collection = window.ACADEMY.backbone.collection.instances;
 
             if(self.url_root !== '/'){
-                var cursoModel = new Models.Course(self.model_root);
+                var cursoModel = new _Model.course(self.model_root);
                 app.views.coursePage = new Views.CoursePage({ model : cursoModel });
                 return;
             }
@@ -41,21 +46,21 @@
 
             $.get('courses/?format=json')
                 .done(function(data){
-                    app.collections.courses = new Collections.Courses(data);
-                    app.views.courses = new Views.Courses({collection : app.collections.courses});
+                    _collection.courses = new _Collection.courses(data);
+                    app.views.courses = new Views.Courses({collection : _collection.courses});
                 })
                 .fail(function(){
                     console.error('fail get Courses :(');
                 });
             $.get('discussions/?format=json')
                 .done(function(data){
-                    app.collections.discussions = new Collections.Discussions(data);
-                    app.views.discussions = new Views.Discussions({collection : app.collections.discussions});
+                    _collection.discussions = new _Collection.discussions(data);
+                    app.views.discussions = new Views.Discussions({collection : _collection.discussions});
                 })
                 .fail(function(){
                     console.error('fail get Discussions :(');
                 });
         }
     });
-    window.Routers.App = routers;
+
 })();

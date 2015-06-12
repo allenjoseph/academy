@@ -1,5 +1,8 @@
 (function () {
 
+    var _Collection = window.ACADEMY.backbone.collection.constructors,
+        _Model = window.ACADEMY.backbone.model.constructors;
+
     Views.AddExamModal = Backbone.View.extend({
 
         tagName : 'section',
@@ -48,7 +51,7 @@
 
             var files = this.model.get('files');
 
-            var exam = new Models.Exam();
+            var exam = new _Model.exam();
             exam.set('course', this.model.id);
             exam.set('description', this.ui.description.val());
             exam.set('files', files.pluck("id"));
@@ -83,7 +86,7 @@
         },
 
         initialize : function(){
-            this.model.set('files' , new window.Collections.Attachments());
+            this.model.set('files' , new _Collection.attachments());
         },
 
         render : function(){

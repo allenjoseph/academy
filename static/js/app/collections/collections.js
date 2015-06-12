@@ -1,21 +1,20 @@
 (function(){
-    var courses = Backbone.Collection.extend({
-        model : Models.Course
-    });
-    window.Collections.Courses = courses;
+    var _Collection = window.ACADEMY.backbone.collection.constructors,
+        _Model = window.ACADEMY.backbone.model.constructors;
 
-    var discussions = Backbone.Collection.extend({
-        model : Models.Discussion
+    _Collection.courses = Backbone.Collection.extend({
+        model : _Model.course
     });
-    window.Collections.Discussions = discussions;
 
-    var comments = Backbone.Collection.extend({
-        model : Models.Comment
+    _Collection.discussions = Backbone.Collection.extend({
+        model : _Model.discussion
     });
-    window.Collections.Comments = comments;
 
-    var attachments = Backbone.Collection.extend({
-        model : Models.Attachment
+    _Collection.comments = Backbone.Collection.extend({
+        model : _Model.comment
     });
-    window.Collections.Attachments = attachments
+
+    _Collection.attachments = Backbone.Collection.extend({
+        model : _Model.attachment
+    });
 })();

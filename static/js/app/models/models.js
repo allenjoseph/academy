@@ -1,22 +1,19 @@
 (function(){
-    var course = Backbone.Model.extend();
-    window.Models.Course = course;
+    var _Model = window.ACADEMY.backbone.model.constructors;
 
-    var discussion = Backbone.Model.extend({
+    _Model.course = Backbone.Model.extend();
+
+    _Model.discussion = Backbone.Model.extend({
         urlRoot : '/discussion'
     });
-    window.Models.Discussion = discussion;
 
-    var comment = Backbone.Model.extend({
+    _Model.comment = Backbone.Model.extend({
         urlRoot : '/comment'
     });
-    window.Models.Comment = comment;
 
-    var exam = Backbone.Model.extend({
+    _Model.exam = Backbone.Model.extend({
         urlRoot : '/exam'
     });
-    window.Models.Exam = exam
 
-    var attachment = Backbone.Model.extend();
-    window.Models.Attachment = attachment;
+    _Model.attachment = Backbone.Model.extend();
 })();

@@ -49,7 +49,10 @@
 {% block content-backbone-router %}
 <script>
     (function(){
-        app.routers.main = new window.Routers.App('/');
+        var _Router = window.ACADEMY.backbone.router.constructors,
+            _router = window.ACADEMY.backbone.router.instances;
+
+        _router.main = new _Router.main('/');
     })();
 </script>
 {% endblock %}

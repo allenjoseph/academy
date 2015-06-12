@@ -1,4 +1,7 @@
 (function(){
+    var _Collection = window.ACADEMY.backbone.collection.constructors,
+        _collection = window.ACADEMY.backbone.collection.instances,
+        _Model = window.ACADEMY.backbone.model.constructors;
 
     Views.Discussion = Backbone.View.extend({
 
@@ -35,8 +38,8 @@
 
             $.get('comments/?format=json&id='+ this.model.get('id'))
                 .done(function(data){
-                    app.collections.comments = new window.Collections.Comments(data);
-                    app.views.comments = new window.Views.Comments({collection : app.collections.comments});
+                    _collection.comments = new _Collection.comments(data);
+                    app.views.comments = new window.Views.Comments({collection : _collection.comments});
                 })
                 .fail(function(){
                     console.error('fail get Comments :(');
@@ -140,14 +143,14 @@
             //deshabilito los botones de confirmacion
             $('#buttons-confirm-comment').find('button').prop('disabled',true);
             //creo un modelo Commentario
-            var comment = new Models.Comment();
+            var comment = new _Model.comment();
             comment.set('comment', text);
             comment.set('discussion', self.model.id);
             //guardo el comentario
             comment.save(null,{
                 success : function(comment){
                     //agrego el nuevo comentario a la colleccion
-                    app.collections.comments.add(comment);
+                    _collection.comments.add(comment);
                     //limpio la seccion del comentario
                     $('#add-comment-textarea').val('');
                     //reseteo el contador de caracteres
@@ -263,12 +266,12 @@
                     hideConfirmButton: true
                 });
 
-                var discussion = new Models.Discussion();
+                var discussion = new _Model.discussion();
                 discussion.set('question', question);
                 discussion.save(null,{
                     success : function(discussion){
                         //aniado la nueva discusion a la coleccion
-                        app.collections.discussions.add(discussion);
+                        _collection.discussions.add(discussion);
                         //cierro el menu para aniadir discussion
                         self.showAddDiscussion();
                         //muestro alerta satisfactoria
