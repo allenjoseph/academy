@@ -1,5 +1,4 @@
-(function(){
-    var _Model = window.ACADEMY.backbone.model.constructors;
+(function(_Model){
 
     _Model.course = Backbone.Model.extend();
 
@@ -16,4 +15,5 @@
     });
 
     _Model.attachment = Backbone.Model.extend();
-})();
+
+})(window.ACADEMY.backbone.model.constructors);

@@ -1,5 +1,4 @@
-(function(){
-    var _Router = window.ACADEMY.backbone.router.constructors;
+(function(_Router){
 
     _Router.main = Backbone.Router.extend({
 
@@ -63,4 +62,4 @@
         }
     });
 
-})();
+})(window.ACADEMY.backbone.router.constructors);
