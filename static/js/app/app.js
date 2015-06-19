@@ -29,7 +29,6 @@
     var utilities = namespace('utilities');
     utilities.namespace = namespace;
 
-
     window.Views = {};
     window.app = {};
     window.app.views = {};
