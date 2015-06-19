@@ -1,6 +1,6 @@
-(function(_Router){
+module.exports = {
 
-    _Router.main = Backbone.Router.extend({
+    main: Backbone.Router.extend({
 
         url_root : '/',
 
@@ -34,6 +34,8 @@
                 _Collection = window.ACADEMY.backbone.collection.constructors,
                 _collection = window.ACADEMY.backbone.collection.instances;
 
+            _collection.courses = new _Collection.courses();
+
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
                 app.views.coursePage = new Views.CoursePage({ model : cursoModel });
@@ -43,14 +45,6 @@
             app.views.submenuDiscussions = new Views.SubmenuDiscussions();
             app.views.addExamModal = new Views.AddExamModal();
 
-            $.get('courses/?format=json')
-                .done(function(data){
-                    _collection.courses = new _Collection.courses(data);
-                    app.views.courses = new Views.Courses({collection : _collection.courses});
-                })
-                .fail(function(){
-                    console.error('fail get Courses :(');
-                });
             $.get('discussions/?format=json')
                 .done(function(data){
                     _collection.discussions = new _Collection.discussions(data);
@@ -60,6 +54,6 @@
                     console.error('fail get Discussions :(');
                 });
         }
-    });
+    })
 
-})(window.ACADEMY.backbone.router.constructors);
+};

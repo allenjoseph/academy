@@ -65,14 +65,8 @@
     <script src="{% static "vendor-bower/backbone/backbone.js"%}"></script>
     <script src="{% static "vendor-bower/backbone.unclassified/backbone.unclassified.js"%}"></script>
 
-    <script src="{% static "js/app/app.js"%}"></script>
-    <script src="{% static "js/app/models/models.js"%}"></script>
-    <script src="{% static "js/app/collections/collections.js"%}"></script>
-    <script src="{% static "js/app/views/course.js"%}"></script>
-    <script src="{% static "js/app/views/discussion.js"%}"></script>
-    <script src="{% static "js/app/views/exam.js"%}"></script>
-    <script src="{% static "js/app/routers/main.js"%}"></script>
-    <script src="{% static "js/app/bundle.js"%}"></script>
+    <script src="{% static "js/app/bundleApp.js"%}"></script>
     {% block content-backbone-router %}{% endblock %}
+    <script src="{% static "js/app/bundle.js"%}"></script>
 </body>
 </html>

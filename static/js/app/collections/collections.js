@@ -1,20 +1,22 @@
-(function(_Collection, _Model){
+var models = require('../models/models');
 
-    _Collection.courses = Backbone.Collection.extend({
-        model : _Model.course
-    });
+module.exports = {
 
-    _Collection.discussions = Backbone.Collection.extend({
-        model : _Model.discussion
-    });
+    courses: Backbone.Collection.extend({
+        model : models.course,
+        url: 'courses/?format=json'
+    }),
 
-    _Collection.comments = Backbone.Collection.extend({
-        model : _Model.comment
-    });
+    discussions: Backbone.Collection.extend({
+        model : models.discussion
+    }),
 
-    _Collection.attachments = Backbone.Collection.extend({
-        model : _Model.attachment
-    });
+    comments: Backbone.Collection.extend({
+        model : models.comment
+    }),
 
-})( window.ACADEMY.backbone.collection.constructors,
-    window.ACADEMY.backbone.model.constructors);
+    attachments: Backbone.Collection.extend({
+        model : models.attachment
+    })
+
+};

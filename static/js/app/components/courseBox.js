@@ -1,23 +1,14 @@
 var React = require('react');
 var CourseList = require('./courseList');
+var courses = window.ACADEMY.backbone.collection.instances.courses;
 
 var CourseBox = React.createClass({
     displayName : 'CourseBox',
 
-    getInitialState : function(){
-        return {
-            data : [
-                { name : 'Uno'},
-                { name : 'Dos'},
-                { name : 'Tres'}
-            ]
-        };
-    },
-
     render : function(){
         return (
             <div>
-                <CourseList courses={this.state.data}/>
+                <CourseList courses={courses}/>
             </div>
         );
     }

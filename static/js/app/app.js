@@ -1,51 +1,35 @@
-(function(){
 
-    window.ACADEMY = window.ACADEMY || {};
+window.ACADEMY = window.ACADEMY || {};
+window.ACADEMY.utilities = require('./utilities');
 
-    function namespace(route){
-        if( typeof route !== 'string'  || !route.length) return;
+window.ACADEMY.utilities.namespace('backbone.model.constructors');
+window.ACADEMY.utilities.namespace('backbone.model.instances');
+window.ACADEMY.utilities.namespace('backbone.collection.constructors');
+window.ACADEMY.utilities.namespace('backbone.collection.instances');
+window.ACADEMY.utilities.namespace('backbone.router.constructors');
+window.ACADEMY.utilities.namespace('backbone.router.instances');
 
-        var parts = route.split('.'),
-            parent = window.ACADEMY;
-        if (parts[0] === 'ACADEMY'){
-            parts = parts.slice(1);
-        }
-        for (var i = 0, len = parts.length; i < len; i++) {
-            if (typeof parent[parts[i]] === 'undefined'){
-                parent[parts[i]] = {};
-            }
-            parent = parent[parts[i]];
-        }
-        return parent;
-    };
+window.ACADEMY.backbone.model.constructors = require('./models/models');
+window.ACADEMY.backbone.collection.constructors = require('./collections/collections');
+window.ACADEMY.backbone.router.constructors = require('./routers/main');
 
-    namespace('backbone.model.constructors');
-    namespace('backbone.model.instances');
-    namespace('backbone.collection.constructors');
-    namespace('backbone.collection.instances');
-    namespace('backbone.router.constructors');
-    namespace('backbone.router.instances');
+/*---------------------------------------------------------*/
+window.Views = {};
+window.app = {};
+window.app.views = {};
+window.template = function(id){
+    return _.template( $( '#' + id ).html() );
+};
+/*---------------------------------------------------------*/
 
-    var utilities = namespace('utilities');
-    utilities.namespace = namespace;
+/* Objects prototype extensions */
+if(!String.prototype.trim){
+    (function(){
+        String.prototype.trim = function(){
+            return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,'');
+        };
+    })();
+}
 
-    window.Views = {};
-    window.app = {};
-    window.app.views = {};
-
-    window.template = function(id){
-        return _.template( $( '#' + id ).html() );
-    };
-
-    if(!String.prototype.trim){
-        (function(){
-            var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-            String.prototype.trim = function(){
-                return this.replace(rtrim,'');
-            };
-        })();
-    }
-
-    moment.locale('es');
-})();
-
+/* Dependencies configurations */
+moment.locale('es');
