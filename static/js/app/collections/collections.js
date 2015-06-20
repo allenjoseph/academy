@@ -8,7 +8,8 @@ module.exports = {
     }),
 
     discussions: Backbone.Collection.extend({
-        model : models.discussion
+        model : models.discussion,
+        url: 'discussions/?format=json'
     }),
 
     comments: Backbone.Collection.extend({

@@ -6,12 +6,12 @@ html{
     overflow-y: scroll!important;
 }
 body{
-    font-family: 'Open Sans Condensed';
+    font-family: 'Open Sans Condensed','Arial','Helvetica';
     background-color: #1E2035;
     color: #f2f2f2;
 }
 h1,h2,h3,h4,h5,h6{
-    font-family: 'Open Sans Condensed';
+    font-family: 'Open Sans Condensed','Arial','Helvetica';
     color: #f2f2f2;
 }
 a {

@@ -19881,27 +19881,12 @@ React.render(
 },{"./courseList":159,"react":156}],159:[function(require,module,exports){
 var React = require('react');
 var Course = require('./course');
-
-var BackboneMixin = {
-    componentDidMount: function() {
-        // Whenever there may be a change in the Backbone data, trigger a reconcile.
-        this.getBackboneModels().forEach(function(model) {
-            model.on('add change remove', this.forceUpdate.bind(this, null), this);
-        }, this);
-    },
-
-    componentWillUnmount: function() {
-        // Ensure that we clean up any dangling references when the component is destroyed.
-        this.getBackboneModels().forEach(function(model) {
-            model.off(null, null, this);
-        }, this);
-    }
-};
+var Mixins = require('./mixins');
 
 module.exports = React.createClass({
     displayName : 'CourseList',
 
-    mixins: [BackboneMixin],
+    mixins: [Mixins.backboneMixin],
 
     componentDidMount: function() {
         this.props.courses.fetch();
@@ -19914,7 +19899,7 @@ module.exports = React.createClass({
     render: function() {
         var courseNodes = this.props.courses.map(function (course) {
             return (
-                React.createElement(Course, {name: course.name})
+                React.createElement(Course, {name: course.attributes.course.name})
             );
         });
         return (
@@ -19925,4 +19910,121 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":157,"react":156}]},{},[157,158,159]);
+},{"./course":157,"./mixins":163,"react":156}],160:[function(require,module,exports){
+var React = require('react');
+var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+
+module.exports = React.createClass({
+    displayName: 'Discussion',
+    render: function(){
+        return(
+            React.createElement("li", null, 
+                React.createElement("div", {className: "panel shadow radius discussion"}, 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "small-12 columns"}, 
+                            React.createElement("p", null, 
+                                React.createElement("a", {className: "discussion-question"}, 
+                                this.props.question
+                                )
+                            )
+                        )
+                    ), 
+                    React.createElement("div", {className: "row"}, 
+                        React.createElement("div", {className: "small-12 columns"}, 
+                            React.createElement("span", {className: "pull-left"}, 
+                                React.createElement("figure", {title: this.props.student.name + ' ' + this.props.student.lastname}, 
+                                    React.createElement("img", {src: URL_STACTIC + this.props.student.photo, className: "cicle"}), 
+                                    React.createElement("span", null, this.props.student.name, " ", this.props.student.lastname)
+                                )
+                            ), 
+                            React.createElement("span", {className: "pull-right"}, 
+                                React.createElement("strong", {id: "discussion-counter-comments"}, this.props.comments), 
+                                React.createElement("strong", null, " comentarios")
+                            ), 
+                            React.createElement("span", {className: "pull-right"}, this.props.dateCreation)
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+},{"react":156}],161:[function(require,module,exports){
+var React = require('react');
+var DiscussionList = require('./discussionList');
+var discussions = window.ACADEMY.backbone.collection.instances.discussions;
+
+var DiscussionBox = React.createClass({
+    displayName: 'DiscussionBox',
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "large-12 columns"}, 
+                React.createElement(DiscussionList, {discussions: discussions})
+            )
+        );
+    }
+});
+
+React.render(
+    React.createElement(DiscussionBox, null),
+    document.getElementById('discussions-react')
+);
+
+},{"./discussionList":162,"react":156}],162:[function(require,module,exports){
+var React = require('react');
+var Discussion = require('./discussion');
+var Mixins = require('./mixins');
+
+module.exports = React.createClass({
+    displayName: 'DiscussionList',
+
+    mixins: [Mixins.backboneMixin],
+
+    componentDidMount: function(){
+        this.props.discussions.fetch();
+    },
+
+    getBackboneModels: function(){
+        return [this.props.discussions];
+    },
+
+    render: function(){
+        var discussionNodes = this.props.discussions.map(function (discussion){
+            return(
+                React.createElement(Discussion, {
+                    question: discussion.attributes.question, 
+                    student: discussion.attributes.student, 
+                    comments: discussion.attributes.comments, 
+                    dateCreation: discussion.attributes.dateCreation})
+            );
+        });
+        return(
+            React.createElement("ul", {className: "small-block-grid-1 medium-block-grid-2 large-block-grid-2"}, 
+                discussionNodes
+            )
+        );
+    }
+});
+
+},{"./discussion":160,"./mixins":163,"react":156}],163:[function(require,module,exports){
+module.exports = {
+    backboneMixin: {
+        componentDidMount: function() {
+            // Whenever there may be a change in the Backbone data, trigger a reconcile.
+            this.getBackboneModels().forEach(function(model) {
+                model.on('add change remove', this.forceUpdate.bind(this, null), this);
+            }, this);
+        },
+
+        componentWillUnmount: function() {
+            // Ensure that we clean up any dangling references when the component is destroyed.
+            this.getBackboneModels().forEach(function(model) {
+                model.off(null, null, this);
+            }, this);
+        }
+    }
+};
+
+},{}]},{},[157,158,159,160,161,162,163]);

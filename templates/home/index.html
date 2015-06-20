@@ -35,11 +35,7 @@
 <div class="large-12 columns">
     <div id="submenu-discussions">
     </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <ul id="content-discussions" class="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
-            </ul>
-        </div>
+    <div class="row" id="discussions-react">
     </div>
 </div>
 {% endblock %}
@@ -47,6 +43,9 @@
 {% block content-backbone-router %}
 <script>
     (function(){
+
+        window.ACADEMY.constans.URL_STACTIC='{% static ""%}';
+
         var _Router = window.ACADEMY.backbone.router.constructors,
             _router = window.ACADEMY.backbone.router.instances;
 

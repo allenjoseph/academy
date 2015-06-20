@@ -2,6 +2,7 @@
 window.ACADEMY = window.ACADEMY || {};
 window.ACADEMY.utilities = require('./utilities');
 
+window.ACADEMY.utilities.namespace('constans');
 window.ACADEMY.utilities.namespace('backbone.model.constructors');
 window.ACADEMY.utilities.namespace('backbone.model.instances');
 window.ACADEMY.utilities.namespace('backbone.collection.constructors');

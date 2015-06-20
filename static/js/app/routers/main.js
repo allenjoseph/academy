@@ -35,6 +35,7 @@ module.exports = {
                 _collection = window.ACADEMY.backbone.collection.instances;
 
             _collection.courses = new _Collection.courses();
+            _collection.discussions = new _Collection.discussions();
 
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
@@ -44,15 +45,6 @@ module.exports = {
 
             app.views.submenuDiscussions = new Views.SubmenuDiscussions();
             app.views.addExamModal = new Views.AddExamModal();
-
-            $.get('discussions/?format=json')
-                .done(function(data){
-                    _collection.discussions = new _Collection.discussions(data);
-                    app.views.discussions = new Views.Discussions({collection : _collection.discussions});
-                })
-                .fail(function(){
-                    console.error('fail get Discussions :(');
-                });
         }
     })
 

@@ -3,6 +3,7 @@
 window.ACADEMY = window.ACADEMY || {};
 window.ACADEMY.utilities = require('./utilities');
 
+window.ACADEMY.utilities.namespace('constans');
 window.ACADEMY.utilities.namespace('backbone.model.constructors');
 window.ACADEMY.utilities.namespace('backbone.model.instances');
 window.ACADEMY.utilities.namespace('backbone.collection.constructors');
@@ -46,7 +47,8 @@ module.exports = {
     }),
 
     discussions: Backbone.Collection.extend({
-        model : models.discussion
+        model : models.discussion,
+        url: 'discussions/?format=json'
     }),
 
     comments: Backbone.Collection.extend({
@@ -117,6 +119,7 @@ module.exports = {
                 _collection = window.ACADEMY.backbone.collection.instances;
 
             _collection.courses = new _Collection.courses();
+            _collection.discussions = new _Collection.discussions();
 
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
@@ -126,15 +129,6 @@ module.exports = {
 
             app.views.submenuDiscussions = new Views.SubmenuDiscussions();
             app.views.addExamModal = new Views.AddExamModal();
-
-            $.get('discussions/?format=json')
-                .done(function(data){
-                    _collection.discussions = new _Collection.discussions(data);
-                    app.views.discussions = new Views.Discussions({collection : _collection.discussions});
-                })
-                .fail(function(){
-                    console.error('fail get Discussions :(');
-                });
         }
     })
 
