@@ -16,11 +16,13 @@ module.exports = React.createClass({
     },
 
     render: function() {
+
         var courseNodes = this.props.courses.map(function (course) {
             return (
-                <Course name={course.attributes.course.name} />
+                <Course key={course.cid} course={course.toJSON().course} onAddExam={this.props.onAddExam}/>
             );
-        });
+        }, this);
+
         return (
             <ul className="content-courses small-block-grid-1 medium-block-grid-2 large-block-grid-3">
                 {courseNodes}

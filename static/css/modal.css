@@ -1,26 +1,17 @@
-@import url(http://fonts.googleapis.com/css?family=Exo+2:700,400&subset=latin,cyrillic);
-
-/* ==========================================================================
-   Remodal necessary styles
-   ========================================================================== */
-
 /* Hide scroll bar */
-
-html.remodal-is-locked,
-body.remodal-is-locked {
+.modal.modal-is-locked {
     overflow: hidden;
 }
 
 /* Anti FOUC */
 
-.remodal,
-[data-remodal-id] {
+.modal{
     visibility: hidden;
 }
 
 /* Necessary styles of the overlay */
 
-.remodal-overlay {
+.modal-overlay {
     position: fixed;
     z-index: 9999;
     top: -5000px;
@@ -33,7 +24,7 @@ body.remodal-is-locked {
 
 /* Necessary styles of the wrapper */
 
-.remodal-wrapper {
+.modal-wrapper {
     position: fixed;
     z-index: 10000;
     top: 0;
@@ -49,7 +40,7 @@ body.remodal-is-locked {
     -webkit-overflow-scrolling: touch;
 }
 
-.remodal-wrapper:after {
+.modal-wrapper:after {
     display: inline-block;
 
     height: 100%;
@@ -60,14 +51,14 @@ body.remodal-is-locked {
 
 /* Fix iPad, iPhone glitches */
 
-.remodal-overlay,
-.remodal-wrapper {
+.modal-overlay,
+.modal-wrapper {
     -webkit-transform: translateZ(0px);
 }
 
 /* Necessary styles of the modal dialog */
 
-.remodal {
+.modal {
     position: relative;
 
     display: inline-block;
@@ -75,36 +66,36 @@ body.remodal-is-locked {
 
 /* Anti-zoom. Font-size should be >= 16px. */
 
-.remodal select,
-.remodal textarea,
-.remodal input,
-.remodal select:focus,
-.remodal textarea:focus,
-.remodal input:focus {
+.modal select,
+.modal textarea,
+.modal input,
+.modal select:focus,
+.modal textarea:focus,
+.modal input:focus {
     font-size: 16px;
 }
 
 /* ==========================================================================
-   Remodal default theme
+   modal default theme
    ========================================================================== */
 
 /* Default theme font */
 
-/*.remodal,
-.remodal * {
+/*.modal,
+.modal * {
     font-family: "Exo 2", sans-serif;
 }*/
 
 /* Background for effects */
 
-.remodal-bg {
+.modal-bg {
     -webkit-transition: -webkit-filter 0.2s ease-out;
     -moz-transition: -moz-filter 0.2s ease-out;
     -o-transition: -o-filter 0.2s ease-out;
     transition: filter 0.2s ease-out;
 }
 
-body.remodal-is-active .remodal-bg {
+.modal.modal-is-active .modal-bg {
     -webkit-filter: blur(3px);
     -ms-filter: blur(3px);
     filter: blur(3px);
@@ -114,7 +105,7 @@ body.remodal-is-active .remodal-bg {
 
 /* Default theme styles of the overlay */
 
-.remodal-overlay {
+.modal-overlay {
     -webkit-transition: opacity 0.2s ease-out;
     -moz-transition: opacity 0.2s ease-out;
     -o-transition: opacity 0.2s ease-out;
@@ -124,13 +115,13 @@ body.remodal-is-active .remodal-bg {
     background: rgba(33, 36, 46, 0.95);
 }
 
-body.remodal-is-active .remodal-overlay {
+.modal.modal-is-active .modal-overlay {
     opacity: 1;
 }
 
 /* Default theme styles of the modal dialog */
 
-.remodal {
+.modal {
     font-size: 16px;
 
     -webkit-box-sizing: border-box;
@@ -156,7 +147,7 @@ body.remodal-is-active .remodal-overlay {
     background-clip: padding-box;
 }
 
-body.remodal-is-active .remodal {
+.modal.modal-is-active .modal {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -168,14 +159,14 @@ body.remodal-is-active .remodal {
 
 /* Vertical align of the modal dialog */
 
-.remodal,
-.remodal-wrapper:after {
+.modal,
+.modal-wrapper:after {
     vertical-align: middle;
 }
 
 /* Close button */
 
-.remodal-close {
+.modal-close {
     position: absolute;
     top: 5px;
     left: 5px;
@@ -193,7 +184,7 @@ body.remodal-is-active .remodal {
     border-radius: 50%;
 }
 
-.remodal-close:after {
+.modal-close:after {
     font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif !important;
     font-size: 28px;
     line-height: 28px;
@@ -211,20 +202,20 @@ body.remodal-is-active .remodal {
     color: #3e5368;
 }
 
-.remodal-close:hover,
-.remodal-close:active {
+.modal-close:hover,
+.modal-close:active {
     background: #3e5368;
 }
 
-.remodal-close:hover.remodal-close:after,
-.remodal-close:active.remodal-close:after {
+.modal-close:hover.modal-close:after,
+.modal-close:active.modal-close:after {
     color: #f4f4f4;
 }
 
 /* Dialog buttons */
 
-.remodal-confirm,
-.remodal-cancel {
+.modal-confirm,
+.modal-cancel {
     font-size: 10pt;
 
     display: inline-block;
@@ -246,26 +237,26 @@ body.remodal-is-active .remodal {
     background-clip: padding-box;
 }
 
-.remodal-confirm {
+.modal-confirm {
     color: #16a085;
     border: 2px solid #16a085;
     background: #f4f4f4;
 }
 
-.remodal-confirm:hover,
-.remodal-confirm:active {
+.modal-confirm:hover,
+.modal-confirm:active {
     color: #f4f4f4;
     background: #16a085;
 }
 
-.remodal-cancel {
+.modal-cancel {
     color: #c0392b;
     border: 2px solid #c0392b;
     background: #f4f4f4;
 }
 
-.remodal-cancel:hover,
-.remodal-cancel:active {
+.modal-cancel:hover,
+.modal-cancel:active {
     color: #f4f4f4;
     background: #c0392b;
 }
@@ -274,7 +265,7 @@ body.remodal-is-active .remodal {
    ========================================================================== */
 
 @media only screen and (min-width: 40.063em) /* min-width 641px */ {
-    .remodal {
+    .modal {
         max-width: 700px;
         min-height: 0;
         margin: 20px auto;
@@ -287,28 +278,28 @@ body.remodal-is-active .remodal {
 /* IE8
    ========================================================================== */
 
-.lt-ie9 .remodal-overlay {
+.lt-ie9 .modal-overlay {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#F021242E, endColorstr=#F021242E);
 }
 
-.lt-ie9 .remodal {
+.lt-ie9 .modal {
     width: 700px;
     min-height: 0;
     margin: 20px auto;
 }
 
-.lt-ie9 .remodal-close:after {
+.lt-ie9 .modal-close:after {
     margin: auto;
 
     text-align: center;
 }
 
-.lt-ie9 .remodal-close:hover,
-.lt-ie9 .remodal-close:active {
+.lt-ie9 .modal-close:hover,
+.lt-ie9 .modal-close:active {
     background: transparent;
 }
 
-.lt-ie9 .remodal-close:hover.remodal-close:after,
-.lt-ie9 .remodal-close:active.remodal-close:after {
+.lt-ie9 .modal-close:hover.modal-close:after,
+.lt-ie9 .modal-close:active.modal-close:after {
     color: #3e5368;
 }

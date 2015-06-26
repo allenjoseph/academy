@@ -18,7 +18,7 @@ module.exports = React.createClass({
     render: function(){
         var discussionNodes = this.props.discussions.map(function (discussion){
             return(
-                <Discussion
+                <Discussion key={discussion.cid}
                     question={discussion.attributes.question}
                     student={discussion.attributes.student}
                     comments={discussion.attributes.comments}

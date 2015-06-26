@@ -19812,15 +19812,17 @@ module.exports = require('./lib/React');
 var React = require('react');
 
 module.exports = React.createClass({
-    displayName : 'Course',
+    displayName: 'Course',
+
     render: function() {
+        var href = '/courses/'+ this.props.course.slug;
         return (
             React.createElement("li", null, 
                 React.createElement("div", {className: "course-wrapper"}), 
                 React.createElement("div", {className: "course-content"}, 
                     React.createElement("div", null, 
                         React.createElement("h3", {className: "text-center"}, 
-                            React.createElement("a", {className: "course-name"}, this.props.name)
+                            React.createElement("a", {className: "course-name", href: href}, this.props.course.name)
                         ), 
                         React.createElement("div", {className: "course-rows"}, 
                             React.createElement("div", {className: "row-one"}, 
@@ -19846,7 +19848,9 @@ module.exports = React.createClass({
                             React.createElement("div", {className: "row-links"}, 
                                 React.createElement("div", {className: "link-icon", title: "Solicitar Ayuda"}, React.createElement("i", {className: "fa fa-child fa-fw"})), 
                                 React.createElement("div", {className: "link-icon", title: "Iniciar Reunion"}, React.createElement("i", {className: "fa fa-users fa-fw"})), 
-                                React.createElement("div", {className: "link-icon btn-add-exam", title: "Agregar Examen"}, React.createElement("i", {className: "fa fa-camera fa-fw"}))
+                                React.createElement("div", {className: "link-icon btn-add-exam", title: "Agregar Examen", "data-remodal-target": "modal"}, 
+                                    React.createElement("i", {className: "fa fa-camera fa-fw"})
+                                )
                             )
                         )
                     )
@@ -19857,9 +19861,9 @@ module.exports = React.createClass({
 });
 
 },{"react":156}],158:[function(require,module,exports){
-var React = require('react');
-var CourseList = require('./courseList');
-var courses = window.ACADEMY.backbone.collection.instances.courses;
+var React = require('react'),
+    CourseList = require('./courseList'),
+    courses = window.ACADEMY.backbone.collection.instances.courses;
 
 var CourseBox = React.createClass({
     displayName : 'CourseBox',
@@ -19897,11 +19901,13 @@ module.exports = React.createClass({
     },
 
     render: function() {
+
         var courseNodes = this.props.courses.map(function (course) {
             return (
-                React.createElement(Course, {name: course.attributes.course.name})
+                React.createElement(Course, {key: course.cid, course: course.toJSON().course, onAddExam: this.props.onAddExam})
             );
-        });
+        }, this);
+
         return (
             React.createElement("ul", {className: "content-courses small-block-grid-1 medium-block-grid-2 large-block-grid-3"}, 
                 courseNodes
@@ -19910,7 +19916,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":157,"./mixins":163,"react":156}],160:[function(require,module,exports){
+},{"./course":157,"./mixins":165,"react":156}],160:[function(require,module,exports){
 var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
@@ -19993,7 +19999,7 @@ module.exports = React.createClass({
     render: function(){
         var discussionNodes = this.props.discussions.map(function (discussion){
             return(
-                React.createElement(Discussion, {
+                React.createElement(Discussion, {key: discussion.cid, 
                     question: discussion.attributes.question, 
                     student: discussion.attributes.student, 
                     comments: discussion.attributes.comments, 
@@ -20008,7 +20014,86 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":160,"./mixins":163,"react":156}],163:[function(require,module,exports){
+},{"./discussion":160,"./mixins":165,"react":156}],163:[function(require,module,exports){
+var React = require('react'),
+    ExamForm = require('./examForm'),
+    Exam = window.ACADEMY.backbone.model.constructors.exam;
+
+var ExamBox = React.createClass({
+    displayName: 'ExamBox',
+
+    getInitialState: function(){
+        var exam = new Exam();
+        exam.set('course', '');
+        exam.set('description', '');
+        exam.set('files', []);
+        return { examModel: exam }
+    },
+
+    render: function(){
+        return (
+            React.createElement("div", {className: "modal"}, 
+                React.createElement("div", {className: "modal-overlay"}), 
+                React.createElement("div", {className: "modal-wrapper"}, 
+                    React.createElement("section", {className: "modal-exam light-color bg"}, 
+                        React.createElement("button", {className: "modal-close"}), 
+                        React.createElement(ExamForm, {examModel: this.state.examModel})
+                    )
+                )
+            )
+        );
+    }
+});
+
+React.render(
+  React.createElement(ExamBox, null),
+  document.getElementById('modal-exam')
+);
+
+},{"./examForm":164,"react":156}],164:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+    displayName: 'ExamForm',
+
+    getInitialState: function() {
+        return { description : '', placeholder : 'Que examen es, Práctica, Parcial, Final... ?' };
+    },
+
+    changeDescription: function(e){
+        debugger;
+    },
+
+    render: function(){
+        return (
+            React.createElement("div", {className: "exam-wrapper"}, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "small-12 columns"}, 
+                        React.createElement("h1", null, "Compartir Examen")
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "small-12 columns fileupload-content"}
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "small-12 columns"}, 
+                        React.createElement("div", {className: "row collapse"}, 
+                            React.createElement("div", {className: "small-10 columns"}, 
+                                React.createElement("input", {type: "text", onChange: this.changeDescription, value: this.state.description, placeholder: this.state.placeholder})
+                            ), 
+                            React.createElement("div", {className: "small-2 columns"}, 
+                                React.createElement("a", {id: "btn-share-exam", className: "button yellow postfix"}, "Compartir")
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+},{"react":156}],165:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -20024,7 +20109,18 @@ module.exports = {
                 model.off(null, null, this);
             }, this);
         }
+    },
+    modelMixin: {
+        bindTo: function(model, key){
+            debugger;
+            return {
+                value: model.get(key),
+                requestChange: function(value){
+                    model.set(key, value);
+                }.bind(this)
+            }
+        }
     }
 };
 
-},{}]},{},[157,158,159,160,161,162,163]);
+},{}]},{},[157,158,159,160,161,162,163,164,165]);

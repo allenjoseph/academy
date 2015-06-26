@@ -1,6 +1,6 @@
-var React = require('react');
-var CourseList = require('./courseList');
-var courses = window.ACADEMY.backbone.collection.instances.courses;
+var React = require('react'),
+    CourseList = require('./courseList'),
+    courses = window.ACADEMY.backbone.collection.instances.courses;
 
 var CourseBox = React.createClass({
     displayName : 'CourseBox',
@@ -8,7 +8,7 @@ var CourseBox = React.createClass({
     render : function(){
         return (
             <div>
-                <CourseList courses={courses}/>
+                <CourseList courses={courses} />
             </div>
         );
     }

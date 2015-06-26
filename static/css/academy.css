@@ -362,7 +362,7 @@ input:disabled{
 /*discussion classes*/
 
 /*comment modal*/
-.remodal-comment{
+.modal-comment{
     overflow: hidden;
     display: block;
     position:absolute;
@@ -372,12 +372,12 @@ input:disabled{
     left: 0;
     right: 0;
 }
-.remodal-comment .comment-wrapper{
+.modal-comment .comment-wrapper{
     height: 100%;
     position: relative;
     overflow: hidden;
 }
-.remodal-comment .comment-body-wrapper{
+.modal-comment .comment-body-wrapper{
     height: 100%;
     margin-top: -13em;
     overflow: hidden;
@@ -385,36 +385,36 @@ input:disabled{
     position: absolute;
     width: 100%;
 }
-.remodal-comment .comment-body-content{
+.modal-comment .comment-body-content{
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
 }
-.remodal-comment figure{
+.modal-comment figure{
     margin: 0;
 }
-.remodal-comment figure img{
+.modal-comment figure img{
     height: 24px;
 }
-.remodal-comment .comment-header{
+.modal-comment .comment-header{
     padding: 0;
     overflow: hidden;
     height: 8em;
     border-bottom: 1px solid #ddd;
 }
-.remodal-comment .comment-header .comment-header-top{
+.modal-comment .comment-header .comment-header-top{
     text-align: center;
     height: 6em;
     overflow: hidden;
 }
-.remodal-comment .comment-header .comment-header-footer{
+.modal-comment .comment-header .comment-header-footer{
     color: #333;
     height: 2em;
 }
-.remodal-comment .comment-header .comment-header-footer .comment-header-footer-content{
+.modal-comment .comment-header .comment-header-footer .comment-header-footer-content{
     font-size: 0.7em;
 }
-.remodal-comment .comment-footer{
+.modal-comment .comment-footer{
     bottom: 0;
     display: block;
     height: 5em;

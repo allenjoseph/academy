@@ -44,7 +44,7 @@ module.exports = {
             }
 
             app.views.submenuDiscussions = new Views.SubmenuDiscussions();
-            app.views.addExamModal = new Views.AddExamModal();
+            //app.views.addExamModal = new Views.AddExamModal();
         }
     })
 

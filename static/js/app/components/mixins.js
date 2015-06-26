@@ -13,5 +13,16 @@ module.exports = {
                 model.off(null, null, this);
             }, this);
         }
+    },
+    modelMixin: {
+        bindTo: function(model, key){
+            debugger;
+            return {
+                value: model.get(key),
+                requestChange: function(value){
+                    model.set(key, value);
+                }.bind(this)
+            }
+        }
     }
 };

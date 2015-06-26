@@ -46,7 +46,13 @@ module.exports = function(grunt) {
 
         watch:{
             browserify: {
-                files: ['static/js/app/app.js'],
+                files: [
+                    'static/js/app/app.js',
+                    'static/js/app/collections/*.js',
+                    'static/js/app/models/*.js',
+                    'static/js/app/routers/*.js',
+                    'static/js/app/views/*.js'
+                ],
                 tasks: ['browserify:default']
             },
             browserifyReact: {
