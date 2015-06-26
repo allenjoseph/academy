@@ -15,11 +15,11 @@ var ExamBox = React.createClass({
 
     render: function(){
         return (
-            <div className="modal">
+            <div className="modal-content">
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
-                    <section className="modal-exam light-color bg">
-                        <button className="modal-close"></button>
+                    <section className="modal modal-exam light-color bg">
+                        <a className="modal-close"></a>
                         <ExamForm examModel={this.state.examModel}/>
                     </section>
                 </div>

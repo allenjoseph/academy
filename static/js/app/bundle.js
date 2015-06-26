@@ -20032,11 +20032,11 @@ var ExamBox = React.createClass({
 
     render: function(){
         return (
-            React.createElement("div", {className: "modal"}, 
+            React.createElement("div", {className: "modal-content"}, 
                 React.createElement("div", {className: "modal-overlay"}), 
                 React.createElement("div", {className: "modal-wrapper"}, 
-                    React.createElement("section", {className: "modal-exam light-color bg"}, 
-                        React.createElement("button", {className: "modal-close"}), 
+                    React.createElement("section", {className: "modal modal-exam light-color bg"}, 
+                        React.createElement("a", {className: "modal-close"}), 
                         React.createElement(ExamForm, {examModel: this.state.examModel})
                     )
                 )
