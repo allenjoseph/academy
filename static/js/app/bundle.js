@@ -19814,15 +19814,24 @@ var React = require('react');
 module.exports = React.createClass({
     displayName: 'Course',
 
+    componentDidMount: function(){
+        this.openExamEvent = new CustomEvent('openModalExam', this.props.data);
+    },
+
+    openModal: function(e){
+        window.dispatchEvent(this.openExamEvent);
+    },
+
     render: function() {
-        var href = '/courses/'+ this.props.course.slug;
+        var course = this.props.data.course,
+            href = '/courses/'+ course.slug;
         return (
             React.createElement("li", null, 
                 React.createElement("div", {className: "course-wrapper"}), 
                 React.createElement("div", {className: "course-content"}, 
                     React.createElement("div", null, 
                         React.createElement("h3", {className: "text-center"}, 
-                            React.createElement("a", {className: "course-name", href: href}, this.props.course.name)
+                            React.createElement("a", {className: "course-name", href: href}, course.name)
                         ), 
                         React.createElement("div", {className: "course-rows"}, 
                             React.createElement("div", {className: "row-one"}, 
@@ -19848,7 +19857,7 @@ module.exports = React.createClass({
                             React.createElement("div", {className: "row-links"}, 
                                 React.createElement("div", {className: "link-icon", title: "Solicitar Ayuda"}, React.createElement("i", {className: "fa fa-child fa-fw"})), 
                                 React.createElement("div", {className: "link-icon", title: "Iniciar Reunion"}, React.createElement("i", {className: "fa fa-users fa-fw"})), 
-                                React.createElement("div", {className: "link-icon btn-add-exam", title: "Agregar Examen", "data-remodal-target": "modal"}, 
+                                React.createElement("div", {className: "link-icon btn-add-exam", title: "Agregar Examen", onClick: this.openModal}, 
                                     React.createElement("i", {className: "fa fa-camera fa-fw"})
                                 )
                             )
@@ -19904,7 +19913,7 @@ module.exports = React.createClass({
 
         var courseNodes = this.props.courses.map(function (course) {
             return (
-                React.createElement(Course, {key: course.cid, course: course.toJSON().course, onAddExam: this.props.onAddExam})
+                React.createElement(Course, {key: course.cid, data: course.toJSON()})
             );
         }, this);
 
@@ -20016,28 +20025,40 @@ module.exports = React.createClass({
 
 },{"./discussion":160,"./mixins":165,"react":156}],163:[function(require,module,exports){
 var React = require('react'),
-    ExamForm = require('./examForm'),
-    Exam = window.ACADEMY.backbone.model.constructors.exam;
+    ExamForm = require('./examForm');
 
 var ExamBox = React.createClass({
     displayName: 'ExamBox',
 
     getInitialState: function(){
-        var exam = new Exam();
-        exam.set('course', '');
-        exam.set('description', '');
-        exam.set('files', []);
-        return { examModel: exam }
+        return {openModalClass: ''};
+    },
+
+    componentDidMount: function(){
+        window.addEventListener('openModalExam', this.openModalExam);
+    },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('openModalExam', this.openModalExam);
+    },
+
+    openModalExam: function(){
+        this.setState({openModalClass: 'modal-is-active'});
+    },
+
+    closeModalExam: function(){
+        this.setState({openModalClass: ''});
+        window.dispatchEvent(new Event('clearModalExam'));
     },
 
     render: function(){
         return (
-            React.createElement("div", {className: "modal-content"}, 
+            React.createElement("div", {className: 'modal-content ' + this.state.openModalClass}, 
                 React.createElement("div", {className: "modal-overlay"}), 
                 React.createElement("div", {className: "modal-wrapper"}, 
                     React.createElement("section", {className: "modal modal-exam light-color bg"}, 
-                        React.createElement("a", {className: "modal-close"}), 
-                        React.createElement(ExamForm, {examModel: this.state.examModel})
+                        React.createElement("a", {className: "modal-close", onClick: this.closeModalExam}), 
+                        React.createElement(ExamForm, null)
                     )
                 )
             )
@@ -20051,17 +20072,45 @@ React.render(
 );
 
 },{"./examForm":164,"react":156}],164:[function(require,module,exports){
-var React = require('react');
+var React = require('react'),
+    Exam = window.ACADEMY.backbone.model.constructors.exam;
 
 module.exports = React.createClass({
     displayName: 'ExamForm',
 
-    getInitialState: function() {
-        return { description : '', placeholder : 'Que examen es, Práctica, Parcial, Final... ?' };
+    getInitialState: function(){
+        this.initialData = {
+            course: '',
+            description: '',
+            files: [],
+            placeholder: 'Que examen es, Práctica, Parcial, Final... ?'
+        };
+        this.examModel = new Exam(this.initialData);
+        return this.examModel.toJSON();
+    },
+
+    componentDidMount: function(){
+        window.addEventListener('clearModalExam', this.cleanModel);
+    },
+
+    componentWillUnmount: function(){
+        window.removeEventListener('clearModalExam', this.cleanModel);
+    },
+
+    cleanModel: function(){
+        this.examModel.set(this.initialData);
+        this.setState(this.initialData);
     },
 
     changeDescription: function(e){
-        debugger;
+        var nextState = {},
+            key = e.target.getAttribute('name');
+
+        nextState[key] = e.target.value;
+
+        this.examModel.set(nextState);
+
+        this.setState(nextState);
     },
 
     render: function(){
@@ -20080,7 +20129,7 @@ module.exports = React.createClass({
                     React.createElement("div", {className: "small-12 columns"}, 
                         React.createElement("div", {className: "row collapse"}, 
                             React.createElement("div", {className: "small-10 columns"}, 
-                                React.createElement("input", {type: "text", onChange: this.changeDescription, value: this.state.description, placeholder: this.state.placeholder})
+                                React.createElement("input", {type: "text", name: "description", value: this.state.description, onChange: this.changeDescription, placeholder: this.state.placeholder})
                             ), 
                             React.createElement("div", {className: "small-2 columns"}, 
                                 React.createElement("a", {id: "btn-share-exam", className: "button yellow postfix"}, "Compartir")

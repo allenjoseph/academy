@@ -19,7 +19,7 @@ module.exports = React.createClass({
 
         var courseNodes = this.props.courses.map(function (course) {
             return (
-                <Course key={course.cid} course={course.toJSON().course} onAddExam={this.props.onAddExam}/>
+                <Course key={course.cid} data={course.toJSON()} />
             );
         }, this);
 
