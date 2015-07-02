@@ -21,7 +21,7 @@ var ExamBox = React.createClass({
     },
 
     closeModalExam: function(){
-        this.setState({openModalClass: ''});
+        this.setState(this.getInitialState());
         window.dispatchEvent(new Event('clearModalExam'));
     },
 
@@ -32,7 +32,7 @@ var ExamBox = React.createClass({
                 <div className="modal-wrapper">
                     <section className="modal modal-exam light-color bg">
                         <a className="modal-close" onClick={this.closeModalExam}></a>
-                        <ExamForm />
+                        <ExamForm isOpen={!!this.state.openModalClass}/>
                     </section>
                 </div>
             </div>

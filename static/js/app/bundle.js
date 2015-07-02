@@ -19925,7 +19925,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":157,"./mixins":165,"react":156}],160:[function(require,module,exports){
+},{"./course":157,"./mixins":167,"react":156}],160:[function(require,module,exports){
 var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
@@ -20023,7 +20023,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":160,"./mixins":165,"react":156}],163:[function(require,module,exports){
+},{"./discussion":160,"./mixins":167,"react":156}],163:[function(require,module,exports){
 var React = require('react'),
     ExamForm = require('./examForm');
 
@@ -20047,7 +20047,7 @@ var ExamBox = React.createClass({
     },
 
     closeModalExam: function(){
-        this.setState({openModalClass: ''});
+        this.setState(this.getInitialState());
         window.dispatchEvent(new Event('clearModalExam'));
     },
 
@@ -20058,7 +20058,7 @@ var ExamBox = React.createClass({
                 React.createElement("div", {className: "modal-wrapper"}, 
                     React.createElement("section", {className: "modal modal-exam light-color bg"}, 
                         React.createElement("a", {className: "modal-close", onClick: this.closeModalExam}), 
-                        React.createElement(ExamForm, null)
+                        React.createElement(ExamForm, {isOpen: !!this.state.openModalClass})
                     )
                 )
             )
@@ -20073,20 +20073,19 @@ React.render(
 
 },{"./examForm":164,"react":156}],164:[function(require,module,exports){
 var React = require('react'),
+    Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
 
 module.exports = React.createClass({
     displayName: 'ExamForm',
 
     getInitialState: function(){
-        this.initialData = {
+        return {
             course: '',
             description: '',
             files: [],
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?'
         };
-        this.examModel = new Exam(this.initialData);
-        return this.examModel.toJSON();
     },
 
     componentDidMount: function(){
@@ -20097,9 +20096,14 @@ module.exports = React.createClass({
         window.removeEventListener('clearModalExam', this.cleanModel);
     },
 
+    componentDidUpdate: function(){
+        if(this.props.isOpen){
+            React.findDOMNode(this.refs.description).focus();
+        }
+    },
+
     cleanModel: function(){
-        this.examModel.set(this.initialData);
-        this.setState(this.initialData);
+        this.setState(this.getInitialState());
     },
 
     changeDescription: function(e){
@@ -20107,9 +20111,6 @@ module.exports = React.createClass({
             key = e.target.getAttribute('name');
 
         nextState[key] = e.target.value;
-
-        this.examModel.set(nextState);
-
         this.setState(nextState);
     },
 
@@ -20122,14 +20123,15 @@ module.exports = React.createClass({
                     )
                 ), 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "small-12 columns fileupload-content"}
+                    React.createElement("div", {className: "small-12 columns fileupload-content"}, 
+                        React.createElement(Fileupload, null)
                     )
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns"}, 
                         React.createElement("div", {className: "row collapse"}, 
                             React.createElement("div", {className: "small-10 columns"}, 
-                                React.createElement("input", {type: "text", name: "description", value: this.state.description, onChange: this.changeDescription, placeholder: this.state.placeholder})
+                                React.createElement("input", {type: "text", ref: "description", name: "description", value: this.state.description, onChange: this.changeDescription, placeholder: this.state.placeholder})
                             ), 
                             React.createElement("div", {className: "small-2 columns"}, 
                                 React.createElement("a", {id: "btn-share-exam", className: "button yellow postfix"}, "Compartir")
@@ -20142,7 +20144,117 @@ module.exports = React.createClass({
     }
 });
 
-},{"react":156}],165:[function(require,module,exports){
+},{"./fileupload":166,"react":156}],165:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+    displayName: 'FileList',
+
+    getInitialState: function(){
+        return { files: [] };
+    },
+
+    componentDidMount: function() {
+        window.addEventListener('fileuploadadd', this.filesAdd);
+    },
+
+    filesAdd: function(data){
+        this.setState({ files: data.detail.files });
+    },
+
+    render: function(){
+        var files = this.state.files.map(function(file){
+            debugger;
+            React.createElement("li", {key: file.id}, 
+                React.createElement("span", {className: "file-name mr1"}, file.name)
+            )
+        });
+        return(
+            React.createElement("ul", {className: "file-list no-bullet text-left"}, 
+                files
+            )
+        );
+    }
+});
+
+},{"react":156}],166:[function(require,module,exports){
+var React = require('react'),
+    FileList = require('./fileList');
+
+module.exports = React.createClass({
+    displayName: 'Fileupload',
+
+    componentDidMount: function(){
+        this.$fileUpload = $(React.findDOMNode(this.refs.fileButton));
+        this.$fileUpload.fileupload({
+            url: 'http://127.0.0.1:8000/upload/',
+            dataType: 'json',
+            autoUpload: true,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 5000000, // 5 MB
+        })
+        .on('fileuploadadd', this.addFile)
+        .on('fileuploadprocessalways', this.processAlwaysFile)
+        .on('fileuploadprogressall', this.processAllFile)
+        .on('fileuploaddone', this.doneFile)
+        .on('fileuploadfail', this.failFile)
+        .prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    },
+
+    addFile: function(e,data){
+        for (var i = 0, len = data.files.length; i < len; i++) {
+            data.files[i].id = $.guid++;
+        }
+        window.dispatchEvent(new CustomEvent('fileuploadadd',{ detail: data }));
+    },
+
+    processAlwaysFile: function(e, data){
+        var file = data.files[data.index];
+        //data.context.find('.file-uploading').remove();
+        if (file.error) {
+            console.log(file.error+':','"'+file.name+'"');
+            //data.context.remove();
+        }
+    },
+
+    processAllFile: function(e, data){
+        /*var progress = parseInt(data.loaded / data.total * 100, 10);
+        this.$fileUpload.find('.progress .meter').css(
+            'width',
+            progress + '%'
+        );*/
+    },
+
+    doneFile: function(e, data){
+        /*var model = data.result.model;
+        this
+        this.setState({ files: data.files });
+        //self.model.get('files').add(model);
+        data.context
+        .append($('<a class="btn-delete-file text-danger"/>')
+        .append('<i class="fa fa-trash-o" data-id="'+model.id+'"></i>'));*/
+    },
+
+    failFile: function(e, data){
+
+        /*data.context.append($('<small class="text-success"/>').text('   falló.'));*/
+    },
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "fileupload-component"}, 
+                React.createElement("input", {accept: "image/*", className: "fileupload fileinput-button", type: "file", name: "file", ref: "fileButton", multiple: true}), 
+                React.createElement("div", {className: "progress"}, 
+                    React.createElement("span", {className: "meter"})
+                ), 
+                React.createElement(FileList, null)
+            )
+        );
+    }
+});
+
+},{"./fileList":165,"react":156}],167:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -20172,4 +20284,4 @@ module.exports = {
     }
 };
 
-},{}]},{},[157,158,159,160,161,162,163,164,165]);
+},{}]},{},[157,158,159,160,161,162,163,164,165,166,167]);

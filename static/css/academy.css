@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'Open Sans Condensed';
+    src: url(../fonts/Open-Sans-Condensed.woff2);
+}
 html,body{
     height: 100%;
     width: 100%;
