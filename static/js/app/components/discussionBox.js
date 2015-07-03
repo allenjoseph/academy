@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var discussions = window.ACADEMY.backbone.collection.instances.discussions;
 

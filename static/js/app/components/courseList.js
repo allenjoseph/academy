@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
 

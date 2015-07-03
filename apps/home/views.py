@@ -34,21 +34,16 @@ def UploadFile(request):
 
     #guardamos el archivo.
     attachment = Attachment()
-    attachment.title=unicode(fileUploaded.name)
-    attachment.attachment=fileUploaded
+    attachment.title = unicode(fileUploaded.name)
+    attachment.size = fileUploaded.file.size
+    attachment.attachment = fileUploaded
     attachment.save()
 
     #json de la instancia guardada
     objectSerializer = ObjectSerializer()
     dictElementAttachment = objectSerializer.serialize([attachment])[0]
 
-    data = {
-        'name': unicode(fileUploaded.name),
-        'size': str(fileUploaded.file.size),
-        'model': dictElementAttachment
-    }
-
-    return JsonResponse(data)
+    return JsonResponse(dictElementAttachment)
 
 @csrf_exempt
 @require_POST

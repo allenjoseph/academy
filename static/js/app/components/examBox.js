@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     ExamForm = require('./examForm');
 
 var ExamBox = React.createClass({
@@ -17,7 +17,8 @@ var ExamBox = React.createClass({
     },
 
     openModalExam: function(){
-        this.setState({openModalClass: 'modal-is-active'});
+        var newState = { openModalClass: 'modal-is-active' };
+        this.setState(newState);
     },
 
     closeModalExam: function(){

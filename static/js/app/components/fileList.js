@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 
 module.exports = React.createClass({
     displayName: 'FileList',
@@ -12,15 +12,19 @@ module.exports = React.createClass({
     },
 
     filesAdd: function(data){
-        this.setState({ files: data.detail.files });
+        var newState = React.addons.update(this.state, {
+            files: { $push: [data.detail]}
+        });
+        this.setState(newState);
     },
 
     render: function(){
         var files = this.state.files.map(function(file){
-            debugger;
-            <li key={file.id}>
-                <span className="file-name mr1">{file.name}</span>
-            </li>
+            return(
+                <li key={file.id}>
+                    <span className="file-name mr1">{file.name}</span>
+                </li>
+            );
         });
         return(
             <ul className='file-list no-bullet text-left'>

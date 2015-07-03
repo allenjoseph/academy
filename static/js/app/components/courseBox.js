@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
 

@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
 
@@ -33,11 +33,11 @@ module.exports = React.createClass({
     },
 
     changeDescription: function(e){
-        var nextState = {},
-            key = e.target.getAttribute('name');
+        var newState = React.addons.update(this.state, {
+            description: {$set : e.target.value}
+        });
 
-        nextState[key] = e.target.value;
-        this.setState(nextState);
+        this.setState(newState);
     },
 
     render: function(){
@@ -57,7 +57,7 @@ module.exports = React.createClass({
                     <div className="small-12 columns">
                         <div className="row collapse">
                             <div className="small-10 columns">
-                                <input type="text" ref="description" name="description" value={this.state.description} onChange={this.changeDescription} placeholder={this.state.placeholder}/>
+                                <input type="text" ref="description" value={this.state.description} onChange={this.changeDescription} placeholder={this.state.placeholder}/>
                             </div>
                             <div className="small-2 columns">
                                 <a id="btn-share-exam" className="button yellow postfix">Compartir</a>

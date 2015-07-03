@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     FileList = require('./fileList');
 
 module.exports = React.createClass({
@@ -23,10 +23,11 @@ module.exports = React.createClass({
     },
 
     addFile: function(e,data){
-        for (var i = 0, len = data.files.length; i < len; i++) {
-            data.files[i].id = $.guid++;
+        var file = data.files && data.files.length ? data.files[0] : null;
+        if(file){
+            file.id = $.guid++;
+            window.dispatchEvent(new CustomEvent('fileuploadadd', { detail: file }));
         }
-        window.dispatchEvent(new CustomEvent('fileuploadadd',{ detail: data }));
     },
 
     processAlwaysFile: function(e, data){

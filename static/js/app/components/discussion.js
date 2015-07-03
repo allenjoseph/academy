@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
 module.exports = React.createClass({
