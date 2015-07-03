@@ -41,4 +41,4 @@ class MasterAdmin(admin.ModelAdmin):
 
 @admin.register(Attachment)
 class Attachment(admin.ModelAdmin):
-    list_display = ('id','title','attachment','dateCreation',)
+    list_display = ('id','name','attachment','dateCreation',)

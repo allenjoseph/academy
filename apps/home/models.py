@@ -88,7 +88,7 @@ class Profesor(models.Model):
 
 class Attachment(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=100, blank=True)
     size = models.PositiveIntegerField()
     attachment = models.FileField(upload_to='attachment/%Y/%m/%d')
     dateCreation = models.DateTimeField(auto_now_add=True)

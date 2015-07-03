@@ -22,8 +22,8 @@ var ExamBox = React.createClass({
     },
 
     closeModalExam: function(){
+        window.dispatchEvent(new Event('cleanExamForm'));
         this.setState(this.getInitialState());
-        window.dispatchEvent(new Event('clearModalExam'));
     },
 
     render: function(){

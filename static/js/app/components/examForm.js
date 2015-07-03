@@ -6,20 +6,22 @@ module.exports = React.createClass({
     displayName: 'ExamForm',
 
     getInitialState: function(){
+        this.files = [];
         return {
             course: '',
             description: '',
-            files: [],
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?'
         };
     },
 
     componentDidMount: function(){
-        window.addEventListener('clearModalExam', this.cleanModel);
+        window.addEventListener('fileuploaddone', this.addFile);
+        window.addEventListener('cleanExamForm', this.cleanExamForm);
     },
 
     componentWillUnmount: function(){
-        window.removeEventListener('clearModalExam', this.cleanModel);
+        window.removeEventListener('fileuploaddone', this.addFile);
+        window.removeEventListener('cleanExamForm', this.cleanExamForm);
     },
 
     componentDidUpdate: function(){
@@ -28,7 +30,12 @@ module.exports = React.createClass({
         }
     },
 
-    cleanModel: function(){
+    addFile: function(data){
+        this.files.push(data.detail);
+    },
+
+    cleanExamForm: function(){
+        window.dispatchEvent(new Event('fileuploadremoveall'));
         this.setState(this.getInitialState());
     },
 

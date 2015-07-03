@@ -22100,8 +22100,8 @@ var ExamBox = React.createClass({
     },
 
     closeModalExam: function(){
+        window.dispatchEvent(new Event('cleanExamForm'));
         this.setState(this.getInitialState());
-        window.dispatchEvent(new Event('clearModalExam'));
     },
 
     render: function(){
@@ -22133,20 +22133,22 @@ module.exports = React.createClass({
     displayName: 'ExamForm',
 
     getInitialState: function(){
+        this.files = [];
         return {
             course: '',
             description: '',
-            files: [],
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?'
         };
     },
 
     componentDidMount: function(){
-        window.addEventListener('clearModalExam', this.cleanModel);
+        window.addEventListener('fileuploaddone', this.addFile);
+        window.addEventListener('cleanExamForm', this.cleanExamForm);
     },
 
     componentWillUnmount: function(){
-        window.removeEventListener('clearModalExam', this.cleanModel);
+        window.removeEventListener('fileuploaddone', this.addFile);
+        window.removeEventListener('cleanExamForm', this.cleanExamForm);
     },
 
     componentDidUpdate: function(){
@@ -22155,7 +22157,12 @@ module.exports = React.createClass({
         }
     },
 
-    cleanModel: function(){
+    addFile: function(data){
+        this.files.push(data.detail);
+    },
+
+    cleanExamForm: function(){
+        window.dispatchEvent(new Event('fileuploadremoveall'));
         this.setState(this.getInitialState());
     },
 
@@ -22208,26 +22215,74 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        window.addEventListener('fileuploadadd', this.filesAdd);
+        window.addEventListener('fileuploadadd', this.addFile);
+        window.addEventListener('fileuploadremove', this.removeFile);
+        window.addEventListener('fileuploadremoveall', this.removeAllFiles);
+
+        window.addEventListener('fileuploaddone', this.addFile);
     },
 
-    filesAdd: function(data){
+    componentWillUnmount: function(){
+        window.removeEventListener('fileuploadadd', this.addFile);
+        window.removeEventListener('fileuploadremove', this.removeFile);
+        window.removeEventListener('fileuploadremoveall', this.removeAllFiles);
+    },
+
+    addFile: function(data){
         var newState = React.addons.update(this.state, {
             files: { $push: [data.detail]}
         });
         this.setState(newState);
     },
 
+    removeFile: function(data){
+        var pos = this.state.files.indexOf(data.detail || data);
+        var newState = React.addons.update(this.state, {
+            files: { $splice: [[pos,1]]}
+        });
+        this.setState(newState);
+    },
+
+    removeAllFiles: function(){
+        this.state.files.map(function(file){
+            if(file.id){
+                this.deleteFile(file);
+            }else if(file.guid){
+                this.removeFile(file)
+            }
+        },this);
+    },
+
+    deleteFile: function(file){
+        this.removeFile(file);
+        $.post('http://127.0.0.1:8000/delete/'+file.id)
+        .fail(function(){
+            console.error('fail delete file :(');
+        });
+    },
+
     render: function(){
         var files = this.state.files.map(function(file){
-            return(
-                React.createElement("li", {key: file.id}, 
-                    React.createElement("span", {className: "file-name mr1"}, file.name)
-                )
-            );
-        });
+            if(file.name && (file.id || file.guid)){
+                var icon = !file.id
+                                ? React.createElement("i", {className: "fa fa-cog fa-spin"})
+                                : React.createElement("a", {className: "btn-delete-file text-danger", onClick: this.deleteFile.bind(this,file)}, 
+                                    React.createElement("i", {className: "fa fa-trash-o"})
+                                );
+                return(
+                    React.createElement("li", {key:  file.id || file.guid, className: "file-element"}, 
+                        React.createElement("span", {className: "file-name mr1"}, 
+                            React.createElement("span", {className: "mh1"}, 
+                                icon
+                            ), 
+                            file.name
+                        )
+                    )
+                );
+            }
+        },this);
         return(
-            React.createElement("ul", {className: "file-list no-bullet text-left"}, 
+            React.createElement("ul", {className:  !this.state.files.length ? 'hide' : 'file-list no-bullet text-left'}, 
                 files
             )
         );
@@ -22252,9 +22307,7 @@ module.exports = React.createClass({
         })
         .on('fileuploadadd', this.addFile)
         .on('fileuploadprocessalways', this.processAlwaysFile)
-        .on('fileuploadprogressall', this.processAllFile)
         .on('fileuploaddone', this.doneFile)
-        .on('fileuploadfail', this.failFile)
         .prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
     },
@@ -22262,50 +22315,29 @@ module.exports = React.createClass({
     addFile: function(e,data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
-            file.id = $.guid++;
+            file.guid = 'file-' + $.guid++;
             window.dispatchEvent(new CustomEvent('fileuploadadd', { detail: file }));
         }
     },
 
     processAlwaysFile: function(e, data){
-        var file = data.files[data.index];
-        //data.context.find('.file-uploading').remove();
-        if (file.error) {
-            console.log(file.error+':','"'+file.name+'"');
-            //data.context.remove();
+        var file = data.files && data.files.length ? data.files[0] : null;
+        if(file){
+            window.dispatchEvent(new CustomEvent('fileuploadremove', { detail: file }));
+            if (file.error) {
+                console.warn('Fileupload fail',file.name,':',file.error);
+            }
         }
     },
 
-    processAllFile: function(e, data){
-        /*var progress = parseInt(data.loaded / data.total * 100, 10);
-        this.$fileUpload.find('.progress .meter').css(
-            'width',
-            progress + '%'
-        );*/
-    },
-
     doneFile: function(e, data){
-        /*var model = data.result.model;
-        this
-        this.setState({ files: data.files });
-        //self.model.get('files').add(model);
-        data.context
-        .append($('<a class="btn-delete-file text-danger"/>')
-        .append('<i class="fa fa-trash-o" data-id="'+model.id+'"></i>'));*/
-    },
-
-    failFile: function(e, data){
-
-        /*data.context.append($('<small class="text-success"/>').text('   falló.'));*/
+        window.dispatchEvent(new CustomEvent('fileuploaddone', { detail: data.result }));
     },
 
     render: function(){
         return(
             React.createElement("div", {className: "fileupload-component"}, 
                 React.createElement("input", {accept: "image/*", className: "fileupload fileinput-button", type: "file", name: "file", ref: "fileButton", multiple: true}), 
-                React.createElement("div", {className: "progress"}, 
-                    React.createElement("span", {className: "meter"})
-                ), 
                 React.createElement(FileList, null)
             )
         );

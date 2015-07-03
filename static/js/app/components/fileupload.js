@@ -15,9 +15,7 @@ module.exports = React.createClass({
         })
         .on('fileuploadadd', this.addFile)
         .on('fileuploadprocessalways', this.processAlwaysFile)
-        .on('fileuploadprogressall', this.processAllFile)
         .on('fileuploaddone', this.doneFile)
-        .on('fileuploadfail', this.failFile)
         .prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
     },
@@ -25,50 +23,29 @@ module.exports = React.createClass({
     addFile: function(e,data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
-            file.id = $.guid++;
+            file.guid = 'file-' + $.guid++;
             window.dispatchEvent(new CustomEvent('fileuploadadd', { detail: file }));
         }
     },
 
     processAlwaysFile: function(e, data){
-        var file = data.files[data.index];
-        //data.context.find('.file-uploading').remove();
-        if (file.error) {
-            console.log(file.error+':','"'+file.name+'"');
-            //data.context.remove();
+        var file = data.files && data.files.length ? data.files[0] : null;
+        if(file){
+            window.dispatchEvent(new CustomEvent('fileuploadremove', { detail: file }));
+            if (file.error) {
+                console.warn('Fileupload fail',file.name,':',file.error);
+            }
         }
     },
 
-    processAllFile: function(e, data){
-        /*var progress = parseInt(data.loaded / data.total * 100, 10);
-        this.$fileUpload.find('.progress .meter').css(
-            'width',
-            progress + '%'
-        );*/
-    },
-
     doneFile: function(e, data){
-        /*var model = data.result.model;
-        this
-        this.setState({ files: data.files });
-        //self.model.get('files').add(model);
-        data.context
-        .append($('<a class="btn-delete-file text-danger"/>')
-        .append('<i class="fa fa-trash-o" data-id="'+model.id+'"></i>'));*/
-    },
-
-    failFile: function(e, data){
-
-        /*data.context.append($('<small class="text-success"/>').text('   falló.'));*/
+        window.dispatchEvent(new CustomEvent('fileuploaddone', { detail: data.result }));
     },
 
     render: function(){
         return(
             <div className="fileupload-component">
                 <input accept="image/*" className="fileupload fileinput-button" type="file" name="file" ref="fileButton" multiple/>
-                <div className="progress">
-                    <span className="meter"></span>
-                </div>
                 <FileList />
             </div>
         );

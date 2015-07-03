@@ -34,7 +34,7 @@ def UploadFile(request):
 
     #guardamos el archivo.
     attachment = Attachment()
-    attachment.title = unicode(fileUploaded.name)
+    attachment.name = unicode(fileUploaded.name)
     attachment.size = fileUploaded.file.size
     attachment.attachment = fileUploaded
     attachment.save()
