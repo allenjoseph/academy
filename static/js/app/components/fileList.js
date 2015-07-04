@@ -29,6 +29,9 @@ module.exports = React.createClass({
     },
 
     removeFile: function(data){
+        if(data.id){
+            window.dispatchEvent(new CustomEvent('removeFileFromExam', { detail: data.id }));
+        }
         var pos = this.state.files.indexOf(data.detail || data);
         var newState = React.addons.update(this.state, {
             files: { $splice: [[pos,1]]}

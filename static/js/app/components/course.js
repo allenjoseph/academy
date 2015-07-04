@@ -4,7 +4,7 @@ module.exports = React.createClass({
     displayName: 'Course',
 
     componentDidMount: function(){
-        this.openExamEvent = new CustomEvent('openModalExam', this.props.data);
+        this.openExamEvent = new CustomEvent('openModalExam', { detail: this.props.data });
     },
 
     openModal: function(e){

@@ -21867,7 +21867,7 @@ module.exports = React.createClass({
     displayName: 'Course',
 
     componentDidMount: function(){
-        this.openExamEvent = new CustomEvent('openModalExam', this.props.data);
+        this.openExamEvent = new CustomEvent('openModalExam', { detail: this.props.data });
     },
 
     openModal: function(e){
@@ -22083,7 +22083,7 @@ var ExamBox = React.createClass({
     displayName: 'ExamBox',
 
     getInitialState: function(){
-        return {openModalClass: ''};
+        return {openModalClass: '', course: {}};
     },
 
     componentDidMount: function(){
@@ -22094,8 +22094,11 @@ var ExamBox = React.createClass({
         window.removeEventListener('openModalExam', this.openModalExam);
     },
 
-    openModalExam: function(){
-        var newState = { openModalClass: 'modal-is-active' };
+    openModalExam: function(data){
+        var newState = React.addons.update(this.state,{
+            openModalClass: { $set: 'modal-is-active' },
+            course: { $set: data.detail }
+        });
         this.setState(newState);
     },
 
@@ -22111,7 +22114,7 @@ var ExamBox = React.createClass({
                 React.createElement("div", {className: "modal-wrapper"}, 
                     React.createElement("section", {className: "modal modal-exam light-color bg"}, 
                         React.createElement("a", {className: "modal-close", onClick: this.closeModalExam}), 
-                        React.createElement(ExamForm, {isOpen: !!this.state.openModalClass})
+                        React.createElement(ExamForm, {isOpen: !!this.state.openModalClass, course: this.state.course})
                     )
                 )
             )
@@ -22133,17 +22136,19 @@ module.exports = React.createClass({
     displayName: 'ExamForm',
 
     getInitialState: function(){
-        this.files = [];
         return {
             course: '',
             description: '',
-            placeholder: 'Que examen es, Práctica, Parcial, Final... ?'
+            placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
+            files: []
         };
     },
 
     componentDidMount: function(){
         window.addEventListener('fileuploaddone', this.addFile);
         window.addEventListener('cleanExamForm', this.cleanExamForm);
+
+        window.addEventListener('removeFileFromExam', this.removeFile);
     },
 
     componentWillUnmount: function(){
@@ -22158,7 +22163,20 @@ module.exports = React.createClass({
     },
 
     addFile: function(data){
-        this.files.push(data.detail);
+        var newState = React.addons.update(this.state,{
+            files: {$push:[data.detail.id]}
+        });
+        this.setState(newState);
+    },
+
+    removeFile: function(data){
+        if(data.detail){
+            var pos = this.state.files.indexOf(data.detail);
+            var newState = React.addons.update(this.state,{
+                files: { $splice: [[pos,1]] }
+            });
+            this.setState(newState);
+        }
     },
 
     cleanExamForm: function(){
@@ -22170,8 +22188,22 @@ module.exports = React.createClass({
         var newState = React.addons.update(this.state, {
             description: {$set : e.target.value}
         });
-
         this.setState(newState);
+    },
+
+    shareExam: function(){
+        if(!this.state.files.length) return;
+
+        var exam = new Exam(this.state);
+        exam.set('course', this.props.course.id);
+        exam.save(null,{
+            success : function(exam){
+                debugger;
+            },
+            error : function(){
+                debugger;
+            }
+        });
     },
 
     render: function(){
@@ -22194,7 +22226,8 @@ module.exports = React.createClass({
                                 React.createElement("input", {type: "text", ref: "description", value: this.state.description, onChange: this.changeDescription, placeholder: this.state.placeholder})
                             ), 
                             React.createElement("div", {className: "small-2 columns"}, 
-                                React.createElement("a", {id: "btn-share-exam", className: "button yellow postfix"}, "Compartir")
+                                React.createElement("a", {id: "btn-share-exam", className: "button yellow postfix", onClick: this.shareExam, 
+                                disabled: !this.state.description || !this.state.files.length}, "Compartir")
                             )
                         )
                     )
@@ -22236,6 +22269,9 @@ module.exports = React.createClass({
     },
 
     removeFile: function(data){
+        if(data.id){
+            window.dispatchEvent(new CustomEvent('removeFileFromExam', { detail: data.id }));
+        }
         var pos = this.state.files.indexOf(data.detail || data);
         var newState = React.addons.update(this.state, {
             files: { $splice: [[pos,1]]}

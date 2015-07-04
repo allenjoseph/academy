@@ -6,17 +6,19 @@ module.exports = React.createClass({
     displayName: 'ExamForm',
 
     getInitialState: function(){
-        this.files = [];
         return {
             course: '',
             description: '',
-            placeholder: 'Que examen es, Práctica, Parcial, Final... ?'
+            placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
+            files: []
         };
     },
 
     componentDidMount: function(){
         window.addEventListener('fileuploaddone', this.addFile);
         window.addEventListener('cleanExamForm', this.cleanExamForm);
+
+        window.addEventListener('removeFileFromExam', this.removeFile);
     },
 
     componentWillUnmount: function(){
@@ -31,7 +33,20 @@ module.exports = React.createClass({
     },
 
     addFile: function(data){
-        this.files.push(data.detail);
+        var newState = React.addons.update(this.state,{
+            files: {$push:[data.detail.id]}
+        });
+        this.setState(newState);
+    },
+
+    removeFile: function(data){
+        if(data.detail){
+            var pos = this.state.files.indexOf(data.detail);
+            var newState = React.addons.update(this.state,{
+                files: { $splice: [[pos,1]] }
+            });
+            this.setState(newState);
+        }
     },
 
     cleanExamForm: function(){
@@ -43,8 +58,22 @@ module.exports = React.createClass({
         var newState = React.addons.update(this.state, {
             description: {$set : e.target.value}
         });
-
         this.setState(newState);
+    },
+
+    shareExam: function(){
+        if(!this.state.files.length) return;
+
+        var exam = new Exam(this.state);
+        exam.set('course', this.props.course.id);
+        exam.save(null,{
+            success : function(exam){
+                debugger;
+            },
+            error : function(){
+                debugger;
+            }
+        });
     },
 
     render: function(){
@@ -67,7 +96,8 @@ module.exports = React.createClass({
                                 <input type="text" ref="description" value={this.state.description} onChange={this.changeDescription} placeholder={this.state.placeholder}/>
                             </div>
                             <div className="small-2 columns">
-                                <a id="btn-share-exam" className="button yellow postfix">Compartir</a>
+                                <a id="btn-share-exam" className="button yellow postfix" onClick={this.shareExam}
+                                disabled={!this.state.description || !this.state.files.length}>Compartir</a>
                             </div>
                         </div>
                     </div>

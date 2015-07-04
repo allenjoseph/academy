@@ -5,7 +5,7 @@ var ExamBox = React.createClass({
     displayName: 'ExamBox',
 
     getInitialState: function(){
-        return {openModalClass: ''};
+        return {openModalClass: '', course: {}};
     },
 
     componentDidMount: function(){
@@ -16,8 +16,11 @@ var ExamBox = React.createClass({
         window.removeEventListener('openModalExam', this.openModalExam);
     },
 
-    openModalExam: function(){
-        var newState = { openModalClass: 'modal-is-active' };
+    openModalExam: function(data){
+        var newState = React.addons.update(this.state,{
+            openModalClass: { $set: 'modal-is-active' },
+            course: { $set: data.detail }
+        });
         this.setState(newState);
     },
 
@@ -33,7 +36,7 @@ var ExamBox = React.createClass({
                 <div className="modal-wrapper">
                     <section className="modal modal-exam light-color bg">
                         <a className="modal-close" onClick={this.closeModalExam}></a>
-                        <ExamForm isOpen={!!this.state.openModalClass}/>
+                        <ExamForm isOpen={!!this.state.openModalClass} course={this.state.course} />
                     </section>
                 </div>
             </div>

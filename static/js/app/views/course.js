@@ -1,7 +1,7 @@
 (function(){
 
     Views.Courses = Backbone.View.extend({
-
+        /*
         el : '#content-courses',
 
         initialize : function(){
@@ -20,11 +20,11 @@
         renderCourse : function( course ){
             var view = new Views.Course({ model : course });
             this.$el.append(view.render().el);
-        }
+        }*/
     });
 
     Views.Course = Backbone.View.extend({
-
+        /*
         tagName : 'li',
 
         events : {
@@ -46,11 +46,11 @@
         clickAddExam : function(){
             window.app.views.addExamModal.initModal(this.model);
             window.app.views.addExamModal.openModal();
-        }
+        }*/
     });
 
     Views.CoursePage = Backbone.View.extend({
-
+        /*
         el : "#page-course",
 
         events : {
@@ -66,7 +66,7 @@
         clickAddExam : function(){
             window.app.views.addExamModal.initModal(this.model);
             window.app.views.addExamModal.openModal();
-        }
+        }*/
     });
 
 })();
