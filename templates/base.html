@@ -5,11 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Academy</title>
-    <link rel="stylesheet" type="text/css" href="{% static "vendor-bower/font-awesome/font-awesome.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "vendor-bower/css/font-awesome.min.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/base.css"%}"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/modal.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/sweet-alert.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
 </head>
 <body class="layout-table">
@@ -51,19 +50,16 @@
 
     {% include "templates.html" %}
 
-    <script src="{% static "vendor-bower/jquery/jquery.js"%}"></script>
-    <script src="{% static "vendor-bower/jquery-ui/jquery-ui.js"%}"></script>
-    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.fileupload.js"%}"></script>
-    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.fileupload-process.js"%}"></script>
-    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.fileupload-validate.js"%}"></script>
-    <script src="{% static "vendor-bower/blueimp-file-upload/jquery.iframe-transport.js"%}"></script>
-
-    <script src="{% static "vendor/moment/moment-with-locales.js"%}"></script>
-    <script src="{% static "vendor/sweet-alert/sweet-alert.js"%}"></script>
-
-    <script src="{% static "vendor-bower/underscore/underscore.js"%}"></script>
-    <script src="{% static "vendor-bower/backbone/backbone.js"%}"></script>
-    <script src="{% static "vendor-bower/backbone.unclassified/backbone.unclassified.js"%}"></script>
+    <script src="{% static "vendor-bower/js/jquery/jquery.min.js"%}"></script>
+    <script src="{% static "vendor-bower/js/jquery-ui/jquery-ui.js"%}"></script>
+    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload.js"%}"></script>
+    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload-process.js"%}"></script>
+    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload-validate.js"%}"></script>
+    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.iframe-transport.js"%}"></script>
+    <script src="{% static "vendor-bower/js/moment/moment-with-locales.min.js"%}"></script>
+    <script src="{% static "vendor-bower/js/underscore/underscore.js"%}"></script>
+    <script src="{% static "vendor-bower/js/backbone/backbone.js"%}"></script>
+    <script src="{% static "vendor-bower/js/backbone.unclassified/backbone.unclassified.js"%}"></script>
 
     <script src="{% static "js/app/bundleApp.js"%}"></script>
     {% block content-backbone-router %}{% endblock %}

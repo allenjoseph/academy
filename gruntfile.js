@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(grunt) {
     grunt.initConfig({
 
@@ -5,7 +7,12 @@ module.exports = function(grunt) {
             install: {
                 options: {
                     targetDir: './static/vendor-bower',
-                    layout:'byType',
+                    layout: function(type, component, source) {
+                        if(type=='js'){
+                            return path.join(type, component);
+                        }
+                        return type;
+                    },
                     install: true,
                     verbose: false,
                     cleanTargetDir: false,
@@ -66,6 +73,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-browserify');
 
-    grunt.registerTask('bower', ['bower:install']);
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('watcher', ['watch']);
+    grunt.registerTask('default', ['bower:install']);
 };
