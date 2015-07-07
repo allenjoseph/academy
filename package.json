@@ -12,6 +12,7 @@
   "dependencies": {
     "browserify": "^10.2.4",
     "react": "^0.13.3",
+    "react-growl": "^0.1.2",
     "reactify": "^1.1.1"
   },
   "scripts": {

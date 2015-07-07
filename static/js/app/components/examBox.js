@@ -4,6 +4,8 @@ var React = require('react/addons'),
 var ExamBox = React.createClass({
     displayName: 'ExamBox',
 
+    growler:
+
     getInitialState: function(){
         return {openModalClass: '', course: {}};
     },
