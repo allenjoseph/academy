@@ -1,12 +1,9 @@
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
-    Growl = require('Growl/growl.react'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
 
 module.exports = React.createClass({
     displayName: 'ExamForm',
-
-    growler: null,
 
     getInitialState: function(){
         return {
@@ -22,9 +19,6 @@ module.exports = React.createClass({
         window.addEventListener('cleanExamForm', this.cleanExamForm);
 
         window.addEventListener('removeFileFromExam', this.removeFile);
-
-        Growl.setMaxToShow(5);
-        this.growler = this.ref.growler;
     },
 
     componentWillUnmount: function(){
@@ -70,23 +64,17 @@ module.exports = React.createClass({
     shareExam: function(){
         if(!this.state.files.length) return;
 
-        var notification = this.growl;
         var exam = new Exam(this.state);
         exam.set('course', this.props.course.id);
         exam.save(null,{
             success : function(exam){
                 debugger;
-
-                notification('success', 'se agregó un examen al Curso <strong>XXX</strong>');
+                $.growl({message: 'se agregó un examen al Curso <strong>XXX</strong>', style:'notice', title:'', location:'br'});
             },
             error : function(){
                 debugger;
             }
         });
-    },
-
-    growl: function(level, msg){
-        this.growler.addNotification(level, msg);
     },
 
     render: function(){
