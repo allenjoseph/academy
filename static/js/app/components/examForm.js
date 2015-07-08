@@ -67,9 +67,10 @@ module.exports = React.createClass({
         var exam = new Exam(this.state);
         exam.set('course', this.props.course.id);
         exam.save(null,{
-            success : function(exam){
+            success : function(exam, response){
                 debugger;
-                $.growl({message: 'se agregó un examen al Curso <strong>XXX</strong>', style:'notice', title:'', location:'br'});
+                $.growl({message: 'puedes verlo en <strong>XXX</strong>', style:'notice', title:'Nuevo Examen Subido!', location:'br'});
+                window.dispatchEvent(new Event('closeModalExam'));
             },
             error : function(){
                 debugger;
@@ -103,7 +104,6 @@ module.exports = React.createClass({
                         </div>
                     </div>
                 </div>
-                <Growl ref="growler"/>
             </div>
         );
     }

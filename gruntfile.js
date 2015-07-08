@@ -74,5 +74,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browserify');
 
     grunt.registerTask('watcher', ['watch']);
-    grunt.registerTask('default', ['bower:install']);
+    grunt.registerTask('bower', ['bower:install']);
+    grunt.registerTask('default', ['watcher']);
 };

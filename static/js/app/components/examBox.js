@@ -10,10 +10,12 @@ var ExamBox = React.createClass({
 
     componentDidMount: function(){
         window.addEventListener('openModalExam', this.openModalExam);
+        window.addEventListener('closeModalExam', this.closeModalExam);
     },
 
     componentWilUnmount: function(){
         window.removeEventListener('openModalExam', this.openModalExam);
+        window.removeEventListener('closeModalExam', this.closeModalExam);
     },
 
     openModalExam: function(data){

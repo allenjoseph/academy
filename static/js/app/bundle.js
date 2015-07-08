@@ -22088,10 +22088,12 @@ var ExamBox = React.createClass({
 
     componentDidMount: function(){
         window.addEventListener('openModalExam', this.openModalExam);
+        window.addEventListener('closeModalExam', this.closeModalExam);
     },
 
     componentWilUnmount: function(){
         window.removeEventListener('openModalExam', this.openModalExam);
+        window.removeEventListener('closeModalExam', this.closeModalExam);
     },
 
     openModalExam: function(data){
@@ -22197,8 +22199,10 @@ module.exports = React.createClass({
         var exam = new Exam(this.state);
         exam.set('course', this.props.course.id);
         exam.save(null,{
-            success : function(exam){
+            success : function(exam, response){
                 debugger;
+                $.growl({message: 'puedes verlo en <strong>XXX</strong>', style:'notice', title:'Nuevo Examen Subido!', location:'br'});
+                window.dispatchEvent(new Event('closeModalExam'));
             },
             error : function(){
                 debugger;
