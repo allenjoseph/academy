@@ -15,6 +15,7 @@ window.ACADEMY.backbone.model.constructors = require('./models/models');
 window.ACADEMY.backbone.collection.constructors = require('./collections/collections');
 window.ACADEMY.backbone.router.constructors = require('./routers/main');
 
+window.ACADEMY.socket = io.connect('http://127.0.0.1:3000');
 /*---------------------------------------------------------*/
 window.Views = {};
 window.app = {};
