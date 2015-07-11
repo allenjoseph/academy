@@ -14,7 +14,7 @@ class ExamView(RestServiceMixin, View):
         params = json.loads(request.body)
 
         student = Student.objects.get(pk=request.session['student_id'])
-        academyCourse = AcademyCourse.objects.get(pk=params.get('course'))
+        academyCourse = AcademyCourse.objects.get(pk=params.get('courseAcademy'))
         files = params.get('files')
 
         exam = Exam.objects.create(

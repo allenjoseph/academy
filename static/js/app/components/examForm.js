@@ -7,7 +7,6 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            course: '',
             description: '',
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
             files: []
@@ -64,12 +63,19 @@ module.exports = React.createClass({
     shareExam: function(){
         if(!this.state.files.length) return;
 
+        var course = this.props.courseAcademy.course;
+
         var exam = new Exam(this.state);
-        exam.set('course', this.props.course.id);
+        exam.set('courseAcademy', this.props.courseAcademy.id);
         exam.save(null,{
             success : function(exam, response){
                 debugger;
-                $.growl({message: 'puedes verlo en <strong>XXX</strong>', style:'notice', title:'Nuevo Examen Subido!', location:'br'});
+                $.growl({
+                    message: 'puedes verlo en <strong>XXX</strong>',
+                    style:'notice',
+                    title:'Nuevo Examen Subido!',
+                    location:'br'
+                });
                 window.dispatchEvent(new Event('closeModalExam'));
             },
             error : function(){
