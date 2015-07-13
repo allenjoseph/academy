@@ -46,7 +46,7 @@ module.exports = function(grunt) {
                     transform: ['reactify']
                 },
                 files:{
-                    'static/js/app/bundle.js' : 'static/js/app/components/*.js'
+                    'static/js/app/bundle.js' : 'static/js/app/components/**/*.js'
                 }
             },
         },
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
                 tasks: ['browserify:default']
             },
             browserifyReact: {
-                files: ['static/js/app/components/*.js'],
+                files: ['static/js/app/components/**/*.js'],
                 tasks: ['browserify:react']
             }
         }

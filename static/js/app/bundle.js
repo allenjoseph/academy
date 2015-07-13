@@ -21861,6 +21861,292 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 },{"./emptyFunction":131,"_process":1}],174:[function(require,module,exports){
+module.exports = require('./lib/React');
+
+},{"./lib/React":32}],175:[function(require,module,exports){
+var React = require('react');
+var SingleGrowl = require('./single-growl.react.js');
+
+// Private vars
+var holder = null;
+var position = "br";
+var valid_positions = ["tl", "tr", "bl", "br", "tc", "bc"];
+var delay = 3000;
+var animations = true;
+var maxShown = 8;
+
+var movePosition = function() {
+	var y = position.slice(0, 1);
+	if(y == "t") {
+		holder.style.top = "0px";
+		holder.style.bottom = "auto";
+	} else {
+		holder.style.top = "auto";
+		holder.style.bottom = "0px";
+	}
+
+	var x = position.slice(1, 2);
+	if(x == "l") {
+		holder.style.left = "0px";
+		holder.style.right = "auto";
+	} else if(x == "r") {
+		holder.style.left = "auto";
+		holder.style.right = "0px";
+	} else {
+		var neg = holder.clientWidth / 2;
+		var left = (window.innerWidth / 2) - neg;
+		holder.style.left = left + "px";
+		holder.style.right = "auto";
+	}
+}
+
+var Growl = React.createClass({displayName: "Growl",
+
+	// This is just a counter, don't modify directly
+	uid: 5200,
+
+	levels: ['info', 'warn', 'error', 'success'],
+
+	// Convenience constans for setting notification level
+	WARN: 'warn',
+	INFO: 'info',
+	ERROR: 'error',
+	SUCCESS: 'success',
+
+	// Use these statics to configure all Growls from anywhere in your application
+	statics: {
+		setPosition: function(pos) {
+			if(inArray(pos, valid_positions)) {
+				position = pos;
+			} else {
+				console.log('Unknown position supplied.');
+			}
+
+			if(holder !== null) {
+				movePosition();
+			}
+		},
+		setMaxToShow: function(ct) {
+			maxShown = ct;
+		},
+		setDelay: function(del) {
+			delay = parseInt(del);
+			SingleGrowl.setDelay(del);
+		},
+		getDelay: function() {
+			return delay;
+		},
+		noAnimations: function() {
+			animations = false;
+			SingleGrowl.noAnimations();
+		}
+	},
+
+	getInitialState: function() {
+		return {
+			notifications: []
+		}
+	},
+
+	getDefaultProps: function() {
+		return {};
+	},
+
+	handleRemovedNotification: function(uid) {
+		var notifications = this.state.notifications;
+		var n = notifications.filter(function(ele) {
+			return ele.uid !== uid;
+		});
+		this.setState( { notifications: n} );
+	},
+
+	addNotification: function(note) {
+		var n = this.state.notifications;
+		var self = this;
+		try {
+			if(note.level) {
+				if(!inArray(note.level, this.levels)) {
+					throw "Invalid level supplied";
+				} else {
+					note.uid = this.uid;
+					note.ref = "notification-"+this.uid;
+					this.uid += 1;
+					note.timeout = false;
+
+					n.push(note);
+
+					this.setState({ notifications: n });
+				}
+			}
+		} catch (ex) {
+			console.log('Error adding notification: '+ex);
+		}
+	},
+
+	componentDidMount: function() {
+		if(holder === null) {
+			holder = this.getDOMNode();
+		}
+		movePosition();
+	},
+
+	render: function() {
+		var that = this;
+
+		if(this.state.notifications.length == 0 ) {
+			return React.createElement("div", {className: "growl-wrapper empty"});
+		}
+		var isMore = "";
+		var count = 0;
+		if(this.state.notifications.length > maxShown) {
+			var amt = this.state.notifications.length - maxShown;
+			isMore = React.createElement("li", {key: "more-still"}, React.createElement("span", null, amt, " more"))
+		}
+
+		return (
+			React.createElement("div", {className: "growl-wrapper"}, 
+			  React.createElement("ul", null, 
+				this.state.notifications.map(function(n) {
+					count += 1;
+					if(count >= maxShown) {
+						return "";
+					} else {
+						return React.createElement(SingleGrowl, {key: n.uid, ref: n.ref, notification: n, onDidRemove: that.handleRemovedNotification})
+					}
+				}), 
+				isMore
+			  )
+			)
+		);
+
+	}
+});
+
+function inArray(needle, haystack) {
+	var length = haystack.length;
+	for(var i=0; i < length; i++) {
+		if(haystack[i] == needle) return true;
+	}
+	return false;
+}
+
+module.exports = Growl;
+
+},{"./single-growl.react.js":176,"react":174}],176:[function(require,module,exports){
+var React = require('react');
+
+var animations = true;
+var delay = 3000;
+
+var SingleGrowl = React.createClass({displayName: "SingleGrowl",
+
+	getInitialState: function() {
+		return {
+			remove: false
+		};
+	},
+
+	setRemove: function() {
+
+		// Just in case this was triggered some other way than the timeout itself.
+		clearTimeout(this.props.notification.timeout);
+
+		if(!animations) {
+			this.props.onDidRemove(this.props.notification.uid);
+		} else {
+			this.setState({ remove: true });
+		}
+	},
+
+	statics: {
+		noAnimations: function() {
+			animations = false;
+		},
+		setDelay: function(ms) {
+			delay = ms;
+		},
+		getDelay: function() {
+			return delay;
+		}
+	},
+
+	getDefaultProps: function() {
+		return {
+			notification: null,
+			onDidRemove: function(uid) {}
+		};
+	},
+
+	startTimer: function() {
+		var note = this.props.notification;
+		var self = this;
+		note.timeout = setTimeout(function() {
+						self.setRemove();
+					}, delay);
+	},
+
+	componentDidMount: function() {
+		// This should always evaluate to true, but just in case...
+		if(this.props.notification.timeout === false) {
+			this.startTimer();
+		}
+
+		if(animations) {
+			var self = this;
+			var ele = this.getDOMNode();
+			var transitionEvent = whichTransitionEvent();
+			if(transitionEvent) {
+				ele.addEventListener(transitionEvent, function() {
+					if(self.state.remove) {
+						self.props.onDidRemove(self.props.notification.uid);
+					}
+				});
+			} else {
+				// Force animations to false bc this browser doesn't support them...
+				console.log('Animations disabled. Browser does not support.');
+				animations = false;
+			}
+		}
+	},
+
+	render: function() {
+		var cname = "growl " + this.props.notification.level;
+		if(this.state.remove) {
+			cname = cname + " removing";
+		}
+		return (
+            React.createElement("li", {className: cname}, 
+                React.createElement("span", null, 
+                    React.createElement("div", {className: "growl-title"}, this.props.notification.title), 
+                    React.createElement("div", {className: "growl-message"}, this.props.notification.message)
+                )
+            )
+        );
+	}
+
+});
+
+/* From Modernizr */
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition':'transitionend',
+      'OTransition':'oTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( el.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
+
+module.exports = SingleGrowl;
+
+},{"react":174}],177:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -21921,7 +22207,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],175:[function(require,module,exports){
+},{"react/addons":2}],178:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
@@ -21943,7 +22229,7 @@ React.render(
   document.getElementById('content-react')
 );
 
-},{"./courseList":176,"react/addons":2}],176:[function(require,module,exports){
+},{"./courseList":179,"react/addons":2}],179:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -21977,7 +22263,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":174,"./mixins":184,"react/addons":2}],177:[function(require,module,exports){
+},{"./course":177,"./mixins":187,"react/addons":2}],180:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
@@ -22017,7 +22303,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],178:[function(require,module,exports){
+},{"react/addons":2}],181:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var discussions = window.ACADEMY.backbone.collection.instances.discussions;
@@ -22039,7 +22325,7 @@ React.render(
     document.getElementById('discussions-react')
 );
 
-},{"./discussionList":179,"react/addons":2}],179:[function(require,module,exports){
+},{"./discussionList":182,"react/addons":2}],182:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
@@ -22075,7 +22361,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":177,"./mixins":184,"react/addons":2}],180:[function(require,module,exports){
+},{"./discussion":180,"./mixins":187,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22083,7 +22369,7 @@ var ExamBox = React.createClass({
     displayName: 'ExamBox',
 
     getInitialState: function(){
-        return {openModalClass: '', course: {}};
+        return {openModalClass: '', courseAcademy: {}};
     },
 
     componentDidMount: function(){
@@ -22099,7 +22385,7 @@ var ExamBox = React.createClass({
     openModalExam: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
-            course: { $set: data.detail }
+            courseAcademy: { $set: data.detail }
         });
         this.setState(newState);
     },
@@ -22116,7 +22402,7 @@ var ExamBox = React.createClass({
                 React.createElement("div", {className: "modal-wrapper"}, 
                     React.createElement("section", {className: "modal modal-exam light-color bg"}, 
                         React.createElement("a", {className: "modal-close", onClick: this.closeModalExam}), 
-                        React.createElement(ExamForm, {isOpen: !!this.state.openModalClass, course: this.state.course})
+                        React.createElement(ExamForm, {isOpen: !!this.state.openModalClass, courseAcademy: this.state.courseAcademy})
                     )
                 )
             )
@@ -22129,7 +22415,7 @@ React.render(
   document.getElementById('modal-exam')
 );
 
-},{"./examForm":181,"react/addons":2}],181:[function(require,module,exports){
+},{"./examForm":184,"react/addons":2}],184:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -22139,7 +22425,6 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            course: '',
             description: '',
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
             files: []
@@ -22196,13 +22481,19 @@ module.exports = React.createClass({
     shareExam: function(){
         if(!this.state.files.length) return;
 
+        var course = this.props.courseAcademy.course;
+        var self = this;
+
         var exam = new Exam(this.state);
-        exam.set('course', this.props.course.id);
+        exam.set('courseAcademy', this.props.courseAcademy.id);
         exam.save(null,{
             success : function(exam, response){
-                debugger;
-                $.growl({message: 'puedes verlo en <strong>XXX</strong>', style:'notice', title:'Nuevo Examen Subido!', location:'br'});
                 window.dispatchEvent(new Event('closeModalExam'));
+                window.ACADEMY.socket.emit('addExam',{
+                    level:'success',
+                    title:'Nuevo Examen Subido!',
+                    message: 'puedes verlo en <strong>'+ course.name +'</strong>'
+                });
             },
             error : function(){
                 debugger;
@@ -22241,7 +22532,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":183,"react/addons":2}],182:[function(require,module,exports){
+},{"./fileupload":186,"react/addons":2}],185:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22329,7 +22620,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],183:[function(require,module,exports){
+},{"react/addons":2}],186:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -22384,7 +22675,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":182,"react/addons":2}],184:[function(require,module,exports){
+},{"./fileList":185,"react/addons":2}],187:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -22414,4 +22705,37 @@ module.exports = {
     }
 };
 
-},{}]},{},[174,175,176,177,178,179,180,181,182,183,184]);
+},{}],188:[function(require,module,exports){
+var React = require('react'),
+    Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
+
+var NotificationBox = React.createClass({
+    displayName : 'NotificationBox',
+    growler: null,
+    componentDidMount: function(){
+        window.addEventListener('showNotification', this.showNotification);
+
+        Growl.setMaxToShow(5); // Default is 8
+        this.growler = this.refs.growler;
+    },
+    componentWillUnmount: function(){
+        window.removeEventListener('showNotification', this.showNotification);
+    },
+    showNotification: function(data){
+        this.growler.addNotification(data.detail);
+    },
+    render: function(){
+        return(
+            React.createElement("div", {className: "notification-wrapper"}, 
+                React.createElement(Growl, {ref: "growler"})
+            )
+        );
+    }
+});
+
+React.render(
+    React.createElement(NotificationBox, null),
+    document.getElementById('notification')
+);
+
+},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188]);

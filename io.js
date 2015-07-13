@@ -3,15 +3,13 @@ var app = require('express')(),
     io = require('socket.io')(http);
 
 io.on('connection', function(socket){
-    console.log('a user connected: ');
 
-    socket.on('notification', function(msg){
-        console.log('msg :',msg);
-        io.emit('notification', msg);
+    socket.on('addExam', function(data){
+        io.emit('newExam', data);
     });
 
     socket.on('disconnect', function(){
-        console.log('a user disconnect: ');
+        //..
     });
 });
 

@@ -16,6 +16,9 @@ window.ACADEMY.backbone.collection.constructors = require('./collections/collect
 window.ACADEMY.backbone.router.constructors = require('./routers/main');
 
 window.ACADEMY.socket = io.connect('http://127.0.0.1:3000');
+window.ACADEMY.socket.on('newExam', function(data){
+    window.dispatchEvent(new CustomEvent('showNotification', { detail: data }));
+});
 /*---------------------------------------------------------*/
 window.Views = {};
 window.app = {};

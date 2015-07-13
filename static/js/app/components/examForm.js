@@ -64,19 +64,18 @@ module.exports = React.createClass({
         if(!this.state.files.length) return;
 
         var course = this.props.courseAcademy.course;
+        var self = this;
 
         var exam = new Exam(this.state);
         exam.set('courseAcademy', this.props.courseAcademy.id);
         exam.save(null,{
             success : function(exam, response){
-                debugger;
-                $.growl({
-                    message: 'puedes verlo en <strong>XXX</strong>',
-                    style:'notice',
-                    title:'Nuevo Examen Subido!',
-                    location:'br'
-                });
                 window.dispatchEvent(new Event('closeModalExam'));
+                window.ACADEMY.socket.emit('addExam',{
+                    level:'success',
+                    title:'Nuevo Examen Subido!',
+                    message: 'puedes verlo en <strong>'+ course.name +'</strong>'
+                });
             },
             error : function(){
                 debugger;

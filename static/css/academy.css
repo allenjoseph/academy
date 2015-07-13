@@ -560,3 +560,75 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
     border-bottom: 1px dashed #ccc;
 }
 /* end File button */
+
+#notification{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+.notification-wrapper{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.growl-wrapper {
+    position: absolute;
+    width: 20%;
+    height: auto;
+    z-index: 999;
+}
+.growl-wrapper.empty {
+    display: none;
+}
+.growl-wrapper ul {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.growl-wrapper ul li {
+    position: relative;
+    margin: .25em 0 .25em 0;
+}
+.growl-wrapper ul li > span {
+    border-radius: 4px;
+    transition: all 1s ease;
+    display: block;
+    background: #7f8c8d;
+    color: #FFF;
+    padding: .5em;
+    right: 0;
+}
+.growl-wrapper ul li.removing > span {
+    opacity: 0;
+    right: -20%;
+}
+.growl.error > span{
+    color: #FFF;
+    background: #C0392B;
+}
+.growl.success > span{
+    color: #FFF;
+    background: #2ECC71;
+}
+.growl.warn > span{
+    color: #FFF;
+    background: #F39C12;
+}
+.growl.info > span{
+    color: #FFF;
+    background: #7f8c8d;
+}
+.growl .growl-title {
+    font-size: 1.125em;
+    line-height: 1.5em;
+}
+.growl .growl-message {
+    font-size: .875em;
+    line-height: 1.125em;
+}

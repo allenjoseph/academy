@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Academy</title>
     <link rel="stylesheet" type="text/css" href="{% static "vendor-bower/css/font-awesome.min.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "vendor-bower/css/jquery.growl.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/base.css"%}"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/modal.css"%}">
@@ -14,6 +13,7 @@
     <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 </head>
 <body class="layout-table">
+    <div id="notification"></div>
     <div class="header-group">
         <div id="header">
             <div class="row">
@@ -53,7 +53,6 @@
     {% include "templates.html" %}
 
     <script src="{% static "vendor-bower/js/jquery/jquery.min.js"%}"></script>
-    <script src="{% static "vendor-bower/js/growl/jquery.growl.js"%}"></script>
     <script src="{% static "vendor-bower/js/jquery-ui/jquery-ui.js"%}"></script>
     <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload.js"%}"></script>
     <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload-process.js"%}"></script>
