@@ -26,9 +26,13 @@ module.exports = React.createClass({
             );
         });
         return(
-            <ul className="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
-                {discussionNodes}
-            </ul>
+            <div className="row">
+                <div className="large-12 columns">
+                    <ul className="small-block-grid-1 medium-block-grid-2 large-block-grid-2">
+                        {discussionNodes}
+                    </ul>
+                </div>
+            </div>
         );
     }
 });

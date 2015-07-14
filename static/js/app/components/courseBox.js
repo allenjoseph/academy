@@ -16,5 +16,5 @@ var CourseBox = React.createClass({
 
 React.render(
   <CourseBox />,
-  document.getElementById('content-react')
+  document.getElementById('courseBox')
 );

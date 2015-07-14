@@ -7,7 +7,7 @@ var NotificationBox = React.createClass({
     componentDidMount: function(){
         window.addEventListener('showNotification', this.showNotification);
 
-        Growl.setMaxToShow(5); // Default is 8
+        Growl.setMaxToShow(5);
         this.growler = this.refs.growler;
     },
     componentWillUnmount: function(){

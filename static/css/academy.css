@@ -568,6 +568,8 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
     top: 0;
     left: 0;
     padding: 10px;
+    z-index: 999;
+    pointer-events: none;
 }
 .notification-wrapper{
     position: relative;
@@ -578,7 +580,6 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
     position: absolute;
     width: 20%;
     height: auto;
-    z-index: 999;
 }
 .growl-wrapper.empty {
     display: none;

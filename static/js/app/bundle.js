@@ -22147,6 +22147,73 @@ function whichTransitionEvent(){
 module.exports = SingleGrowl;
 
 },{"react":174}],177:[function(require,module,exports){
+var React = require('react');
+var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+
+var CommentBox = React.createClass({
+    displayName: 'CommentBox',
+    getInitialState: function(){
+        return {openModalClass: '', discussion: {}};
+    },
+    closeModalComment: function(){
+
+    },
+    render: function(){
+        return(
+            React.createElement("div", {className: 'modal-content ' + this.state.openModalClass}, 
+                React.createElement("div", {className: "modal-overlay"}), 
+                React.createElement("div", {className: "modal-wrapper"}, 
+                    React.createElement("section", {className: "modal modal-comment light-color bg"}, 
+                        React.createElement("a", {className: "modal-close", onClick: this.closeModalComment}), 
+                        React.createElement("div", {className: "comment-wrapper"}, 
+                            React.createElement("div", {className: "comment-header"}, 
+                                React.createElement("div", {className: "row comment-header-top"}, 
+                                    React.createElement("div", {className: "small-12 columns"}, 
+                                        React.createElement("a", null, this.props.discussion.question)
+                                    )
+                                ), 
+                                React.createElement("div", {className: "row comment-header-footer"}, 
+                                    React.createElement("div", {className: "small-12 columns comment-header-footer-content"}, 
+                                        React.createElement("span", {className: "pull-left"}, React.createElement("strong", null, this.props.discussion.dateCreation)), 
+                                        React.createElement("span", {className: "pull-right"}, 
+                                            React.createElement("strong", {id: "counter-comments"}, this.props.discussion.comments.length), 
+                                            React.createElement("strong", null, " comentarios")), 
+                                        React.createElement("span", null, 
+                                            React.createElement("figure", {title: "<%= student.name %> <%= student.lastname %>"}, 
+                                                React.createElement("img", {src: URL_STACTIC + this.props.student.photo, className: "cicle"})
+                                            )
+                                        )
+                                    )
+                                )
+                            ), 
+                            React.createElement("div", {className: "comment-body-wrapper"}, 
+                                React.createElement("div", {id: "content-discussion-comments", className: "comment-body-content"}, 
+                                    React.createElement("span", null, "Cargando Comentarios")
+                                )
+                            ), 
+                            React.createElement("div", {className: "comment-footer"}, 
+                                React.createElement("span", {className: "disclaimer"}, "Presione enter para enviar."), 
+                                React.createElement("span", {id: "counter-characters", className: "counter"}, "150"), 
+                                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", maxlength: "150"}), 
+                                React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
+                                    React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
+                                    React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary"}, "Cancelar")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+React.render(
+    React.createElement(CommentBox, null),
+    document.getElementById('commnetBox')
+);
+
+},{"react":174}],178:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22207,7 +22274,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],178:[function(require,module,exports){
+},{"react/addons":2}],179:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
@@ -22226,10 +22293,10 @@ var CourseBox = React.createClass({
 
 React.render(
   React.createElement(CourseBox, null),
-  document.getElementById('content-react')
+  document.getElementById('courseBox')
 );
 
-},{"./courseList":179,"react/addons":2}],179:[function(require,module,exports){
+},{"./courseList":180,"react/addons":2}],180:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -22263,7 +22330,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":177,"./mixins":187,"react/addons":2}],180:[function(require,module,exports){
+},{"./course":178,"./mixins":189,"react/addons":2}],181:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
@@ -22303,9 +22370,10 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],181:[function(require,module,exports){
+},{"react/addons":2}],182:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
+var DiscussionForm = require('./discussionForm');
 var discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 var DiscussionBox = React.createClass({
@@ -22313,7 +22381,8 @@ var DiscussionBox = React.createClass({
 
     render: function(){
         return(
-            React.createElement("div", {className: "large-12 columns"}, 
+            React.createElement("div", {className: "row"}, 
+                React.createElement(DiscussionForm, null), 
                 React.createElement(DiscussionList, {discussions: discussions})
             )
         );
@@ -22322,10 +22391,50 @@ var DiscussionBox = React.createClass({
 
 React.render(
     React.createElement(DiscussionBox, null),
-    document.getElementById('discussions-react')
+    document.getElementById('discussionBox')
 );
 
-},{"./discussionList":182,"react/addons":2}],182:[function(require,module,exports){
+},{"./discussionForm":183,"./discussionList":184,"react/addons":2}],183:[function(require,module,exports){
+var React = require('react/addons');
+
+module.exports = React.createClass({
+    displayName: 'DiscussionForm',
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "large-12 columns"}, 
+                    React.createElement("div", {className: "row border-bottom-dark"}, 
+                        React.createElement("div", {className: "small-8 columns"}, 
+                            React.createElement("div", {className: "row"}, 
+                                React.createElement("div", {className: "small-12 medium-3 columns menu-link"}, 
+                                    React.createElement("h3", null, React.createElement("a", {id: "btn-new-discussion"}, "NUEVA"))
+                                ), 
+                                React.createElement("div", {className: "small-12 medium-3 columns end menu-link"}, 
+                                    React.createElement("h3", null, React.createElement("a", {id: "btn-search-discussion"}, "BUSCAR"))
+                                )
+                            )
+                        )
+                    ), 
+                    React.createElement("div", {id: "form-add-discussion", className: "row border-bottom-dark"}, 
+                        React.createElement("div", {className: "small-12 columns"}, 
+                            React.createElement("div", {className: "row collapse"}, 
+                                React.createElement("div", {className: "small-10 columns"}, 
+                                    React.createElement("input", {id: "input-question-discussion", type: "text", placeholder: "Escribe tu pregunta aquí."})
+                                ), 
+                                React.createElement("div", {className: "small-2 columns"}, 
+                                    React.createElement("a", {id: "btn-send-discussion", className: "button yellow postfix"}, "Enviar")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+},{"react/addons":2}],184:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
@@ -22354,14 +22463,18 @@ module.exports = React.createClass({
             );
         });
         return(
-            React.createElement("ul", {className: "small-block-grid-1 medium-block-grid-2 large-block-grid-2"}, 
-                discussionNodes
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "large-12 columns"}, 
+                    React.createElement("ul", {className: "small-block-grid-1 medium-block-grid-2 large-block-grid-2"}, 
+                        discussionNodes
+                    )
+                )
             )
         );
     }
 });
 
-},{"./discussion":180,"./mixins":187,"react/addons":2}],183:[function(require,module,exports){
+},{"./discussion":181,"./mixins":189,"react/addons":2}],185:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22412,10 +22525,10 @@ var ExamBox = React.createClass({
 
 React.render(
   React.createElement(ExamBox, null),
-  document.getElementById('modal-exam')
+  document.getElementById('examBox')
 );
 
-},{"./examForm":184,"react/addons":2}],184:[function(require,module,exports){
+},{"./examForm":186,"react/addons":2}],186:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -22532,7 +22645,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":186,"react/addons":2}],185:[function(require,module,exports){
+},{"./fileupload":188,"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22620,7 +22733,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],186:[function(require,module,exports){
+},{"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -22675,7 +22788,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":185,"react/addons":2}],187:[function(require,module,exports){
+},{"./fileList":187,"react/addons":2}],189:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -22705,7 +22818,7 @@ module.exports = {
     }
 };
 
-},{}],188:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 var React = require('react'),
     Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
 
@@ -22715,7 +22828,7 @@ var NotificationBox = React.createClass({
     componentDidMount: function(){
         window.addEventListener('showNotification', this.showNotification);
 
-        Growl.setMaxToShow(5); // Default is 8
+        Growl.setMaxToShow(5);
         this.growler = this.refs.growler;
     },
     componentWillUnmount: function(){
@@ -22738,4 +22851,4 @@ React.render(
     document.getElementById('notification')
 );
 
-},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188]);
+},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190]);

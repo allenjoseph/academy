@@ -48,5 +48,5 @@ var ExamBox = React.createClass({
 
 React.render(
   <ExamBox />,
-  document.getElementById('modal-exam')
+  document.getElementById('examBox')
 );
