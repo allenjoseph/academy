@@ -22150,10 +22150,69 @@ module.exports = SingleGrowl;
 var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
+var CommentForm = React.createClass({displayName: "CommentForm",
+    render: function(){
+        return(
+            React.createElement("div", {className: "comment-footer"}, 
+                React.createElement("span", {className: "disclaimer"}, "Presione enter para enviar."), 
+                React.createElement("span", {id: "counter-characters", className: "counter"}, "150"), 
+                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", maxlength: "150"}), 
+                React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
+                    React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
+                    React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary"}, "Cancelar")
+                )
+            )
+        );
+    }
+});
+
+var CommentList = React.createClass({displayName: "CommentList",
+    getInitialState: function(){
+        return {comments:[]}
+    },
+    render: function(){
+        var comments = this.state.comments.map(function(comment){
+            return(
+                React.createElement("div", {className: "row comment-entry"}, 
+                    React.createElement("div", {class: "comment-entry-figure"}, 
+                        React.createElement("figure", {title: comment.student.name + ' ' + comment.student.lastname}, 
+                             comment.student.photo ? React.createElement("img", {src: URL_STACTIC + comment.student.photo, class: "cicle"}) : ''
+                        )
+                    ), 
+                    React.createElement("div", {class: "comment-entry-text"}, 
+                        React.createElement("span", null, comment.comment), 
+                        React.createElement("small", null, comment.dateCreation)
+                    )
+                )
+            );
+        });
+        return(
+            React.createElement("div", {className: "comment-body-wrapper"}, 
+                React.createElement("div", {id: "content-discussion-comments", className: "comment-body-content"}, 
+                    React.createElement("span", null, "Cargando Comentarios"), 
+                    comments
+                )
+            )
+        );
+    }
+});
+
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
     getInitialState: function(){
-        return {openModalClass: '', discussion: {}};
+        return {
+            openModalClass: '',
+            discussion: {
+                question: '',
+                dateCreation: '',
+                comments:[]
+            },
+            student: {
+                name: '',
+                lastname: '',
+                photo:''
+            }
+        };
     },
     closeModalComment: function(){
 
@@ -22169,37 +22228,25 @@ var CommentBox = React.createClass({
                             React.createElement("div", {className: "comment-header"}, 
                                 React.createElement("div", {className: "row comment-header-top"}, 
                                     React.createElement("div", {className: "small-12 columns"}, 
-                                        React.createElement("a", null, this.props.discussion.question)
+                                        React.createElement("a", null, this.state.discussion.question)
                                     )
                                 ), 
                                 React.createElement("div", {className: "row comment-header-footer"}, 
                                     React.createElement("div", {className: "small-12 columns comment-header-footer-content"}, 
-                                        React.createElement("span", {className: "pull-left"}, React.createElement("strong", null, this.props.discussion.dateCreation)), 
+                                        React.createElement("span", {className: "pull-left"}, React.createElement("strong", null, this.state.discussion.dateCreation)), 
                                         React.createElement("span", {className: "pull-right"}, 
-                                            React.createElement("strong", {id: "counter-comments"}, this.props.discussion.comments.length), 
+                                            React.createElement("strong", {id: "counter-comments"}, this.state.discussion.comments.length), 
                                             React.createElement("strong", null, " comentarios")), 
                                         React.createElement("span", null, 
-                                            React.createElement("figure", {title: "<%= student.name %> <%= student.lastname %>"}, 
-                                                React.createElement("img", {src: URL_STACTIC + this.props.student.photo, className: "cicle"})
-                                            )
+                                        React.createElement("figure", {title: this.state.student.name + ' ' + this.state.student.lastname}, 
+                                         this.state.student.photo ? React.createElement("img", {src: URL_STACTIC + this.state.student.photo, className: "cicle"}) : ''
+                                        )
                                         )
                                     )
                                 )
                             ), 
-                            React.createElement("div", {className: "comment-body-wrapper"}, 
-                                React.createElement("div", {id: "content-discussion-comments", className: "comment-body-content"}, 
-                                    React.createElement("span", null, "Cargando Comentarios")
-                                )
-                            ), 
-                            React.createElement("div", {className: "comment-footer"}, 
-                                React.createElement("span", {className: "disclaimer"}, "Presione enter para enviar."), 
-                                React.createElement("span", {id: "counter-characters", className: "counter"}, "150"), 
-                                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", maxlength: "150"}), 
-                                React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
-                                    React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
-                                    React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary"}, "Cancelar")
-                                )
-                            )
+                            React.createElement(CommentList, null), 
+                            React.createElement(CommentForm, null)
                         )
                     )
                 )
@@ -22210,7 +22257,7 @@ var CommentBox = React.createClass({
 
 React.render(
     React.createElement(CommentBox, null),
-    document.getElementById('commnetBox')
+    document.getElementById('commentBox')
 );
 
 },{"react":174}],178:[function(require,module,exports){
@@ -22353,7 +22400,7 @@ module.exports = React.createClass({
                         React.createElement("div", {className: "small-12 columns"}, 
                             React.createElement("span", {className: "pull-left"}, 
                                 React.createElement("figure", {title: this.props.student.name + ' ' + this.props.student.lastname}, 
-                                    React.createElement("img", {src: URL_STACTIC + this.props.student.photo, className: "cicle"}), 
+                                     this.props.student.photo ? React.createElement("img", {src: URL_STACTIC + this.props.student.photo, className: "cicle"}) : '', 
                                     React.createElement("span", null, this.props.student.name, " ", this.props.student.lastname)
                                 )
                             ), 

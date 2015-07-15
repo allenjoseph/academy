@@ -20,7 +20,7 @@ module.exports = React.createClass({
                         <div className="small-12 columns">
                             <span className="pull-left">
                                 <figure title={this.props.student.name + ' ' + this.props.student.lastname}>
-                                    <img src={URL_STACTIC + this.props.student.photo} className="cicle" />
+                                    { this.props.student.photo ? <img src={URL_STACTIC + this.props.student.photo} className="cicle" /> : '' }
                                     <span>{this.props.student.name} {this.props.student.lastname}</span>
                                 </figure>
                             </span>
