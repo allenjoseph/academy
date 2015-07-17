@@ -3,6 +3,11 @@ var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
 module.exports = React.createClass({
     displayName: 'Discussion',
+
+    openComments: function(){
+        window.dispatchEvent(new CustomEvent('openModalComment',{ detail : this.props.discussion }));
+    },
+
     render: function(){
         return(
             <li>
@@ -10,8 +15,8 @@ module.exports = React.createClass({
                     <div className="row">
                         <div className="small-12 columns">
                             <p>
-                                <a className="discussion-question">
-                                {this.props.question}
+                                <a className="discussion-question" onClick={this.openComments}>
+                                {this.props.discussion.question}
                                 </a>
                             </p>
                         </div>
@@ -19,16 +24,18 @@ module.exports = React.createClass({
                     <div className="row">
                         <div className="small-12 columns">
                             <span className="pull-left">
-                                <figure title={this.props.student.name + ' ' + this.props.student.lastname}>
-                                    { this.props.student.photo ? <img src={URL_STACTIC + this.props.student.photo} className="cicle" /> : '' }
-                                    <span>{this.props.student.name} {this.props.student.lastname}</span>
+                                <figure title={this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}>
+                                    { this.props.discussion.student.photo ? <img src={URL_STACTIC + this.props.discussion.student.photo} className="cicle" /> : '' }
+                                    <span>{this.props.discussion.student.name} {this.props.discussion.student.lastname}</span>
                                 </figure>
                             </span>
                             <span className="pull-right">
-                                <strong id="discussion-counter-comments">{this.props.comments}</strong>
+                                <strong id="discussion-counter-comments">
+                                    {this.props.discussion.comments}
+                                </strong>
                                 <strong> comentarios</strong>
                             </span>
-                            <span className="pull-right">{this.props.dateCreation}</span>
+                            <span className="pull-right">{this.props.discussion.dateCreation}</span>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var DiscussionForm = require('./discussionForm');
-var discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 var DiscussionBox = React.createClass({
     displayName: 'DiscussionBox',
@@ -10,7 +9,7 @@ var DiscussionBox = React.createClass({
         return(
             <div className="row">
                 <DiscussionForm />
-                <DiscussionList discussions={discussions}/>
+                <DiscussionList />
             </div>
         );
     }

@@ -1,73 +1,39 @@
 var React = require('react');
+var CommentForm = require('./commentForm');
+var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
-
-var CommentForm = React.createClass({
-    render: function(){
-        return(
-            <div className="comment-footer">
-                <span className="disclaimer">Presione enter para enviar.</span>
-                <span id="counter-characters" className="counter">150</span>
-                <textarea id="add-comment-textarea" className="comment-textarea" maxlength="150"></textarea>
-                <div id="buttons-confirm-comment" className="comment-footer-confirm">
-                    <button id="button-add-comment" className="button tiny yellow mr1">Enviar Comentario</button>
-                    <button id="button-cancel-comment" className="button tiny secondary">Cancelar</button>
-                </div>
-            </div>
-        );
-    }
-});
-
-var CommentList = React.createClass({
-    getInitialState: function(){
-        return {comments:[]}
-    },
-    render: function(){
-        var comments = this.state.comments.map(function(comment){
-            return(
-                <div className="row comment-entry">
-                    <div class="comment-entry-figure">
-                        <figure title={comment.student.name + ' ' + comment.student.lastname}>
-                            { comment.student.photo ? <img src={URL_STACTIC + comment.student.photo} class="cicle" /> : '' }
-                        </figure>
-                    </div>
-                    <div class="comment-entry-text">
-                        <span>{comment.comment}</span>
-                        <small>{comment.dateCreation}</small>
-                    </div>
-                </div>
-            );
-        });
-        return(
-            <div className="comment-body-wrapper">
-                <div id="content-discussion-comments" className="comment-body-content">
-                    <span>Cargando Comentarios</span>
-                    {comments}
-                </div>
-            </div>
-        );
-    }
-});
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
     getInitialState: function(){
         return {
             openModalClass: '',
-            discussion: {
-                question: '',
-                dateCreation: '',
-                comments:[]
-            },
-            student: {
-                name: '',
-                lastname: '',
-                photo:''
-            }
+            discussion: {}
         };
     },
-    closeModalComment: function(){
 
+    componentDidMount: function(){
+        window.addEventListener('openModalComment', this.openModalComment);
+        window.addEventListener('closeModalComment', this.closeModalComment);
     },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('openModalComment', this.openModalComment);
+        window.removeEventListener('closeModalComment', this.closeModalComment);
+    },
+
+    openModalComment: function(data){
+        var newState = React.addons.update(this.state,{
+            openModalClass: { $set: 'modal-is-active' },
+            discussion: { $set: data.detail }
+        });
+        this.setState(newState);
+    },
+
+    closeModalComment: function(){
+        this.setState(this.getInitialState());
+    },
+
     render: function(){
         return(
             <div className={'modal-content ' + this.state.openModalClass}>
@@ -86,17 +52,28 @@ var CommentBox = React.createClass({
                                     <div className="small-12 columns comment-header-footer-content">
                                         <span className="pull-left"><strong>{this.state.discussion.dateCreation}</strong></span>
                                         <span className="pull-right">
-                                            <strong id="counter-comments">{this.state.discussion.comments.length}</strong>
+                                            <strong id="counter-comments">
+                                                {this.state.discussion.comments || 0}
+                                            </strong>
                                             <strong> comentarios</strong></span>
                                         <span>
-                                        <figure title={this.state.student.name + ' ' + this.state.student.lastname}>
-                                        { this.state.student.photo ? <img src={URL_STACTIC + this.state.student.photo} className="cicle" /> : '' }
-                                        </figure>
+                                        {
+                                            !this.state.discussion.student ? '' :
+                                                <figure title={this.state.discussion.student.name + ' ' + this.state.discussion.student.lastname}>
+                                                    {
+                                                        !this.state.discussion.student.photo ? '' :
+                                                            <img src={URL_STACTIC + this.state.discussion.student.photo} className="cicle" />
+                                                    }
+                                                </figure>
+                                        }
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <CommentList />
+                            {
+                                !this.state.discussion.id ? '' :
+                                    <CommentList discussionId={this.state.discussion.id}/>
+                            }
                             <CommentForm />
                         </div>
                     </section>

@@ -36,6 +36,7 @@ module.exports = {
 
             _collection.courses = new _Collection.courses();
             _collection.discussions = new _Collection.discussions();
+            _collection.comments = new _Collection.comments();
 
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
@@ -44,7 +45,6 @@ module.exports = {
             }
 
             app.views.submenuDiscussions = new Views.SubmenuDiscussions();
-            //app.views.addExamModal = new Views.AddExamModal();
         }
     })
 

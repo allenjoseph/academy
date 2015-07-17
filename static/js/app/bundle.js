@@ -22148,75 +22148,41 @@ module.exports = SingleGrowl;
 
 },{"react":174}],177:[function(require,module,exports){
 var React = require('react');
+var CommentForm = require('./commentForm');
+var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
-
-var CommentForm = React.createClass({displayName: "CommentForm",
-    render: function(){
-        return(
-            React.createElement("div", {className: "comment-footer"}, 
-                React.createElement("span", {className: "disclaimer"}, "Presione enter para enviar."), 
-                React.createElement("span", {id: "counter-characters", className: "counter"}, "150"), 
-                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", maxlength: "150"}), 
-                React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
-                    React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
-                    React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary"}, "Cancelar")
-                )
-            )
-        );
-    }
-});
-
-var CommentList = React.createClass({displayName: "CommentList",
-    getInitialState: function(){
-        return {comments:[]}
-    },
-    render: function(){
-        var comments = this.state.comments.map(function(comment){
-            return(
-                React.createElement("div", {className: "row comment-entry"}, 
-                    React.createElement("div", {class: "comment-entry-figure"}, 
-                        React.createElement("figure", {title: comment.student.name + ' ' + comment.student.lastname}, 
-                             comment.student.photo ? React.createElement("img", {src: URL_STACTIC + comment.student.photo, class: "cicle"}) : ''
-                        )
-                    ), 
-                    React.createElement("div", {class: "comment-entry-text"}, 
-                        React.createElement("span", null, comment.comment), 
-                        React.createElement("small", null, comment.dateCreation)
-                    )
-                )
-            );
-        });
-        return(
-            React.createElement("div", {className: "comment-body-wrapper"}, 
-                React.createElement("div", {id: "content-discussion-comments", className: "comment-body-content"}, 
-                    React.createElement("span", null, "Cargando Comentarios"), 
-                    comments
-                )
-            )
-        );
-    }
-});
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
     getInitialState: function(){
         return {
             openModalClass: '',
-            discussion: {
-                question: '',
-                dateCreation: '',
-                comments:[]
-            },
-            student: {
-                name: '',
-                lastname: '',
-                photo:''
-            }
+            discussion: {}
         };
     },
-    closeModalComment: function(){
 
+    componentDidMount: function(){
+        window.addEventListener('openModalComment', this.openModalComment);
+        window.addEventListener('closeModalComment', this.closeModalComment);
     },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('openModalComment', this.openModalComment);
+        window.removeEventListener('closeModalComment', this.closeModalComment);
+    },
+
+    openModalComment: function(data){
+        var newState = React.addons.update(this.state,{
+            openModalClass: { $set: 'modal-is-active' },
+            discussion: { $set: data.detail }
+        });
+        this.setState(newState);
+    },
+
+    closeModalComment: function(){
+        this.setState(this.getInitialState());
+    },
+
     render: function(){
         return(
             React.createElement("div", {className: 'modal-content ' + this.state.openModalClass}, 
@@ -22235,17 +22201,28 @@ var CommentBox = React.createClass({
                                     React.createElement("div", {className: "small-12 columns comment-header-footer-content"}, 
                                         React.createElement("span", {className: "pull-left"}, React.createElement("strong", null, this.state.discussion.dateCreation)), 
                                         React.createElement("span", {className: "pull-right"}, 
-                                            React.createElement("strong", {id: "counter-comments"}, this.state.discussion.comments.length), 
+                                            React.createElement("strong", {id: "counter-comments"}, 
+                                                this.state.discussion.comments || 0
+                                            ), 
                                             React.createElement("strong", null, " comentarios")), 
                                         React.createElement("span", null, 
-                                        React.createElement("figure", {title: this.state.student.name + ' ' + this.state.student.lastname}, 
-                                         this.state.student.photo ? React.createElement("img", {src: URL_STACTIC + this.state.student.photo, className: "cicle"}) : ''
-                                        )
+                                        
+                                            !this.state.discussion.student ? '' :
+                                                React.createElement("figure", {title: this.state.discussion.student.name + ' ' + this.state.discussion.student.lastname}, 
+                                                    
+                                                        !this.state.discussion.student.photo ? '' :
+                                                            React.createElement("img", {src: URL_STACTIC + this.state.discussion.student.photo, className: "cicle"})
+                                                    
+                                                )
+                                        
                                         )
                                     )
                                 )
                             ), 
-                            React.createElement(CommentList, null), 
+                            
+                                !this.state.discussion.id ? '' :
+                                    React.createElement(CommentList, {discussionId: this.state.discussion.id}), 
+                            
                             React.createElement(CommentForm, null)
                         )
                     )
@@ -22260,7 +22237,112 @@ React.render(
     document.getElementById('commentBox')
 );
 
-},{"react":174}],178:[function(require,module,exports){
+},{"./commentForm":178,"./commentList":179,"react":174}],178:[function(require,module,exports){
+var React = require('react/addons');
+
+module.exports = React.createClass({
+    displayName: 'CommentForm',
+
+    getInitialState: function(){
+        return {
+            enterPressed: false,
+            comment: ''
+        }
+    },
+
+    changeComment: function(e){
+        var newState = React.addons.update(this.state, {
+            comment: { $set: e.target.value }
+        });
+        this.setState(newState);
+    },
+
+    onKeyPress: function(e){
+        if(e.which === 13){
+            newState = React.addons.update(this.state, {
+                enterPressed: { $set: true }
+            });
+            this.setState(newState);
+            e.preventDefault();
+        }
+    },
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "comment-footer"}, 
+                React.createElement("span", {className: "disclaimer"}, "Presione enter para enviar."), 
+                React.createElement("span", {id: "counter-characters", className: "counter"}, "150"), 
+                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", maxlength: 150, value: this.state.comment, onChange: this.changeComment, disabled: this.state.enterPressed, onKeyPress: this.onKeyPress}), 
+                
+                    !this.state.enterPressed ? '' :
+                        React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
+                            React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
+                            React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary"}, "Cancelar")
+                        )
+                
+            )
+        );
+    }
+});
+
+},{"react/addons":2}],179:[function(require,module,exports){
+var React = require('react');
+var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var comments = window.ACADEMY.backbone.collection.instances.comments;
+var Mixins = require('./mixins');
+
+module.exports = React.createClass({
+    displayName: 'CommentList',
+
+    mixins: [Mixins.backboneMixin],
+
+    componentDidMount: function(){
+        comments.fetch({
+            data: $.param({
+                format : 'json',
+                id: this.props.discussionId
+            })
+        });
+    },
+
+    getBackboneModels: function(){
+        return [comments];
+    },
+
+    getComments: function(){
+        return comments.map(function (item){
+            var comment = item.attributes;
+            return(
+                React.createElement("div", {className: "row comment-entry", key: item.cid}, 
+                    React.createElement("div", {className: "comment-entry-figure"}, 
+                        React.createElement("figure", {title: comment.student.name + ' ' + comment.student.lastname}, 
+                             comment.student.photo ? React.createElement("img", {src: URL_STACTIC + comment.student.photo, className: "cicle"}) : ''
+                        )
+                    ), 
+                    React.createElement("div", {className: "comment-entry-text"}, 
+                        React.createElement("span", null, comment.comment), 
+                        React.createElement("small", null, comment.dateCreation)
+                    )
+                )
+            );
+        });
+    },
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "comment-body-wrapper"}, 
+                React.createElement("div", {id: "content-discussion-comments", className: "comment-body-content"}, 
+                    
+                        !comments.length ? React.createElement("span", null, "Cargando Comentarios") :
+                            this.getComments()
+                    
+                )
+            )
+        );
+    }
+});
+
+},{"./mixins":191,"react":174}],180:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22321,7 +22403,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],179:[function(require,module,exports){
+},{"react/addons":2}],181:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
@@ -22343,7 +22425,7 @@ React.render(
   document.getElementById('courseBox')
 );
 
-},{"./courseList":180,"react/addons":2}],180:[function(require,module,exports){
+},{"./courseList":182,"react/addons":2}],182:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -22377,12 +22459,17 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":178,"./mixins":189,"react/addons":2}],181:[function(require,module,exports){
+},{"./course":180,"./mixins":191,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 
 module.exports = React.createClass({
     displayName: 'Discussion',
+
+    openComments: function(){
+        window.dispatchEvent(new CustomEvent('openModalComment',{ detail : this.props.discussion }));
+    },
+
     render: function(){
         return(
             React.createElement("li", null, 
@@ -22390,8 +22477,8 @@ module.exports = React.createClass({
                     React.createElement("div", {className: "row"}, 
                         React.createElement("div", {className: "small-12 columns"}, 
                             React.createElement("p", null, 
-                                React.createElement("a", {className: "discussion-question"}, 
-                                this.props.question
+                                React.createElement("a", {className: "discussion-question", onClick: this.openComments}, 
+                                this.props.discussion.question
                                 )
                             )
                         )
@@ -22399,16 +22486,18 @@ module.exports = React.createClass({
                     React.createElement("div", {className: "row"}, 
                         React.createElement("div", {className: "small-12 columns"}, 
                             React.createElement("span", {className: "pull-left"}, 
-                                React.createElement("figure", {title: this.props.student.name + ' ' + this.props.student.lastname}, 
-                                     this.props.student.photo ? React.createElement("img", {src: URL_STACTIC + this.props.student.photo, className: "cicle"}) : '', 
-                                    React.createElement("span", null, this.props.student.name, " ", this.props.student.lastname)
+                                React.createElement("figure", {title: this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}, 
+                                     this.props.discussion.student.photo ? React.createElement("img", {src: URL_STACTIC + this.props.discussion.student.photo, className: "cicle"}) : '', 
+                                    React.createElement("span", null, this.props.discussion.student.name, " ", this.props.discussion.student.lastname)
                                 )
                             ), 
                             React.createElement("span", {className: "pull-right"}, 
-                                React.createElement("strong", {id: "discussion-counter-comments"}, this.props.comments), 
+                                React.createElement("strong", {id: "discussion-counter-comments"}, 
+                                    this.props.discussion.comments
+                                ), 
                                 React.createElement("strong", null, " comentarios")
                             ), 
-                            React.createElement("span", {className: "pull-right"}, this.props.dateCreation)
+                            React.createElement("span", {className: "pull-right"}, this.props.discussion.dateCreation)
                         )
                     )
                 )
@@ -22417,11 +22506,10 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],182:[function(require,module,exports){
+},{"react/addons":2}],184:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var DiscussionForm = require('./discussionForm');
-var discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 var DiscussionBox = React.createClass({
     displayName: 'DiscussionBox',
@@ -22430,7 +22518,7 @@ var DiscussionBox = React.createClass({
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement(DiscussionForm, null), 
-                React.createElement(DiscussionList, {discussions: discussions})
+                React.createElement(DiscussionList, null)
             )
         );
     }
@@ -22441,7 +22529,7 @@ React.render(
     document.getElementById('discussionBox')
 );
 
-},{"./discussionForm":183,"./discussionList":184,"react/addons":2}],183:[function(require,module,exports){
+},{"./discussionForm":185,"./discussionList":186,"react/addons":2}],185:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22481,10 +22569,11 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],184:[function(require,module,exports){
+},{"react/addons":2}],186:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
+var discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 module.exports = React.createClass({
     displayName: 'DiscussionList',
@@ -22492,21 +22581,17 @@ module.exports = React.createClass({
     mixins: [Mixins.backboneMixin],
 
     componentDidMount: function(){
-        this.props.discussions.fetch();
+        discussions.fetch();
     },
 
     getBackboneModels: function(){
-        return [this.props.discussions];
+        return [discussions];
     },
 
     render: function(){
-        var discussionNodes = this.props.discussions.map(function (discussion){
+        var discussionNodes = discussions.map(function (discussion){
             return(
-                React.createElement(Discussion, {key: discussion.cid, 
-                    question: discussion.attributes.question, 
-                    student: discussion.attributes.student, 
-                    comments: discussion.attributes.comments, 
-                    dateCreation: discussion.attributes.dateCreation})
+                React.createElement(Discussion, {key: discussion.cid, discussion: discussion.attributes})
             );
         });
         return(
@@ -22521,7 +22606,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":181,"./mixins":189,"react/addons":2}],185:[function(require,module,exports){
+},{"./discussion":183,"./mixins":191,"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22575,7 +22660,7 @@ React.render(
   document.getElementById('examBox')
 );
 
-},{"./examForm":186,"react/addons":2}],186:[function(require,module,exports){
+},{"./examForm":188,"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -22692,7 +22777,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":188,"react/addons":2}],187:[function(require,module,exports){
+},{"./fileupload":190,"react/addons":2}],189:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22780,7 +22865,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],188:[function(require,module,exports){
+},{"react/addons":2}],190:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -22835,7 +22920,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":187,"react/addons":2}],189:[function(require,module,exports){
+},{"./fileList":189,"react/addons":2}],191:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -22865,7 +22950,7 @@ module.exports = {
     }
 };
 
-},{}],190:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var React = require('react'),
     Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
 
@@ -22898,4 +22983,4 @@ React.render(
     document.getElementById('notification')
 );
 
-},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190]);
+},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192]);

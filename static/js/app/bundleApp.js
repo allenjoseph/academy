@@ -56,7 +56,8 @@ module.exports = {
     }),
 
     comments: Backbone.Collection.extend({
-        model : models.comment
+        model : models.comment,
+        url: 'comments'
     }),
 
     attachments: Backbone.Collection.extend({
@@ -124,6 +125,7 @@ module.exports = {
 
             _collection.courses = new _Collection.courses();
             _collection.discussions = new _Collection.discussions();
+            _collection.comments = new _Collection.comments();
 
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
@@ -132,7 +134,6 @@ module.exports = {
             }
 
             app.views.submenuDiscussions = new Views.SubmenuDiscussions();
-            //app.views.addExamModal = new Views.AddExamModal();
         }
     })
 
@@ -198,13 +199,14 @@ module.exports = {
             window.app.views.addCommentModal.openModal();
 
             $.get('comments/?format=json&id='+ this.model.get('id'))
-                .done(function(data){
-                    _collection.comments = new _Collection.comments(data);
-                    app.views.comments = new window.Views.Comments({collection : _collection.comments});
-                })
-                .fail(function(){
-                    console.error('fail get Comments :(');
-                });
+            .done(function(data){
+                _collection.comments = new _Collection.comments(data);
+                app.views.comments = new window.Views.Comments({collection : _collection.comments});
+            })
+            .fail(function(){
+                console.error('fail get Comments :(');
+            });
+
         }
     });
 

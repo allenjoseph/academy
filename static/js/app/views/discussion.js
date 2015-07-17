@@ -37,13 +37,14 @@
             window.app.views.addCommentModal.openModal();
 
             $.get('comments/?format=json&id='+ this.model.get('id'))
-                .done(function(data){
-                    _collection.comments = new _Collection.comments(data);
-                    app.views.comments = new window.Views.Comments({collection : _collection.comments});
-                })
-                .fail(function(){
-                    console.error('fail get Comments :(');
-                });
+            .done(function(data){
+                _collection.comments = new _Collection.comments(data);
+                app.views.comments = new window.Views.Comments({collection : _collection.comments});
+            })
+            .fail(function(){
+                console.error('fail get Comments :(');
+            });
+
         }
     });
 

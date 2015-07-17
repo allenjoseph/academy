@@ -13,7 +13,8 @@ module.exports = {
     }),
 
     comments: Backbone.Collection.extend({
-        model : models.comment
+        model : models.comment,
+        url: 'comments'
     }),
 
     attachments: Backbone.Collection.extend({

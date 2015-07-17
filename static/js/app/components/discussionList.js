@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
+var discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 module.exports = React.createClass({
     displayName: 'DiscussionList',
@@ -8,21 +9,17 @@ module.exports = React.createClass({
     mixins: [Mixins.backboneMixin],
 
     componentDidMount: function(){
-        this.props.discussions.fetch();
+        discussions.fetch();
     },
 
     getBackboneModels: function(){
-        return [this.props.discussions];
+        return [discussions];
     },
 
     render: function(){
-        var discussionNodes = this.props.discussions.map(function (discussion){
+        var discussionNodes = discussions.map(function (discussion){
             return(
-                <Discussion key={discussion.cid}
-                    question={discussion.attributes.question}
-                    student={discussion.attributes.student}
-                    comments={discussion.attributes.comments}
-                    dateCreation={discussion.attributes.dateCreation}/>
+                <Discussion key={discussion.cid} discussion={discussion.attributes}/>
             );
         });
         return(
