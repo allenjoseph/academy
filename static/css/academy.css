@@ -459,10 +459,9 @@ input:disabled{
 }
 .comment-footer span{
     position: absolute;
-    font-size: 0.6em;
+    font-size: 0.8em;
     color: #666;
     top: 0;
-    padding-top: 4px;
     line-height: 1em;
 }
 .comment-footer span.disclaimer{

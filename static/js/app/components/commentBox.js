@@ -31,6 +31,7 @@ var CommentBox = React.createClass({
     },
 
     closeModalComment: function(){
+        window.dispatchEvent(new Event('cleanCommentForm'));
         this.setState(this.getInitialState());
     },
 

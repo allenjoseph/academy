@@ -22180,6 +22180,7 @@ var CommentBox = React.createClass({
     },
 
     closeModalComment: function(){
+        window.dispatchEvent(new Event('cleanCommentForm'));
         this.setState(this.getInitialState());
     },
 
@@ -22246,13 +22247,27 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             enterPressed: false,
-            comment: ''
+            comment: '',
+            counter: 150
         }
+    },
+
+    componentDidMount: function(){
+        window.addEventListener('cleanCommentForm', this.cleanCommentForm);
+    },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('cleanCommentForm', this.cleanCommentForm);
+    },
+
+    cleanCommentForm: function(){
+        this.setState(this.getInitialState());
     },
 
     changeComment: function(e){
         var newState = React.addons.update(this.state, {
-            comment: { $set: e.target.value }
+            comment: { $set: e.target.value },
+            counter: { $set: 150 - e.target.value.length}
         });
         this.setState(newState);
     },
@@ -22267,17 +22282,26 @@ module.exports = React.createClass({
         }
     },
 
+    cancelSubmit: function(){
+        var newState = React.addons.update(this.state, {
+            enterPressed: { $set: false }
+        });
+        this.setState(newState);
+    },
+
     render: function(){
         return(
             React.createElement("div", {className: "comment-footer"}, 
                 React.createElement("span", {className: "disclaimer"}, "Presione enter para enviar."), 
-                React.createElement("span", {id: "counter-characters", className: "counter"}, "150"), 
-                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", maxlength: 150, value: this.state.comment, onChange: this.changeComment, disabled: this.state.enterPressed, onKeyPress: this.onKeyPress}), 
+                React.createElement("span", {id: "counter-characters", className: "counter"}, this.state.counter), 
+                React.createElement("textarea", {id: "add-comment-textarea", className: "comment-textarea", ref: "comment", 
+                    maxLength: 150, value: this.state.comment, disabled: this.state.enterPressed, 
+                    onChange: this.changeComment, onKeyPress: this.onKeyPress}), 
                 
                     !this.state.enterPressed ? '' :
                         React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
                             React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
-                            React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary"}, "Cancelar")
+                            React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary", onClick: this.cancelSubmit}, "Cancelar")
                         )
                 
             )
@@ -22333,7 +22357,7 @@ module.exports = React.createClass({
             React.createElement("div", {className: "comment-body-wrapper"}, 
                 React.createElement("div", {id: "content-discussion-comments", className: "comment-body-content"}, 
                     
-                        !comments.length ? React.createElement("span", null, "Cargando Comentarios") :
+                        !comments.length ? React.createElement("span", null, "Sin comentarios") :
                             this.getComments()
                     
                 )
