@@ -2,6 +2,7 @@ var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
 var Mixins = require('./mixins');
+var Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
     displayName: 'CommentList',
@@ -33,7 +34,7 @@ module.exports = React.createClass({
                     </div>
                     <div className="comment-entry-text">
                         <span>{comment.comment}</span>
-                        <small>{comment.dateCreation}</small>
+                        <small>{ Utilities.timeFromNow(comment.dateCreation) }</small>
                     </div>
                 </div>
             );

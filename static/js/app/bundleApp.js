@@ -19,6 +19,11 @@ window.ACADEMY.socket = io.connect('http://127.0.0.1:3000');
 window.ACADEMY.socket.on('newExam', function(data){
     window.dispatchEvent(new CustomEvent('showNotification', { detail: data }));
 });
+window.ACADEMY.socket.on('newDiscussion', function(data){
+    debugger;
+    window.dispatchEvent(new CustomEvent('showNotification', { detail: data.notification }));
+    window.ACADEMY.backbone.collection.instances.discussions.add(data.discussion);
+});
 /*---------------------------------------------------------*/
 window.Views = {};
 window.app = {};
@@ -26,6 +31,7 @@ window.app.views = {};
 window.template = function(id){
     return _.template( $( '#' + id ).html() );
 };
+
 /*---------------------------------------------------------*/
 
 /* Objects prototype extensions */
@@ -156,7 +162,20 @@ module.exports = {
             parent = parent[parts[i]];
         }
         return parent;
+    },
+    timeFromNow: function(date){
+        if(window.moment){
+            return moment(date).fromNow();
+        }
+        return date;
+    },
+    largeDate: function(date){
+        if(window.moment){
+            return moment(date).format('LL');
+        }
+        return date;
     }
+
 };
 
 },{}],6:[function(require,module,exports){

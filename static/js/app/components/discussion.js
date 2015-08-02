@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
     displayName: 'Discussion',
@@ -35,7 +36,7 @@ module.exports = React.createClass({
                                 </strong>
                                 <strong> comentarios</strong>
                             </span>
-                            <span className="pull-right">{this.props.discussion.dateCreation}</span>
+                            <span className="pull-right">{ Utilities.timeFromNow(this.props.discussion.dateCreation) }</span>
                         </div>
                     </div>
                 </div>

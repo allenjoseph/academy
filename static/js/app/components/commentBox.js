@@ -2,6 +2,7 @@ var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var Utilities = window.ACADEMY.utilities;
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
@@ -51,7 +52,9 @@ var CommentBox = React.createClass({
                                 </div>
                                 <div className="row comment-header-footer">
                                     <div className="small-12 columns comment-header-footer-content">
-                                        <span className="pull-left"><strong>{this.state.discussion.dateCreation}</strong></span>
+                                        <span className="pull-left">
+                                            <strong>{ Utilities.largeDate(this.state.discussion.dateCreation) }</strong>
+                                        </span>
                                         <span className="pull-right">
                                             <strong id="counter-comments">
                                                 {this.state.discussion.comments || 0}
@@ -75,7 +78,7 @@ var CommentBox = React.createClass({
                                 !this.state.discussion.id ? '' :
                                     <CommentList discussionId={this.state.discussion.id}/>
                             }
-                            <CommentForm />
+                            <CommentForm discussionId={this.state.discussion.id}/>
                         </div>
                     </section>
                 </div>

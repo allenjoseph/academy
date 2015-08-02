@@ -22151,6 +22151,7 @@ var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var Utilities = window.ACADEMY.utilities;
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
@@ -22200,7 +22201,9 @@ var CommentBox = React.createClass({
                                 ), 
                                 React.createElement("div", {className: "row comment-header-footer"}, 
                                     React.createElement("div", {className: "small-12 columns comment-header-footer-content"}, 
-                                        React.createElement("span", {className: "pull-left"}, React.createElement("strong", null, this.state.discussion.dateCreation)), 
+                                        React.createElement("span", {className: "pull-left"}, 
+                                            React.createElement("strong", null,  Utilities.largeDate(this.state.discussion.dateCreation) )
+                                        ), 
                                         React.createElement("span", {className: "pull-right"}, 
                                             React.createElement("strong", {id: "counter-comments"}, 
                                                 this.state.discussion.comments || 0
@@ -22224,7 +22227,7 @@ var CommentBox = React.createClass({
                                 !this.state.discussion.id ? '' :
                                     React.createElement(CommentList, {discussionId: this.state.discussion.id}), 
                             
-                            React.createElement(CommentForm, null)
+                            React.createElement(CommentForm, {discussionId: this.state.discussion.id})
                         )
                     )
                 )
@@ -22239,7 +22242,9 @@ React.render(
 );
 
 },{"./commentForm":178,"./commentList":179,"react":174}],178:[function(require,module,exports){
-var React = require('react/addons');
+var React = require('react/addons'),
+    Comment = window.ACADEMY.backbone.model.constructors.comment,
+    comments = window.ACADEMY.backbone.collection.instances.comments;
 
 module.exports = React.createClass({
     displayName: 'CommentForm',
@@ -22289,6 +22294,24 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
+    sendSubmit: function(){
+        var self = this;
+        //creo un modelo Commentario
+        var comment = new Comment();
+        comment.set('comment', this.state.comment);
+        comment.set('discussion', this.props.discussionId);
+        //guardo el comentario
+        comment.save(null,{
+            success : function(comment){
+                //agrego el nuevo comentario a la colleccion
+                comments.add(comment);
+                self.cleanCommentForm();
+            },
+            error : function(){
+            }
+        });
+    },
+
     render: function(){
         return(
             React.createElement("div", {className: "comment-footer"}, 
@@ -22300,7 +22323,7 @@ module.exports = React.createClass({
                 
                     !this.state.enterPressed ? '' :
                         React.createElement("div", {id: "buttons-confirm-comment", className: "comment-footer-confirm"}, 
-                            React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1"}, "Enviar Comentario"), 
+                            React.createElement("button", {id: "button-add-comment", className: "button tiny yellow mr1", onClick: this.sendSubmit}, "Enviar Comentario"), 
                             React.createElement("button", {id: "button-cancel-comment", className: "button tiny secondary", onClick: this.cancelSubmit}, "Cancelar")
                         )
                 
@@ -22314,6 +22337,7 @@ var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
 var Mixins = require('./mixins');
+var Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
     displayName: 'CommentList',
@@ -22345,7 +22369,7 @@ module.exports = React.createClass({
                     ), 
                     React.createElement("div", {className: "comment-entry-text"}, 
                         React.createElement("span", null, comment.comment), 
-                        React.createElement("small", null, comment.dateCreation)
+                        React.createElement("small", null,  Utilities.timeFromNow(comment.dateCreation) )
                     )
                 )
             );
@@ -22486,6 +22510,7 @@ module.exports = React.createClass({
 },{"./course":180,"./mixins":191,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
     displayName: 'Discussion',
@@ -22521,7 +22546,7 @@ module.exports = React.createClass({
                                 ), 
                                 React.createElement("strong", null, " comentarios")
                             ), 
-                            React.createElement("span", {className: "pull-right"}, this.props.discussion.dateCreation)
+                            React.createElement("span", {className: "pull-right"},  Utilities.timeFromNow(this.props.discussion.dateCreation) )
                         )
                     )
                 )
@@ -22554,10 +22579,57 @@ React.render(
 );
 
 },{"./discussionForm":185,"./discussionList":186,"react/addons":2}],185:[function(require,module,exports){
-var React = require('react/addons');
+var React = require('react/addons'),
+    Discussion = window.ACADEMY.backbone.model.constructors.discussion,
+    discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 module.exports = React.createClass({
     displayName: 'DiscussionForm',
+
+    getInitialState: function(){
+        return {
+            question: ''
+        }
+    },
+
+    changeDiscussion: function(e){
+        var newState = React.addons.update(this.state, {
+            question: { $set: e.target.value }
+        });
+        this.setState(newState);
+    },
+
+    sendSubmit: function(){
+        var self = this;
+
+        var discussion = new Discussion();
+        discussion.set('question', this.state.question);
+        discussion.save(null,{
+            success : function(discussion){
+                //aniado la nueva discusion a la coleccion
+                //discussions.add(discussion);
+                //limpio el input para aniadir discussion
+                self.cancelSubmit();
+                //muestro alerta satisfactoria
+                window.ACADEMY.socket.emit('newDiscussion',{
+                    notification: {
+                        level:'success',
+                        title:'Se agregó nueva pregunta!',
+                        message: '<strong>'+ discussion.question +'</strong>'
+                    },
+                    discussion: discussion
+                });
+
+            },
+            error : function(){
+
+            }
+        });
+    },
+
+    cancelSubmit: function(){
+        this.setState(this.getInitialState());
+    },
 
     render: function(){
         return(
@@ -22579,10 +22651,10 @@ module.exports = React.createClass({
                         React.createElement("div", {className: "small-12 columns"}, 
                             React.createElement("div", {className: "row collapse"}, 
                                 React.createElement("div", {className: "small-10 columns"}, 
-                                    React.createElement("input", {id: "input-question-discussion", type: "text", placeholder: "Escribe tu pregunta aquí."})
+                                    React.createElement("input", {id: "input-question-discussion", type: "text", value: this.state.question, onChange: this.changeDiscussion, placeholder: "Escribe tu pregunta aquí."})
                                 ), 
                                 React.createElement("div", {className: "small-2 columns"}, 
-                                    React.createElement("a", {id: "btn-send-discussion", className: "button yellow postfix"}, "Enviar")
+                                    React.createElement("a", {id: "btn-send-discussion", className: "button yellow postfix", onClick: this.sendSubmit}, "Enviar")
                                 )
                             )
                         )

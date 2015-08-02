@@ -14,5 +14,18 @@ module.exports = {
             parent = parent[parts[i]];
         }
         return parent;
+    },
+    timeFromNow: function(date){
+        if(window.moment){
+            return moment(date).fromNow();
+        }
+        return date;
+    },
+    largeDate: function(date){
+        if(window.moment){
+            return moment(date).format('LL');
+        }
+        return date;
     }
+
 };

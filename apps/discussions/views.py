@@ -74,7 +74,7 @@ class DiscussionView(RestServiceMixin, View):
             student = student,
             state = state)
 
-        jsonDiscussion = JsonSerializer(discussion, student = student, comments = 0)
+        jsonDiscussion = JsonSerializer(discussion, student = student, comments = 0).getJSON()
 
         return JsonResponse(json.loads(jsonDiscussion),safe=False,status=201)
 
@@ -98,6 +98,6 @@ class CommentView(RestServiceMixin, View):
             student = student,
             state = state)
 
-        jsonComment = JsonSerializer(comment, student = student)
+        jsonComment = JsonSerializer(comment, student = student).getJSON()
 
         return JsonResponse(json.loads(jsonComment),safe=False,status=201)
