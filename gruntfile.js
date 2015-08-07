@@ -33,8 +33,7 @@ module.exports = function(grunt) {
                         'static/js/app/utilities.js',
                         'static/js/app/models/*.js',
                         'static/js/app/collections/*.js',
-                        'static/js/app/routers/*.js',
-                        'static/js/app/views/*.js'
+                        'static/js/app/routers/*.js'
                     ]
                 }
             },
@@ -56,8 +55,7 @@ module.exports = function(grunt) {
                     'static/js/app/utilities.js',
                     'static/js/app/models/*.js',
                     'static/js/app/collections/*.js',
-                    'static/js/app/routers/*.js',
-                    'static/js/app/views/*.js'
+                    'static/js/app/routers/*.js'
                 ],
                 tasks: ['browserify:default']
             },
