@@ -8,6 +8,10 @@ io.on('connection', function(socket){
         io.emit('newExam', data);
     });
 
+    socket.on('newDiscussion',function(data){
+        io.emit('newDiscussion', data);
+    });
+
     socket.on('disconnect', function(){
         //..
     });

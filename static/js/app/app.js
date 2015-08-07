@@ -19,10 +19,10 @@ window.ACADEMY.socket.on('newExam', function(data){
     window.dispatchEvent(new CustomEvent('showNotification', { detail: data }));
 });
 window.ACADEMY.socket.on('newDiscussion', function(data){
-    debugger;
     window.dispatchEvent(new CustomEvent('showNotification', { detail: data.notification }));
     window.ACADEMY.backbone.collection.instances.discussions.add(data.discussion);
 });
+
 /*---------------------------------------------------------*/
 window.Views = {};
 window.app = {};

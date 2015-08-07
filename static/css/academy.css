@@ -273,6 +273,9 @@ input:disabled{
 .text-success {
     color: #5da423;
 }
+.text-uppercase {
+    text-transform: uppercase!important;
+}
 /* end helper clases */
 
 /* menu-links */
@@ -630,6 +633,6 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
     line-height: 1.5em;
 }
 .growl .growl-message {
-    font-size: .875em;
+    font-size: 1em;
     line-height: 1.125em;
 }

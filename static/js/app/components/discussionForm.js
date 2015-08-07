@@ -34,7 +34,7 @@ module.exports = React.createClass({
                     notification: {
                         level:'success',
                         title:'Se agregó nueva pregunta!',
-                        message: '<strong>'+ discussion.question +'</strong>'
+                        message: '<strong class="text-uppercase">'+ discussion.attributes.question +'</strong>'
                     },
                     discussion: discussion
                 });

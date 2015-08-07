@@ -31,12 +31,10 @@ module.exports = function(grunt) {
                     'static/js/app/bundleApp.js' : [
                         'static/js/app/app.js',
                         'static/js/app/utilities.js',
-                        'static/js/app/models/models.js',
-                        'static/js/app/collections/collections.js',
-                        'static/js/app/views/course.js',
-                        'static/js/app/views/discussion.js',
-                        'static/js/app/views/exam.js',
-                        'static/js/app/routers/main.js'
+                        'static/js/app/models/*.js',
+                        'static/js/app/collections/*.js',
+                        'static/js/app/routers/*.js',
+                        'static/js/app/views/*.js'
                     ]
                 }
             },
@@ -55,8 +53,9 @@ module.exports = function(grunt) {
             browserify: {
                 files: [
                     'static/js/app/app.js',
-                    'static/js/app/collections/*.js',
+                    'static/js/app/utilities.js',
                     'static/js/app/models/*.js',
+                    'static/js/app/collections/*.js',
                     'static/js/app/routers/*.js',
                     'static/js/app/views/*.js'
                 ],

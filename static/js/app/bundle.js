@@ -22118,7 +22118,7 @@ var SingleGrowl = React.createClass({displayName: "SingleGrowl",
             React.createElement("li", {className: cname}, 
                 React.createElement("span", null, 
                     React.createElement("div", {className: "growl-title"}, this.props.notification.title), 
-                    React.createElement("div", {className: "growl-message"}, this.props.notification.message)
+                    React.createElement("div", {className: "growl-message", dangerouslySetInnerHTML: {__html: this.props.notification.message}})
                 )
             )
         );
@@ -22615,7 +22615,7 @@ module.exports = React.createClass({
                     notification: {
                         level:'success',
                         title:'Se agregó nueva pregunta!',
-                        message: '<strong>'+ discussion.question +'</strong>'
+                        message: '<strong class="text-uppercase">'+ discussion.attributes.question +'</strong>'
                     },
                     discussion: discussion
                 });

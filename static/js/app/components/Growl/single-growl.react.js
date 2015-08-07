@@ -83,7 +83,7 @@ var SingleGrowl = React.createClass({
             <li className={cname}>
                 <span>
                     <div className="growl-title">{this.props.notification.title}</div>
-                    <div className="growl-message">{this.props.notification.message}</div>
+                    <div className="growl-message" dangerouslySetInnerHTML={{__html: this.props.notification.message }} />
                 </span>
             </li>
         );
