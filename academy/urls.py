@@ -4,12 +4,16 @@ from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
 from apps.courses.views import CoursesView, CourseView
 from apps.home.views import IndexView, UploadFile, DeleteUploadedFile
-from apps.discussions.views import DiscussionsView, DiscussionCommentsView, DiscussionView, CommentView
+from apps.discussions.views import DiscussionsView
+from apps.discussions.views import DiscussionCommentsView
+from apps.discussions.views import DiscussionView
+from apps.discussions.views import CommentView
 from apps.exams.views import ExamView
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
 
@@ -25,12 +29,14 @@ urlpatterns = patterns('',
     url(r'^exam/?$', ExamView.as_view()),
 
     url(r'^upload/', UploadFile, name='uploadFile'),
-    url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile, name = 'deleteUploadedFile' ),
+    url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile,
+        name='deleteUploadedFile'),
 
     #url(r'^media/(?P<path>.*)$', 'django.views.static.server', {'document_root': path.join(path.dirname(__file__), 'media')}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += i18n_patterns('',
+urlpatterns += i18n_patterns(
+    '',
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
 )
