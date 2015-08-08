@@ -7,14 +7,15 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-#print(BASE_DIR)
+# print(BASE_DIR)
 
-#BASE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__),os.pardir))
-#print(BASE_DIR)
+# BASE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__),os.pardir))
+# print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -74,7 +75,6 @@ DATABASES = {
 }
 
 # Internationalization
-from django.utils.translation import ugettext_lazy as _
 LANGUAGES = (
     ('es', _('Spanish')),
     ('en', _('English')),
@@ -103,7 +103,7 @@ STATIC_URL = '/static/'
 # Descomnetar al ejecutar los comandos
 # python manage.py makemessages -l en
 # python manage.py compilemessages -l en
-#STATIC_ROOT = BASE_DIR + '/static/'
+# STATIC_ROOT = BASE_DIR + '/static/'
 
 # Comnetar al ejecutar la internacionalizacion
 STATICFILES_DIRS = (

@@ -32,7 +32,7 @@ urlpatterns = patterns(
     url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile,
         name='deleteUploadedFile'),
 
-    #url(r'^media/(?P<path>.*)$', 'django.views.static.server', {'document_root': path.join(path.dirname(__file__), 'media')}),
+    # url(r'^media/(?P<path>.*)$', 'django.views.static.server', {'document_root': path.join(path.dirname(__file__), 'media')}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(

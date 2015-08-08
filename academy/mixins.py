@@ -1,18 +1,21 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 import json
 from flufl.enum import IntEnum
 
+
 class StateEnum(IntEnum):
     ACTIVO = 1
+
 
 class LoginRequiredMixin(object):
 
     @method_decorator(login_required(login_url='/login/'))
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+
 
 class JsonResponseMixin(object):
 
@@ -28,6 +31,7 @@ class JsonResponseMixin(object):
         data = self.get_data()
         return JsonResponse(json.loads(data), safe=False)
 
+
 class HttpError(Exception):
     def __init__(self, message=None, status=500):
         super(HttpError, self).__init__(message)
@@ -35,6 +39,7 @@ class HttpError(Exception):
 
     def __repr__(self):
         return 'HttpError(%r, %r)' % (self.status, self.message)
+
 
 class RestServiceMixin(object):
 
@@ -50,10 +55,10 @@ class RestServiceMixin(object):
             method_override = request.POST.pop('_method')[0].upper()
             request.POST._mutable = False
 
-        #asigno el request method en post
+        # asigno el request method en post
         request.method = method_override or method
 
-        #le asigno los valores del request al metodo post
+        # le asigno los valores del request al metodo post
         if request.method not in ['POST', 'GET']:
             setattr(request, request.method, request.POST)
 
