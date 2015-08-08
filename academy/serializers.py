@@ -4,13 +4,19 @@ from apps.discussions.models import Discussion, DiscussionComment
 from django.utils import timezone
 import json
 
+
 def date_handler(obj):
-    return timezone.localtime(obj).isoformat() if hasattr(obj, 'isoformat') else obj
+    if hasattr(obj, 'isoformat'):
+        return timezone.localtime(obj).isoformat()
+    else:
+        return obj
+
 
 class ObjectSerializer(Serializer):
-    def end_object( self, obj ):
+    def end_object(self, obj):
         self._current['id'] = obj._get_pk_val()
-        self.objects.append( self._current )
+        self.objects.append(self._current)
+
 
 class JsonSerializer(ObjectSerializer):
 
@@ -57,5 +63,3 @@ class JsonSerializer(ObjectSerializer):
             return self.getDiscussionJSON()
         elif typeModel == DiscussionComment:
             return self.getDiscussionCommentJSON()
-
-
