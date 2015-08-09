@@ -1,6 +1,5 @@
 var React = require('react/addons'),
-    Comment = window.ACADEMY.backbone.model.constructors.comment,
-    comments = window.ACADEMY.backbone.collection.instances.comments;
+    Comment = window.ACADEMY.backbone.model.constructors.comment;
 
 module.exports = React.createClass({
     displayName: 'CommentForm',
@@ -60,7 +59,10 @@ module.exports = React.createClass({
         comment.save(null,{
             success : function(comment){
                 //agrego el nuevo comentario a la colleccion
-                comments.add(comment);
+                window.ACADEMY.socket.emit('addComment',{
+                    discussionId: self.props.discussionId,
+                    comment: comment
+                });
                 self.cleanCommentForm();
             },
             error : function(){

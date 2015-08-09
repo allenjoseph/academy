@@ -22152,6 +22152,7 @@ var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var Utilities = window.ACADEMY.utilities;
+var comments = window.ACADEMY.backbone.collection.instances.comments;
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
@@ -22165,17 +22166,28 @@ var CommentBox = React.createClass({
     componentDidMount: function(){
         window.addEventListener('openModalComment', this.openModalComment);
         window.addEventListener('closeModalComment', this.closeModalComment);
+        window.addEventListener('updateCommentsCount', this.updateCommentsCount);
     },
 
     componentWilUnmount: function(){
         window.removeEventListener('openModalComment', this.openModalComment);
         window.removeEventListener('closeModalComment', this.closeModalComment);
+        window.removeEventListener('updateCommentsCount', this.updateCommentsCount);
     },
 
     openModalComment: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
             discussion: { $set: data.detail }
+        });
+        this.setState(newState);
+    },
+
+    updateCommentsCount: function(data){
+        if(data.detail.discussionId !== this.state.discussion.id) return;
+        comments.add(data.detail.comment);
+        var newState = React.addons.update(this.state,{
+            discussion: { comments : { $set: comments.length } }
         });
         this.setState(newState);
     },
@@ -22243,8 +22255,7 @@ React.render(
 
 },{"./commentForm":178,"./commentList":179,"react":174}],178:[function(require,module,exports){
 var React = require('react/addons'),
-    Comment = window.ACADEMY.backbone.model.constructors.comment,
-    comments = window.ACADEMY.backbone.collection.instances.comments;
+    Comment = window.ACADEMY.backbone.model.constructors.comment;
 
 module.exports = React.createClass({
     displayName: 'CommentForm',
@@ -22304,7 +22315,10 @@ module.exports = React.createClass({
         comment.save(null,{
             success : function(comment){
                 //agrego el nuevo comentario a la colleccion
-                comments.add(comment);
+                window.ACADEMY.socket.emit('addComment',{
+                    discussionId: self.props.discussionId,
+                    comment: comment
+                });
                 self.cleanCommentForm();
             },
             error : function(){
@@ -22515,8 +22529,34 @@ var Utilities = window.ACADEMY.utilities;
 module.exports = React.createClass({
     displayName: 'Discussion',
 
+    getInitialState: function(){
+        return {
+            comments : 0
+        };
+    },
+
+    componentDidMount: function(){
+        window.addEventListener('updateCommentsCount', this.updateCommentsCount);
+        if(this.props.discussion.comments){
+            this.setState({ comments: this.props.discussion.comments });
+        }
+    },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('updateCommentsCount', this.updateCommentsCount);
+    },
+
+    updateCommentsCount: function(data){
+        if(data.detail.discussionId !== this.props.discussion.id) return;
+        this.setState({ comments: this.state.comments + 1 });
+    },
+
     openComments: function(){
-        window.dispatchEvent(new CustomEvent('openModalComment',{ detail : this.props.discussion }));
+        var discussion = this.props.discussion;
+        if(this.state.comments > discussion.comments){
+            discussion.comments = this.state.comments;
+        }
+        window.dispatchEvent(new CustomEvent('openModalComment',{ detail : discussion }));
     },
 
     render: function(){
@@ -22542,7 +22582,7 @@ module.exports = React.createClass({
                             ), 
                             React.createElement("span", {className: "pull-right"}, 
                                 React.createElement("strong", {id: "discussion-counter-comments"}, 
-                                    this.props.discussion.comments
+                                     this.state.comments
                                 ), 
                                 React.createElement("strong", null, " comentarios")
                             ), 

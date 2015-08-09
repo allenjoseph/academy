@@ -23,6 +23,9 @@ window.ACADEMY.socket.on('newDiscussion', function(data){
     window.dispatchEvent(new CustomEvent('showNotification', { detail: data.notification }));
     window.ACADEMY.backbone.collection.instances.discussions.add(data.discussion);
 });
+window.ACADEMY.socket.on('addComment', function(data){
+    window.dispatchEvent(new CustomEvent('updateCommentsCount', { detail: data }));
+});
 
 /*---------------------------------------------------------*/
 window.Views = {};

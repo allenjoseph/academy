@@ -3,6 +3,7 @@ var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var Utilities = window.ACADEMY.utilities;
+var comments = window.ACADEMY.backbone.collection.instances.comments;
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',
@@ -16,17 +17,28 @@ var CommentBox = React.createClass({
     componentDidMount: function(){
         window.addEventListener('openModalComment', this.openModalComment);
         window.addEventListener('closeModalComment', this.closeModalComment);
+        window.addEventListener('updateCommentsCount', this.updateCommentsCount);
     },
 
     componentWilUnmount: function(){
         window.removeEventListener('openModalComment', this.openModalComment);
         window.removeEventListener('closeModalComment', this.closeModalComment);
+        window.removeEventListener('updateCommentsCount', this.updateCommentsCount);
     },
 
     openModalComment: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
             discussion: { $set: data.detail }
+        });
+        this.setState(newState);
+    },
+
+    updateCommentsCount: function(data){
+        if(data.detail.discussionId !== this.state.discussion.id) return;
+        comments.add(data.detail.comment);
+        var newState = React.addons.update(this.state,{
+            discussion: { comments : { $set: comments.length } }
         });
         this.setState(newState);
     },

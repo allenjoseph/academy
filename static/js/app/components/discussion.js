@@ -5,8 +5,34 @@ var Utilities = window.ACADEMY.utilities;
 module.exports = React.createClass({
     displayName: 'Discussion',
 
+    getInitialState: function(){
+        return {
+            comments : 0
+        };
+    },
+
+    componentDidMount: function(){
+        window.addEventListener('updateCommentsCount', this.updateCommentsCount);
+        if(this.props.discussion.comments){
+            this.setState({ comments: this.props.discussion.comments });
+        }
+    },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('updateCommentsCount', this.updateCommentsCount);
+    },
+
+    updateCommentsCount: function(data){
+        if(data.detail.discussionId !== this.props.discussion.id) return;
+        this.setState({ comments: this.state.comments + 1 });
+    },
+
     openComments: function(){
-        window.dispatchEvent(new CustomEvent('openModalComment',{ detail : this.props.discussion }));
+        var discussion = this.props.discussion;
+        if(this.state.comments > discussion.comments){
+            discussion.comments = this.state.comments;
+        }
+        window.dispatchEvent(new CustomEvent('openModalComment',{ detail : discussion }));
     },
 
     render: function(){
@@ -32,7 +58,7 @@ module.exports = React.createClass({
                             </span>
                             <span className="pull-right">
                                 <strong id="discussion-counter-comments">
-                                    {this.props.discussion.comments}
+                                    { this.state.comments }
                                 </strong>
                                 <strong> comentarios</strong>
                             </span>

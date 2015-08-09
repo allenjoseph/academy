@@ -12,6 +12,10 @@ io.on('connection', function(socket){
         io.emit('newDiscussion', data);
     });
 
+    socket.on('addComment',function(data){
+        io.emit('addComment', data);
+    });
+
     socket.on('disconnect', function(){
         //..
     });
