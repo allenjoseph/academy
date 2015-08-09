@@ -7,6 +7,7 @@ from apps.home.models import AcademyYear
 import json
 from django.core.exceptions import MultipleObjectsReturned
 
+
 class CoursesView(JsonResponseMixin, TemplateView):
     template_name = 'home/404.html'
 
@@ -20,12 +21,13 @@ class CoursesView(JsonResponseMixin, TemplateView):
         objectSerializer = ObjectSerializer()
 
         for academyCourse in academyCourses:
-            academyCourseDict = objectSerializer.serialize([academyCourse,])
-            (academyCourseDict[0])['course'] = objectSerializer.serialize([academyCourse.course,])[0]
+            academyCourseDict = objectSerializer.serialize([academyCourse])
+            (academyCourseDict[0])['course'] = objectSerializer.serialize([academyCourse.course])[0]
             academyCoursesList.append(academyCourseDict[0])
 
         data = json.dumps(academyCoursesList)
         return data
+
 
 class CourseView(TemplateView):
     template_name = 'home/course.html'
@@ -33,14 +35,14 @@ class CourseView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
 
-        #obtengo el curso y lo devuelvo a la vista
+        # obtengo el curso y lo devuelvo a la vista
         try:
             course = Course.objects.get(slug__exact=kwargs.get('slug'), department__id=request.session['department_id'])
             academyCourse = AcademyCourse.objects.get(course=course,academyYear__id=request.session['academyYear_id'])
 
             objectSerializer = ObjectSerializer()
-            academyCourses = objectSerializer.serialize([academyCourse,])
-            (academyCourses[0])['course'] = objectSerializer.serialize([course,])[0]
+            academyCourses = objectSerializer.serialize([academyCourse])
+            (academyCourses[0])['course'] = objectSerializer.serialize([course])[0]
 
             context['academyCourse_json'] = json.dumps(academyCourses[0])
             context['academyCourse'] = academyCourse
@@ -52,9 +54,7 @@ class CourseView(TemplateView):
             context['discussions_in_course'] = 1
             context['homeworks_in_course'] = 0
 
-
         except MultipleObjectsReturned:
             print('academyCourse problem')
 
         return self.render_to_response(context)
-

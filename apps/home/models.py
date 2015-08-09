@@ -2,12 +2,14 @@ import os
 from django.db import models
 from django.template.defaultfilters import slugify
 
+
 class Master(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self):
         return u'%s' % (self.description)
+
 
 class Parameter(models.Model):
     id = models.AutoField(primary_key=True)
@@ -18,6 +20,7 @@ class Parameter(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
+
 class AcademyYear(models.Model):
     id = models.AutoField(primary_key=True)
     year = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -25,6 +28,7 @@ class AcademyYear(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.year)
+
 
 class University(models.Model):
     id = models.AutoField(primary_key=True)
@@ -35,6 +39,7 @@ class University(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
+
 class Faculty(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -43,6 +48,7 @@ class Faculty(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.name)
+
 
 class Department(models.Model):
     id = models.AutoField(primary_key=True)
@@ -59,8 +65,10 @@ class Department(models.Model):
     def __unicode__(self):
         return u'%s' % (self.name)
 
+
 def get_image_path(instance, filename):
     return os.path.join('student', str(instance.provider)+'_'+str(instance.providerKey), filename)
+
 
 class Student(models.Model):
     id = models.AutoField(primary_key=True)
@@ -74,7 +82,8 @@ class Student(models.Model):
     dateLastSeen = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
-        return u'%s %s' % (self.name,self.lastname)
+        return u'%s %s' % (self.name, self.lastname)
+
 
 class Profesor(models.Model):
     id = models.AutoField(primary_key=True)
@@ -84,7 +93,8 @@ class Profesor(models.Model):
     photo = models.ImageField(upload_to=get_image_path, blank=True, null=True)
 
     def __unicode__(self):
-        return u'%s %s' % (self.name,self.lastname)
+        return u'%s %s' % (self.name, self.lastname)
+
 
 class Attachment(models.Model):
     id = models.AutoField(primary_key=True)

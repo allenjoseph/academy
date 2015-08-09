@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from academy.serializers import JsonSerializer
 import json
 
+
 class ExamView(RestServiceMixin, View):
 
     def post(self, request, *args, **kwargs):
@@ -18,15 +19,15 @@ class ExamView(RestServiceMixin, View):
         files = params.get('files')
 
         exam = Exam.objects.create(
-            description = params.get('description'),
-            academyCourse = academyCourse,
-            student = student)
+            description=params.get('description'),
+            academyCourse=academyCourse,
+            student=student)
 
         for file_id in files:
             ExamAttachment.objects.create(
-                exam = exam,
-                attachment = Attachment.objects.get(pk=file_id))
+                exam=exam,
+                attachment=Attachment.objects.get(pk=file_id))
 
-        jsonExam = JsonSerializer(exam, student = student).getJSON()
+        jsonExam = JsonSerializer(exam, student=student).getJSON()
 
         return JsonResponse(json.loads(jsonExam), safe=False, status=201)
