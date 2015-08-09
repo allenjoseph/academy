@@ -28,14 +28,6 @@ window.ACADEMY.socket.on('addComment', function(data){
 });
 
 /*---------------------------------------------------------*/
-window.Views = {};
-window.app = {};
-window.app.views = {};
-window.template = function(id){
-    return _.template( $( '#' + id ).html() );
-};
-
-/*---------------------------------------------------------*/
 
 /* Objects prototype extensions */
 if(!String.prototype.trim){
@@ -138,14 +130,10 @@ module.exports = {
 
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
-                app.views.coursePage = new Views.CoursePage({ model : cursoModel });
                 return;
             }
-
-            app.views.submenuDiscussions = new Views.SubmenuDiscussions();
         }
     })
-
 };
 
 },{}],5:[function(require,module,exports){

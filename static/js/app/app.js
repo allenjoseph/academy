@@ -27,14 +27,6 @@ window.ACADEMY.socket.on('addComment', function(data){
 });
 
 /*---------------------------------------------------------*/
-window.Views = {};
-window.app = {};
-window.app.views = {};
-window.template = function(id){
-    return _.template( $( '#' + id ).html() );
-};
-
-/*---------------------------------------------------------*/
 
 /* Objects prototype extensions */
 if(!String.prototype.trim){

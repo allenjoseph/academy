@@ -40,12 +40,8 @@ module.exports = {
 
             if(self.url_root !== '/'){
                 var cursoModel = new _Model.course(self.model_root);
-                app.views.coursePage = new Views.CoursePage({ model : cursoModel });
                 return;
             }
-
-            app.views.submenuDiscussions = new Views.SubmenuDiscussions();
         }
     })
-
 };
