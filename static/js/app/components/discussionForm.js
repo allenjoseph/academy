@@ -25,11 +25,10 @@ module.exports = React.createClass({
         discussion.set('question', this.state.question);
         discussion.save(null,{
             success : function(discussion){
-                //aniado la nueva discusion a la coleccion
-                //discussions.add(discussion);
                 //limpio el input para aniadir discussion
                 self.cancelSubmit();
                 //muestro alerta satisfactoria
+                //y agrego la nueva discusion a la coleccion
                 window.ACADEMY.socket.emit('newDiscussion',{
                     notification: {
                         level:'success',

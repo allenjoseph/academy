@@ -15,7 +15,7 @@ var DiscussionBox = React.createClass({
     }
 });
 
-React.render(
-    <DiscussionBox />,
-    document.getElementById('discussionBox')
-);
+var $discussionBox = document.getElementById('discussionBox');
+if(!!$discussionBox){
+    React.render(<DiscussionBox />, $discussionBox);
+}

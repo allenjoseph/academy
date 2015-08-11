@@ -14,7 +14,7 @@ var CourseBox = React.createClass({
     }
 });
 
-React.render(
-  <CourseBox />,
-  document.getElementById('courseBox')
-);
+var $courseBox = document.getElementById('courseBox');
+if (!!$courseBox){
+    React.render(<CourseBox />, $courseBox);
+}

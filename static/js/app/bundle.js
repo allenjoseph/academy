@@ -22482,10 +22482,10 @@ var CourseBox = React.createClass({
     }
 });
 
-React.render(
-  React.createElement(CourseBox, null),
-  document.getElementById('courseBox')
-);
+var $courseBox = document.getElementById('courseBox');
+if (!!$courseBox){
+    React.render(React.createElement(CourseBox, null), $courseBox);
+}
 
 },{"./courseList":182,"react/addons":2}],182:[function(require,module,exports){
 var React = require('react/addons');
@@ -22613,10 +22613,10 @@ var DiscussionBox = React.createClass({
     }
 });
 
-React.render(
-    React.createElement(DiscussionBox, null),
-    document.getElementById('discussionBox')
-);
+var $discussionBox = document.getElementById('discussionBox');
+if(!!$discussionBox){
+    React.render(React.createElement(DiscussionBox, null), $discussionBox);
+}
 
 },{"./discussionForm":185,"./discussionList":186,"react/addons":2}],185:[function(require,module,exports){
 var React = require('react/addons'),
@@ -22646,11 +22646,10 @@ module.exports = React.createClass({
         discussion.set('question', this.state.question);
         discussion.save(null,{
             success : function(discussion){
-                //aniado la nueva discusion a la coleccion
-                //discussions.add(discussion);
                 //limpio el input para aniadir discussion
                 self.cancelSubmit();
                 //muestro alerta satisfactoria
+                //y agrego la nueva discusion a la coleccion
                 window.ACADEMY.socket.emit('newDiscussion',{
                     notification: {
                         level:'success',
