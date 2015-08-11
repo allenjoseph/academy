@@ -3,12 +3,8 @@ var React = require('react/addons');
 module.exports = React.createClass({
     displayName: 'Course',
 
-    componentDidMount: function(){
-        this.openExamEvent = new CustomEvent('openModalExam', { detail: this.props.data });
-    },
-
-    openModal: function(e){
-        window.dispatchEvent(this.openExamEvent);
+    openModalExam: function(e){
+        window.dispatchEvent(new CustomEvent('openModalExam', { detail: this.props.data }));
     },
 
     render: function() {
@@ -46,7 +42,7 @@ module.exports = React.createClass({
                             <div className="row-links">
                                 <div className="link-icon" title="Solicitar Ayuda"><i className="fa fa-child fa-fw"></i></div>
                                 <div className="link-icon" title="Iniciar Reunion"><i className="fa fa-users fa-fw"></i></div>
-                                <div className="link-icon btn-add-exam" title="Agregar Examen" onClick={this.openModal}>
+                                <div className="link-icon btn-add-exam" title="Agregar Examen" onClick={this.openModalExam}>
                                     <i className="fa fa-camera fa-fw"></i>
                                 </div>
                             </div>
