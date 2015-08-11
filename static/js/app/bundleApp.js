@@ -8,12 +8,9 @@ window.ACADEMY.utilities.namespace('backbone.model.constructors');
 window.ACADEMY.utilities.namespace('backbone.model.instances');
 window.ACADEMY.utilities.namespace('backbone.collection.constructors');
 window.ACADEMY.utilities.namespace('backbone.collection.instances');
-window.ACADEMY.utilities.namespace('backbone.router.constructors');
-window.ACADEMY.utilities.namespace('backbone.router.instances');
 
 window.ACADEMY.backbone.model.constructors = require('./models/models');
 window.ACADEMY.backbone.collection.constructors = require('./collections/collections');
-window.ACADEMY.backbone.router.constructors = require('./routers/main');
 
 window.ACADEMY.socket = io.connect('http://127.0.0.1:3000');
 window.ACADEMY.socket.on('newExam', function(data){
@@ -41,7 +38,7 @@ if(!String.prototype.trim){
 /* Dependencies configurations */
 moment.locale('es');
 
-},{"./collections/collections":2,"./models/models":3,"./routers/main":4,"./utilities":5}],2:[function(require,module,exports){
+},{"./collections/collections":2,"./models/models":3,"./utilities":5}],2:[function(require,module,exports){
 var models = require('../models/models');
 
 module.exports = {
@@ -88,53 +85,42 @@ module.exports = {
 };
 
 },{}],4:[function(require,module,exports){
-module.exports = {
+var _Model = window.ACADEMY.backbone.model.constructors,
+    _Collection = window.ACADEMY.backbone.collection.constructors,
+    _collection = window.ACADEMY.backbone.collection.instances;
 
-    main: Backbone.Router.extend({
+var Router = Backbone.Router.extend({
 
-        url_root : '/',
+    routes : {
+        'home': 'home',
+        'course/:id': 'course',
+        '*otherRoute': 'default'
+    },
 
-        routes : {
-            '' : 'index',
-            '*otherRoute' : 'default'
-        },
+    initialize : function(){
+        console.log('init Route');
+    },
 
-        initialize : function(url,model){
-            this.url_root = url;
-            this.model_root = model;
-            Backbone.history.start( { root : this.url_root } );
-            //Backbone.emulateJSON = true;
-        },
+    home : function(){
+        this.navigate('');
+        _collection.courses = new _Collection.courses();
+        _collection.discussions = new _Collection.discussions();
+        _collection.comments = new _Collection.comments();
+    },
 
-        index : function(){
-            this.fetchData();
-        },
+    course : function(id){
+        this.navigate('');
+        var cursoModel = new _Model.course(this.model_root);
+    },
 
-        courses : function(){
-            debugger;
-        },
+    default : function(otherRoute){
+        this.navigate('');
+    }
+});
 
-        default : function(otherRoute){
-            this.navigate('');
-        },
+window.ACADEMY.router = new Router();
 
-        fetchData : function(){
-            var self = this,
-                _Model = window.ACADEMY.backbone.model.constructors,
-                _Collection = window.ACADEMY.backbone.collection.constructors,
-                _collection = window.ACADEMY.backbone.collection.instances;
-
-            _collection.courses = new _Collection.courses();
-            _collection.discussions = new _Collection.discussions();
-            _collection.comments = new _Collection.comments();
-
-            if(self.url_root !== '/'){
-                var cursoModel = new _Model.course(self.model_root);
-                return;
-            }
-        }
-    })
-};
+Backbone.history.start({pushState: true, root: window.location.pathname});
 
 },{}],5:[function(require,module,exports){
 module.exports = {

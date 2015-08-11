@@ -70,14 +70,12 @@
 <script>
     (function(){
 
-        var _Router = window.ACADEMY.backbone.router.constructors,
-            _router = window.ACADEMY.backbone.router.instances;
-
         {% autoescape off %}
         var model = {{ academyCourse_json }};
         {% endautoescape %}
 
-        _router.courses = new _Router.main('/courses', model);
+        window.ACADEMY.router.navigate('course/' + model.id, {trigger: true});
+
     })();
 </script>
 {% endblock %}

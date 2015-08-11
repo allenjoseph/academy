@@ -1,47 +1,36 @@
-module.exports = {
+var _Model = window.ACADEMY.backbone.model.constructors,
+    _Collection = window.ACADEMY.backbone.collection.constructors,
+    _collection = window.ACADEMY.backbone.collection.instances;
 
-    main: Backbone.Router.extend({
+var Router = Backbone.Router.extend({
 
-        url_root : '/',
+    routes : {
+        'home': 'home',
+        'course/:id': 'course',
+        '*otherRoute': 'default'
+    },
 
-        routes : {
-            '' : 'index',
-            '*otherRoute' : 'default'
-        },
+    initialize : function(){
+        console.log('init Route');
+    },
 
-        initialize : function(url,model){
-            this.url_root = url;
-            this.model_root = model;
-            Backbone.history.start( { root : this.url_root } );
-            //Backbone.emulateJSON = true;
-        },
+    home : function(){
+        this.navigate('');
+        _collection.courses = new _Collection.courses();
+        _collection.discussions = new _Collection.discussions();
+        _collection.comments = new _Collection.comments();
+    },
 
-        index : function(){
-            this.fetchData();
-        },
+    course : function(id){
+        this.navigate('');
+        var cursoModel = new _Model.course(this.model_root);
+    },
 
-        courses : function(){
-            debugger;
-        },
+    default : function(otherRoute){
+        this.navigate('');
+    }
+});
 
-        default : function(otherRoute){
-            this.navigate('');
-        },
+window.ACADEMY.router = new Router();
 
-        fetchData : function(){
-            var self = this,
-                _Model = window.ACADEMY.backbone.model.constructors,
-                _Collection = window.ACADEMY.backbone.collection.constructors,
-                _collection = window.ACADEMY.backbone.collection.instances;
-
-            _collection.courses = new _Collection.courses();
-            _collection.discussions = new _Collection.discussions();
-            _collection.comments = new _Collection.comments();
-
-            if(self.url_root !== '/'){
-                var cursoModel = new _Model.course(self.model_root);
-                return;
-            }
-        }
-    })
-};
+Backbone.history.start({pushState: true, root: window.location.pathname});

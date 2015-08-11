@@ -66,6 +66,9 @@
     <script src="{% static "vendor-bower/js/backbone.unclassified/backbone.unclassified.js"%}"></script>
 
     <script src="{% static "js/app/bundleApp.js"%}"></script>
+    <script>
+        window.ACADEMY.constans.URL_STACTIC='{% static ""%}';
+    </script>
     {% block content-backbone-router %}{% endblock %}
     <script src="{% static "js/app/bundle.js"%}"></script>
 </body>

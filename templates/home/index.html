@@ -38,12 +38,8 @@
 <script>
     (function(){
 
-        window.ACADEMY.constans.URL_STACTIC='{% static ""%}';
+        window.ACADEMY.router.navigate('home', {trigger: true});
 
-        var _Router = window.ACADEMY.backbone.router.constructors,
-            _router = window.ACADEMY.backbone.router.instances;
-
-        _router.main = new _Router.main('/');
     })();
 </script>
 {% endblock %}

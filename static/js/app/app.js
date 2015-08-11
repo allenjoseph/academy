@@ -7,12 +7,9 @@ window.ACADEMY.utilities.namespace('backbone.model.constructors');
 window.ACADEMY.utilities.namespace('backbone.model.instances');
 window.ACADEMY.utilities.namespace('backbone.collection.constructors');
 window.ACADEMY.utilities.namespace('backbone.collection.instances');
-window.ACADEMY.utilities.namespace('backbone.router.constructors');
-window.ACADEMY.utilities.namespace('backbone.router.instances');
 
 window.ACADEMY.backbone.model.constructors = require('./models/models');
 window.ACADEMY.backbone.collection.constructors = require('./collections/collections');
-window.ACADEMY.backbone.router.constructors = require('./routers/main');
 
 window.ACADEMY.socket = io.connect('http://127.0.0.1:3000');
 window.ACADEMY.socket.on('newExam', function(data){
