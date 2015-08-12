@@ -4,54 +4,50 @@
 
 {% block content-light %}
 <div class="large-12 columns" id="page-course">
-    <h1>{{ academyCourse.course.name }}</h1>
-    <h5 class="subheader">{{ academyCourse.profesor.name }} {{ academyCourse.profesor.lastname }}</h5>
-    <p>
-        <span class="label secondary">{{ studens_in_course }} alumnos inscritos</span>
-        <span class="label success">{{ studens_in_course_online }} enlinea</span></p>
     <div class="row">
-        <div class="medium-4 columns">
-            <ul class="no-bullet">
-                <li>
-                    <a class="btn-add-exam">
-                        <i class="fa fa-camera fa-fw"></i>
-                        Compartir exámen
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-file-text fa-fw"></i>
-                        Compartir trabajo encargado
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-users fa-fw"></i>
-                        Iniciar reunión de estudio
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-child fa-fw"></i>
-                        Solicitar ayuda 
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-question-circle fa-fw"></i>
-                        Preguntar en el curso
-                    </a>
-                </li>
-            </ul>
+        <div class="medium-6 columns">
+            <h1>{{ academyCourse.course.name }}</h1>
+            <h5 class="subheader">{{ academyCourse.profesor.name }} {{ academyCourse.profesor.lastname }}</h5>
+            <p>
+                <span class="label secondary">{{ studens_in_course }} alumnos inscritos</span>
+                <span class="label success">{{ studens_in_course_online }} enlinea</span>
+            </p>
         </div>
-        <div class="medium-8 columns">
+        <div class="medium-6 columns">
             <ul class="no-bullet">
                 <li>{{ exams_in_course }} examenes disponibles.</li>
                 <li>{{ homeworks_in_course }} trabajos encargados disponibles.</li>
-                <li>{{ meetings_in_course }} reuniones de estudio programadas, <a href="">asistir a alguna</a>.</li>
-                <li>{{ aid_in_course }} solicitudes de ayuda pendientes, <a href="">brindar ayuda</a>.</li>
+                <li>{{ meetings_in_course }} reuniones de estudio programadas.</li>
+                <li>{{ aid_in_course }} solicitudes de ayuda pendientes.</li>
                 <li>{{ discussions_in_course }} preguntas hechas.</li>
             </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="medium-2 medium-offset-1 columns">
+            <a title="Compartir exámen">
+                <i class="fa fa-camera fa-fw"></i>
+            </a>
+        </div>
+        <div class="medium-2 columns">
+            <a title="Compartir trabajo encargado">
+                <i class="fa fa-file-text fa-fw"></i>
+            </a>
+        </div>
+        <div class="medium-2 columns">
+            <a title="Iniciar reunión de estudio">
+                <i class="fa fa-users fa-fw"></i>
+            </a>
+        </div>
+        <div class="medium-2 columns">
+            <a title="Solicitar ayuda">
+                <i class="fa fa-child fa-fw"></i>
+            </a>
+        </div>
+        <div class="medium-2 columns end">
+            <a title="Preguntar en el curso">
+                <i class="fa fa-question-circle fa-fw"></i>
+            </a>
         </div>
     </div>
     <div class="row light-color border-top">
