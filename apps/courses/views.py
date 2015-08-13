@@ -2,8 +2,7 @@
 from django.views.generic import TemplateView
 from academy.mixins import JsonResponseMixin
 from academy.serializers import ObjectSerializer
-from models import Course, AcademyCourse
-from apps.home.models import AcademyYear
+from models import AcademyCourse
 import json
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -21,9 +20,10 @@ class CoursesView(JsonResponseMixin, TemplateView):
         objectSerializer = ObjectSerializer()
 
         for academyCourse in academyCourses:
-            academyCourseDict = objectSerializer.serialize([academyCourse])
-            (academyCourseDict[0])['course'] = objectSerializer.serialize([academyCourse.course])[0]
-            academyCoursesList.append(academyCourseDict[0])
+            academyCourseDict = objectSerializer.serialize([academyCourse])[0]
+            academyCourseDict['course'] = objectSerializer.serialize(
+                [academyCourse.course])[0]
+            academyCoursesList.append(academyCourseDict)
 
         data = json.dumps(academyCoursesList)
         return data
@@ -37,22 +37,28 @@ class CourseView(TemplateView):
 
         # obtengo el curso y lo devuelvo a la vista
         try:
-            course = Course.objects.get(slug__exact=kwargs.get('slug'), department__id=request.session['department_id'])
-            academyCourse = AcademyCourse.objects.get(course=course,academyYear__id=request.session['academyYear_id'])
+            academyCourse = AcademyCourse.objects.get(
+                course__slug__exact=kwargs.get('slug'),
+                course__department__id=request.session['department_id'],
+                academyYear__id=request.session['academyYear_id'])
 
             objectSerializer = ObjectSerializer()
-            academyCourses = objectSerializer.serialize([academyCourse])
-            (academyCourses[0])['course'] = objectSerializer.serialize([course])[0]
+            academyCourseDict = objectSerializer.serialize([academyCourse])[0]
+            academyCourseDict['profesor'] = objectSerializer.serialize(
+                [academyCourse.profesor])[0]
+            academyCourseDict['course'] = objectSerializer.serialize(
+                [academyCourse.course])[0]
+            academyCourseDict['figures'] = {
+                'studentsEnrolled': 10,
+                'studentsOnline': 5,
+                'exams': 0,
+                'meetings': 0,
+                'aid': 0,
+                'discussions': 1,
+                'homeworks': 0
+            }
 
-            context['academyCourse_json'] = json.dumps(academyCourses[0])
-            context['academyCourse'] = academyCourse
-            context['studens_in_course'] = 10
-            context['studens_in_course_online'] = 5
-            context['exams_in_course'] = 0
-            context['meetings_in_course'] = 0
-            context['aid_in_course'] = 0
-            context['discussions_in_course'] = 1
-            context['homeworks_in_course'] = 0
+            context['academyCourseInfo'] = json.dumps(academyCourseDict)
 
         except MultipleObjectsReturned:
             print('academyCourse problem')

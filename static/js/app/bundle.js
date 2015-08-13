@@ -22404,22 +22404,18 @@ module.exports = React.createClass({
     }
 });
 
-},{"./mixins":191,"react":174}],180:[function(require,module,exports){
+},{"./mixins":194,"react":174}],180:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
     displayName: 'Course',
 
-    componentDidMount: function(){
-        this.openExamEvent = new CustomEvent('openModalExam', { detail: this.props.data });
-    },
-
-    openModal: function(e){
-        window.dispatchEvent(this.openExamEvent);
+    openModalExam: function(e){
+        window.dispatchEvent(new CustomEvent('openModalExam', { detail: this.props.academyCourse }));
     },
 
     render: function() {
-        var course = this.props.data.course,
+        var course = this.props.academyCourse.course,
             href = '/courses/'+ course.slug;
         return (
             React.createElement("li", null, 
@@ -22433,19 +22429,19 @@ module.exports = React.createClass({
                             React.createElement("div", {className: "row-one"}, 
                                 React.createElement("div", {className: "row-shape one"}), 
                                 React.createElement("div", {className: "row-content one"}, 
-                                    "25 Alumnos"
+                                     this.props.figures.students, " Alumnos"
                                 )
                             ), 
                             React.createElement("div", {className: "row-two"}, 
                                 React.createElement("div", {className: "row-shape two"}), 
                                 React.createElement("div", {className: "row-content two"}, 
-                                    "10 Trabajos"
+                                     this.props.figures.homeworks, " Trabajos"
                                 )
                             ), 
                             React.createElement("div", {className: "row-three"}, 
                                 React.createElement("div", {className: "row-shape three"}), 
                                 React.createElement("div", {className: "row-content three"}, 
-                                    "5 Examenes"
+                                     this.props.figures.exams, " Examenes"
                                 )
                             ), 
                             React.createElement("div", {className: "row-separator"}
@@ -22453,7 +22449,7 @@ module.exports = React.createClass({
                             React.createElement("div", {className: "row-links"}, 
                                 React.createElement("div", {className: "link-icon", title: "Solicitar Ayuda"}, React.createElement("i", {className: "fa fa-child fa-fw"})), 
                                 React.createElement("div", {className: "link-icon", title: "Iniciar Reunion"}, React.createElement("i", {className: "fa fa-users fa-fw"})), 
-                                React.createElement("div", {className: "link-icon btn-add-exam", title: "Agregar Examen", onClick: this.openModal}, 
+                                React.createElement("div", {className: "link-icon btn-add-exam", title: "Agregar Examen", onClick: this.openModalExam}, 
                                     React.createElement("i", {className: "fa fa-camera fa-fw"})
                                 )
                             )
@@ -22466,6 +22462,46 @@ module.exports = React.createClass({
 });
 
 },{"react/addons":2}],181:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+
+    displayName: 'CourseActionList',
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "medium-2 medium-offset-1 columns text-center"}, 
+                    React.createElement("a", {className: "option-course", title: "Compartir exámen"}, 
+                        React.createElement("i", {className: "fa fa-camera fa-fw"})
+                    )
+                ), 
+                React.createElement("div", {className: "medium-2 columns text-center"}, 
+                    React.createElement("a", {className: "option-course", title: "Compartir trabajo encargado"}, 
+                        React.createElement("i", {className: "fa fa-file-text fa-fw"})
+                    )
+                ), 
+                React.createElement("div", {className: "medium-2 columns text-center"}, 
+                    React.createElement("a", {className: "option-course", title: "Iniciar reunión de estudio"}, 
+                        React.createElement("i", {className: "fa fa-users fa-fw"})
+                    )
+                ), 
+                React.createElement("div", {className: "medium-2 columns text-center"}, 
+                    React.createElement("a", {className: "option-course", title: "Solicitar ayuda"}, 
+                        React.createElement("i", {className: "fa fa-child fa-fw"})
+                    )
+                ), 
+                React.createElement("div", {className: "medium-2 columns end text-center"}, 
+                    React.createElement("a", {className: "option-course", title: "Preguntar en el curso"}, 
+                        React.createElement("i", {className: "fa fa-question-circle fa-fw"})
+                    )
+                )
+            )
+        );
+    }
+});
+
+},{"react":174}],182:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
@@ -22487,7 +22523,7 @@ if (!!$courseBox){
     React.render(React.createElement(CourseBox, null), $courseBox);
 }
 
-},{"./courseList":182,"react/addons":2}],182:[function(require,module,exports){
+},{"./courseList":183,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -22509,7 +22545,7 @@ module.exports = React.createClass({
 
         var courseNodes = this.props.courses.map(function (course) {
             return (
-                React.createElement(Course, {key: course.cid, data: course.toJSON()})
+                React.createElement(Course, {key: course.cid, academyCourse: course.toJSON(), figures:  {} })
             );
         }, this);
 
@@ -22521,7 +22557,66 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":180,"./mixins":191,"react/addons":2}],183:[function(require,module,exports){
+},{"./course":180,"./mixins":194,"react/addons":2}],184:[function(require,module,exports){
+var React = require('react'),
+    CoursePageInfo = require('./coursePageInfo'),
+    CourseActionList = require('./courseActionList'),
+    academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
+
+var CoursePageBox = React.createClass({
+
+    displayName: 'CoursePageBox',
+
+    render: function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement(CoursePageInfo, {course: academyCourse.course, 
+                                profesor: academyCourse.profesor, 
+                                figures: academyCourse.figures}), 
+                React.createElement(CourseActionList, null)
+            )
+        );
+    }
+});
+
+var $coursePageBox = document.getElementById('coursePageBox');
+if (!!$coursePageBox){
+    React.render(React.createElement(CoursePageBox, null), $coursePageBox);
+}
+
+},{"./courseActionList":181,"./coursePageInfo":185,"react":174}],185:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+
+    displayName: 'CoursePageInfo',
+
+    render: function(){
+        return(
+            React.createElement("div", {className: "row pt1"}, 
+                React.createElement("div", {className: "medium-6 columns"}, 
+                    React.createElement("h1", null,  this.props.course.name), 
+                    React.createElement("h5", {className: "subheader"},  this.props.profesor.name + ' ' + this.props.profesor.lastname), 
+                    React.createElement("p", null, 
+                        React.createElement("span", {className: "label secondary"},  this.props.figures.studentsEnrolled, " alumnos inscritos"), 
+                        React.createElement("span", {className: "label success"},  this.props.figures.studentsOnline, " enlinea")
+                    )
+                ), 
+                React.createElement("div", {className: "medium-6 columns"}, 
+                    React.createElement("ul", {className: "no-bullet"}, 
+                        React.createElement("li", null,  this.props.figures.exams, " examenes disponibles."), 
+                        React.createElement("li", null,  this.props.figures.homeworks, " trabajos encargados disponibles."), 
+                        React.createElement("li", null,  this.props.figures.meetings, " reuniones de estudio programadas."), 
+                        React.createElement("li", null,  this.props.figures.aid, " solicitudes de ayuda pendientes."), 
+                        React.createElement("li", null,  this.props.figures.discussions, " preguntas hechas.")
+                    )
+                )
+            )
+        );
+    }
+});
+
+},{"react":174}],186:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var Utilities = window.ACADEMY.utilities;
@@ -22595,7 +22690,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],184:[function(require,module,exports){
+},{"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var DiscussionForm = require('./discussionForm');
@@ -22618,7 +22713,7 @@ if(!!$discussionBox){
     React.render(React.createElement(DiscussionBox, null), $discussionBox);
 }
 
-},{"./discussionForm":185,"./discussionList":186,"react/addons":2}],185:[function(require,module,exports){
+},{"./discussionForm":188,"./discussionList":189,"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons'),
     Discussion = window.ACADEMY.backbone.model.constructors.discussion,
     discussions = window.ACADEMY.backbone.collection.instances.discussions;
@@ -22704,7 +22799,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],186:[function(require,module,exports){
+},{"react/addons":2}],189:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
@@ -22741,7 +22836,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":183,"./mixins":191,"react/addons":2}],187:[function(require,module,exports){
+},{"./discussion":186,"./mixins":194,"react/addons":2}],190:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22795,7 +22890,7 @@ React.render(
   document.getElementById('examBox')
 );
 
-},{"./examForm":188,"react/addons":2}],188:[function(require,module,exports){
+},{"./examForm":191,"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -22912,7 +23007,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":190,"react/addons":2}],189:[function(require,module,exports){
+},{"./fileupload":193,"react/addons":2}],192:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -23000,7 +23095,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],190:[function(require,module,exports){
+},{"react/addons":2}],193:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -23055,7 +23150,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":189,"react/addons":2}],191:[function(require,module,exports){
+},{"./fileList":192,"react/addons":2}],194:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -23085,7 +23180,7 @@ module.exports = {
     }
 };
 
-},{}],192:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 var React = require('react'),
     Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
 
@@ -23118,4 +23213,4 @@ React.render(
     document.getElementById('notification')
 );
 
-},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192]);
+},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195]);

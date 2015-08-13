@@ -4,7 +4,7 @@ from academy.mixins import JsonResponseMixin, RestServiceMixin, StateEnum
 from models import Discussion, DiscussionComment
 from apps.home.models import Student, Parameter
 from apps.courses.models import AcademyCourse
-from academy.serializers import ObjectSerializer, JsonSerializer
+from academy.serializers import ObjectSerializer, ModelSerializer
 from django.utils import timezone
 from django.http import HttpResponse, JsonResponse
 import json
@@ -30,9 +30,11 @@ class DiscussionsView(JsonResponseMixin, TemplateView):
         discussions = objectSerializer.serialize(objects)
 
         for element in discussions:
-            student = objectSerializer.serialize([objects.get(pk=element.get('id')).student,])
+            student = objectSerializer.serialize(
+                [objects.get(pk=element.get('id')).student])
             element['student'] = student[0]
-            commentsCount = DiscussionComment.objects.filter(discussion=objects.get(pk=element.get('id'))).count()
+            commentsCount = DiscussionComment.objects.filter(
+                discussion=objects.get(pk=element.get('id'))).count()
             element['comments'] = commentsCount
 
         data = json.dumps(discussions, default=date_handler)
@@ -52,10 +54,12 @@ class DiscussionCommentsView(JsonResponseMixin, TemplateView):
         objectSerializer = ObjectSerializer()
 
         if self.discussionId > 0:
-            objects = DiscussionComment.objects.filter(discussion__id=self.discussionId)
+            objects = DiscussionComment.objects.filter(
+                discussion__id=self.discussionId)
             comments = objectSerializer.serialize(objects)
             for comment in comments:
-                student = objectSerializer.serialize([objects.get(pk=comment.get('id')).student])
+                student = objectSerializer.serialize(
+                    [objects.get(pk=comment.get('id')).student])
                 comment['student'] = student[0]
 
             data = json.dumps(comments, default=date_handler)
@@ -73,7 +77,8 @@ class DiscussionView(RestServiceMixin, View):
 
         academyCourse = None
         if 'academyCourse_id' in request.session:
-            academyCourse = AcademyCourse.objects.get(pk=request.session['academyCourse_id'])
+            academyCourse = AcademyCourse.objects.get(
+                pk=request.session['academyCourse_id'])
 
         discussion = Discussion.objects.create(
             question=params.get('question'),
@@ -81,7 +86,7 @@ class DiscussionView(RestServiceMixin, View):
             student=student,
             state=state)
 
-        jsonDiscussion = JsonSerializer(discussion, student=student, comments=0).getJSON()
+        jsonDiscussion = ModelSerializer(discussion, comments=0)
 
         return JsonResponse(json.loads(jsonDiscussion), safe=False, status=201)
 
@@ -106,6 +111,6 @@ class CommentView(RestServiceMixin, View):
             student=student,
             state=state)
 
-        jsonComment = JsonSerializer(comment, student=student).getJSON()
+        jsonComment = ModelSerializer(comment)
 
         return JsonResponse(json.loads(jsonComment), safe=False, status=201)

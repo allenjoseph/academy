@@ -636,3 +636,11 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
     font-size: 1em;
     line-height: 1.125em;
 }
+
+.option-course{
+    padding: 1em;
+    background-color: #ddd;
+    border-radius: 50%;
+    line-height: 5em;
+    font-size: 1.5em;
+}

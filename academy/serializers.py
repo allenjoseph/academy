@@ -13,44 +13,32 @@ def date_handler(obj):
 
 
 class ObjectSerializer(Serializer):
+
     def end_object(self, obj):
         self._current['id'] = obj._get_pk_val()
         self.objects.append(self._current)
 
 
-class JsonSerializer(ObjectSerializer):
+class ModelSerializer(ObjectSerializer):
 
-    def __init__(self, model, **dependencies):
-        self.model = model
-        self.dependencies = dependencies
-
-    def getExamJSON(self):
-        examDict = self.serialize([self.model],)[0]
-
-        if 'student' in self.dependencies:
-            studentDict = self.serialize([self.dependencies['student']],)[0]
-            examDict['student'] = studentDict
+    def getExam(self):
+        examDict = self.serialize([self.model])[0]
+        examDict['student'] = self.serialize([self.model.student])[0]
 
         return json.dumps(examDict, default=date_handler)
 
-    def getDiscussionJSON(self):
+    def getDiscussion(self):
         discussionDict = self.serialize([self.model],)[0]
-
-        if 'student' in self.dependencies:
-            studentDict = self.serialize([self.dependencies['student']],)[0]
-            discussionDict['student'] = studentDict
+        discussionDict['student'] = self.serialize([self.model.student])[0]
 
         if 'comments' in self.dependencies:
             discussionDict['comments'] = self.dependencies['comments']
 
         return json.dumps(discussionDict, default=date_handler)
 
-    def getDiscussionCommentJSON(self):
+    def getDiscussionComment(self):
         commentDict = self.serialize([self.model],)[0]
-
-        if 'student' in self.dependencies:
-            studentDict = self.serialize([self.dependencies['student']],)[0]
-            commentDict['student'] = studentDict
+        commentDict['student'] = self.serialize([self.model.student])[0]
 
         return json.dumps(commentDict, default=date_handler)
 
@@ -58,8 +46,13 @@ class JsonSerializer(ObjectSerializer):
         typeModel = type(self.model)
 
         if typeModel == Exam:
-            return self.getExamJSON()
+            return self.getExam()
         elif typeModel == Discussion:
-            return self.getDiscussionJSON()
+            return self.getDiscussion()
         elif typeModel == DiscussionComment:
-            return self.getDiscussionCommentJSON()
+            return self.getDiscussionComment()
+
+    def __init__(self, model, **dependencies):
+        self.model = model
+        self.dependencies = dependencies
+        return self.getJSON(self)

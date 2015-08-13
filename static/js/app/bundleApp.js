@@ -93,7 +93,7 @@ var Router = Backbone.Router.extend({
 
     routes : {
         'home': 'home',
-        'course/:id': 'course',
+        'course': 'course',
         '*otherRoute': 'default'
     },
 
@@ -108,9 +108,8 @@ var Router = Backbone.Router.extend({
         _collection.comments = new _Collection.comments();
     },
 
-    course : function(id){
+    course : function(){
         this.navigate('');
-        var cursoModel = new _Model.course(this.model_root);
     },
 
     default : function(otherRoute){

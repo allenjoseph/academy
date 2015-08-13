@@ -4,11 +4,11 @@ module.exports = React.createClass({
     displayName: 'Course',
 
     openModalExam: function(e){
-        window.dispatchEvent(new CustomEvent('openModalExam', { detail: this.props.data }));
+        window.dispatchEvent(new CustomEvent('openModalExam', { detail: this.props.academyCourse }));
     },
 
     render: function() {
-        var course = this.props.data.course,
+        var course = this.props.academyCourse.course,
             href = '/courses/'+ course.slug;
         return (
             <li>
@@ -22,19 +22,19 @@ module.exports = React.createClass({
                             <div className="row-one">
                                 <div className="row-shape one"></div>
                                 <div className="row-content one">
-                                    25 Alumnos
+                                    { this.props.figures.students } Alumnos
                                 </div>
                             </div>
                             <div className="row-two">
                                 <div className="row-shape two"></div>
                                 <div className="row-content two">
-                                    10 Trabajos
+                                    { this.props.figures.homeworks } Trabajos
                                 </div>
                             </div>
                             <div className="row-three">
                                 <div className="row-shape three"></div>
                                 <div className="row-content three">
-                                    5 Examenes
+                                    { this.props.figures.exams } Examenes
                                 </div>
                             </div>
                             <div className="row-separator">
