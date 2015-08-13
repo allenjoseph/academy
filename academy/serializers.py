@@ -1,8 +1,10 @@
 from django.core.serializers.python import Serializer
 from apps.exams.models import Exam
+from apps.home.models import Attachment
 from apps.discussions.models import Discussion, DiscussionComment
 from apps.courses.models import AcademyCourse
 from django.utils import timezone
+from django.db.models.query import QuerySet
 import json
 
 
@@ -23,47 +25,45 @@ class ObjectSerializer(Serializer):
 class ModelSerializer(ObjectSerializer):
 
     def getExam(self):
-        examDict = self.serialize([self.model])[0]
-        examDict['student'] = self.serialize([self.model.student])[0]
-
-        return json.dumps(examDict, default=date_handler)
+        self.dictModel['student'] = self.serialize([self.model.student])[0]
 
     def getDiscussion(self):
-        discussionDict = self.serialize([self.model],)[0]
-        discussionDict['student'] = self.serialize([self.model.student])[0]
-
-        if 'comments' in self.dependencies:
-            discussionDict['comments'] = self.dependencies['comments']
-
-        return json.dumps(discussionDict, default=date_handler)
+        self.dictModel['student'] = self.serialize([self.model.student])[0]
+        self.dictModel['comments'] = DiscussionComment.objects.filter(
+            discussion__id=self.dictModel['id']).count()
 
     def getDiscussionComment(self):
-        commentDict = self.serialize([self.model],)[0]
-        commentDict['student'] = self.serialize([self.model.student])[0]
-
-        return json.dumps(commentDict, default=date_handler)
+        self.dictModel['student'] = self.serialize([self.model.student])[0]
 
     def getAcademyCourse(self):
-        academyCourseDict = self.serialize([self.model],)[0]
-        academyCourseDict['course'] = self.serialize([self.model.course])[0]
-        academyCourseDict['profesor'] = self.serialize(
+        self.dictModel['course'] = self.serialize([self.model.course])[0]
+        self.dictModel['profesor'] = self.serialize(
             [self.model.profesor])[0]
 
-        return json.dumps(academyCourseDict, default=date_handler)
-
     def getJSON(self):
-        typeModel = type(self.model)
+        return json.dumps(self.dictModel, default=date_handler)
 
-        if typeModel == Exam:
-            return self.getExam()
-        elif typeModel == Discussion:
-            return self.getDiscussion()
-        elif typeModel == DiscussionComment:
-            return self.getDiscussionComment()
-        elif typeModel == AcademyCourse:
-            return self.getAcademyCourse()
-
-    def __init__(self, model, **dependencies):
+    def evaluateModel(self, model):
         self.model = model
-        self.dependencies = dependencies
-        return self.getJSON()
+        self.dictModel = self.serialize([model])[0]
+
+        typeModel = type(model)
+        if typeModel == Exam:
+            self.getExam()
+        elif typeModel == Discussion:
+            self.getDiscussion()
+        elif typeModel == DiscussionComment:
+            self.getDiscussionComment()
+        elif typeModel == AcademyCourse:
+            self.getAcademyCourse()
+
+    def __init__(self, model):
+        self.dictModel = {}
+        if type(model) == QuerySet:
+            arrayDictModel = []
+            for modelItem in model:
+                self.evaluateModel(modelItem)
+                arrayDictModel.append(self.dictModel)
+            self.dictModel = arrayDictModel
+        else:
+            self.evaluateModel(model)

@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 from django.views.generic import TemplateView
 from academy.mixins import JsonResponseMixin
-from academy.serializers import ObjectSerializer
+from academy.serializers import ModelSerializer
 from models import AcademyCourse
-import json
 from django.core.exceptions import MultipleObjectsReturned
 
 
@@ -14,19 +13,9 @@ class CoursesView(JsonResponseMixin, TemplateView):
         return self.response_handler()
 
     def get_data(self):
-
         academyCourses = AcademyCourse.objects.all()
-        academyCoursesList = []
-        objectSerializer = ObjectSerializer()
-
-        for academyCourse in academyCourses:
-            academyCourseDict = objectSerializer.serialize([academyCourse])[0]
-            academyCourseDict['course'] = objectSerializer.serialize(
-                [academyCourse.course])[0]
-            academyCoursesList.append(academyCourseDict)
-
-        data = json.dumps(academyCoursesList)
-        return data
+        academyCourseSerialize = ModelSerializer(academyCourses)
+        return academyCourseSerialize.getJSON()
 
 
 class CourseView(TemplateView):
@@ -35,20 +24,14 @@ class CourseView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
 
-        # obtengo el curso y lo devuelvo a la vista
         try:
             academyCourse = AcademyCourse.objects.get(
                 course__slug__exact=kwargs.get('slug'),
                 course__department__id=request.session['department_id'],
                 academyYear__id=request.session['academyYear_id'])
 
-            objectSerializer = ObjectSerializer()
-            academyCourseDict = objectSerializer.serialize([academyCourse])[0]
-            academyCourseDict['profesor'] = objectSerializer.serialize(
-                [academyCourse.profesor])[0]
-            academyCourseDict['course'] = objectSerializer.serialize(
-                [academyCourse.course])[0]
-            academyCourseDict['figures'] = {
+            academyCourseSerialize = ModelSerializer(academyCourse)
+            academyCourseSerialize.dictModel['figures'] = {
                 'studentsEnrolled': 10,
                 'studentsOnline': 5,
                 'exams': 0,
@@ -58,7 +41,7 @@ class CourseView(TemplateView):
                 'homeworks': 0
             }
 
-            context['academyCourseInfo'] = json.dumps(academyCourseDict)
+            context['academyCourseInfo'] = academyCourseSerialize.getJSON()
 
         except MultipleObjectsReturned:
             print('academyCourse problem')

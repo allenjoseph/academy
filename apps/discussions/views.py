@@ -4,18 +4,9 @@ from academy.mixins import JsonResponseMixin, RestServiceMixin, StateEnum
 from models import Discussion, DiscussionComment
 from apps.home.models import Student, Parameter
 from apps.courses.models import AcademyCourse
-from academy.serializers import ObjectSerializer, ModelSerializer
-from django.utils import timezone
+from academy.serializers import ModelSerializer
 from django.http import HttpResponse, JsonResponse
 import json
-
-
-def date_handler(obj):
-    if hasattr(obj, 'isoformat'):
-        return timezone.localtime(obj).isoformat()
-    else:
-        return obj
-
 
 class DiscussionsView(JsonResponseMixin, TemplateView):
     template_name = 'home/404.html'
@@ -24,21 +15,9 @@ class DiscussionsView(JsonResponseMixin, TemplateView):
         return self.response_handler()
 
     def get_data(self):
-        objects = Discussion.objects.all()
-
-        objectSerializer = ObjectSerializer()
-        discussions = objectSerializer.serialize(objects)
-
-        for element in discussions:
-            student = objectSerializer.serialize(
-                [objects.get(pk=element.get('id')).student])
-            element['student'] = student[0]
-            commentsCount = DiscussionComment.objects.filter(
-                discussion=objects.get(pk=element.get('id'))).count()
-            element['comments'] = commentsCount
-
-        data = json.dumps(discussions, default=date_handler)
-        return data
+        discussions = Discussion.objects.all()
+        discussionsSerialize = ModelSerializer(discussions)
+        return discussionsSerialize.getJSON()
 
 
 class DiscussionCommentsView(JsonResponseMixin, TemplateView):
@@ -50,31 +29,19 @@ class DiscussionCommentsView(JsonResponseMixin, TemplateView):
         return self.response_handler()
 
     def get_data(self):
-        data = {}
-        objectSerializer = ObjectSerializer()
-
         if self.discussionId > 0:
-            objects = DiscussionComment.objects.filter(
+            discussionComments = DiscussionComment.objects.filter(
                 discussion__id=self.discussionId)
-            comments = objectSerializer.serialize(objects)
-            for comment in comments:
-                student = objectSerializer.serialize(
-                    [objects.get(pk=comment.get('id')).student])
-                comment['student'] = student[0]
-
-            data = json.dumps(comments, default=date_handler)
-
-        return data
+            discussionCommentsSerializer = ModelSerializer(discussionComments)
+        return discussionCommentsSerializer.getJSON()
 
 
 class DiscussionView(RestServiceMixin, View):
     # create and update
     def post(self, request, *args, **kwargs):
         params = json.loads(request.body)
-
         student = Student.objects.get(pk=request.session['student_id'])
         state = Parameter.objects.get(pk=int(StateEnum.ACTIVO))
-
         academyCourse = None
         if 'academyCourse_id' in request.session:
             academyCourse = AcademyCourse.objects.get(
@@ -86,8 +53,7 @@ class DiscussionView(RestServiceMixin, View):
             student=student,
             state=state)
 
-        dictDiscussion = ModelSerializer(discussion, comments=0)
-
+        dictDiscussion = ModelSerializer(discussion).dictModel
         return JsonResponse(dictDiscussion, status=201)
 
     def delete(self, request, discussion_id):
@@ -100,7 +66,6 @@ class CommentView(RestServiceMixin, View):
 
     def post(self, request, *args, **kwargs):
         params = json.loads(request.body)
-
         student = Student.objects.get(pk=request.session['student_id'])
         discussion = Discussion.objects.get(pk=params.get('discussion'))
         state = Parameter.objects.get(pk=int(StateEnum.ACTIVO))
@@ -111,6 +76,5 @@ class CommentView(RestServiceMixin, View):
             student=student,
             state=state)
 
-        dictComment = ModelSerializer(comment)
-
+        dictComment = ModelSerializer(comment).dictModel
         return JsonResponse(dictComment, status=201)

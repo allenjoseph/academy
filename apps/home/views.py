@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.views.generic import TemplateView
 from models import Attachment
-from academy.serializers import ObjectSerializer
+from academy.serializers import ModelSerializer
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import UploadedFile
@@ -41,10 +41,7 @@ def UploadFile(request):
     attachment.attachment = fileUploaded
     attachment.save()
 
-    # json de la instancia guardada
-    objectSerializer = ObjectSerializer()
-    dictElementAttachment = objectSerializer.serialize([attachment])[0]
-
+    dictElementAttachment = ModelSerializer(attachment).dictModel
     return JsonResponse(dictElementAttachment)
 
 

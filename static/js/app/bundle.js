@@ -22031,7 +22031,6 @@ function inArray(needle, haystack) {
 }
 
 module.exports = Growl;
-
 },{"./single-growl.react.js":176,"react":174}],176:[function(require,module,exports){
 var React = require('react');
 
@@ -22145,7 +22144,6 @@ function whichTransitionEvent(){
 }
 
 module.exports = SingleGrowl;
-
 },{"react":174}],177:[function(require,module,exports){
 var React = require('react');
 var CommentForm = require('./commentForm');
@@ -22252,7 +22250,6 @@ React.render(
     React.createElement(CommentBox, null),
     document.getElementById('commentBox')
 );
-
 },{"./commentForm":178,"./commentList":179,"react":174}],178:[function(require,module,exports){
 var React = require('react/addons'),
     Comment = window.ACADEMY.backbone.model.constructors.comment;
@@ -22345,7 +22342,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react/addons":2}],179:[function(require,module,exports){
 var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
@@ -22403,7 +22399,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"./mixins":194,"react":174}],180:[function(require,module,exports){
 var React = require('react/addons');
 
@@ -22460,7 +22455,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react/addons":2}],181:[function(require,module,exports){
 var React = require('react');
 
@@ -22500,7 +22494,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react":174}],182:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
@@ -22522,7 +22515,6 @@ var $courseBox = document.getElementById('courseBox');
 if (!!$courseBox){
     React.render(React.createElement(CourseBox, null), $courseBox);
 }
-
 },{"./courseList":183,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
@@ -22556,7 +22548,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"./course":180,"./mixins":194,"react/addons":2}],184:[function(require,module,exports){
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
@@ -22583,7 +22574,6 @@ var $coursePageBox = document.getElementById('coursePageBox');
 if (!!$coursePageBox){
     React.render(React.createElement(CoursePageBox, null), $coursePageBox);
 }
-
 },{"./courseActionList":181,"./coursePageInfo":185,"react":174}],185:[function(require,module,exports){
 var React = require('react');
 
@@ -22615,7 +22605,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react":174}],186:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
@@ -22689,7 +22678,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
@@ -22712,7 +22700,6 @@ var $discussionBox = document.getElementById('discussionBox');
 if(!!$discussionBox){
     React.render(React.createElement(DiscussionBox, null), $discussionBox);
 }
-
 },{"./discussionForm":188,"./discussionList":189,"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons'),
     Discussion = window.ACADEMY.backbone.model.constructors.discussion,
@@ -22798,7 +22785,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react/addons":2}],189:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
@@ -22835,7 +22821,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"./discussion":186,"./mixins":194,"react/addons":2}],190:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
@@ -22889,7 +22874,6 @@ React.render(
   React.createElement(ExamBox, null),
   document.getElementById('examBox')
 );
-
 },{"./examForm":191,"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
@@ -23006,7 +22990,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"./fileupload":193,"react/addons":2}],192:[function(require,module,exports){
 var React = require('react/addons');
 
@@ -23094,7 +23077,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"react/addons":2}],193:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
@@ -23149,7 +23131,6 @@ module.exports = React.createClass({
         );
     }
 });
-
 },{"./fileList":192,"react/addons":2}],194:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
@@ -23179,7 +23160,6 @@ module.exports = {
         }
     }
 };
-
 },{}],195:[function(require,module,exports){
 var React = require('react'),
     Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
@@ -23212,5 +23192,4 @@ React.render(
     React.createElement(NotificationBox, null),
     document.getElementById('notification')
 );
-
 },{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195]);
