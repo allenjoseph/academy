@@ -29,6 +29,6 @@ class ExamView(RestServiceMixin, View):
                 exam=exam,
                 attachment=Attachment.objects.get(pk=file_id))
 
-        jsonExam = ModelSerializer(exam)
+        dictExam = ModelSerializer(exam)
 
-        return JsonResponse(json.loads(jsonExam), safe=False, status=201)
+        return JsonResponse(dictExam, status=201)

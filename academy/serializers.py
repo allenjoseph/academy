@@ -1,6 +1,7 @@
 from django.core.serializers.python import Serializer
 from apps.exams.models import Exam
 from apps.discussions.models import Discussion, DiscussionComment
+from apps.courses.models import AcademyCourse
 from django.utils import timezone
 import json
 
@@ -14,9 +15,9 @@ def date_handler(obj):
 
 class ObjectSerializer(Serializer):
 
-    def end_object(self, obj):
+    def get_dump_object(self, obj):
         self._current['id'] = obj._get_pk_val()
-        self.objects.append(self._current)
+        return self._current
 
 
 class ModelSerializer(ObjectSerializer):
@@ -42,6 +43,14 @@ class ModelSerializer(ObjectSerializer):
 
         return json.dumps(commentDict, default=date_handler)
 
+    def getAcademyCourse(self):
+        academyCourseDict = self.serialize([self.model],)[0]
+        academyCourseDict['course'] = self.serialize([self.model.course])[0]
+        academyCourseDict['profesor'] = self.serialize(
+            [self.model.profesor])[0]
+
+        return json.dumps(academyCourseDict, default=date_handler)
+
     def getJSON(self):
         typeModel = type(self.model)
 
@@ -51,8 +60,10 @@ class ModelSerializer(ObjectSerializer):
             return self.getDiscussion()
         elif typeModel == DiscussionComment:
             return self.getDiscussionComment()
+        elif typeModel == AcademyCourse:
+            return self.getAcademyCourse()
 
     def __init__(self, model, **dependencies):
         self.model = model
         self.dependencies = dependencies
-        return self.getJSON(self)
+        return self.getJSON()

@@ -86,9 +86,9 @@ class DiscussionView(RestServiceMixin, View):
             student=student,
             state=state)
 
-        jsonDiscussion = ModelSerializer(discussion, comments=0)
+        dictDiscussion = ModelSerializer(discussion, comments=0)
 
-        return JsonResponse(json.loads(jsonDiscussion), safe=False, status=201)
+        return JsonResponse(dictDiscussion, status=201)
 
     def delete(self, request, discussion_id):
         discussion = Discussion.objects.get(pk=discussion_id)
@@ -111,6 +111,6 @@ class CommentView(RestServiceMixin, View):
             student=student,
             state=state)
 
-        jsonComment = ModelSerializer(comment)
+        dictComment = ModelSerializer(comment)
 
-        return JsonResponse(json.loads(jsonComment), safe=False, status=201)
+        return JsonResponse(dictComment, status=201)
