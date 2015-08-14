@@ -38,7 +38,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <li>
-                <div className="panel shadow radius discussion">
+                <div className="panel discussion box-shadow-light">
                     <div className="row">
                         <div className="small-12 columns">
                             <p>

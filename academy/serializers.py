@@ -1,6 +1,5 @@
 from django.core.serializers.python import Serializer
 from apps.exams.models import Exam
-from apps.home.models import Attachment
 from apps.discussions.models import Discussion, DiscussionComment
 from apps.courses.models import AcademyCourse
 from django.utils import timezone

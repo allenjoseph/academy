@@ -12,9 +12,9 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
     <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 </head>
-<body class="layout-table">
+<body class="layout-table bg-blue-dark">
 
-    <div class="header-group">
+    <div class="header-group bg-blue-dark">
         <div id="header">
             <div class="row">
                 {% include "header.html" %}
@@ -28,7 +28,7 @@
     </div>
 
     <div class="main-group">
-        <div id="first-content" class="light-color bg">
+        <div id="first-content" class="bg-blue-light">
             <div class="row">
                 {% block content-light %}{% endblock %}
             </div>
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="footer-group">
+    <div class="footer-group bg-blue-dark">
         <div id="footer">
             <div class="row">
                 {% include "footer.html" %}

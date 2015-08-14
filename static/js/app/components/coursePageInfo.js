@@ -4,6 +4,37 @@ module.exports = React.createClass({
 
     displayName: 'CoursePageInfo',
 
+    getInitialState: function(){
+        return {
+            figures:{
+                exams: 'Examenes disponibles',
+                homeworks: 'Trabajos encargados disponibles',
+                meetings: 'Reuniones de estudio programadas',
+                aid: 'Solicitudes de ayuda pendientes',
+                discussions: 'Preguntas hechas'
+            }
+        }
+    },
+
+    getFigures: function(){
+        var figures = [];
+        for(var key in this.props.figures){
+
+            if( this.props.figures.hasOwnProperty(key) &&
+                this.state.figures.hasOwnProperty(key)){
+
+                figures.push(
+                    <li className="figures" key={key}>
+                        <span className="name">{ this.state.figures[key] }</span>
+                        <span className="separator"/>
+                        <span className="counter color info bg light-color">{ this.props.figures[key] }</span>
+                    </li>
+                );
+            }
+        }
+        return figures;
+    },
+
     render: function(){
         return(
             <div className="row pt1">
@@ -17,11 +48,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="medium-6 columns">
                     <ul className="no-bullet">
-                        <li>{ this.props.figures.exams } examenes disponibles.</li>
-                        <li>{ this.props.figures.homeworks } trabajos encargados disponibles.</li>
-                        <li>{ this.props.figures.meetings } reuniones de estudio programadas.</li>
-                        <li>{ this.props.figures.aid } solicitudes de ayuda pendientes.</li>
-                        <li>{ this.props.figures.discussions } preguntas hechas.</li>
+                        { this.getFigures() }
                     </ul>
                 </div>
             </div>

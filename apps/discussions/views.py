@@ -8,6 +8,7 @@ from academy.serializers import ModelSerializer
 from django.http import HttpResponse, JsonResponse
 import json
 
+
 class DiscussionsView(JsonResponseMixin, TemplateView):
     template_name = 'home/404.html'
 

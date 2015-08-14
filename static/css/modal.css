@@ -227,8 +227,8 @@ body.modal-is-locked {
     text-align: center;
     text-decoration: none;
 
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
     background-clip: padding-box;
 }
 
@@ -265,8 +265,8 @@ body.modal-is-locked {
         min-height: 0;
         margin: 20px auto;
 
-        -webkit-border-radius: 6px;
-        border-radius: 6px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
     }
 }
 
