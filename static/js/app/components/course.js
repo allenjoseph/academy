@@ -12,37 +12,36 @@ module.exports = React.createClass({
             href = '/courses/'+ course.slug;
         return (
             <li>
-                <div className="course-wrapper"></div>
+                <div className="course-wrapper"/>
                 <div className="course-content">
                     <div>
                         <h3 className="text-center">
                             <a className="course-name" href={href}>{course.name}</a>
                         </h3>
-                        <div className="course-rows">
-                            <div className="row-one">
-                                <div className="row-shape one"></div>
-                                <div className="row-content one">
+                        <div>
+                            <div>
+                                <div className="row-shape one"/>
+                                <div className="row-content">
                                     { this.props.figures.students } Alumnos
                                 </div>
                             </div>
-                            <div className="row-two">
-                                <div className="row-shape two"></div>
-                                <div className="row-content two">
+                            <div>
+                                <div className="row-shape two"/>
+                                <div className="row-content">
                                     { this.props.figures.homeworks } Trabajos
                                 </div>
                             </div>
-                            <div className="row-three">
-                                <div className="row-shape three"></div>
-                                <div className="row-content three">
+                            <div>
+                                <div className="row-shape three"/>
+                                <div className="row-content">
                                     { this.props.figures.exams } Examenes
                                 </div>
                             </div>
-                            <div className="row-separator">
-                            </div>
+                            <div className="row-separator"/>
                             <div className="row-links">
                                 <div className="link-icon" title="Solicitar Ayuda"><i className="fa fa-child fa-fw"></i></div>
                                 <div className="link-icon" title="Iniciar Reunion"><i className="fa fa-users fa-fw"></i></div>
-                                <div className="link-icon btn-add-exam" title="Agregar Examen" onClick={this.openModalExam}>
+                                <div className="link-icon" title="Agregar Examen" onClick={this.openModalExam}>
                                     <i className="fa fa-camera fa-fw"></i>
                                 </div>
                             </div>

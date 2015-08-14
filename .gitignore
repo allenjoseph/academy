@@ -61,7 +61,6 @@ apps/**/migrations/
 node_modules
 bower_modules
 static/vendor-bower
-static/css/styls
 media/
 bower_components/
 .idea/

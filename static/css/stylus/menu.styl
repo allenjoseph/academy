@@ -1,0 +1,22 @@
+@import "variables"
+@import "mixins"
+
+.menu-item
+    border-bottom 4px solid transparent
+    transition 100ms background-color
+    text-align center
+    &:hover
+        border-bottom-color redMaterial
+    a 
+        color whitePalette
+        display block
+        {textShadowForWhite}
+.menu-item-user
+    padding-right 80px
+    text-align right
+    img
+        height 45px
+        margin-top auto
+        position absolute
+        right 1em
+        border-radius 50%

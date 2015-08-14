@@ -19,8 +19,6 @@ module.exports = React.createClass({
     },
 
     sendSubmit: function(event){
-        if (event.charCode !== 13) return true;
-
         event.preventDefault();
         var self = this;
 
@@ -54,14 +52,16 @@ module.exports = React.createClass({
 
     render: function(){
         return(
-            <div id="form-add-discussion" className="row pt2 pb1">
+            <div className="row">
                 <div className="small-12 columns">
-                    <span className="icon-inner-input">
-                        <i className="fa fa-question"></i>
+                    <span className="input-add-discussion">
+                        <i className="fa fa-question"/>
+                        <input type="text" value={this.state.question}
+                            onChange={this.changeDiscussion}/>
+                        <a onClick={this.sendSubmit}>
+                            <i className="fa fa-plus"/>
+                        </a>
                     </span>
-                    <input className="input-dark"
-                        type="text" value={this.state.question}
-                        onChange={this.changeDiscussion} onKeyPress={this.sendSubmit}/>
                 </div>
             </div>
         );

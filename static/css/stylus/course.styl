@@ -1,0 +1,100 @@
+@import "variables"
+
+.content-courses
+    li
+        position relative
+        &:hover
+            cursor default
+            .row-separator
+                background-color #18A6D5
+            .course-wrapper 
+                &:after, &:before
+                    border-top-color #18A6D5
+            .row-links 
+                .link-icon
+                    color rgba(0,0,0,0.4)
+    h3
+        max-height 2.5
+        overflow hidden
+    a
+        color whitePalette
+        {textShadowForWhite}
+    .course-wrapper
+        margin 10px auto
+        display table
+        width 260px
+        &:before 
+            content ''
+            display block
+            border-left 25px solid transparent
+            border-right 25px solid transparent
+            border-top 260px solid #1085AA
+            width 260px
+        &:after 
+            content ''
+            display block
+            border-left 105px solid transparent
+            border-right 105px solid transparent
+            border-top 30px solid #1085AA
+            width 0
+            margin-left 25px
+    .course-content
+        position absolute
+        width 240px
+        margin 15px auto
+        top 0
+        left 0
+        right 0
+        h1, h2, h3, h4, h5, h6
+            color #FCFDFD
+        .row-shape
+            content: ''
+            display: block
+            border-left: 6px solid transparent
+            border-right: 6px solid transparent
+            border-top: 40px solid #FFF
+            position: absolute
+            z-index: 1
+            filter:         drop-shadow(rgba(0,0,0,.75) 0 3px 8px)
+            &.one
+                border-top-color: #F0F3FA
+                left: 2px
+                width: 237px
+            &.two
+                border-top-color: #F0B546
+                left: 5px
+                width: 231px
+            &.three
+                border-top-color: #9679CC
+                left: 8px
+                width: 225px
+        .row-content
+            z-index 2
+            color #222
+            font-size 1.5em
+            position relative
+            text-align center
+        .row-separator
+            background-color #1085AA
+            display block
+            height 25px
+            position relative
+            width 100%
+            z-index 3
+            box-shadow 0px -5px 5px 0px rgba(0, 0, 0, .25)
+        .row-links
+            text-align center
+            z-index 4
+            margin-top -15px
+            position relative
+            .link-icon
+                display inline
+                margin 0 10px
+                font-size 1.5em
+                cursor pointer
+                color rgba(0,0,0,0.6)
+                {textShadowIcon}
+                &:hover
+                    color: whitePalette
+                    {textShadowIconHover}
+    

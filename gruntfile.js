@@ -48,6 +48,19 @@ module.exports = function(grunt) {
             },
         },
 
+        stylus: {
+            compile: {
+                options: {
+                    compress: false
+                },
+                files: {
+                    'static/css/app.css': [
+                        'static/css/stylus/*.styl'
+                    ]
+                }
+            }
+        },
+
         watch:{
             browserify: {
                 files: [
@@ -62,6 +75,12 @@ module.exports = function(grunt) {
             browserifyReact: {
                 files: ['static/js/app/components/**/*.js'],
                 tasks: ['browserify:react']
+            },
+            stylus: {
+                files: [
+                    'static/css/stylus/*.styl'
+                ],
+                tasks: ['stylus:compile']
             }
         }
     });
@@ -69,6 +88,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-stylus');
 
     grunt.registerTask('clean-vendor', ['bower:install']);
     grunt.registerTask('default', ['watch']);

@@ -9,50 +9,42 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/base.css"%}"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/modal.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/academy.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/app.css"%}">
     <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
 </head>
-<body class="layout-table bg-blue-dark">
+<body class="layout">
 
-    <div class="header-group bg-blue-dark">
-        <div id="header">
-            <div class="row">
-                {% include "header.html" %}
-            </div>
+    <div class="layout-header">
+        <div class="row">
+            {% include "header.html" %}
         </div>
-        <div id="news" class="light-color bg">
-            <div class="row">
-                {% include "news.html" %}
-            </div>
+        <div class="row">
+            {% include "news.html" %}
         </div>
     </div>
 
-    <div class="main-group">
-        <div id="first-content" class="bg-blue-light">
+    <div class="layout-main">
+        <div>
             <div class="row">
                 {% block content-light %}{% endblock %}
             </div>
         </div>
-        <div id="second-content">
+        <div class="discussionBoxWrapper">
             <div class="row">
                 {% block content %}{% endblock %}
             </div>
         </div>
     </div>
 
-    <div class="footer-group bg-blue-dark">
-        <div id="footer">
-            <div class="row">
-                {% include "footer.html" %}
-            </div>
+    <div class="layout-footer">
+        <div class="row">
+            {% include "footer.html" %}
         </div>
     </div>
 
     <div id="examBox"></div>
     <div id="commentBox"></div>
-    <div id="notification"></div>
-
-    {% include "templates.html" %}
+    <div id="notificationBox"></div>
 
     <script src="{% static "vendor-bower/js/jquery/jquery.min.js"%}"></script>
     <script src="{% static "vendor-bower/js/jquery-ui/jquery-ui.js"%}"></script>

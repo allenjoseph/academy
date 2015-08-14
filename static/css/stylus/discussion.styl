@@ -1,0 +1,61 @@
+@import "variables"
+@import "mixins"
+
+.discussionBoxWrapper
+    background-color blueStrongPalette
+.discussion 
+    background-color whitePalette
+    box-shadow-material 1
+    margin 0
+    padding 0.5em 1em
+    transition all 100ms
+    &:hover
+        box-shadow-material 2
+    p 
+        height 4em
+        margin-bottom 0em
+        overflow hidden
+        a
+            color grayPalette
+            font-size 1.3em
+            font-weight bold
+    span
+        color grayPalette
+        padding-left .5em
+    figure
+        margin 0
+        span
+            font-weight bold
+        img
+            border-radius 50%
+            height 24px
+            margin-right 3px
+            margin-top -5px
+.input-add-discussion
+    display block
+    margin 2em 0
+    input
+        box-shadow-material 1
+        color grayPalette !important
+        font-size 2em !important
+        height 1.5em !important
+        padding 0 0 0 50px !important
+    > i 
+        color redMaterial
+        font-size 2em
+        left 1em
+        position absolute
+        top 1.25em
+    a
+        background redMaterial
+        border-radius 50%
+        box-shadow-material 2
+        position absolute
+        right 2em
+        top 3em
+        transition all 100ms linear
+        i
+            color whitePalette
+            margin 1.2em
+        &:hover
+            box-shadow-material 3

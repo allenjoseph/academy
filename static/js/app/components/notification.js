@@ -27,5 +27,5 @@ var NotificationBox = React.createClass({
 
 React.render(
     <NotificationBox />,
-    document.getElementById('notification')
+    document.getElementById('notificationBox')
 );
