@@ -30,6 +30,121 @@ a,
   font-family: OpenSans !important;
 }
 
+.modal-comment {
+  bottom: 0;
+  display: block;
+  height: auto;
+  left: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.modal-comment figure {
+  margin: 0;
+}
+.modal-comment figure img {
+  height: 24px;
+  border-radius: 50%;
+}
+.modal-comment .comment-wrapper {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.modal-comment .comment-wrapper .comment-header {
+  background-color: #4f6ec6;
+  overflow: hidden;
+  padding: 0;
+}
+.modal-comment .comment-wrapper .comment-header .comment-header-top {
+  height: 6em;
+  overflow: hidden;
+  text-align: center;
+  padding: 0.5em 2.5em 0;
+}
+.modal-comment .comment-wrapper .comment-header .comment-header-top a {
+  color: #fcfdfd;
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+.modal-comment .comment-wrapper .comment-header .comment-header-footer {
+  color: #333;
+  height: 2em;
+}
+.modal-comment .comment-wrapper .comment-header .comment-header-footer span {
+  font-size: 1em;
+  color: #fcfdfd;
+}
+.modal-comment .comment-wrapper .comment-body-wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  padding-bottom: 15em;
+}
+.modal-comment .comment-wrapper .comment-body-wrapper .comment-body-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 1em;
+}
+.modal-comment .comment-wrapper .comment-body-wrapper .comment-body-content .comment-entry {
+  border-bottom: 1px solid #e4dcd8;
+  position: relative;
+  padding: 0.5em 0;
+}
+.modal-comment .comment-wrapper .comment-body-wrapper .comment-body-content .comment-entry .comment-entry-figure {
+  position: absolute;
+  width: 35px;
+  top: 0.5em;
+}
+.modal-comment .comment-wrapper .comment-body-wrapper .comment-body-content .comment-entry .comment-entry-text {
+  margin-left: 40px;
+  font-size: 1em;
+  text-align: left;
+}
+.modal-comment .comment-wrapper .comment-body-wrapper .comment-body-content .comment-entry .comment-entry-text > small {
+  position: absolute;
+  right: 1em;
+  bottom: 0.5em;
+}
+.modal-comment .comment-wrapper .comment-footer {
+  bottom: 0;
+  display: block;
+  height: 7em;
+  position: absolute;
+  width: 100%;
+  padding: 0 1em;
+  background-color: #4f6ec6;
+}
+.modal-comment .comment-wrapper .comment-footer span {
+  font-size: 0.8em;
+  color: #fcfdfd;
+  line-height: 1em;
+  padding: 0.5em 0;
+}
+.modal-comment .comment-wrapper .comment-footer textarea {
+  background: transparent !important;
+  border: 1px solid #fcfdfd !important;
+  color: #fcfdfd !important;
+  box-shadow: none !important;
+  padding: 0.5em;
+  width: 100%;
+  height: 3em;
+  margin: 0;
+  font-size: 1.5em;
+  line-height: 1em;
+}
+.modal-comment .comment-wrapper .comment-footer .comment-footer-confirm {
+  position: absolute;
+  top: 2.5em;
+  left: 0;
+  width: 100%;
+  margin: auto;
+}
+
 .content-courses li {
   position: relative;
 }
@@ -168,21 +283,19 @@ a,
   -ms-transition: all 100ms;
   -kthtml-transition: all 100ms;
   transition: all 100ms;
+  cursor: pointer;
 }
 .discussion:hover {
   -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-.discussion p {
-  height: 4em;
+.discussion h3 {
+  height: 3em;
   margin-bottom: 0em;
   overflow: hidden;
-}
-.discussion p a {
-  color: #444;
+  color: #444 !important;
   font-size: 1.3em;
-  font-weight: bold;
 }
 .discussion span {
   color: #444;
@@ -310,6 +423,7 @@ a,
 .modal-close {
   color: #fcfdfd !important;
   transition: transform 0.8s ease-in-out;
+  z-index: 1;
 }
 .modal-close:hover,
 .modal-close:active {

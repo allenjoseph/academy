@@ -53,7 +53,7 @@ var CommentBox = React.createClass({
             <div className={'modal-content ' + this.state.openModalClass}>
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
-                    <section className="modal modal-comment light-color bg">
+                    <section className="modal modal-comment">
                         <a className="modal-close" onClick={this.closeModalComment}></a>
                         <div className="comment-wrapper">
                             <div className="comment-header">
@@ -63,7 +63,7 @@ var CommentBox = React.createClass({
                                     </div>
                                 </div>
                                 <div className="row comment-header-footer">
-                                    <div className="small-12 columns comment-header-footer-content">
+                                    <div className="small-12 columns">
                                         <span className="pull-left">
                                             <strong>{ Utilities.largeDate(this.state.discussion.dateCreation) }</strong>
                                         </span>

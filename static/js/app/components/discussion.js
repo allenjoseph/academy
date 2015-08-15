@@ -38,14 +38,12 @@ module.exports = React.createClass({
     render: function(){
         return(
             <li>
-                <div className="panel discussion">
+                <div className="panel discussion" onClick={this.openComments}>
                     <div className="row">
                         <div className="small-12 columns">
-                            <p>
-                                <a onClick={this.openComments}>
+                            <h3>
                                 {this.props.discussion.question}
-                                </a>
-                            </p>
+                            </h3>
                         </div>
                     </div>
                     <div className="row">

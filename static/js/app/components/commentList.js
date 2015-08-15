@@ -44,7 +44,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <div className="comment-body-wrapper">
-                <div id="content-discussion-comments" className="comment-body-content">
+                <div className="comment-body-content">
                     {
                         !comments.length ? <span>Sin comentarios</span> :
                             this.getComments()

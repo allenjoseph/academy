@@ -73,16 +73,16 @@ module.exports = React.createClass({
     render: function(){
         return(
             <div className="comment-footer">
-                <span className="disclaimer">Presione enter para enviar.</span>
-                <span id="counter-characters" className="counter">{this.state.counter}</span>
-                <textarea id="add-comment-textarea" className="comment-textarea" ref="comment"
+                <span className="disclaimer left">Presione enter para enviar.</span>
+                <span className="counter right">{this.state.counter}</span>
+                <textarea ref="comment"
                     maxLength={150} value={this.state.comment} disabled={this.state.enterPressed}
                     onChange={this.changeComment} onKeyPress={this.onKeyPress}></textarea>
                 {
                     !this.state.enterPressed ? '' :
-                        <div id="buttons-confirm-comment" className="comment-footer-confirm">
-                            <button id="button-add-comment" className="button tiny yellow mr1" onClick={this.sendSubmit}>Enviar Comentario</button>
-                            <button id="button-cancel-comment" className="button tiny secondary" onClick={this.cancelSubmit}>Cancelar</button>
+                        <div className="comment-footer-confirm">
+                            <button className="button tiny secondary" onClick={this.cancelSubmit}>Cancelar</button>
+                            <button className="button tiny yellow" onClick={this.sendSubmit}>Enviar Comentario</button>
                         </div>
                 }
             </div>
