@@ -29,6 +29,26 @@ a,
 .label {
   font-family: OpenSans !important;
 }
+.button {
+  text-transform: uppercase !important;
+}
+.button.tiny {
+  padding: 0.5rem 1.25rem !important;
+  font-size: 1rem !important;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: 0 0.5em;
+}
+.button.tiny:hover {
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.button.cancel {
+  background-color: #fcfdfd;
+  color: #444;
+}
 
 .modal-comment {
   bottom: 0;
@@ -46,6 +66,8 @@ a,
 }
 .modal-comment figure img {
   height: 24px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
   border-radius: 50%;
 }
 .modal-comment .comment-wrapper {
@@ -118,6 +140,7 @@ a,
   width: 100%;
   padding: 0 1em;
   background-color: #4f6ec6;
+  z-index: 1;
 }
 .modal-comment .comment-wrapper .comment-footer span {
   font-size: 0.8em;
@@ -129,6 +152,8 @@ a,
   background: transparent !important;
   border: 1px solid #fcfdfd !important;
   color: #fcfdfd !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
   box-shadow: none !important;
   padding: 0.5em;
   width: 100%;
@@ -136,6 +161,14 @@ a,
   margin: 0;
   font-size: 1.5em;
   line-height: 1em;
+}
+.modal-comment .comment-wrapper .comment-footer textarea:disabled {
+  background-color: rgba(255,255,255,0.5) !important;
+  -webkit-filter: blur(5px) !important;
+  -moz-filter: blur(5px) !important;
+  -ms-filter: blur(5px) !important;
+  -o-filter: blur(5px) !important;
+  filter: n;
 }
 .modal-comment .comment-wrapper .comment-footer .comment-footer-confirm {
   position: absolute;

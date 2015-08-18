@@ -81,8 +81,8 @@ module.exports = React.createClass({
                 {
                     !this.state.enterPressed ? '' :
                         <div className="comment-footer-confirm">
-                            <button className="button tiny secondary" onClick={this.cancelSubmit}>Cancelar</button>
-                            <button className="button tiny yellow" onClick={this.sendSubmit}>Enviar Comentario</button>
+                            <button className="button tiny cancel" onClick={this.cancelSubmit}>Cancelar</button>
+                            <button className="button tiny" onClick={this.sendSubmit}>Confirmar</button>
                         </div>
                 }
             </div>
