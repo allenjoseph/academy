@@ -22471,27 +22471,27 @@ module.exports = React.createClass({
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "medium-2 medium-offset-1 columns text-center"}, 
-                    React.createElement("a", {className: "option-course box-shadow-light bg-md-pink", title: "Compartir exámen"}, 
+                    React.createElement("a", {className: "cicle-icon-link pink", title: "Compartir exámen"}, 
                         React.createElement("i", {className: "fa fa-camera fa-fw"})
                     )
                 ), 
                 React.createElement("div", {className: "medium-2 columns text-center"}, 
-                    React.createElement("a", {className: "option-course box-shadow-light bg-md-orange", title: "Compartir trabajo encargado"}, 
+                    React.createElement("a", {className: "cicle-icon-link orange", title: "Compartir trabajo encargado"}, 
                         React.createElement("i", {className: "fa fa-file-text fa-fw"})
                     )
                 ), 
                 React.createElement("div", {className: "medium-2 columns text-center"}, 
-                    React.createElement("a", {className: "option-course box-shadow-light bg-md-lime", title: "Iniciar reunión de estudio"}, 
+                    React.createElement("a", {className: "cicle-icon-link lime", title: "Iniciar reunión de estudio"}, 
                         React.createElement("i", {className: "fa fa-users fa-fw"})
                     )
                 ), 
                 React.createElement("div", {className: "medium-2 columns text-center"}, 
-                    React.createElement("a", {className: "option-course box-shadow-light bg-md-cyan", title: "Solicitar ayuda"}, 
+                    React.createElement("a", {className: "cicle-icon-link cyan", title: "Solicitar ayuda"}, 
                         React.createElement("i", {className: "fa fa-child fa-fw"})
                     )
                 ), 
                 React.createElement("div", {className: "medium-2 columns end text-center"}, 
-                    React.createElement("a", {className: "option-course box-shadow-light bg-md-brown", title: "Preguntar en el curso"}, 
+                    React.createElement("a", {className: "cicle-icon-link brown", title: "Preguntar en el curso"}, 
                         React.createElement("i", {className: "fa fa-question-circle fa-fw"})
                     )
                 )

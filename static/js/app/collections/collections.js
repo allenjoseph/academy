@@ -9,12 +9,18 @@ module.exports = {
 
     discussions: Backbone.Collection.extend({
         model : models.discussion,
-        url: 'discussions/?format=json'
+        url: 'discussions/?format=json',
+        comparator: function(model){
+            return -model.get('id');
+        }
     }),
 
     comments: Backbone.Collection.extend({
         model : models.comment,
-        url: 'comments'
+        url: 'comments',
+        comparator: function(model){
+            return -model.get('id');
+        }
     }),
 
     attachments: Backbone.Collection.extend({
