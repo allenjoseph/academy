@@ -22568,7 +22568,7 @@ module.exports = React.createClass({
                 this.state.figures.hasOwnProperty(key)){
 
                 figures.push(
-                    React.createElement("li", {className: "figures", key: key}, 
+                    React.createElement("div", {className: "figures", key: key}, 
                         React.createElement("span", {className: "name"},  this.state.figures[key] ), 
                         React.createElement("span", {className: "separator"}), 
                         React.createElement("span", {className: "counter color info bg light-color"},  this.props.figures[key] )
@@ -22585,14 +22585,14 @@ module.exports = React.createClass({
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("h1", null,  this.props.course.name), 
                     React.createElement("a", null,  this.props.profesor.name + ' ' + this.props.profesor.lastname), 
-                    React.createElement("div", null, 
+                    React.createElement("div", {className: "hide"}, 
                         React.createElement("span", {className: "label secondary"},  this.props.figures.studentsEnrolled, " alumnos inscritos"), 
                         React.createElement("span", {className: "label success"},  this.props.figures.studentsOnline, " enlinea")
                     )
                 ), 
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("div", {className: "box"}, 
-                        React.createElement("ul", {className: "no-bullet"}, 
+                        React.createElement("div", null, 
                              this.getFigures() 
                         )
                     )
