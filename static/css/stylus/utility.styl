@@ -1,6 +1,9 @@
 @import "variables"
 @import "mixins"
 
+.red
+    background-color redHighlightPalette
+    color whitePalette !important
 .pink
     background-color pinkMaterial
     color whitePalette !important
@@ -17,21 +20,38 @@
     background-color cyanMaterial
     color whitePalette !important
 
-.cicle-icon-link
-    padding 1em
-    border-radius 50%
-    line-height 5em
-    display initial
-    font-size 1.5em
-    box-shadow-material 1
-    transition all 300ms
-    &:hover
-        box-shadow-material 2
+.mtn
+    margin-top 1em !important
 
 .box
     background-color whitePalette
+    color grayPalette
     box-shadow-material 1
-    margin 1em 0 !important
     transition all 300ms
+    padding .5em 1em
+    margin .5em 0
     &:hover
         box-shadow-material 2
+    header
+        position relative
+        border-bottom 1px solid rgba(0,0,0,.05)
+        h1, h2, h3, h4, h5, h6
+            color grayPalette !important
+
+.circle-button-right
+    border-radius 50%
+    bottom -1.5em
+    box-shadow-material 2
+    height 3.5em
+    padding-top 1em
+    position absolute
+    right 1em
+    text-align center
+    transition all 100ms linear
+    width 3.5em
+    z-index 99
+    i
+        color whitePalette
+        font-size 1.2em
+    &:hover
+        box-shadow-material 3

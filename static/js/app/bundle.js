@@ -22404,7 +22404,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./mixins":194,"react":174}],180:[function(require,module,exports){
+},{"./mixins":193,"react":174}],180:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22461,46 +22461,6 @@ module.exports = React.createClass({
 });
 
 },{"react/addons":2}],181:[function(require,module,exports){
-var React = require('react');
-
-module.exports = React.createClass({
-
-    displayName: 'CourseActionList',
-
-    render: function(){
-        return(
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "medium-2 medium-offset-1 columns text-center"}, 
-                    React.createElement("a", {className: "cicle-icon-link pink", title: "Compartir exámen"}, 
-                        React.createElement("i", {className: "fa fa-camera fa-fw"})
-                    )
-                ), 
-                React.createElement("div", {className: "medium-2 columns text-center"}, 
-                    React.createElement("a", {className: "cicle-icon-link orange", title: "Compartir trabajo encargado"}, 
-                        React.createElement("i", {className: "fa fa-file-text fa-fw"})
-                    )
-                ), 
-                React.createElement("div", {className: "medium-2 columns text-center"}, 
-                    React.createElement("a", {className: "cicle-icon-link lime", title: "Iniciar reunión de estudio"}, 
-                        React.createElement("i", {className: "fa fa-users fa-fw"})
-                    )
-                ), 
-                React.createElement("div", {className: "medium-2 columns text-center"}, 
-                    React.createElement("a", {className: "cicle-icon-link cyan", title: "Solicitar ayuda"}, 
-                        React.createElement("i", {className: "fa fa-child fa-fw"})
-                    )
-                ), 
-                React.createElement("div", {className: "medium-2 columns end text-center"}, 
-                    React.createElement("a", {className: "cicle-icon-link brown", title: "Preguntar en el curso"}, 
-                        React.createElement("i", {className: "fa fa-question-circle fa-fw"})
-                    )
-                )
-            )
-        );
-    }
-});
-
-},{"react":174}],182:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
@@ -22522,7 +22482,7 @@ if (!!$courseBox){
     React.render(React.createElement(CourseBox, null), $courseBox);
 }
 
-},{"./courseList":183,"react/addons":2}],183:[function(require,module,exports){
+},{"./courseList":182,"react/addons":2}],182:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -22556,10 +22516,9 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":180,"./mixins":194,"react/addons":2}],184:[function(require,module,exports){
+},{"./course":180,"./mixins":193,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
-    CourseActionList = require('./courseActionList'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
 var CoursePageBox = React.createClass({
@@ -22571,8 +22530,7 @@ var CoursePageBox = React.createClass({
             React.createElement("div", null, 
                 React.createElement(CoursePageInfo, {course: academyCourse.course, 
                                 profesor: academyCourse.profesor, 
-                                figures: academyCourse.figures}), 
-                React.createElement(CourseActionList, null)
+                                figures: academyCourse.figures})
             )
         );
     }
@@ -22583,7 +22541,7 @@ if (!!$coursePageBox){
     React.render(React.createElement(CoursePageBox, null), $coursePageBox);
 }
 
-},{"./courseActionList":181,"./coursePageInfo":185,"react":174}],185:[function(require,module,exports){
+},{"./coursePageInfo":184,"react":174}],184:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -22623,18 +22581,20 @@ module.exports = React.createClass({
 
     render: function(){
         return(
-            React.createElement("div", {className: "row pt1"}, 
+            React.createElement("div", {className: "row mtn"}, 
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("h1", null,  this.props.course.name), 
-                    React.createElement("h5", {className: "subheader"},  this.props.profesor.name + ' ' + this.props.profesor.lastname), 
-                    React.createElement("p", null, 
+                    React.createElement("a", null,  this.props.profesor.name + ' ' + this.props.profesor.lastname), 
+                    React.createElement("div", null, 
                         React.createElement("span", {className: "label secondary"},  this.props.figures.studentsEnrolled, " alumnos inscritos"), 
                         React.createElement("span", {className: "label success"},  this.props.figures.studentsOnline, " enlinea")
                     )
                 ), 
                 React.createElement("div", {className: "medium-6 columns"}, 
-                    React.createElement("ul", {className: "no-bullet"}, 
-                         this.getFigures() 
+                    React.createElement("div", {className: "box"}, 
+                        React.createElement("ul", {className: "no-bullet"}, 
+                             this.getFigures() 
+                        )
                     )
                 )
             )
@@ -22642,7 +22602,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react":174}],186:[function(require,module,exports){
+},{"react":174}],185:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var Utilities = window.ACADEMY.utilities;
@@ -22683,7 +22643,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             React.createElement("li", null, 
-                React.createElement("div", {className: "panel discussion", onClick: this.openComments}, 
+                React.createElement("div", {className: "discussion", onClick: this.openComments}, 
                     React.createElement("div", {className: "row"}, 
                         React.createElement("div", {className: "small-12 columns"}, 
                             React.createElement("h3", null, 
@@ -22716,7 +22676,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],187:[function(require,module,exports){
+},{"react/addons":2}],186:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var DiscussionForm = require('./discussionForm');
@@ -22739,7 +22699,7 @@ if(!!$discussionBox){
     React.render(React.createElement(DiscussionBox, null), $discussionBox);
 }
 
-},{"./discussionForm":188,"./discussionList":189,"react/addons":2}],188:[function(require,module,exports){
+},{"./discussionForm":187,"./discussionList":188,"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons'),
     Discussion = window.ACADEMY.backbone.model.constructors.discussion,
     discussions = window.ACADEMY.backbone.collection.instances.discussions;
@@ -22800,7 +22760,7 @@ module.exports = React.createClass({
                         React.createElement("i", {className: "fa fa-question"}), 
                         React.createElement("input", {type: "text", value: this.state.question, 
                             onChange: this.changeDiscussion}), 
-                        React.createElement("a", {onClick: this.sendSubmit}, 
+                        React.createElement("a", {className: "circle-button-right red", onClick: this.sendSubmit}, 
                             React.createElement("i", {className: "fa fa-plus"})
                         )
                     )
@@ -22810,7 +22770,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],189:[function(require,module,exports){
+},{"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
@@ -22847,7 +22807,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":186,"./mixins":194,"react/addons":2}],190:[function(require,module,exports){
+},{"./discussion":185,"./mixins":193,"react/addons":2}],189:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22901,7 +22861,7 @@ React.render(
   document.getElementById('examBox')
 );
 
-},{"./examForm":191,"react/addons":2}],191:[function(require,module,exports){
+},{"./examForm":190,"react/addons":2}],190:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -23018,7 +22978,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":193,"react/addons":2}],192:[function(require,module,exports){
+},{"./fileupload":192,"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -23106,7 +23066,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],193:[function(require,module,exports){
+},{"react/addons":2}],192:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -23161,7 +23121,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":192,"react/addons":2}],194:[function(require,module,exports){
+},{"./fileList":191,"react/addons":2}],193:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -23191,7 +23151,7 @@ module.exports = {
     }
 };
 
-},{}],195:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 var React = require('react'),
     Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
 
@@ -23224,4 +23184,4 @@ React.render(
     document.getElementById('notificationBox')
 );
 
-},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195]);
+},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194]);

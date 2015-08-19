@@ -58,7 +58,7 @@ module.exports = React.createClass({
                         <i className="fa fa-question"/>
                         <input type="text" value={this.state.question}
                             onChange={this.changeDiscussion}/>
-                        <a onClick={this.sendSubmit}>
+                        <a className="circle-button-right red" onClick={this.sendSubmit}>
                             <i className="fa fa-plus"/>
                         </a>
                     </span>

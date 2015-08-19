@@ -37,19 +37,21 @@ module.exports = React.createClass({
 
     render: function(){
         return(
-            <div className="row pt1">
+            <div className="row mtn">
                 <div className="medium-6 columns">
                     <h1>{ this.props.course.name }</h1>
-                    <h5 className="subheader">{ this.props.profesor.name + ' ' + this.props.profesor.lastname }</h5>
-                    <p>
+                    <a>{ this.props.profesor.name + ' ' + this.props.profesor.lastname }</a>
+                    <div>
                         <span className="label secondary">{ this.props.figures.studentsEnrolled } alumnos inscritos</span>
                         <span className="label success">{ this.props.figures.studentsOnline } enlinea</span>
-                    </p>
+                    </div>
                 </div>
                 <div className="medium-6 columns">
-                    <ul className="no-bullet">
-                        { this.getFigures() }
-                    </ul>
+                    <div className="box">
+                        <ul className="no-bullet">
+                            { this.getFigures() }
+                        </ul>
+                    </div>
                 </div>
             </div>
         );

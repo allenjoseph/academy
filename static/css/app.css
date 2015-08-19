@@ -351,6 +351,7 @@ a,
 .input-add-discussion {
   display: block;
   margin: 2em 0;
+  position: relative;
 }
 .input-add-discussion input {
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -362,38 +363,11 @@ a,
   padding: 0 0 0 50px !important;
 }
 .input-add-discussion > i {
-  color: #f44336;
+  color: #f1687b;
   font-size: 2em;
-  left: 1em;
+  left: 0.5em;
   position: absolute;
-  top: 1.25em;
-}
-.input-add-discussion a {
-  background: #f44336;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  position: absolute;
-  right: 2em;
-  top: 3em;
-  -webkit-transition: all 100ms linear;
-  -o-transition: all 100ms linear;
-  -moz-transition: all 100ms linear;
-  -ms-transition: all 100ms linear;
-  -kthtml-transition: all 100ms linear;
-  transition: all 100ms linear;
-}
-.input-add-discussion a i {
-  color: #fcfdfd;
-  margin: 1.2em;
-}
-.input-add-discussion a:hover {
-  -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  -moz-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  top: 0.2em;
 }
 
 .layout {
@@ -414,7 +388,8 @@ a,
 .layout .layout-main h4,
 .layout .layout-main h5,
 .layout .layout-main h6 {
-  color: #f1687b;
+  color: #4f6ec6;
+  font-weight: bolder;
 }
 .layout .layout-footer {
   display: table-footer-group !important;
@@ -467,6 +442,10 @@ a,
   color: #fcfdfd !important;
 }
 
+.red {
+  background-color: #f1687b;
+  color: #fcfdfd !important;
+}
 .pink {
   background-color: #e91e63;
   color: #fcfdfd !important;
@@ -487,45 +466,70 @@ a,
   background-color: #00bcd4;
   color: #fcfdfd !important;
 }
-.cicle-icon-link {
-  padding: 1em;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  line-height: 5em;
-  display: initial;
-  font-size: 1.5em;
-  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  -webkit-transition: all 300ms;
-  -o-transition: all 300ms;
-  -moz-transition: all 300ms;
-  -ms-transition: all 300ms;
-  -kthtml-transition: all 300ms;
-  transition: all 300ms;
-}
-.cicle-icon-link:hover {
-  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+.mtn {
+  margin-top: 1em !important;
 }
 .box {
   background-color: #fcfdfd;
+  color: #444;
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  margin: 1em 0 !important;
   -webkit-transition: all 300ms;
   -o-transition: all 300ms;
   -moz-transition: all 300ms;
   -ms-transition: all 300ms;
   -kthtml-transition: all 300ms;
   transition: all 300ms;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
 }
 .box:hover {
   -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.box header {
+  position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.box header h1,
+.box header h2,
+.box header h3,
+.box header h4,
+.box header h5,
+.box header h6 {
+  color: #444 !important;
+}
+.circle-button-right {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  bottom: -1.5em;
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  height: 3.5em;
+  padding-top: 1em;
+  position: absolute;
+  right: 1em;
+  text-align: center;
+  -webkit-transition: all 100ms linear;
+  -o-transition: all 100ms linear;
+  -moz-transition: all 100ms linear;
+  -ms-transition: all 100ms linear;
+  -kthtml-transition: all 100ms linear;
+  transition: all 100ms linear;
+  width: 3.5em;
+  z-index: 99;
+}
+.circle-button-right i {
+  color: #fcfdfd;
+  font-size: 1.2em;
+}
+.circle-button-right:hover {
+  -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  -moz-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 

@@ -33,6 +33,7 @@
 .input-add-discussion
     display block
     margin 2em 0
+    position relative
     input
         box-shadow-material 1
         color grayPalette !important
@@ -40,21 +41,8 @@
         height 1.5em !important
         padding 0 0 0 50px !important
     > i
-        color redMaterial
+        color redHighlightPalette
         font-size 2em
-        left 1em
+        left .5em
         position absolute
-        top 1.25em
-    a
-        background redMaterial
-        border-radius 50%
-        box-shadow-material 2
-        position absolute
-        right 2em
-        top 3em
-        transition all 100ms linear
-        i
-            color whitePalette
-            margin 1.2em
-        &:hover
-            box-shadow-material 3
+        top .2em

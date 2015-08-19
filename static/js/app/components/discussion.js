@@ -38,7 +38,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <li>
-                <div className="panel discussion" onClick={this.openComments}>
+                <div className="discussion" onClick={this.openComments}>
                     <div className="row">
                         <div className="small-12 columns">
                             <h3>

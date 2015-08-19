@@ -1,6 +1,5 @@
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
-    CourseActionList = require('./courseActionList'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
 var CoursePageBox = React.createClass({
@@ -13,7 +12,6 @@ var CoursePageBox = React.createClass({
                 <CoursePageInfo course={academyCourse.course}
                                 profesor={academyCourse.profesor}
                                 figures={academyCourse.figures}/>
-                <CourseActionList/>
             </div>
         );
     }
