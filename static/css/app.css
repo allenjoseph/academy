@@ -51,16 +51,19 @@ a,
 }
 
 .box {
-  border: 1px solid #e6e6e6;
   background-color: #fcfdfd;
+  border: 1px solid transparent;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   color: #444;
+  margin: 0.5em 0;
   -webkit-transition: all 300ms;
   -o-transition: all 300ms;
   -moz-transition: all 300ms;
   -ms-transition: all 300ms;
   -kthtml-transition: all 300ms;
   transition: all 300ms;
-  margin: 0.5em 0;
 }
 .box:hover {
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -427,7 +430,7 @@ a,
 }
 .layout .layout-main {
   display: table-row-group !important;
-  background-color: #eee;
+  background-color: #f1f1f1;
 }
 .layout .layout-main h1,
 .layout .layout-main h2,
@@ -487,6 +490,79 @@ a,
 }
 .modal-close:after {
   color: #fcfdfd !important;
+}
+
+#notificationBox {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  z-index: 999;
+  pointer-events: none;
+}
+#notificationBox .notification-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+#notificationBox .notification-wrapper .growl-wrapper {
+  position: absolute;
+  width: 20%;
+  height: auto;
+}
+#notificationBox .notification-wrapper .growl-wrapper .empty {
+  display: none;
+}
+#notificationBox .notification-wrapper .growl-wrapper ul {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#notificationBox .notification-wrapper .growl-wrapper ul li {
+  position: relative;
+  margin: 0.25em 0 0.25em 0;
+}
+#notificationBox .notification-wrapper .growl-wrapper ul li > span {
+  border-radius: 4px;
+  transition: all 1s ease;
+  display: block;
+  background: #7f8c8d;
+  color: #fff;
+  padding: 0.5em;
+  right: 0;
+}
+#notificationBox .notification-wrapper .growl-wrapper ul.removing > span {
+  opacity: 0;
+  right: -20%;
+}
+.growl.error > span {
+  color: #fff;
+  background: #c0392b;
+}
+.growl.success > span {
+  color: #fff;
+  background: #2ecc71;
+}
+.growl.warn > span {
+  color: #fff;
+  background: #f39c12;
+}
+.growl.info > span {
+  color: #fff;
+  background: #7f8c8d;
+}
+.growl .growl-title {
+  font-size: 1.125em;
+  line-height: 1.5em;
+}
+.growl .growl-message {
+  font-size: 1em;
+  line-height: 1.125em;
 }
 
 .red {
