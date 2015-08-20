@@ -22551,11 +22551,8 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             figures:{
-                exams: 'Examenes disponibles',
-                homeworks: 'Trabajos encargados disponibles',
-                meetings: 'Reuniones de estudio programadas',
-                aid: 'Solicitudes de ayuda pendientes',
-                discussions: 'Preguntas hechas'
+                studentsEnrolled: 'Alumnos inscritos.',
+                studentsOnline: 'Alumnos en linea.'
             }
         }
     },
@@ -22568,10 +22565,9 @@ module.exports = React.createClass({
                 this.state.figures.hasOwnProperty(key)){
 
                 figures.push(
-                    React.createElement("div", {className: "figures", key: key}, 
-                        React.createElement("span", {className: "name"},  this.state.figures[key] ), 
-                        React.createElement("span", {className: "separator"}), 
-                        React.createElement("span", {className: "counter color info bg light-color"},  this.props.figures[key] )
+                    React.createElement("div", {className: "item", key: key}, 
+                        React.createElement("span", {className: "figure"},  this.props.figures[key] ), 
+                        React.createElement("span", {className: "description"},  this.state.figures[key] )
                     )
                 );
             }
@@ -22584,17 +22580,11 @@ module.exports = React.createClass({
             React.createElement("div", {className: "row mtn"}, 
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("h1", null,  this.props.course.name), 
-                    React.createElement("a", null,  this.props.profesor.name + ' ' + this.props.profesor.lastname), 
-                    React.createElement("div", {className: "hide"}, 
-                        React.createElement("span", {className: "label secondary"},  this.props.figures.studentsEnrolled, " alumnos inscritos"), 
-                        React.createElement("span", {className: "label success"},  this.props.figures.studentsOnline, " enlinea")
-                    )
+                    React.createElement("a", null,  this.props.profesor.name + ' ' + this.props.profesor.lastname)
                 ), 
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("div", {className: "box"}, 
-                        React.createElement("div", null, 
-                             this.getFigures() 
-                        )
+                         this.getFigures() 
                     )
                 )
             )
