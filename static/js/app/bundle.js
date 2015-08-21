@@ -23142,29 +23142,44 @@ module.exports = {
 };
 
 },{}],194:[function(require,module,exports){
-var React = require('react'),
-    Growl = require("./Growl/growl.react");/*https://github.com/Moosylvania/react-growl*/
+var React = require('react/addons');
 
 var NotificationBox = React.createClass({
     displayName : 'NotificationBox',
-    growler: null,
+
+    getInitialState: function(){
+        return {
+            visible: false,
+            data: {}
+        };
+    },
+
     componentDidMount: function(){
         window.addEventListener('showNotification', this.showNotification);
-
-        Growl.setMaxToShow(5);
-        this.growler = this.refs.growler;
     },
     componentWillUnmount: function(){
         window.removeEventListener('showNotification', this.showNotification);
     },
     showNotification: function(data){
-        this.growler.addNotification(data.detail);
+        this.setState({
+            visible: true,
+            data: data.detail
+        });
     },
     render: function(){
+        debugger;
+        if(this.state.visible){
+            return(
+                React.createElement("div", {className: this.state.data.level + ' wrapper'}, 
+                    React.createElement("span", {class: "title"}, "Se agregó nueva pregunta!"), 
+                    React.createElement("span", {class: "message"}, 
+                        React.createElement("strong", null, "asasasas")
+                    )
+                )
+            );
+        }
         return(
-            React.createElement("div", {className: "notification-wrapper"}, 
-                React.createElement(Growl, {ref: "growler"})
-            )
+            React.createElement("div", null)
         );
     }
 });
@@ -23174,4 +23189,4 @@ React.render(
     document.getElementById('notificationBox')
 );
 
-},{"./Growl/growl.react":175,"react":174}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194]);
+},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194]);

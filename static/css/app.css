@@ -410,7 +410,7 @@ a,
   color: #444 !important;
   font-size: 2em !important;
   height: 1.5em !important;
-  padding: 0 0 0 50px !important;
+  padding: 0 80px 0 50px !important;
 }
 .input-add-discussion > i {
   color: #f1687b;
@@ -494,75 +494,20 @@ a,
 
 #notificationBox {
   position: fixed;
-  height: 100%;
+  height: 3em;
   width: 100%;
-  top: 0;
   left: 0;
-  padding: 10px;
+  bottom: 0;
   z-index: 999;
   pointer-events: none;
 }
-#notificationBox .notification-wrapper {
-  position: relative;
-  height: 100%;
-  width: 100%;
+#notificationBox .wrapper {
+  text-align: center;
+  line-height: 3em;
 }
-#notificationBox .notification-wrapper .growl-wrapper {
-  position: absolute;
-  width: 20%;
-  height: auto;
-}
-#notificationBox .notification-wrapper .growl-wrapper .empty {
-  display: none;
-}
-#notificationBox .notification-wrapper .growl-wrapper ul {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-#notificationBox .notification-wrapper .growl-wrapper ul li {
-  position: relative;
-  margin: 0.25em 0 0.25em 0;
-}
-#notificationBox .notification-wrapper .growl-wrapper ul li > span {
-  border-radius: 4px;
-  transition: all 1s ease;
-  display: block;
-  background: #7f8c8d;
-  color: #fff;
-  padding: 0.5em;
-  right: 0;
-}
-#notificationBox .notification-wrapper .growl-wrapper ul.removing > span {
-  opacity: 0;
-  right: -20%;
-}
-.growl.error > span {
-  color: #fff;
-  background: #c0392b;
-}
-.growl.success > span {
-  color: #fff;
-  background: #2ecc71;
-}
-.growl.warn > span {
-  color: #fff;
-  background: #f39c12;
-}
-.growl.info > span {
-  color: #fff;
-  background: #7f8c8d;
-}
-.growl .growl-title {
-  font-size: 1.125em;
-  line-height: 1.5em;
-}
-.growl .growl-message {
-  font-size: 1em;
-  line-height: 1.125em;
+#notificationBox .wrapper.success {
+  background-color: #92d1f0;
+  color: #fcfdfd !important;
 }
 
 .red {
