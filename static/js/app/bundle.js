@@ -22404,7 +22404,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./mixins":193,"react":174}],180:[function(require,module,exports){
+},{"./mixins":194,"react":174}],180:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22516,9 +22516,10 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":180,"./mixins":193,"react/addons":2}],183:[function(require,module,exports){
+},{"./course":180,"./mixins":194,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
+    CoursePageContent = require('./coursePageContent'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
 var CoursePageBox = React.createClass({
@@ -22530,7 +22531,8 @@ var CoursePageBox = React.createClass({
             React.createElement("div", null, 
                 React.createElement(CoursePageInfo, {course: academyCourse.course, 
                                 profesor: academyCourse.profesor, 
-                                figures: academyCourse.figures})
+                                figures: academyCourse.figures}), 
+                React.createElement(CoursePageContent, null)
             )
         );
     }
@@ -22541,7 +22543,83 @@ if (!!$coursePageBox){
     React.render(React.createElement(CoursePageBox, null), $coursePageBox);
 }
 
-},{"./coursePageInfo":184,"react":174}],184:[function(require,module,exports){
+},{"./coursePageContent":184,"./coursePageInfo":185,"react":174}],184:[function(require,module,exports){
+var React = require('react'),
+    academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
+
+module.exports = React.createClass({
+
+    displayName: 'CoursePageContent',
+
+    getInitialState: function(){
+        return {
+            figures:[
+                {
+                    title: 'Exámenes',
+                    label: 'Compartir exámen',
+                    icon: 'fa-camera',
+                    action: this.openModalExam
+                },
+                {
+                    title: 'Trabajos',
+                    label: 'Compartir trabajo',
+                    icon: 'fa-file-text'
+                },
+                {
+                    title: 'Reuniones programadas',
+                    label: 'Asistir',
+                    icon: 'fa-users'
+                },
+                {
+                    title: 'Pendientes de ayuda',
+                    label: 'Ayudar',
+                    icon: 'fa-child'
+                },
+                {
+                    title: 'Preguntas',
+                    label: 'Preguntar',
+                    icon: 'fa-question'
+                }
+            ]
+        }
+    },
+
+    openModalExam: function(e){
+        debugger;
+        window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
+    },
+
+    getFigures: function(){
+        var cont = 0;
+        return this.state.figures.map(function(figure){
+            return (
+                React.createElement("div", {className: "row", key: ++cont}, 
+                    React.createElement("div", {className: "large-12 columns"}, 
+                        React.createElement("div", {className: "box pts pln prn"}, 
+                            React.createElement("header", null, 
+                                React.createElement("h2", null, figure.title), 
+                                React.createElement("a", {className: "circle-button-right red", title: figure.label, onClick: figure.action}, 
+                                    React.createElement("i", {className: 'fa ' + figure.icon})
+                                )
+                            ), 
+                            React.createElement("p", null, "Sin registros")
+                        )
+                    )
+                )
+            );
+        });
+    },
+
+    render: function(){
+        return(
+            React.createElement("div", null, 
+                this.getFigures()
+            )
+        );
+    }
+});
+
+},{"react":174}],185:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -22592,7 +22670,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react":174}],185:[function(require,module,exports){
+},{"react":174}],186:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var Utilities = window.ACADEMY.utilities;
@@ -22666,7 +22744,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],186:[function(require,module,exports){
+},{"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var DiscussionForm = require('./discussionForm');
@@ -22689,7 +22767,7 @@ if(!!$discussionBox){
     React.render(React.createElement(DiscussionBox, null), $discussionBox);
 }
 
-},{"./discussionForm":187,"./discussionList":188,"react/addons":2}],187:[function(require,module,exports){
+},{"./discussionForm":188,"./discussionList":189,"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons'),
     Discussion = window.ACADEMY.backbone.model.constructors.discussion,
     discussions = window.ACADEMY.backbone.collection.instances.discussions;
@@ -22760,7 +22838,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],188:[function(require,module,exports){
+},{"react/addons":2}],189:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
@@ -22797,7 +22875,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":185,"./mixins":193,"react/addons":2}],189:[function(require,module,exports){
+},{"./discussion":186,"./mixins":194,"react/addons":2}],190:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22851,7 +22929,7 @@ React.render(
   document.getElementById('examBox')
 );
 
-},{"./examForm":190,"react/addons":2}],190:[function(require,module,exports){
+},{"./examForm":191,"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -22968,7 +23046,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":192,"react/addons":2}],191:[function(require,module,exports){
+},{"./fileupload":193,"react/addons":2}],192:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -23056,7 +23134,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],192:[function(require,module,exports){
+},{"react/addons":2}],193:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -23111,7 +23189,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":191,"react/addons":2}],193:[function(require,module,exports){
+},{"./fileList":192,"react/addons":2}],194:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -23141,7 +23219,7 @@ module.exports = {
     }
 };
 
-},{}],194:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 var React = require('react/addons');
 
 var NotificationBox = React.createClass({
@@ -23195,4 +23273,4 @@ React.render(
     document.getElementById('notificationBox')
 );
 
-},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194]);
+},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195]);
