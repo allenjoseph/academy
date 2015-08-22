@@ -2,15 +2,15 @@
 
 #notificationBox
     position fixed
-    height 3em
+    height auto
     width 100%
     left 0
     bottom 0
     z-index 999
-    pointer-events none
     .wrapper
         text-align center
         line-height 3em
+        position relative
         &.success
             background-color blackMaterial
         &.fail
@@ -19,5 +19,19 @@
             color whitePalette !important
             font-size 1.2em
             {textShadowForWhite}
-
-
+        .close
+            position absolute;
+            top 0
+            right 5px
+            width 28px
+            text-decoration none
+            transition transform .8s ease-in-out
+            &:hover,&:active
+                transform rotate(360deg)
+            &:after
+                font-size 28px
+                display block
+                content "×"
+                cursor pointer
+                text-decoration none
+                color whitePalette !important

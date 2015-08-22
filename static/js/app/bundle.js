@@ -23161,22 +23161,31 @@ var NotificationBox = React.createClass({
         window.removeEventListener('showNotification', this.showNotification);
     },
     showNotification: function(data){
+        var self = this;
         this.setState({
             visible: true,
             data: data.detail
         });
+        setTimeout(function(){
+            self.closeNotification();
+        },3000);
+    },
+    closeNotification: function(){
+        this.setState(this.getInitialState());
     },
     render: function(){
+        var content;
         if(this.state.visible){
-            return(
-                React.createElement("div", {className: this.state.data.level + ' wrapper'}, 
-                    React.createElement("span", {class: "title"}, this.state.data.title + ' '), 
-                    React.createElement("span", {class: "message", dangerouslySetInnerHTML: {__html: this.state.data.message}})
-                )
-            );
+            content = React.createElement("div", null, 
+                        React.createElement("span", {className: "title"}, this.state.data.title + ' '), 
+                        React.createElement("span", {className: "message", dangerouslySetInnerHTML: {__html: this.state.data.message}}), 
+                        React.createElement("span", {className: "close", onClick: this.closeNotification})
+                    );
         }
         return(
-            React.createElement("div", null)
+            React.createElement("div", {className: 'wrapper ' + this.state.data.level}, 
+                 content 
+            )
         );
     }
 });

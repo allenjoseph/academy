@@ -17,22 +17,31 @@ var NotificationBox = React.createClass({
         window.removeEventListener('showNotification', this.showNotification);
     },
     showNotification: function(data){
+        var self = this;
         this.setState({
             visible: true,
             data: data.detail
         });
+        setTimeout(function(){
+            self.closeNotification();
+        },3000);
+    },
+    closeNotification: function(){
+        this.setState(this.getInitialState());
     },
     render: function(){
+        var content;
         if(this.state.visible){
-            return(
-                <div className={this.state.data.level + ' wrapper'}>
-                    <span class="title">{this.state.data.title + ' '}</span>
-                    <span class="message" dangerouslySetInnerHTML={{__html: this.state.data.message}}></span>
-                </div>
-            );
+            content = <div>
+                        <span className="title">{this.state.data.title + ' '}</span>
+                        <span className="message" dangerouslySetInnerHTML={{__html: this.state.data.message}}></span>
+                        <span className="close" onClick={this.closeNotification}/>
+                    </div>;
         }
         return(
-            <div/>
+            <div className={'wrapper ' + this.state.data.level}>
+                { content }
+            </div>
         );
     }
 });

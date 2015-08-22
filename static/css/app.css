@@ -494,16 +494,16 @@ a,
 
 #notificationBox {
   position: fixed;
-  height: 3em;
+  height: auto;
   width: 100%;
   left: 0;
   bottom: 0;
   z-index: 999;
-  pointer-events: none;
 }
 #notificationBox .wrapper {
   text-align: center;
   line-height: 3em;
+  position: relative;
 }
 #notificationBox .wrapper.success {
   background-color: #404040;
@@ -515,6 +515,26 @@ a,
   color: #fcfdfd !important;
   font-size: 1.2em;
   text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+}
+#notificationBox .wrapper .close {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  width: 28px;
+  text-decoration: none;
+  transition: transform 0.8s ease-in-out;
+}
+#notificationBox .wrapper .close:hover,
+#notificationBox .wrapper .close:active {
+  transform: rotate(360deg);
+}
+#notificationBox .wrapper .close:after {
+  font-size: 28px;
+  display: block;
+  content: "×";
+  cursor: pointer;
+  text-decoration: none;
+  color: #fcfdfd !important;
 }
 
 .red {
