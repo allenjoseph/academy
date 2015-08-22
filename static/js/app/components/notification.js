@@ -23,14 +23,11 @@ var NotificationBox = React.createClass({
         });
     },
     render: function(){
-        debugger;
         if(this.state.visible){
             return(
                 <div className={this.state.data.level + ' wrapper'}>
-                    <span class="title">Se agregó nueva pregunta!</span>
-                    <span class="message">
-                        <strong>asasasas</strong>
-                    </span>
+                    <span class="title">{this.state.data.title + ' '}</span>
+                    <span class="message" dangerouslySetInnerHTML={{__html: this.state.data.message}}></span>
                 </div>
             );
         }

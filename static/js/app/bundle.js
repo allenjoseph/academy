@@ -22726,7 +22726,7 @@ module.exports = React.createClass({
                     notification: {
                         level:'success',
                         title:'Se agregó nueva pregunta!',
-                        message: '<strong class="text-uppercase">'+ discussion.attributes.question +'</strong>'
+                        message: '<strong class="uppercase">'+ discussion.attributes.question +'</strong>'
                     },
                     discussion: discussion
                 });
@@ -22747,11 +22747,11 @@ module.exports = React.createClass({
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "small-12 columns"}, 
                     React.createElement("span", {className: "input-add-discussion"}, 
-                        React.createElement("i", {className: "fa fa-question"}), 
+                        React.createElement("i", {className: "fa fa-pencil"}), 
                         React.createElement("input", {type: "text", value: this.state.question, 
                             onChange: this.changeDiscussion}), 
                         React.createElement("a", {className: "circle-button-right red", onClick: this.sendSubmit}, 
-                            React.createElement("i", {className: "fa fa-plus"})
+                            React.createElement("i", {className: "fa fa-question"})
                         )
                     )
                 )
@@ -23167,14 +23167,11 @@ var NotificationBox = React.createClass({
         });
     },
     render: function(){
-        debugger;
         if(this.state.visible){
             return(
                 React.createElement("div", {className: this.state.data.level + ' wrapper'}, 
-                    React.createElement("span", {class: "title"}, "Se agregó nueva pregunta!"), 
-                    React.createElement("span", {class: "message"}, 
-                        React.createElement("strong", null, "asasasas")
-                    )
+                    React.createElement("span", {class: "title"}, this.state.data.title + ' '), 
+                    React.createElement("span", {class: "message", dangerouslySetInnerHTML: {__html: this.state.data.message}})
                 )
             );
         }

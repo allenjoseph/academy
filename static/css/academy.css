@@ -86,9 +86,7 @@ input:disabled{
 .text-success {
     color: #5da423;
 }
-.text-uppercase {
-    text-transform: uppercase!important;
-}
+
 /* end helper clases */
 
 

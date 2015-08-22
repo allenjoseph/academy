@@ -34,7 +34,7 @@ module.exports = React.createClass({
                     notification: {
                         level:'success',
                         title:'Se agregó nueva pregunta!',
-                        message: '<strong class="text-uppercase">'+ discussion.attributes.question +'</strong>'
+                        message: '<strong class="uppercase">'+ discussion.attributes.question +'</strong>'
                     },
                     discussion: discussion
                 });
@@ -55,11 +55,11 @@ module.exports = React.createClass({
             <div className="row">
                 <div className="small-12 columns">
                     <span className="input-add-discussion">
-                        <i className="fa fa-question"/>
+                        <i className="fa fa-pencil"/>
                         <input type="text" value={this.state.question}
                             onChange={this.changeDiscussion}/>
                         <a className="circle-button-right red" onClick={this.sendSubmit}>
-                            <i className="fa fa-plus"/>
+                            <i className="fa fa-question"/>
                         </a>
                     </span>
                 </div>
