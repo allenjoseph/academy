@@ -21865,289 +21865,6 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":32}],175:[function(require,module,exports){
 var React = require('react');
-var SingleGrowl = require('./single-growl.react.js');
-
-// Private vars
-var holder = null;
-var position = "br";
-var valid_positions = ["tl", "tr", "bl", "br", "tc", "bc"];
-var delay = 3000;
-var animations = true;
-var maxShown = 8;
-
-var movePosition = function() {
-	var y = position.slice(0, 1);
-	if(y == "t") {
-		holder.style.top = "0px";
-		holder.style.bottom = "auto";
-	} else {
-		holder.style.top = "auto";
-		holder.style.bottom = "0px";
-	}
-
-	var x = position.slice(1, 2);
-	if(x == "l") {
-		holder.style.left = "0px";
-		holder.style.right = "auto";
-	} else if(x == "r") {
-		holder.style.left = "auto";
-		holder.style.right = "0px";
-	} else {
-		var neg = holder.clientWidth / 2;
-		var left = (window.innerWidth / 2) - neg;
-		holder.style.left = left + "px";
-		holder.style.right = "auto";
-	}
-}
-
-var Growl = React.createClass({displayName: "Growl",
-
-	// This is just a counter, don't modify directly
-	uid: 5200,
-
-	levels: ['info', 'warn', 'error', 'success'],
-
-	// Convenience constans for setting notification level
-	WARN: 'warn',
-	INFO: 'info',
-	ERROR: 'error',
-	SUCCESS: 'success',
-
-	// Use these statics to configure all Growls from anywhere in your application
-	statics: {
-		setPosition: function(pos) {
-			if(inArray(pos, valid_positions)) {
-				position = pos;
-			} else {
-				console.log('Unknown position supplied.');
-			}
-
-			if(holder !== null) {
-				movePosition();
-			}
-		},
-		setMaxToShow: function(ct) {
-			maxShown = ct;
-		},
-		setDelay: function(del) {
-			delay = parseInt(del);
-			SingleGrowl.setDelay(del);
-		},
-		getDelay: function() {
-			return delay;
-		},
-		noAnimations: function() {
-			animations = false;
-			SingleGrowl.noAnimations();
-		}
-	},
-
-	getInitialState: function() {
-		return {
-			notifications: []
-		}
-	},
-
-	getDefaultProps: function() {
-		return {};
-	},
-
-	handleRemovedNotification: function(uid) {
-		var notifications = this.state.notifications;
-		var n = notifications.filter(function(ele) {
-			return ele.uid !== uid;
-		});
-		this.setState( { notifications: n} );
-	},
-
-	addNotification: function(note) {
-		var n = this.state.notifications;
-		var self = this;
-		try {
-			if(note.level) {
-				if(!inArray(note.level, this.levels)) {
-					throw "Invalid level supplied";
-				} else {
-					note.uid = this.uid;
-					note.ref = "notification-"+this.uid;
-					this.uid += 1;
-					note.timeout = false;
-
-					n.push(note);
-
-					this.setState({ notifications: n });
-				}
-			}
-		} catch (ex) {
-			console.log('Error adding notification: '+ex);
-		}
-	},
-
-	componentDidMount: function() {
-		if(holder === null) {
-			holder = this.getDOMNode();
-		}
-		movePosition();
-	},
-
-	render: function() {
-		var that = this;
-
-		if(this.state.notifications.length == 0 ) {
-			return React.createElement("div", {className: "growl-wrapper empty"});
-		}
-		var isMore = "";
-		var count = 0;
-		if(this.state.notifications.length > maxShown) {
-			var amt = this.state.notifications.length - maxShown;
-			isMore = React.createElement("li", {key: "more-still"}, React.createElement("span", null, amt, " more"))
-		}
-
-		return (
-			React.createElement("div", {className: "growl-wrapper"}, 
-			  React.createElement("ul", null, 
-				this.state.notifications.map(function(n) {
-					count += 1;
-					if(count >= maxShown) {
-						return "";
-					} else {
-						return React.createElement(SingleGrowl, {key: n.uid, ref: n.ref, notification: n, onDidRemove: that.handleRemovedNotification})
-					}
-				}), 
-				isMore
-			  )
-			)
-		);
-
-	}
-});
-
-function inArray(needle, haystack) {
-	var length = haystack.length;
-	for(var i=0; i < length; i++) {
-		if(haystack[i] == needle) return true;
-	}
-	return false;
-}
-
-module.exports = Growl;
-
-},{"./single-growl.react.js":176,"react":174}],176:[function(require,module,exports){
-var React = require('react');
-
-var animations = true;
-var delay = 3000;
-
-var SingleGrowl = React.createClass({displayName: "SingleGrowl",
-
-	getInitialState: function() {
-		return {
-			remove: false
-		};
-	},
-
-	setRemove: function() {
-
-		// Just in case this was triggered some other way than the timeout itself.
-		clearTimeout(this.props.notification.timeout);
-
-		if(!animations) {
-			this.props.onDidRemove(this.props.notification.uid);
-		} else {
-			this.setState({ remove: true });
-		}
-	},
-
-	statics: {
-		noAnimations: function() {
-			animations = false;
-		},
-		setDelay: function(ms) {
-			delay = ms;
-		},
-		getDelay: function() {
-			return delay;
-		}
-	},
-
-	getDefaultProps: function() {
-		return {
-			notification: null,
-			onDidRemove: function(uid) {}
-		};
-	},
-
-	startTimer: function() {
-		var note = this.props.notification;
-		var self = this;
-		note.timeout = setTimeout(function() {
-						self.setRemove();
-					}, delay);
-	},
-
-	componentDidMount: function() {
-		// This should always evaluate to true, but just in case...
-		if(this.props.notification.timeout === false) {
-			this.startTimer();
-		}
-
-		if(animations) {
-			var self = this;
-			var ele = this.getDOMNode();
-			var transitionEvent = whichTransitionEvent();
-			if(transitionEvent) {
-				ele.addEventListener(transitionEvent, function() {
-					if(self.state.remove) {
-						self.props.onDidRemove(self.props.notification.uid);
-					}
-				});
-			} else {
-				// Force animations to false bc this browser doesn't support them...
-				console.log('Animations disabled. Browser does not support.');
-				animations = false;
-			}
-		}
-	},
-
-	render: function() {
-		var cname = "growl " + this.props.notification.level;
-		if(this.state.remove) {
-			cname = cname + " removing";
-		}
-		return (
-            React.createElement("li", {className: cname}, 
-                React.createElement("span", null, 
-                    React.createElement("div", {className: "growl-title"}, this.props.notification.title), 
-                    React.createElement("div", {className: "growl-message", dangerouslySetInnerHTML: {__html: this.props.notification.message}})
-                )
-            )
-        );
-	}
-
-});
-
-/* From Modernizr */
-function whichTransitionEvent(){
-    var t;
-    var el = document.createElement('fakeelement');
-    var transitions = {
-      'transition':'transitionend',
-      'OTransition':'oTransitionEnd',
-      'MozTransition':'transitionend',
-      'WebkitTransition':'webkitTransitionEnd'
-    }
-
-    for(t in transitions){
-        if( el.style[t] !== undefined ){
-            return transitions[t];
-        }
-    }
-}
-
-module.exports = SingleGrowl;
-
-},{"react":174}],177:[function(require,module,exports){
-var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
@@ -22208,15 +21925,15 @@ var CommentBox = React.createClass({
                             React.createElement("div", {className: "comment-header"}, 
                                 React.createElement("div", {className: "row comment-header-top"}, 
                                     React.createElement("div", {className: "small-12 columns"}, 
-                                        React.createElement("a", null, this.state.discussion.question)
+                                        React.createElement("h3", {className: "modal-title"}, this.state.discussion.question)
                                     )
                                 ), 
                                 React.createElement("div", {className: "row comment-header-footer"}, 
                                     React.createElement("div", {className: "small-12 columns"}, 
-                                        React.createElement("span", {className: "pull-left"}, 
+                                        React.createElement("span", {className: "left"}, 
                                             React.createElement("strong", null,  Utilities.largeDate(this.state.discussion.dateCreation) )
                                         ), 
-                                        React.createElement("span", {className: "pull-right"}, 
+                                        React.createElement("span", {className: "right"}, 
                                             React.createElement("strong", {id: "counter-comments"}, 
                                                 this.state.discussion.comments || 0
                                             ), 
@@ -22253,7 +21970,7 @@ React.render(
     document.getElementById('commentBox')
 );
 
-},{"./commentForm":178,"./commentList":179,"react":174}],178:[function(require,module,exports){
+},{"./commentForm":176,"./commentList":177,"react":174}],176:[function(require,module,exports){
 var React = require('react/addons'),
     Comment = window.ACADEMY.backbone.model.constructors.comment;
 
@@ -22329,24 +22046,28 @@ module.exports = React.createClass({
     render: function(){
         return(
             React.createElement("div", {className: "comment-footer"}, 
-                React.createElement("span", {className: "disclaimer left"}, "Presione enter para enviar."), 
-                React.createElement("span", {className: "counter right"}, this.state.counter), 
-                React.createElement("textarea", {ref: "comment", 
-                    maxLength: 150, value: this.state.comment, disabled: this.state.enterPressed, 
-                    onChange: this.changeComment, onKeyPress: this.onKeyPress}), 
-                
-                    !this.state.enterPressed ? '' :
-                        React.createElement("div", {className: "comment-footer-confirm"}, 
-                            React.createElement("button", {className: "button tiny cancel", onClick: this.cancelSubmit}, "Cancelar"), 
-                            React.createElement("button", {className: "button tiny", onClick: this.sendSubmit}, "Confirmar")
-                        )
-                
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "small-12 columns"}, 
+                        React.createElement("span", {className: "disclaimer left"}, "Presione enter para enviar."), 
+                        React.createElement("span", {className: "counter right"}, this.state.counter), 
+                        React.createElement("textarea", {ref: "comment", 
+                            maxLength: 150, value: this.state.comment, disabled: this.state.enterPressed, 
+                            onChange: this.changeComment, onKeyPress: this.onKeyPress}), 
+                        
+                            !this.state.enterPressed ? '' :
+                                React.createElement("div", {className: "comment-footer-confirm"}, 
+                                    React.createElement("button", {className: "button tiny cancel", onClick: this.cancelSubmit}, "Cancelar"), 
+                                    React.createElement("button", {className: "button tiny", onClick: this.sendSubmit}, "Confirmar")
+                                )
+                        
+                    )
+                )
             )
         );
     }
 });
 
-},{"react/addons":2}],179:[function(require,module,exports){
+},{"react/addons":2}],177:[function(require,module,exports){
 var React = require('react');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
@@ -22392,8 +22113,8 @@ module.exports = React.createClass({
 
     render: function(){
         return(
-            React.createElement("div", {className: "comment-body-wrapper"}, 
-                React.createElement("div", {className: "comment-body-content"}, 
+            React.createElement("div", {className: "comment-body"}, 
+                React.createElement("div", {className: "comment-list"}, 
                     
                         !comments.length ? React.createElement("span", null, "Sin comentarios") :
                             this.getComments()
@@ -22404,7 +22125,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./mixins":194,"react":174}],180:[function(require,module,exports){
+},{"./mixins":192,"react":174}],178:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22460,7 +22181,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],181:[function(require,module,exports){
+},{"react/addons":2}],179:[function(require,module,exports){
 var React = require('react/addons'),
     CourseList = require('./courseList'),
     courses = window.ACADEMY.backbone.collection.instances.courses;
@@ -22482,7 +22203,7 @@ if (!!$courseBox){
     React.render(React.createElement(CourseBox, null), $courseBox);
 }
 
-},{"./courseList":182,"react/addons":2}],182:[function(require,module,exports){
+},{"./courseList":180,"react/addons":2}],180:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -22516,7 +22237,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":180,"./mixins":194,"react/addons":2}],183:[function(require,module,exports){
+},{"./course":178,"./mixins":192,"react/addons":2}],181:[function(require,module,exports){
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
     CoursePageContent = require('./coursePageContent'),
@@ -22543,7 +22264,7 @@ if (!!$coursePageBox){
     React.render(React.createElement(CoursePageBox, null), $coursePageBox);
 }
 
-},{"./coursePageContent":184,"./coursePageInfo":185,"react":174}],184:[function(require,module,exports){
+},{"./coursePageContent":182,"./coursePageInfo":183,"react":174}],182:[function(require,module,exports){
 var React = require('react'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
@@ -22585,7 +22306,6 @@ module.exports = React.createClass({
     },
 
     openModalExam: function(e){
-        debugger;
         window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
     },
 
@@ -22619,7 +22339,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react":174}],185:[function(require,module,exports){
+},{"react":174}],183:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -22658,7 +22378,7 @@ module.exports = React.createClass({
             React.createElement("div", {className: "row mtn"}, 
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("h1", null,  this.props.course.name), 
-                    React.createElement("a", null,  this.props.profesor.name + ' ' + this.props.profesor.lastname)
+                    React.createElement("h3", null, React.createElement("a", null,  this.props.profesor.name + ' ' + this.props.profesor.lastname))
                 ), 
                 React.createElement("div", {className: "medium-6 columns"}, 
                     React.createElement("div", {className: "box"}, 
@@ -22670,7 +22390,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react":174}],186:[function(require,module,exports){
+},{"react":174}],184:[function(require,module,exports){
 var React = require('react/addons');
 var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
 var Utilities = window.ACADEMY.utilities;
@@ -22721,19 +22441,19 @@ module.exports = React.createClass({
                     ), 
                     React.createElement("div", {className: "row"}, 
                         React.createElement("div", {className: "small-12 columns"}, 
-                            React.createElement("span", {className: "pull-left"}, 
+                            React.createElement("span", {className: "left"}, 
                                 React.createElement("figure", {title: this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}, 
                                      this.props.discussion.student.photo ? React.createElement("img", {src: URL_STACTIC + this.props.discussion.student.photo}) : '', 
                                     React.createElement("span", null, this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname)
                                 )
                             ), 
-                            React.createElement("span", {className: "pull-right"}, 
+                            React.createElement("span", {className: "right"}, 
                                 React.createElement("strong", null, 
                                      this.state.comments
                                 ), 
                                 React.createElement("strong", null, " comentarios")
                             ), 
-                            React.createElement("span", {className: "pull-right"}, 
+                            React.createElement("span", {className: "right"}, 
                                  Utilities.timeFromNow(this.props.discussion.dateCreation) 
                             )
                         )
@@ -22744,7 +22464,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],187:[function(require,module,exports){
+},{"react/addons":2}],185:[function(require,module,exports){
 var React = require('react/addons');
 var DiscussionList = require('./discussionList');
 var DiscussionForm = require('./discussionForm');
@@ -22767,7 +22487,7 @@ if(!!$discussionBox){
     React.render(React.createElement(DiscussionBox, null), $discussionBox);
 }
 
-},{"./discussionForm":188,"./discussionList":189,"react/addons":2}],188:[function(require,module,exports){
+},{"./discussionForm":186,"./discussionList":187,"react/addons":2}],186:[function(require,module,exports){
 var React = require('react/addons'),
     Discussion = window.ACADEMY.backbone.model.constructors.discussion,
     discussions = window.ACADEMY.backbone.collection.instances.discussions;
@@ -22838,7 +22558,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],189:[function(require,module,exports){
+},{"react/addons":2}],187:[function(require,module,exports){
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
@@ -22875,7 +22595,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":186,"./mixins":194,"react/addons":2}],190:[function(require,module,exports){
+},{"./discussion":184,"./mixins":192,"react/addons":2}],188:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22914,7 +22634,7 @@ var ExamBox = React.createClass({
             React.createElement("div", {className: 'modal-content ' + this.state.openModalClass}, 
                 React.createElement("div", {className: "modal-overlay"}), 
                 React.createElement("div", {className: "modal-wrapper"}, 
-                    React.createElement("section", {className: "modal modal-exam light-color bg"}, 
+                    React.createElement("section", {className: "modal modal-exam"}, 
                         React.createElement("a", {className: "modal-close", onClick: this.closeModalExam}), 
                         React.createElement(ExamForm, {isOpen: !!this.state.openModalClass, courseAcademy: this.state.courseAcademy})
                     )
@@ -22929,7 +22649,7 @@ React.render(
   document.getElementById('examBox')
 );
 
-},{"./examForm":191,"react/addons":2}],191:[function(require,module,exports){
+},{"./examForm":189,"react/addons":2}],189:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.exam;
@@ -23018,17 +22738,17 @@ module.exports = React.createClass({
     render: function(){
         return (
             React.createElement("div", {className: "exam-wrapper"}, 
-                React.createElement("div", {className: "row"}, 
+                React.createElement("header", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns"}, 
-                        React.createElement("h1", null, "Compartir Examen")
+                        React.createElement("h3", {className: "modal-title"}, "Compartir Examen")
                     )
                 ), 
-                React.createElement("div", {className: "row"}, 
+                React.createElement("article", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns fileupload-content"}, 
                         React.createElement(Fileupload, null)
                     )
                 ), 
-                React.createElement("div", {className: "row"}, 
+                React.createElement("footer", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns"}, 
                         React.createElement("div", {className: "row collapse"}, 
                             React.createElement("div", {className: "small-10 columns"}, 
@@ -23046,7 +22766,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":193,"react/addons":2}],192:[function(require,module,exports){
+},{"./fileupload":191,"react/addons":2}],190:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -23116,8 +22836,8 @@ module.exports = React.createClass({
                                 );
                 return(
                     React.createElement("li", {key:  file.id || file.guid, className: "file-element"}, 
-                        React.createElement("span", {className: "file-name mr1"}, 
-                            React.createElement("span", {className: "mh1"}, 
+                        React.createElement("span", {className: "file-name"}, 
+                            React.createElement("span", {className: "prs"}, 
                                 icon
                             ), 
                             file.name
@@ -23134,7 +22854,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],193:[function(require,module,exports){
+},{"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList');
 
@@ -23179,17 +22899,22 @@ module.exports = React.createClass({
         window.dispatchEvent(new CustomEvent('fileuploaddone', { detail: data.result }));
     },
 
+    openFileExplorer: function(){
+        this.$fileUpload.click();
+    },
+
     render: function(){
         return(
             React.createElement("div", {className: "fileupload-component"}, 
-                React.createElement("input", {accept: "image/*", className: "fileupload fileinput-button", type: "file", name: "file", ref: "fileButton", multiple: true}), 
+                React.createElement("input", {accept: "image/*", className: "fileupload hide", type: "file", name: "file", ref: "fileButton", multiple: true}), 
+                React.createElement("button", {className: "button tiny cancel", onClick: this.openFileExplorer}, "Seleccionar fotos del examen"), 
                 React.createElement(FileList, null)
             )
         );
     }
 });
 
-},{"./fileList":192,"react/addons":2}],194:[function(require,module,exports){
+},{"./fileList":190,"react/addons":2}],192:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -23219,7 +22944,7 @@ module.exports = {
     }
 };
 
-},{}],195:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 var React = require('react/addons');
 
 var NotificationBox = React.createClass({
@@ -23273,4 +22998,4 @@ React.render(
     document.getElementById('notificationBox')
 );
 
-},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195]);
+},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193]);

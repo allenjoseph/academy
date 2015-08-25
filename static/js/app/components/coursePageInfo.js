@@ -36,7 +36,7 @@ module.exports = React.createClass({
             <div className="row mtn">
                 <div className="medium-6 columns">
                     <h1>{ this.props.course.name }</h1>
-                    <a>{ this.props.profesor.name + ' ' + this.props.profesor.lastname }</a>
+                    <h3><a>{ this.props.profesor.name + ' ' + this.props.profesor.lastname }</a></h3>
                 </div>
                 <div className="medium-6 columns">
                     <div className="box">

@@ -86,17 +86,17 @@ module.exports = React.createClass({
     render: function(){
         return (
             <div className="exam-wrapper">
-                <div className="row">
+                <header className="row">
                     <div className="small-12 columns">
-                        <h1>Compartir Examen</h1>
+                        <h3 className="modal-title">Compartir Examen</h3>
                     </div>
-                </div>
-                <div className="row">
+                </header>
+                <article className="row">
                     <div className="small-12 columns fileupload-content">
                         <Fileupload />
                     </div>
-                </div>
-                <div className="row">
+                </article>
+                <footer className="row">
                     <div className="small-12 columns">
                         <div className="row collapse">
                             <div className="small-10 columns">
@@ -108,7 +108,7 @@ module.exports = React.createClass({
                             </div>
                         </div>
                     </div>
-                </div>
+                </footer>
             </div>
         );
     }

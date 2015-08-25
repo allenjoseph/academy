@@ -36,7 +36,7 @@ var ExamBox = React.createClass({
             <div className={'modal-content ' + this.state.openModalClass}>
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
-                    <section className="modal modal-exam light-color bg">
+                    <section className="modal modal-exam">
                         <a className="modal-close" onClick={this.closeModalExam}></a>
                         <ExamForm isOpen={!!this.state.openModalClass} courseAcademy={this.state.courseAcademy} />
                     </section>

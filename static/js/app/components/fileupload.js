@@ -42,10 +42,15 @@ module.exports = React.createClass({
         window.dispatchEvent(new CustomEvent('fileuploaddone', { detail: data.result }));
     },
 
+    openFileExplorer: function(){
+        this.$fileUpload.click();
+    },
+
     render: function(){
         return(
             <div className="fileupload-component">
-                <input accept="image/*" className="fileupload fileinput-button" type="file" name="file" ref="fileButton" multiple/>
+                <input accept="image/*" className="fileupload hide" type="file" name="file" ref="fileButton" multiple/>
+                <button className="button tiny cancel" onClick={this.openFileExplorer}>Seleccionar fotos del examen</button>
                 <FileList />
             </div>
         );

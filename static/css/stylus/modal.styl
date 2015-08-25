@@ -1,12 +1,21 @@
 @import "variables"
 
-.modal-close
-    color whitePalette !important
-    transition transform .8s ease-in-out
-    z-index 1
-    &:hover,&:active
-        transform rotate(360deg)
-        background transparent !important
-    &:after
-        color whitePalette !important
+.modal-content
+    .modal-wrapper
+        .modal
+            background-color blueStrongPalette
+            overflow hidden
+            padding 0
+            .modal-close
+                color whitePalette !important
+                transition transform .8s ease-in-out
+                z-index 1
+                &:hover,&:active
+                    transform rotate(360deg)
+                    background transparent !important
+                &:after
+                    color whitePalette !important
+            .modal-title
+                color whitePalette
+                font-weight bolder
 

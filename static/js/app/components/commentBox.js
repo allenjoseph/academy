@@ -59,15 +59,15 @@ var CommentBox = React.createClass({
                             <div className="comment-header">
                                 <div className="row comment-header-top">
                                     <div className="small-12 columns">
-                                        <a>{this.state.discussion.question}</a>
+                                        <h3 className="modal-title">{this.state.discussion.question}</h3>
                                     </div>
                                 </div>
                                 <div className="row comment-header-footer">
                                     <div className="small-12 columns">
-                                        <span className="pull-left">
+                                        <span className="left">
                                             <strong>{ Utilities.largeDate(this.state.discussion.dateCreation) }</strong>
                                         </span>
-                                        <span className="pull-right">
+                                        <span className="right">
                                             <strong id="counter-comments">
                                                 {this.state.discussion.comments || 0}
                                             </strong>

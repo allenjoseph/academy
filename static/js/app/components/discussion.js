@@ -48,19 +48,19 @@ module.exports = React.createClass({
                     </div>
                     <div className="row">
                         <div className="small-12 columns">
-                            <span className="pull-left">
+                            <span className="left">
                                 <figure title={this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}>
                                     { this.props.discussion.student.photo ? <img src={URL_STACTIC + this.props.discussion.student.photo} /> : '' }
                                     <span>{this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}</span>
                                 </figure>
                             </span>
-                            <span className="pull-right">
+                            <span className="right">
                                 <strong>
                                     { this.state.comments }
                                 </strong>
                                 <strong> comentarios</strong>
                             </span>
-                            <span className="pull-right">
+                            <span className="right">
                                 { Utilities.timeFromNow(this.props.discussion.dateCreation) }
                             </span>
                         </div>

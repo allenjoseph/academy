@@ -39,7 +39,6 @@ module.exports = React.createClass({
     },
 
     openModalExam: function(e){
-        debugger;
         window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
     },
 

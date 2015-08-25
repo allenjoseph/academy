@@ -1,26 +1,3 @@
-textarea:disabled,
-input:disabled{
-    color: #E4DCD8;/*color-secundary*/
-}
-
-/* --------------------------- */
-
-.input-dark{
-    background: transparent!important;
-    border: 1px solid #FCFDFD !important;
-    color: #FCFDFD !important;
-    font-size: 2em !important;
-    box-shadow: none !important;
-    padding: 0 0 0 50px !important;
-    height: 1.5em !important;
-}
-.icon-inner-input {
-    color:#FCFDFD;
-    position: absolute;
-    font-size: 2em;
-    padding: 0 0.5em
-}
-
 /* helper classes */
 .mt1{
     margin-top: 1em;
@@ -67,57 +44,7 @@ input:disabled{
 .tal{
     text-align: left !important;
 }
-.text-bolder{
-    font-weight: bolder;
-}
-.border-bottom-dark{
-    border-bottom: 1px solid #23253D;
-    margin-bottom: 1em!important;
-}
-.light-color.border-top{
-    border-top :1px solid #E1E2F4;
-}
-.light-color.border-bottom{
-    border-bottom :1px solid #E1E2F4;
-}
-.text-danger {
-    color: #c60f13;
-}
-.text-success {
-    color: #5da423;
-}
-
 /* end helper clases */
-
-
-/*comment modal*/
-/*end comment modal*/
-
-/* custom button color */
-button.yellow, .button.yellow {
-    background-color: #F0B546;
-    border-color: #e59c13;
-    color: #FFFFFF;
-}
-button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:focus {
-    background-color: #e59c13;
-}
-button.yellow:hover, button.yellow:focus, .button.yellow:hover, .button.yellow:focus {
-    color: #FFFFFF;
-}
-button.green, .button.green {
-    background-color: #5da423;
-    border-color: #4a831c;
-    color: #FFFFFF;
-}
-button.green:hover, button.green:focus, .button.green:hover, .button.green:focus {
-    background-color: #4a831c;
-}
-button.green:hover, button.green:focus, .button.green:hover, .button.green:focus {
-    color: #FFFFFF;
-}
-/* end custom button color*/
-
 
 #submenu-discussions #form-add-discussion{
     display: none;
@@ -131,48 +58,6 @@ button.green:hover, button.green:focus, .button.green:hover, .button.green:focus
 .progress .meter{
     width: 0;
 }
-
-/* File button */
-.fileinput-button {
-  position: relative!important;
-  width: 210px!important;
-  margin: 0!important;
-}
-.fileinput-button::-webkit-file-upload-button {
-    visibility: hidden;
-}
-.fileinput-button::before {
-    content: 'Seleccionar fotos del examen';
-    display: inline-block;
-    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-    border: 1px solid #999;
-    border-radius: 3px;
-    padding: 5px 8px;
-    outline: none;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    cursor: pointer;
-    text-shadow: 1px 1px #fff;
-    text-align: center;
-    font-weight: 700;
-    font-size: 10pt;
-    width: 208px;
-}
-.fileinput-button:hover::before {
-    border-color: black;
-}
-.fileinput-button:active::before {
-    background: -webkit-linear-gradient(#e3e3e3, #f9f9f9);
-    background: -o-linear-gradient(#e3e3e3, #f9f9f9);
-    background: linear-gradient(#e3e3e3, #f9f9f9);
-}
-.file-list{
-    border-top: 1px dashed #ccc;
-}
-.file-element{
-    border-bottom: 1px dashed #ccc;
-}
-/* end File button */
 
 @media only screen {
     .option-course {

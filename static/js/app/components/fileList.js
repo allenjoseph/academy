@@ -67,8 +67,8 @@ module.exports = React.createClass({
                                 </a>;
                 return(
                     <li key={ file.id || file.guid } className="file-element">
-                        <span className="file-name mr1">
-                            <span className="mh1">
+                        <span className="file-name">
+                            <span className="prs">
                                 {icon}
                             </span>
                             {file.name}
