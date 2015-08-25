@@ -135,7 +135,7 @@ a,
   padding: 0 1em;
 }
 .modal-comment .comment-wrapper .comment-body .comment-list .comment-entry {
-  border-bottom: 1px solid #e4dcd8;
+  border-bottom: 1px solid #f2f2f2;
   position: relative;
   padding: 0.5em 0;
 }
@@ -376,14 +376,7 @@ a,
   color: #444 !important;
   font-size: 2em !important;
   height: 1.5em !important;
-  padding: 0 80px 0 50px !important;
-}
-.input-add-discussion > i {
-  color: #f1687b;
-  font-size: 2em;
-  left: 0.5em;
-  position: absolute;
-  top: 0.2em;
+  padding: 0 115px 0 0.5em !important;
 }
 
 .modal-exam .exam-wrapper article {
@@ -394,11 +387,12 @@ a,
   margin-top: 2em !important;
   margin-bottom: 2em !important;
 }
-.fileupload-component .file-list {
-  border-top: 1px dashed #ccc;
-}
 .fileupload-component .file-list .file-element {
-  border-bottom: 1px dashed #ccc;
+  padding: 0.5em;
+  border-bottom: 1px solid #f2f2f2;
+}
+.fileupload-component .file-list .file-element .file-name {
+  padding: 0 1em;
 }
 
 .layout {
@@ -606,5 +600,12 @@ a,
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.button.in {
+  margin: 0;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  background-color: #ffc107;
 }
 

@@ -61,16 +61,16 @@ module.exports = React.createClass({
         var files = this.state.files.map(function(file){
             if(file.name && (file.id || file.guid)){
                 var icon = !file.id
-                                ? <i className="fa fa-cog fa-spin"></i>
-                                : <a className="btn-delete-file text-danger" onClick={this.deleteFile.bind(this,file)}>
+                                ? <a><i className="fa fa-cog fa-spin"></i></a>
+                                : <a className="btn-delete-file" onClick={this.deleteFile.bind(this,file)}>
                                     <i className="fa fa-trash-o"></i>
                                 </a>;
                 return(
                     <li key={ file.id || file.guid } className="file-element">
+                        <span>
+                            {icon}
+                        </span>
                         <span className="file-name">
-                            <span className="prs">
-                                {icon}
-                            </span>
                             {file.name}
                         </span>
                     </li>

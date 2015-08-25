@@ -55,12 +55,9 @@ module.exports = React.createClass({
             <div className="row">
                 <div className="small-12 columns">
                     <span className="input-add-discussion">
-                        <i className="fa fa-pencil"/>
                         <input type="text" value={this.state.question}
                             onChange={this.changeDiscussion}/>
-                        <a className="circle-button-right red" onClick={this.sendSubmit}>
-                            <i className="fa fa-question"/>
-                        </a>
+                        <button className="button tiny in" onClick={this.sendSubmit}>Preguntar</button>
                     </span>
                 </div>
             </div>

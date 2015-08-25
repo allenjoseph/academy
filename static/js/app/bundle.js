@@ -22545,12 +22545,9 @@ module.exports = React.createClass({
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "small-12 columns"}, 
                     React.createElement("span", {className: "input-add-discussion"}, 
-                        React.createElement("i", {className: "fa fa-pencil"}), 
                         React.createElement("input", {type: "text", value: this.state.question, 
                             onChange: this.changeDiscussion}), 
-                        React.createElement("a", {className: "circle-button-right red", onClick: this.sendSubmit}, 
-                            React.createElement("i", {className: "fa fa-question"})
-                        )
+                        React.createElement("button", {className: "button tiny in", onClick: this.sendSubmit}, "Preguntar")
                     )
                 )
             )
@@ -22830,16 +22827,16 @@ module.exports = React.createClass({
         var files = this.state.files.map(function(file){
             if(file.name && (file.id || file.guid)){
                 var icon = !file.id
-                                ? React.createElement("i", {className: "fa fa-cog fa-spin"})
-                                : React.createElement("a", {className: "btn-delete-file text-danger", onClick: this.deleteFile.bind(this,file)}, 
+                                ? React.createElement("a", null, React.createElement("i", {className: "fa fa-cog fa-spin"}))
+                                : React.createElement("a", {className: "btn-delete-file", onClick: this.deleteFile.bind(this,file)}, 
                                     React.createElement("i", {className: "fa fa-trash-o"})
                                 );
                 return(
                     React.createElement("li", {key:  file.id || file.guid, className: "file-element"}, 
+                        React.createElement("span", null, 
+                            icon
+                        ), 
                         React.createElement("span", {className: "file-name"}, 
-                            React.createElement("span", {className: "prs"}, 
-                                icon
-                            ), 
                             file.name
                         )
                     )
