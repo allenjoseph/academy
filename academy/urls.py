@@ -26,7 +26,8 @@ urlpatterns = patterns(
     url(r'^comments/', DiscussionCommentsView.as_view(), name='comments'),
     url(r'^comment/?$', CommentView.as_view()),
 
-    url(r'^exam/?$', ExamView.as_view()),
+    url(r'^exams/?$', ExamView.as_view()),
+    url(r'^exams/(?P<pk>\d+)/?$', ExamView.as_view()),
 
     url(r'^upload/', UploadFile, name='uploadFile'),
     url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile,

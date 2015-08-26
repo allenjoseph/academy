@@ -24,14 +24,14 @@
     </div>
 
     <div class="layout-main">
-        <div>
+        <div class="layout-main-first">
             <div class="row">
-                {% block content-light %}{% endblock %}
+                {% block contentFirst %}{% endblock %}
             </div>
         </div>
-        <div class="discussionBoxWrapper">
+        <div class="layout-main-second">
             <div class="row">
-                {% block content %}{% endblock %}
+                {% block contentSecond %}{% endblock %}
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
     <script>
         window.ACADEMY.constans.URL_STACTIC='{% static ""%}';
     </script>
-    {% block content-backbone-router %}{% endblock %}
+    {% block contentJs %}{% endblock %}
     <script src="{% static "js/app/bundle.js"%}"></script>
 </body>
 </html>

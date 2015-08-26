@@ -11,10 +11,20 @@ import json
 
 class ExamView(RestServiceMixin, View):
 
+    def get(self, request, pk=None, **kwargs):
+        if pk:
+            exam = Exam.objects.get(pk=pk)
+        else:
+            exam = Exam.objects.all()
+        examSerialize = ModelSerializer(exam)
+
+        return JsonResponse(examSerialize.dictModel, safe=False, status=201)
+
     def post(self, request, *args, **kwargs):
         params = json.loads(request.body)
 
-        student = Student.objects.get(pk=request.session['student_id'])
+        student = Student.objects.get(
+            pk=request.session['student_id'])
         academyCourse = AcademyCourse.objects.get(
             pk=params.get('courseAcademy'))
         files = params.get('files')

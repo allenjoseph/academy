@@ -11,7 +11,7 @@ module.exports = {
     }),
 
     exam: Backbone.Model.extend({
-        urlRoot : '/exam'
+        urlRoot : '/exams'
     }),
 
     attachment: Backbone.Model.extend()

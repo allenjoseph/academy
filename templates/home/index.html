@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{% block content-light %}
+{% block contentFirst %}
 <div class="large-12 columns">
     <div class="row">
         <div class="small-12 columns text-center">
@@ -15,15 +15,15 @@
     </div>
     <div class="row">
         <div class="large-12 columns" id="courseBox"></div>
-    </div>    
+    </div>
 </div>
 {% endblock %}
 
-{% block content %}
+{% block contentSecond %}
 <div class="large-12 columns" id="discussionBox"></div>
 {% endblock %}
 
-{% block content-backbone-router %}
+{% block contentJs %}
 <script>
     (function(){
 
