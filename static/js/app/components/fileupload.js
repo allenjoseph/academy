@@ -31,7 +31,7 @@ module.exports = React.createClass({
     processAlwaysFile: function(e, data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
-            window.dispatchEvent(new CustomEvent('fileuploadremove', { detail: file }));
+            window.dispatchEvent(new CustomEvent('removeFile', { detail: file }));
             if (file.error) {
                 console.warn('Fileupload fail',file.name,':',file.error);
             }
@@ -39,7 +39,7 @@ module.exports = React.createClass({
     },
 
     doneFile: function(e, data){
-        window.dispatchEvent(new CustomEvent('fileuploaddone', { detail: data.result }));
+        window.dispatchEvent(new CustomEvent('addFile', { detail: data.result }));
     },
 
     openFileExplorer: function(){

@@ -8,17 +8,17 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        window.addEventListener('fileuploadadd', this.addFile);
-        window.addEventListener('fileuploadremove', this.removeFile);
-        window.addEventListener('fileuploadremoveall', this.removeAllFiles);
-
-        window.addEventListener('fileuploaddone', this.addFile);
+        window.addEventListener('addFile', this.addFile);
+        window.addEventListener('removeFile', this.removeFile);
+        window.addEventListener('removeAllFiles', this.removeAllFiles);
+        window.addEventListener('resetFileUpload', this.resetComponent);
     },
 
     componentWillUnmount: function(){
-        window.removeEventListener('fileuploadadd', this.addFile);
-        window.removeEventListener('fileuploadremove', this.removeFile);
-        window.removeEventListener('fileuploadremoveall', this.removeAllFiles);
+        window.removeEventListener('addFile', this.addFile);
+        window.removeEventListener('removeFile', this.removeFile);
+        window.removeEventListener('removeAllFiles', this.removeAllFiles);
+        window.removeEventListener('resetFileUpload', this.resetComponent);
     },
 
     addFile: function(data){
@@ -40,18 +40,28 @@ module.exports = React.createClass({
     },
 
     removeAllFiles: function(){
+        var cont = 0;
         this.state.files.map(function(file){
+            ++cont;
             if(file.id){
-                this.deleteFile(file);
-            }else if(file.guid){
-                this.removeFile(file)
+                this.deleteFile(file, cont === this.state.files.length);
             }
         },this);
     },
 
-    deleteFile: function(file){
+    resetComponent: function(){
+        this.setState(this.getInitialState());
+    },
+
+    deleteFile: function(file, isLast){
+        var self = this;
         this.removeFile(file);
         $.post('http://127.0.0.1:8000/delete/'+file.id)
+        .success(function(){
+            if(isLast){
+                self.resetComponent();
+            }
+        })
         .fail(function(){
             console.error('fail delete file :(');
         });

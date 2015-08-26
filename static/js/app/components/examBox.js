@@ -31,13 +31,19 @@ var ExamBox = React.createClass({
         this.setState(this.getInitialState());
     },
 
+    cleanExamForm: function(){
+        window.dispatchEvent(new Event('cleanExamForm'));
+        window.dispatchEvent(new Event('removeAllFiles'));
+        this.closeModalExam();
+    },
+
     render: function(){
         return (
             <div className={'modal-content ' + this.state.openModalClass}>
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
                     <section className="modal modal-exam">
-                        <a className="modal-close" onClick={this.closeModalExam}></a>
+                        <a className="modal-close" onClick={this.cleanExamForm}></a>
                         <ExamForm isOpen={!!this.state.openModalClass} courseAcademy={this.state.courseAcademy} />
                     </section>
                 </div>

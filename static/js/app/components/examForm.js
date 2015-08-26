@@ -14,15 +14,15 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function(){
-        window.addEventListener('fileuploaddone', this.addFile);
+        window.addEventListener('addFile', this.addFile);
         window.addEventListener('cleanExamForm', this.cleanExamForm);
-
         window.addEventListener('removeFileFromExam', this.removeFile);
     },
 
     componentWillUnmount: function(){
-        window.removeEventListener('fileuploaddone', this.addFile);
+        window.removeEventListener('addFile', this.addFile);
         window.removeEventListener('cleanExamForm', this.cleanExamForm);
+        window.removeEventListener('removeFileFromExam', this.removeFile);
     },
 
     componentDidUpdate: function(){
@@ -49,7 +49,7 @@ module.exports = React.createClass({
     },
 
     cleanExamForm: function(){
-        window.dispatchEvent(new Event('fileuploadremoveall'));
+        window.dispatchEvent(new Event('resetFileUpload'));
         this.setState(this.getInitialState());
     },
 
