@@ -5,23 +5,24 @@ var React = require('react/addons'),
 module.exports = React.createClass({
     displayName: 'ExamForm',
 
+    files: [],
+
     getInitialState: function(){
         return {
             description: '',
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
-            files: [],
             confirm: false
         };
     },
 
     componentDidMount: function(){
-        window.addEventListener('addFile', this.addFile);
+        window.addEventListener('doneFile', this.doneFile);
         window.addEventListener('cleanExamForm', this.cleanExamForm);
         window.addEventListener('removeFileFromExam', this.removeFile);
     },
 
     componentWillUnmount: function(){
-        window.removeEventListener('addFile', this.addFile);
+        window.removeEventListener('doneFile', this.doneFile);
         window.removeEventListener('cleanExamForm', this.cleanExamForm);
         window.removeEventListener('removeFileFromExam', this.removeFile);
     },
@@ -32,25 +33,22 @@ module.exports = React.createClass({
         }
     },
 
-    addFile: function(data){
-        var newState = React.addons.update(this.state,{
-            files: {$push:[data.detail.id]}
-        });
-        this.setState(newState);
+    doneFile: function(data){
+        if(data.detail && data.detail.id){
+            this.files.push(data.detail.id);
+        }
     },
 
     removeFile: function(data){
-        if(data.detail){
-            var pos = this.state.files.indexOf(data.detail);
-            var newState = React.addons.update(this.state,{
-                files: { $splice: [[pos,1]] }
-            });
-            this.setState(newState);
+        if(data && data.detail){//data.detail = fileId
+            var pos = this.files.indexOf(data.detail);
+            this.files.splice(pos,1);
         }
     },
 
     cleanExamForm: function(){
         window.dispatchEvent(new Event('resetFileUpload'));
+        this.files = [];
         this.setState(this.getInitialState());
     },
 
@@ -62,7 +60,7 @@ module.exports = React.createClass({
     },
 
     validateExam: function(event){
-        if(!this.state.description || !this.state.files.length) return;
+        if(!this.state.description || !this.files.length) return;
         if(!this.state.confirm){
             var newState = React.addons.update(this.state, {
                 confirm: { $set: true }
@@ -79,6 +77,7 @@ module.exports = React.createClass({
 
         var exam = new Exam(this.state);
         exam.set('courseAcademy', this.props.courseAcademy.id);
+        exam.set('files', this.files);
         exam.save(null,{
             success : function(exam, response){
                 window.dispatchEvent(new Event('closeModalExam'));
@@ -111,7 +110,7 @@ module.exports = React.createClass({
                 </header>
                 <article className="row">
                     <div className="small-12 columns fileupload-content">
-                        <Fileupload />
+                        <Fileupload/>
                     </div>
                 </article>
                 <footer className="row">

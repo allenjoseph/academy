@@ -16,7 +16,6 @@ module.exports = {
     },
     modelMixin: {
         bindTo: function(model, key){
-            debugger;
             return {
                 value: model.get(key),
                 requestChange: function(value){

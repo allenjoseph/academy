@@ -8,7 +8,8 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function() {
-        window.addEventListener('addFile', this.addFile);
+        window.addEventListener('addFile', this.addFile);//File por subir
+        window.addEventListener('doneFile', this.addFile);//File subido
         window.addEventListener('removeFile', this.removeFile);
         window.addEventListener('removeAllFiles', this.removeAllFiles);
         window.addEventListener('resetFileUpload', this.resetComponent);
@@ -16,6 +17,7 @@ module.exports = React.createClass({
 
     componentWillUnmount: function(){
         window.removeEventListener('addFile', this.addFile);
+        window.removeEventListener('doneFile', this.addFile);
         window.removeEventListener('removeFile', this.removeFile);
         window.removeEventListener('removeAllFiles', this.removeAllFiles);
         window.removeEventListener('resetFileUpload', this.resetComponent);
