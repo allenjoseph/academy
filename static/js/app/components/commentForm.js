@@ -87,7 +87,7 @@ module.exports = React.createClass({
                     <div className="small-12 columns">
                         <span className="disclaimer left">Presione enter para enviar.</span>
                         <span className="counter right">{this.state.counter}</span>
-                        <div className="button-wrapper">
+                        <div className="button-inner">
                             <textarea ref="comment" className="textarea"
                                 maxLength={150} value={this.state.comment}
                                 onChange={this.changeComment} onKeyPress={this.onKeyPress}></textarea>

@@ -9,7 +9,8 @@ module.exports = React.createClass({
         return {
             description: '',
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
-            files: []
+            files: [],
+            confirm: false
         };
     },
 
@@ -60,9 +61,19 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    shareExam: function(){
-        if(!this.state.files.length) return;
+    validateExam: function(event){
+        if(!this.state.description || !this.state.files.length) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.shareExam();
+    },
 
+    shareExam: function(){
         var course = this.props.courseAcademy.course;
         var self = this;
 
@@ -84,6 +95,13 @@ module.exports = React.createClass({
     },
 
     render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Compartir';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
         return (
             <div className="exam-wrapper">
                 <header className="row">
@@ -97,15 +115,11 @@ module.exports = React.createClass({
                     </div>
                 </article>
                 <footer className="row">
-                    <div className="small-12 columns">
-                        <div className="row collapse">
-                            <div className="small-10 columns">
-                                <input type="text" ref="description" value={this.state.description} onChange={this.changeDescription} placeholder={this.state.placeholder}/>
-                            </div>
-                            <div className="small-2 columns">
-                                <a id="btn-share-exam" className="button yellow postfix" onClick={this.shareExam}
-                                disabled={!this.state.description || !this.state.files.length}>Compartir</a>
-                            </div>
+                    <div className="small-12 columns ptn">
+                        <div className="button-inner">
+                            <input type="text" className="input" ref="description" value={this.state.description}
+                            onChange={this.changeDescription} placeholder={this.state.placeholder}/>
+                            <button className={buttonClass} onClick={this.validateExam}>{buttonText}</button>
                         </div>
                     </div>
                 </footer>

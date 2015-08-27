@@ -75,7 +75,7 @@ module.exports = React.createClass({
         return(
             <div className="row">
                 <div className="small-12 columns">
-                    <span className="input-add-discussion">
+                    <span className="input-add-discussion button-inner">
                         <input type="text" className="input" value={this.state.question}
                             onChange={this.changeDiscussion}/>
                         <button className={buttonClass} onClick={this.validateQuestion}>{buttonText}</button>

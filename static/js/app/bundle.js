@@ -22060,7 +22060,7 @@ module.exports = React.createClass({
                     React.createElement("div", {className: "small-12 columns"}, 
                         React.createElement("span", {className: "disclaimer left"}, "Presione enter para enviar."), 
                         React.createElement("span", {className: "counter right"}, this.state.counter), 
-                        React.createElement("div", {className: "button-wrapper"}, 
+                        React.createElement("div", {className: "button-inner"}, 
                             React.createElement("textarea", {ref: "comment", className: "textarea", 
                                 maxLength: 150, value: this.state.comment, 
                                 onChange: this.changeComment, onKeyPress: this.onKeyPress}), 
@@ -22575,7 +22575,7 @@ module.exports = React.createClass({
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "small-12 columns"}, 
-                    React.createElement("span", {className: "input-add-discussion"}, 
+                    React.createElement("span", {className: "input-add-discussion button-inner"}, 
                         React.createElement("input", {type: "text", className: "input", value: this.state.question, 
                             onChange: this.changeDiscussion}), 
                         React.createElement("button", {className: buttonClass, onClick: this.validateQuestion}, buttonText)
@@ -22695,7 +22695,8 @@ module.exports = React.createClass({
         return {
             description: '',
             placeholder: 'Que examen es, Práctica, Parcial, Final... ?',
-            files: []
+            files: [],
+            confirm: false
         };
     },
 
@@ -22746,9 +22747,19 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    shareExam: function(){
-        if(!this.state.files.length) return;
+    validateExam: function(event){
+        if(!this.state.description || !this.state.files.length) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.shareExam();
+    },
 
+    shareExam: function(){
         var course = this.props.courseAcademy.course;
         var self = this;
 
@@ -22770,6 +22781,13 @@ module.exports = React.createClass({
     },
 
     render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Compartir';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
         return (
             React.createElement("div", {className: "exam-wrapper"}, 
                 React.createElement("header", {className: "row"}, 
@@ -22783,15 +22801,11 @@ module.exports = React.createClass({
                     )
                 ), 
                 React.createElement("footer", {className: "row"}, 
-                    React.createElement("div", {className: "small-12 columns"}, 
-                        React.createElement("div", {className: "row collapse"}, 
-                            React.createElement("div", {className: "small-10 columns"}, 
-                                React.createElement("input", {type: "text", ref: "description", value: this.state.description, onChange: this.changeDescription, placeholder: this.state.placeholder})
-                            ), 
-                            React.createElement("div", {className: "small-2 columns"}, 
-                                React.createElement("a", {id: "btn-share-exam", className: "button yellow postfix", onClick: this.shareExam, 
-                                disabled: !this.state.description || !this.state.files.length}, "Compartir")
-                            )
+                    React.createElement("div", {className: "small-12 columns ptn"}, 
+                        React.createElement("div", {className: "button-inner"}, 
+                            React.createElement("input", {type: "text", className: "input", ref: "description", value: this.state.description, 
+                            onChange: this.changeDescription, placeholder: this.state.placeholder}), 
+                            React.createElement("button", {className: buttonClass, onClick: this.validateExam}, buttonText)
                         )
                     )
                 )
