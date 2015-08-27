@@ -21979,9 +21979,9 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            enterPressed: false,
             comment: '',
-            counter: 150
+            counter: 150,
+            confirm: false
         }
     },
 
@@ -22005,21 +22005,23 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    onKeyPress: function(e){
-        if(e.which === 13){
-            newState = React.addons.update(this.state, {
-                enterPressed: { $set: true }
-            });
-            this.setState(newState);
-            e.preventDefault();
+    onKeyPress: function(event){
+        if(event.which === 13){
+            this.validateComment(event);
         }
     },
 
-    cancelSubmit: function(){
-        var newState = React.addons.update(this.state, {
-            enterPressed: { $set: false }
-        });
-        this.setState(newState);
+    validateComment: function(event){
+        event.preventDefault();
+        if(!this.state.comment) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.sendSubmit();
     },
 
     sendSubmit: function(){
@@ -22044,22 +22046,26 @@ module.exports = React.createClass({
     },
 
     render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Comentar';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
+
         return(
             React.createElement("div", {className: "comment-footer"}, 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns"}, 
                         React.createElement("span", {className: "disclaimer left"}, "Presione enter para enviar."), 
                         React.createElement("span", {className: "counter right"}, this.state.counter), 
-                        React.createElement("textarea", {ref: "comment", 
-                            maxLength: 150, value: this.state.comment, disabled: this.state.enterPressed, 
-                            onChange: this.changeComment, onKeyPress: this.onKeyPress}), 
-                        
-                            !this.state.enterPressed ? '' :
-                                React.createElement("div", {className: "comment-footer-confirm"}, 
-                                    React.createElement("button", {className: "button tiny cancel", onClick: this.cancelSubmit}, "Cancelar"), 
-                                    React.createElement("button", {className: "button tiny", onClick: this.sendSubmit}, "Confirmar")
-                                )
-                        
+                        React.createElement("div", {className: "button-wrapper"}, 
+                            React.createElement("textarea", {ref: "comment", className: "textarea", 
+                                maxLength: 150, value: this.state.comment, 
+                                onChange: this.changeComment, onKeyPress: this.onKeyPress}), 
+                            React.createElement("button", {className: buttonClass, onClick: this.validateComment}, buttonText)
+                        )
                     )
                 )
             )
@@ -22116,8 +22122,12 @@ module.exports = React.createClass({
             React.createElement("div", {className: "comment-body"}, 
                 React.createElement("div", {className: "comment-list"}, 
                     
-                        !comments.length ? React.createElement("span", null, "Sin comentarios") :
-                            this.getComments()
+                        !comments.length
+                        ? React.createElement("div", {className: "watermark"}, 
+                            React.createElement("p", null, React.createElement("i", {className: "fa fa-commenting-o fa-10x"})), 
+                            React.createElement("p", null, "Sin comentarios, sé el primero en comentar!")
+                        )
+                        : this.getComments()
                     
                 )
             )
@@ -22497,7 +22507,8 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            question: ''
+            question: '',
+            confirm: false
         }
     },
 
@@ -22508,11 +22519,23 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    sendSubmit: function(event){
+    validateQuestion: function(event){
         event.preventDefault();
-        var self = this;
+        if(!this.state.question) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.sendSubmit();
+    },
 
-        var discussion = new Discussion();
+    sendSubmit: function(){
+        var self = this,
+            discussion = new Discussion();
+
         discussion.set('question', this.state.question);
         discussion.save(null,{
             success : function(discussion){
@@ -22541,13 +22564,21 @@ module.exports = React.createClass({
     },
 
     render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Preguntar';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
+
         return(
             React.createElement("div", {className: "row"}, 
                 React.createElement("div", {className: "small-12 columns"}, 
                     React.createElement("span", {className: "input-add-discussion"}, 
-                        React.createElement("input", {type: "text", value: this.state.question, 
+                        React.createElement("input", {type: "text", className: "input", value: this.state.question, 
                             onChange: this.changeDiscussion}), 
-                        React.createElement("button", {className: "button tiny in", onClick: this.sendSubmit}, "Preguntar")
+                        React.createElement("button", {className: buttonClass, onClick: this.validateQuestion}, buttonText)
                     )
                 )
             )
@@ -22704,6 +22735,7 @@ module.exports = React.createClass({
     },
 
     cleanExamForm: function(){
+        window.dispatchEvent(new Event('resetFileUpload'));
         this.setState(this.getInitialState());
     },
 

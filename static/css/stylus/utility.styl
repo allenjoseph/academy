@@ -23,6 +23,12 @@
     background-color blueStrongPalette
     color whitePalette !important
 
+.fa-10x
+    font-size 10em !important
+
+.button-wrapper
+    position relative !important
+
 .mtn
     margin-top 1em !important
 .ptn
@@ -57,9 +63,24 @@
     &:hover
         box-shadow-material 1
 
-.button.in
-    margin 0
-    position absolute
-    right 5px
-    bottom 5px
-    background-color amberMaterial
+.button
+    font-weight bolder
+    &.in
+        margin 0
+        position absolute
+        right 5px
+        bottom 5px
+        background-color amberMaterial
+        {textShadowForWhite}
+        &.confirm
+            background-color redHighlightPalette
+
+.watermark
+    color rgba(0, 0, 0, 0.3)
+
+.input, .textarea
+    border none !important
+    box-shadow-material 1
+    color grayPalette !important
+    font-size 2em !important
+

@@ -46,8 +46,12 @@ module.exports = React.createClass({
             <div className="comment-body">
                 <div className="comment-list">
                     {
-                        !comments.length ? <span>Sin comentarios</span> :
-                            this.getComments()
+                        !comments.length
+                        ? <div className="watermark">
+                            <p><i className="fa fa-commenting-o fa-10x"></i></p>
+                            <p>Sin comentarios, sé el primero en comentar!</p>
+                        </div>
+                        : this.getComments()
                     }
                 </div>
             </div>

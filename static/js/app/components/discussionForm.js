@@ -7,7 +7,8 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            question: ''
+            question: '',
+            confirm: false
         }
     },
 
@@ -18,11 +19,23 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    sendSubmit: function(event){
+    validateQuestion: function(event){
         event.preventDefault();
-        var self = this;
+        if(!this.state.question) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.sendSubmit();
+    },
 
-        var discussion = new Discussion();
+    sendSubmit: function(){
+        var self = this,
+            discussion = new Discussion();
+
         discussion.set('question', this.state.question);
         discussion.save(null,{
             success : function(discussion){
@@ -51,13 +64,21 @@ module.exports = React.createClass({
     },
 
     render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Preguntar';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
+
         return(
             <div className="row">
                 <div className="small-12 columns">
                     <span className="input-add-discussion">
-                        <input type="text" value={this.state.question}
+                        <input type="text" className="input" value={this.state.question}
                             onChange={this.changeDiscussion}/>
-                        <button className="button tiny in" onClick={this.sendSubmit}>Preguntar</button>
+                        <button className={buttonClass} onClick={this.validateQuestion}>{buttonText}</button>
                     </span>
                 </div>
             </div>

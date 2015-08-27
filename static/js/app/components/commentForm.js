@@ -6,9 +6,9 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            enterPressed: false,
             comment: '',
-            counter: 150
+            counter: 150,
+            confirm: false
         }
     },
 
@@ -32,21 +32,23 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    onKeyPress: function(e){
-        if(e.which === 13){
-            newState = React.addons.update(this.state, {
-                enterPressed: { $set: true }
-            });
-            this.setState(newState);
-            e.preventDefault();
+    onKeyPress: function(event){
+        if(event.which === 13){
+            this.validateComment(event);
         }
     },
 
-    cancelSubmit: function(){
-        var newState = React.addons.update(this.state, {
-            enterPressed: { $set: false }
-        });
-        this.setState(newState);
+    validateComment: function(event){
+        event.preventDefault();
+        if(!this.state.comment) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.sendSubmit();
     },
 
     sendSubmit: function(){
@@ -71,22 +73,26 @@ module.exports = React.createClass({
     },
 
     render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Comentar';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
+
         return(
             <div className="comment-footer">
                 <div className="row">
                     <div className="small-12 columns">
                         <span className="disclaimer left">Presione enter para enviar.</span>
                         <span className="counter right">{this.state.counter}</span>
-                        <textarea ref="comment"
-                            maxLength={150} value={this.state.comment} disabled={this.state.enterPressed}
-                            onChange={this.changeComment} onKeyPress={this.onKeyPress}></textarea>
-                        {
-                            !this.state.enterPressed ? '' :
-                                <div className="comment-footer-confirm">
-                                    <button className="button tiny cancel" onClick={this.cancelSubmit}>Cancelar</button>
-                                    <button className="button tiny" onClick={this.sendSubmit}>Confirmar</button>
-                                </div>
-                        }
+                        <div className="button-wrapper">
+                            <textarea ref="comment" className="textarea"
+                                maxLength={150} value={this.state.comment}
+                                onChange={this.changeComment} onKeyPress={this.onKeyPress}></textarea>
+                            <button className={buttonClass} onClick={this.validateComment}>{buttonText}</button>
+                        </div>
                     </div>
                 </div>
             </div>
