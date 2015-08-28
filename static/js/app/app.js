@@ -12,6 +12,7 @@ window.ACADEMY.backbone.model.constructors = require('./models/models');
 window.ACADEMY.backbone.collection.constructors = require('./collections/collections');
 
 window.ACADEMY.socket = io.connect('http://127.0.0.1:3000');
+//window.ACADEMY.socket = io.connect('http://socket.allenjoseph.pe');//dev for c9.io
 window.ACADEMY.socket.on('newExam', function(data){
     window.dispatchEvent(new CustomEvent('showNotification', { detail: data }));
 });
