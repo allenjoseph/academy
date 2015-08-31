@@ -1,5 +1,5 @@
 var React = require('react');
-var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var constans = window.ACADEMY.constans;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
 var Mixins = require('./mixins');
 var Utilities = window.ACADEMY.utilities;
@@ -29,7 +29,7 @@ module.exports = React.createClass({
                 <div className="row comment-entry" key={item.cid}>
                     <div className="comment-entry-figure">
                         <figure title={comment.student.name + ' ' + comment.student.lastname}>
-                            { comment.student.photo ? <img src={URL_STACTIC + comment.student.photo} className="cicle" /> : '' }
+                            { comment.student.photo ? <img src={constans.STATIC + comment.student.photo} className="cicle" /> : '' }
                         </figure>
                     </div>
                     <div className="comment-entry-text">

@@ -28,6 +28,7 @@ var ExamBox = React.createClass({
 
     closeModalExam: function(){
         window.dispatchEvent(new Event('cleanExamForm'));
+        window.dispatchEvent(new Event('offFileupload'));
         this.setState(this.getInitialState());
     },
 

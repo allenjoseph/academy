@@ -1,7 +1,7 @@
 var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
-var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var constans = window.ACADEMY.constans;
 var Utilities = window.ACADEMY.utilities;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
 
@@ -78,7 +78,7 @@ var CommentBox = React.createClass({
                                                 <figure title={this.state.discussion.student.name + ' ' + this.state.discussion.student.lastname}>
                                                     {
                                                         !this.state.discussion.student.photo ? '' :
-                                                            <img src={URL_STACTIC + this.state.discussion.student.photo} className="cicle" />
+                                                            <img src={constans.STATIC + this.state.discussion.student.photo} className="cicle" />
                                                     }
                                                 </figure>
                                         }

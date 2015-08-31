@@ -21867,7 +21867,7 @@ module.exports = require('./lib/React');
 var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
-var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var constans = window.ACADEMY.constans;
 var Utilities = window.ACADEMY.utilities;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
 
@@ -21944,7 +21944,7 @@ var CommentBox = React.createClass({
                                                 React.createElement("figure", {title: this.state.discussion.student.name + ' ' + this.state.discussion.student.lastname}, 
                                                     
                                                         !this.state.discussion.student.photo ? '' :
-                                                            React.createElement("img", {src: URL_STACTIC + this.state.discussion.student.photo, className: "cicle"})
+                                                            React.createElement("img", {src: constans.STATIC + this.state.discussion.student.photo, className: "cicle"})
                                                     
                                                 )
                                         
@@ -22075,7 +22075,7 @@ module.exports = React.createClass({
 
 },{"react/addons":2}],177:[function(require,module,exports){
 var React = require('react');
-var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var constans = window.ACADEMY.constans;
 var comments = window.ACADEMY.backbone.collection.instances.comments;
 var Mixins = require('./mixins');
 var Utilities = window.ACADEMY.utilities;
@@ -22105,7 +22105,7 @@ module.exports = React.createClass({
                 React.createElement("div", {className: "row comment-entry", key: item.cid}, 
                     React.createElement("div", {className: "comment-entry-figure"}, 
                         React.createElement("figure", {title: comment.student.name + ' ' + comment.student.lastname}, 
-                             comment.student.photo ? React.createElement("img", {src: URL_STACTIC + comment.student.photo, className: "cicle"}) : ''
+                             comment.student.photo ? React.createElement("img", {src: constans.STATIC + comment.student.photo, className: "cicle"}) : ''
                         )
                     ), 
                     React.createElement("div", {className: "comment-entry-text"}, 
@@ -22402,7 +22402,7 @@ module.exports = React.createClass({
 
 },{"react":174}],184:[function(require,module,exports){
 var React = require('react/addons');
-var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var constans = window.ACADEMY.constans;
 var Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
@@ -22453,7 +22453,7 @@ module.exports = React.createClass({
                         React.createElement("div", {className: "small-12 columns"}, 
                             React.createElement("span", {className: "left"}, 
                                 React.createElement("figure", {title: this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}, 
-                                     this.props.discussion.student.photo ? React.createElement("img", {src: URL_STACTIC + this.props.discussion.student.photo}) : '', 
+                                     this.props.discussion.student.photo ? React.createElement("img", {src: constans.STATIC + this.props.discussion.student.photo}) : '', 
                                     React.createElement("span", null, this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname)
                                 )
                             ), 
@@ -22654,6 +22654,7 @@ var ExamBox = React.createClass({
 
     closeModalExam: function(){
         window.dispatchEvent(new Event('cleanExamForm'));
+        window.dispatchEvent(new Event('offFileupload'));
         this.setState(this.getInitialState());
     },
 
@@ -22814,7 +22815,8 @@ module.exports = React.createClass({
 });
 
 },{"./fileupload":191,"react/addons":2}],190:[function(require,module,exports){
-var React = require('react/addons');
+var React = require('react/addons'),
+    constans = window.ACADEMY.constans;
 
 module.exports = React.createClass({
     displayName: 'FileList',
@@ -22874,7 +22876,7 @@ module.exports = React.createClass({
     deleteFile: function(file, isLast){
         var self = this;
         this.removeFile(file);
-        $.post('http://127.0.0.1:8000/delete/'+file.id)
+        $.post(constans.HOST + '/delete/'+file.id)
         .success(function(){
             if(isLast){
                 self.resetComponent();
@@ -22915,10 +22917,19 @@ module.exports = React.createClass({
 
 },{"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons'),
-    FileList = require('./fileList');
+    FileList = require('./fileList'),
+    constans = window.ACADEMY.constans;
 
 module.exports = React.createClass({
     displayName: 'Fileupload',
+
+    componentDidMount: function(){
+        window.addEventListener('offFileupload', this.offEvents);
+    },
+
+    componentWillUnmount: function(){
+        window.removeEventListener('offFileupload', this.offEvents);
+    },
 
     addFile: function(e,data){
         var file = data.files && data.files.length ? data.files[0] : null;
@@ -22945,7 +22956,7 @@ module.exports = React.createClass({
     openFileExplorer: function(){
         var $fileUpload = $(React.findDOMNode(this.refs.fileButton));
         $fileUpload.fileupload({
-            url: 'http://127.0.0.1:8000/upload/',
+            url: constans.HOST + '/upload/',
             dataType: 'json',
             autoUpload: true,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -22957,6 +22968,14 @@ module.exports = React.createClass({
         .prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
         $fileUpload.click();
+    },
+
+    offEvents: function(){
+        var $fileUpload = $(React.findDOMNode(this.refs.fileButton));
+        $fileUpload
+        .off('fileuploadadd', this.addFile)
+        .off('fileuploadprocessalways', this.processAlwaysFile)
+        .off('fileuploaddone', this.doneFile)
     },
 
     render: function(){

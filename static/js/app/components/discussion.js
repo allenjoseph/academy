@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var URL_STACTIC = window.ACADEMY.constans.URL_STACTIC;
+var constans = window.ACADEMY.constans;
 var Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
@@ -50,7 +50,7 @@ module.exports = React.createClass({
                         <div className="small-12 columns">
                             <span className="left">
                                 <figure title={this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}>
-                                    { this.props.discussion.student.photo ? <img src={URL_STACTIC + this.props.discussion.student.photo} /> : '' }
+                                    { this.props.discussion.student.photo ? <img src={constans.STATIC + this.props.discussion.student.photo} /> : '' }
                                     <span>{this.props.discussion.student.name + ' ' + this.props.discussion.student.lastname}</span>
                                 </figure>
                             </span>

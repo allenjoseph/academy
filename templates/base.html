@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/modal.css"%}">
     <link rel="stylesheet" type="text/css" href="{% static "css/app.css"%}">
-    <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+    <script src="http://127.0.0.1:3333/socket.io/socket.io.js"></script>
     <!-- Dev for c9.io -->
     <!--<script src="http://socket.allenjoseph.pe/socket.io/socket.io.js"></script>-->
 </head>
@@ -61,7 +61,7 @@
 
     <script src="{% static "js/app/bundleApp.js"%}"></script>
     <script>
-        window.ACADEMY.constans.URL_STACTIC='{% static ""%}';
+        window.ACADEMY.constans.STATIC='{% static ""%}';
     </script>
     {% block contentJs %}{% endblock %}
     <script src="{% static "js/app/bundle.js"%}"></script>

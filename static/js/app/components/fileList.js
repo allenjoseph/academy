@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react/addons'),
+    constans = window.ACADEMY.constans;
 
 module.exports = React.createClass({
     displayName: 'FileList',
@@ -58,7 +59,7 @@ module.exports = React.createClass({
     deleteFile: function(file, isLast){
         var self = this;
         this.removeFile(file);
-        $.post('http://127.0.0.1:8000/delete/'+file.id)
+        $.post(constans.HOST + '/delete/'+file.id)
         .success(function(){
             if(isLast){
                 self.resetComponent();

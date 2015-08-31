@@ -1,8 +1,17 @@
 var React = require('react/addons'),
-    FileList = require('./fileList');
+    FileList = require('./fileList'),
+    constans = window.ACADEMY.constans;
 
 module.exports = React.createClass({
     displayName: 'Fileupload',
+
+    componentDidMount: function(){
+        window.addEventListener('offFileupload', this.offEvents);
+    },
+
+    componentWillUnmount: function(){
+        window.removeEventListener('offFileupload', this.offEvents);
+    },
 
     addFile: function(e,data){
         var file = data.files && data.files.length ? data.files[0] : null;
@@ -29,7 +38,7 @@ module.exports = React.createClass({
     openFileExplorer: function(){
         var $fileUpload = $(React.findDOMNode(this.refs.fileButton));
         $fileUpload.fileupload({
-            url: 'http://127.0.0.1:8000/upload/',
+            url: constans.HOST + '/upload/',
             dataType: 'json',
             autoUpload: true,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -41,6 +50,14 @@ module.exports = React.createClass({
         .prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');
         $fileUpload.click();
+    },
+
+    offEvents: function(){
+        var $fileUpload = $(React.findDOMNode(this.refs.fileButton));
+        $fileUpload
+        .off('fileuploadadd', this.addFile)
+        .off('fileuploadprocessalways', this.processAlwaysFile)
+        .off('fileuploaddone', this.doneFile)
     },
 
     render: function(){
