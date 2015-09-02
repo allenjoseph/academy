@@ -91,5 +91,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-stylus');
 
     grunt.registerTask('clean-vendor', ['bower:install']);
+    grunt.registerTask('build', ['stylus:compile','browserify:default','browserify:react']);
     grunt.registerTask('default', ['watch']);
 };

@@ -4,6 +4,7 @@ var React = require('react'),
     _collection = window.ACADEMY.backbone.collection.instances;
 
 module.exports = React.createClass({
+    
     displayName: 'CourseElementList',
 
     mixins: [Mixins.backboneMixin],

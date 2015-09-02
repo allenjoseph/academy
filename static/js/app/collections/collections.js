@@ -4,12 +4,12 @@ module.exports = {
 
     Courses: Backbone.Collection.extend({
         model: _model.Course,
-        url: 'courses/?format=json'
+        url: '/courses/?format=json'
     }),
 
     Discussions: Backbone.Collection.extend({
         model: _model.Discussion,
-        url: 'discussions/?format=json',
+        url: '/discussions/?format=json',
         comparator: function(model){
             return -model.get('id');
         }
@@ -17,7 +17,7 @@ module.exports = {
 
     Comments: Backbone.Collection.extend({
         model: _model.Comment,
-        url: 'comments',
+        url: '/comments',
         comparator: function(model){
             return -model.get('id');
         }
@@ -29,22 +29,22 @@ module.exports = {
 
     Exams: Backbone.Collection.extend({
         model: _model.Exam,
-        url: 'exams'
+        url: '/exams'
     }),
 
     Homeworks: Backbone.Collection.extend({
         model: _model.Homework,
-        url: 'homeworks'
+        url: '/homeworks'
     }),
 
     Meetings: Backbone.Collection.extend({
         model: _model.Meeting,
-        url: 'meetings'
+        url: '/meetings'
     }),
 
     Aids: Backbone.Collection.extend({
         model: _model.Aid,
-        url: 'aids'
+        url: '/aids'
     })
 
 };
