@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-    Comment = window.ACADEMY.backbone.model.constructors.comment;
+    Comment = window.ACADEMY.backbone.model.constructors.Comment;
 
 module.exports = React.createClass({
     displayName: 'CommentForm',

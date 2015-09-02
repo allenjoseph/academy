@@ -1,30 +1,50 @@
-var models = require('../models/models');
+var _model = require('../models/models');
 
 module.exports = {
 
-    courses: Backbone.Collection.extend({
-        model : models.course,
+    Courses: Backbone.Collection.extend({
+        model: _model.Course,
         url: 'courses/?format=json'
     }),
 
-    discussions: Backbone.Collection.extend({
-        model : models.discussion,
+    Discussions: Backbone.Collection.extend({
+        model: _model.Discussion,
         url: 'discussions/?format=json',
         comparator: function(model){
             return -model.get('id');
         }
     }),
 
-    comments: Backbone.Collection.extend({
-        model : models.comment,
+    Comments: Backbone.Collection.extend({
+        model: _model.Comment,
         url: 'comments',
         comparator: function(model){
             return -model.get('id');
         }
     }),
 
-    attachments: Backbone.Collection.extend({
-        model : models.attachment
+    Attachments: Backbone.Collection.extend({
+        model: _model.Attachment
+    }),
+
+    Exams: Backbone.Collection.extend({
+        model: _model.Exam,
+        url: 'exams'
+    }),
+
+    Homeworks: Backbone.Collection.extend({
+        model: _model.Homework,
+        url: 'homeworks'
+    }),
+
+    Meetings: Backbone.Collection.extend({
+        model: _model.Meeting,
+        url: 'meetings'
+    }),
+
+    Aids: Backbone.Collection.extend({
+        model: _model.Aid,
+        url: 'aids'
     })
 
 };

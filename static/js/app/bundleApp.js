@@ -16,7 +16,6 @@ window.ACADEMY.backbone.model.constructors = require('./models/models');
 window.ACADEMY.backbone.collection.constructors = require('./collections/collections');
 
 window.ACADEMY.socket = io.connect(window.ACADEMY.constans.SOCKET);
-//window.ACADEMY.socket = io.connect('http://socket.allenjoseph.pe');//dev for c9.io
 window.ACADEMY.socket.on('newExam', function(data){
     window.dispatchEvent(new CustomEvent('showNotification', { detail: data }));
 });
@@ -43,33 +42,53 @@ if(!String.prototype.trim){
 moment.locale('es');
 
 },{"./collections/collections":2,"./models/models":3,"./utilities":5}],2:[function(require,module,exports){
-var models = require('../models/models');
+var _model = require('../models/models');
 
 module.exports = {
 
-    courses: Backbone.Collection.extend({
-        model : models.course,
+    Courses: Backbone.Collection.extend({
+        model: _model.Course,
         url: 'courses/?format=json'
     }),
 
-    discussions: Backbone.Collection.extend({
-        model : models.discussion,
+    Discussions: Backbone.Collection.extend({
+        model: _model.Discussion,
         url: 'discussions/?format=json',
         comparator: function(model){
             return -model.get('id');
         }
     }),
 
-    comments: Backbone.Collection.extend({
-        model : models.comment,
+    Comments: Backbone.Collection.extend({
+        model: _model.Comment,
         url: 'comments',
         comparator: function(model){
             return -model.get('id');
         }
     }),
 
-    attachments: Backbone.Collection.extend({
-        model : models.attachment
+    Attachments: Backbone.Collection.extend({
+        model: _model.Attachment
+    }),
+
+    Exams: Backbone.Collection.extend({
+        model: _model.Exam,
+        url: 'exams'
+    }),
+
+    Homeworks: Backbone.Collection.extend({
+        model: _model.Homework,
+        url: 'homeworks'
+    }),
+
+    Meetings: Backbone.Collection.extend({
+        model: _model.Meeting,
+        url: 'meetings'
+    }),
+
+    Aids: Backbone.Collection.extend({
+        model: _model.Aid,
+        url: 'aids'
     })
 
 };
@@ -77,26 +96,37 @@ module.exports = {
 },{"../models/models":3}],3:[function(require,module,exports){
 module.exports = {
 
-    course: Backbone.Model.extend(),
+    Course: Backbone.Model.extend(),
 
-    discussion: Backbone.Model.extend({
-        urlRoot : '/discussion'
+    Discussion: Backbone.Model.extend({
+        urlRoot: '/discussion'
     }),
 
-    comment: Backbone.Model.extend({
-        urlRoot : '/comment'
+    Comment: Backbone.Model.extend({
+        urlRoot: '/comment'
     }),
 
-    exam: Backbone.Model.extend({
-        urlRoot : '/exams'
+    Exam: Backbone.Model.extend({
+        urlRoot: '/exams'
     }),
 
-    attachment: Backbone.Model.extend()
+    Homework: Backbone.Model.extend({
+        urlRoot: '/homework'
+    }),
+
+    Meeting: Backbone.Model.extend({
+        urlRoot: '/meeting'
+    }),
+
+    Aid: Backbone.Model.extend({
+        urlRoot: '/aid'
+    }),
+
+    Attachment: Backbone.Model.extend()
 };
 
 },{}],4:[function(require,module,exports){
-var _Model = window.ACADEMY.backbone.model.constructors,
-    _Collection = window.ACADEMY.backbone.collection.constructors,
+var _Collection = window.ACADEMY.backbone.collection.constructors,
     _collection = window.ACADEMY.backbone.collection.instances;
 
 var Router = Backbone.Router.extend({
@@ -113,13 +143,18 @@ var Router = Backbone.Router.extend({
 
     home : function(){
         this.navigate('');
-        _collection.courses = new _Collection.courses();
-        _collection.discussions = new _Collection.discussions();
-        _collection.comments = new _Collection.comments();
+        _collection.courses = new _Collection.Courses();
+        _collection.discussions = new _Collection.Discussions();
+        _collection.comments = new _Collection.Comments();
     },
 
     course : function(){
         this.navigate('');
+        _collection.exams = new _Collection.Exams();
+        _collection.discussions = new _Collection.Discussions();
+        _collection.homeworks = new _Collection.Homeworks();
+        _collection.meetings = new _Collection.Meetings();
+        _collection.aids = new _Collection.Aids();
     },
 
     default : function(otherRoute){

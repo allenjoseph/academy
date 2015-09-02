@@ -82,6 +82,15 @@ a,
 .box header h6 {
   color: #444 !important;
 }
+.box header h1 a,
+.box header h2 a,
+.box header h3 a,
+.box header h4 a,
+.box header h5 a,
+.box header h6 a {
+  padding-left: 0.5em;
+  font-size: 0.7em;
+}
 .box .item {
   display: block;
   line-height: 2em;

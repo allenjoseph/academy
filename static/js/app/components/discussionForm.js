@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-    Discussion = window.ACADEMY.backbone.model.constructors.discussion,
+    Discussion = window.ACADEMY.backbone.model.constructors.Discussion,
     discussions = window.ACADEMY.backbone.collection.instances.discussions;
 
 module.exports = React.createClass({

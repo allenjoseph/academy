@@ -1,4 +1,5 @@
 var React = require('react'),
+    CourseSectionBox = require('./courseSectionBox'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
 module.exports = React.createClass({
@@ -7,32 +8,37 @@ module.exports = React.createClass({
 
     getInitialState: function(){
         return {
-            figures:[
+            sections:[
                 {
                     title: 'Exámenes',
                     label: 'Compartir exámen',
                     icon: 'fa-camera',
-                    action: this.openModalExam
+                    action: this.openModalExam,
+                    collection: 'exams'
                 },
                 {
                     title: 'Trabajos',
                     label: 'Compartir trabajo',
-                    icon: 'fa-file-text'
+                    icon: 'fa-file-text',
+                    collection: 'homeworks'
                 },
                 {
                     title: 'Reuniones programadas',
                     label: 'Asistir',
-                    icon: 'fa-users'
+                    icon: 'fa-users',
+                    collection: 'meetings'
                 },
                 {
                     title: 'Pendientes de ayuda',
                     label: 'Ayudar',
-                    icon: 'fa-child'
+                    icon: 'fa-child',
+                    collection: 'aids'
                 },
                 {
                     title: 'Preguntas',
                     label: 'Preguntar',
-                    icon: 'fa-question'
+                    icon: 'fa-question',
+                    collection: 'dicussions'
                 }
             ]
         }
@@ -44,18 +50,19 @@ module.exports = React.createClass({
 
     getFigures: function(){
         var cont = 0;
-        return this.state.figures.map(function(figure){
+        return this.state.sections.map(function(section){
             return (
                 <div className="row" key={++cont}>
                     <div className="large-12 columns">
                         <div className="box pts pln prn">
                             <header>
-                                <h2>{figure.title}</h2>
-                                <a className="circle-button-right red" title={figure.label} onClick={figure.action}>
-                                    <i className={'fa ' + figure.icon}></i>
-                                </a>
+                                <h2>{section.title}
+                                    <a onClick={section.action}>
+                                        <i className="fa fa-plus"></i>
+                                    </a>
+                                </h2>
                             </header>
-                            <p>Sin registros</p>
+                            <CourseSectionBox elementType={section.collection}/>
                         </div>
                     </div>
                 </div>

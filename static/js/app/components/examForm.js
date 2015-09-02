@@ -1,6 +1,6 @@
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
-    Exam = window.ACADEMY.backbone.model.constructors.exam;
+    Exam = window.ACADEMY.backbone.model.constructors.Exam;
 
 module.exports = React.createClass({
     displayName: 'ExamForm',
