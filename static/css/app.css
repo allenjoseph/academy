@@ -57,7 +57,6 @@ a,
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   color: #444;
-  margin: 0.5em 0;
   -webkit-transition: all 100ms;
   -o-transition: all 100ms;
   -moz-transition: all 100ms;
@@ -528,57 +527,39 @@ a,
 .fa-10x {
   font-size: 10em !important;
 }
+.man {
+  margin: 1em !important;
+}
+.mvn {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+}
 .mtn {
   margin-top: 1em !important;
+}
+.pan {
+  padding: 1em !important;
 }
 .ptn {
   padding-top: 1em !important;
 }
-.pts {
-  padding-top: 0.5em !important;
+.pbn {
+  padding-bottom: 1em !important;
 }
 .prn {
   padding-right: 1em !important;
 }
-.prs {
-  padding-right: 0.5em !important;
-}
 .pln {
   padding-left: 1em !important;
 }
+.pts {
+  padding-top: 0.5em !important;
+}
+.prs {
+  padding-right: 0.5em !important;
+}
 .uppercase {
   text-transform: uppercase !important;
-}
-.circle-button-right {
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  bottom: -1.5em;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  height: 3.5em;
-  padding-top: 1em;
-  position: absolute;
-  right: 1em;
-  text-align: center;
-  -webkit-transition: all 100ms linear;
-  -o-transition: all 100ms linear;
-  -moz-transition: all 100ms linear;
-  -ms-transition: all 100ms linear;
-  -kthtml-transition: all 100ms linear;
-  transition: all 100ms linear;
-  width: 3.5em;
-  z-index: 99;
-}
-.circle-button-right i {
-  color: #fcfdfd;
-  font-size: 1.5em;
-}
-.circle-button-right:hover {
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .button {
   font-weight: bolder;
@@ -615,5 +596,9 @@ a,
   color: #444 !important;
   font-size: 1.5em !important;
   padding: 0 115px 0 0.5em !important;
+}
+.simple-row {
+  padding: 0.2em;
+  border-bottom: 1px solid #f2f2f2;
 }
 

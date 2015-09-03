@@ -195,6 +195,18 @@ module.exports = {
             return moment(date).format('LL');
         }
         return date;
+    },
+    day: function(date){
+        if(window.moment){
+            return moment(date).format('DD');
+        }
+        return date;
+    },
+    largeMonth: function(date){
+        if(window.moment){
+            return moment(date).format('MMM');
+        }
+        return date;
     }
 
 };

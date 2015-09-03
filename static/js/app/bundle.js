@@ -22213,14 +22213,35 @@ if (!!$courseBox){
 }
 
 },{"./courseList":182,"react/addons":2}],180:[function(require,module,exports){
-var React = require('react');
+var React = require('react'),
+    Utilities = window.ACADEMY.utilities;
 
 module.exports = React.createClass({
     displayName: 'CourseElement',
-    render: function(){
+
+    exams: function(){
+        var exam = this.props.properties;
         return(
-            React.createElement("div", null, this.props.properties)
+            React.createElement("div", {className: "row simple-row"}, 
+                React.createElement("div", {className: "medium-1 columns"}, 
+                    React.createElement("strong", null, Utilities.day(exam.dateCreation)), 
+                    React.createElement("small", null, Utilities.largeMonth(exam.dateCreation))
+                ), 
+                React.createElement("div", {className: "medium-11 columns"}, 
+                    exam.description
+                )
+            )
         );
+    },
+
+    render: function(){
+        if(this.hasOwnProperty(this.props.collection)){
+            return this[this.props.collection]();
+        }else{
+            return(
+                React.createElement("div", null, this.props.properties)
+            );
+        }
     }
 });
 
@@ -22245,8 +22266,8 @@ module.exports = React.createClass({
     },
 
     getBackboneModels: function(){
-        if(this.props.elementType){
-            this.collection =  _collection[this.props.elementType];
+        if(this.props.collection){
+            this.collection =  _collection[this.props.collection];
         }
         return [this.collection];
     },
@@ -22257,13 +22278,13 @@ module.exports = React.createClass({
         if(this.collection && this.collection.map){
             elements = this.collection.map(function (element){
                 return(
-                    React.createElement(CourseElement, {key: element.cid, properties: element.attributes})
+                    React.createElement(CourseElement, {key: element.cid, properties: element.attributes, collection: this.props.collection})
                 );
-            });
+            }, this);
         }
         return(
-            React.createElement("div", {className: "large-12 columns"}, 
-                React.createElement("ul", {className: "small-block-grid-3 medium-block-grid-6 large-block-grid-6"}, 
+            React.createElement("div", {className: "row"}, 
+                React.createElement("div", {className: "large-12 columns"}, 
                     elements
                 )
             )
@@ -22309,19 +22330,83 @@ module.exports = React.createClass({
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
     CoursePageContent = require('./coursePageContent'),
+    CourseSectionBox = require('./courseSectionBox'),
+    CourseElementList = require('./courseElementList'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
 var CoursePageBox = React.createClass({
 
     displayName: 'CoursePageBox',
 
+    getInitialState: function(){
+        return {
+            sections:[
+                {
+                    title: 'Exámenes',
+                    label: 'Compartir exámen',
+                    icon: 'fa-camera',
+                    action: this.openModalExam,
+                    collection: 'exams',
+                },
+                {
+                    title: 'Trabajos',
+                    label: 'Compartir trabajo',
+                    icon: 'fa-file-text',
+                    collection: 'homeworks'
+                },
+                {
+                    title: 'Reuniones programadas',
+                    label: 'Asistir',
+                    icon: 'fa-users',
+                    collection: 'meetings'
+                },
+                {
+                    title: 'Pendientes de ayuda',
+                    label: 'Ayudar',
+                    icon: 'fa-child',
+                    collection: 'aids'
+                },
+                {
+                    title: 'Preguntas',
+                    label: 'Preguntar',
+                    icon: 'fa-question',
+                    collection: 'discussions'
+                }
+            ]
+        }
+    },
+
+    openModalExam: function(e){
+        window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
+    },
+
+    getFigures: function(){
+        var cont = 0;
+        return this.state.sections.map(function(section){
+            return (
+                React.createElement("div", {className: "row box mvn", key: ++cont}, 
+                    React.createElement("div", {className: "large-12 columns"}, 
+                        React.createElement("header", null, 
+                            React.createElement("h2", null, section.title, 
+                                React.createElement("a", {onClick: section.action}, 
+                                    React.createElement("i", {className: "fa fa-plus"})
+                                )
+                            )
+                        ), 
+                        React.createElement(CourseElementList, {collection: section.collection, academyCourse: academyCourse.id})
+                    )
+                )
+            );
+        }, this);
+    },
+
     render: function(){
         return(
-            React.createElement("div", null, 
+            React.createElement("div", {className: "large-12 columns"}, 
                 React.createElement(CoursePageInfo, {course: academyCourse.course, 
                                 profesor: academyCourse.profesor, 
                                 figures: academyCourse.figures}), 
-                React.createElement(CoursePageContent, {academyCourse: academyCourse.id})
+                this.getFigures()
             )
         );
     }
@@ -22332,7 +22417,7 @@ if (!!$coursePageBox){
     React.render(React.createElement(CoursePageBox, null), $coursePageBox);
 }
 
-},{"./coursePageContent":184,"./coursePageInfo":185,"react":174}],184:[function(require,module,exports){
+},{"./courseElementList":181,"./coursePageContent":184,"./coursePageInfo":185,"./courseSectionBox":186,"react":174}],184:[function(require,module,exports){
 var React = require('react'),
     CourseSectionBox = require('./courseSectionBox'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
@@ -22474,7 +22559,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             React.createElement("div", {className: "row"}, 
-                React.createElement(CourseElementList, {elementType: this.props.elementType, academyCourse: this.props.academyCourse})
+                React.createElement(CourseElementList, {collection: this.props.collection, academyCourse: this.props.academyCourse})
             )
         );
     }
