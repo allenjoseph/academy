@@ -6,7 +6,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <div className="row">
-                <CourseElementList elementType={this.props.elementType}/>
+                <CourseElementList elementType={this.props.elementType} academyCourse={this.props.academyCourse}/>
             </div>
         );
     }

@@ -48,12 +48,12 @@ module.exports = {
 
     Courses: Backbone.Collection.extend({
         model: _model.Course,
-        url: 'courses/?format=json'
+        url: '/courses'
     }),
 
     Discussions: Backbone.Collection.extend({
         model: _model.Discussion,
-        url: 'discussions/?format=json',
+        url: '/discussions',
         comparator: function(model){
             return -model.get('id');
         }
@@ -61,7 +61,7 @@ module.exports = {
 
     Comments: Backbone.Collection.extend({
         model: _model.Comment,
-        url: 'comments',
+        url: '/comments',
         comparator: function(model){
             return -model.get('id');
         }
@@ -73,22 +73,22 @@ module.exports = {
 
     Exams: Backbone.Collection.extend({
         model: _model.Exam,
-        url: 'exams'
+        url: '/exams'
     }),
 
     Homeworks: Backbone.Collection.extend({
         model: _model.Homework,
-        url: 'homeworks'
+        url: '/homeworks'
     }),
 
     Meetings: Backbone.Collection.extend({
         model: _model.Meeting,
-        url: 'meetings'
+        url: '/meetings'
     }),
 
     Aids: Backbone.Collection.extend({
         model: _model.Aid,
-        url: 'aids'
+        url: '/aids'
     })
 
 };
@@ -99,11 +99,11 @@ module.exports = {
     Course: Backbone.Model.extend(),
 
     Discussion: Backbone.Model.extend({
-        urlRoot: '/discussion'
+        urlRoot: '/discussions'
     }),
 
     Comment: Backbone.Model.extend({
-        urlRoot: '/comment'
+        urlRoot: '/comments'
     }),
 
     Exam: Backbone.Model.extend({
@@ -111,15 +111,15 @@ module.exports = {
     }),
 
     Homework: Backbone.Model.extend({
-        urlRoot: '/homework'
+        urlRoot: '/homeworks'
     }),
 
     Meeting: Backbone.Model.extend({
-        urlRoot: '/meeting'
+        urlRoot: '/meetings'
     }),
 
     Aid: Backbone.Model.extend({
-        urlRoot: '/aid'
+        urlRoot: '/aids'
     }),
 
     Attachment: Backbone.Model.extend()

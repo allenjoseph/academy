@@ -3,11 +3,11 @@ module.exports = {
     Course: Backbone.Model.extend(),
 
     Discussion: Backbone.Model.extend({
-        urlRoot: '/discussion'
+        urlRoot: '/discussions'
     }),
 
     Comment: Backbone.Model.extend({
-        urlRoot: '/comment'
+        urlRoot: '/comments'
     }),
 
     Exam: Backbone.Model.extend({
@@ -15,15 +15,15 @@ module.exports = {
     }),
 
     Homework: Backbone.Model.extend({
-        urlRoot: '/homework'
+        urlRoot: '/homeworks'
     }),
 
     Meeting: Backbone.Model.extend({
-        urlRoot: '/meeting'
+        urlRoot: '/meetings'
     }),
 
     Aid: Backbone.Model.extend({
-        urlRoot: '/aid'
+        urlRoot: '/aids'
     }),
 
     Attachment: Backbone.Model.extend()

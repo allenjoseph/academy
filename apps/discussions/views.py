@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-from django.views.generic import TemplateView, View
-from academy.mixins import JsonResponseMixin, RestServiceMixin, StateEnum
+from django.views.generic import View
+from academy.mixins import RestServiceMixin, StateEnum
 from models import Discussion, DiscussionComment
 from apps.home.models import Student, Parameter
 from apps.courses.models import AcademyCourse
@@ -9,36 +9,22 @@ from django.http import HttpResponse, JsonResponse
 import json
 
 
-class DiscussionsView(JsonResponseMixin, TemplateView):
-    template_name = 'home/404.html'
+class DiscussionsView(RestServiceMixin, View):
 
-    def get(self, request, *args, **kwargs):
-        return self.response_handler()
+    def get(self, request, pk=None, **kwargs):
+        courseId = request.GET.get('course', None)
+        if courseId:
+            discussions = Discussion.objects.filter(
+                academyCourse__id=courseId)
+        elif pk:
+            discussions = Discussion.objects.get(pk=pk)
+        else:
+            discussions = Discussion.objects.all()
+        discussionSerialize = ModelSerializer(discussions)
 
-    def get_data(self):
-        discussions = Discussion.objects.all()
-        discussionsSerialize = ModelSerializer(discussions)
-        return discussionsSerialize.getJSON()
+        return JsonResponse(
+            discussionSerialize.dictModel, safe=False, status=201)
 
-
-class DiscussionCommentsView(JsonResponseMixin, TemplateView):
-    template_name = 'home/404.html'
-    discussionId = 0
-
-    def get(self, request, *args, **kwargs):
-        self.discussionId = request.GET.get('id', None)
-        return self.response_handler()
-
-    def get_data(self):
-        if self.discussionId > 0:
-            discussionComments = DiscussionComment.objects.filter(
-                discussion__id=self.discussionId)
-            discussionCommentsSerializer = ModelSerializer(discussionComments)
-        return discussionCommentsSerializer.getJSON()
-
-
-class DiscussionView(RestServiceMixin, View):
-    # create and update
     def post(self, request, *args, **kwargs):
         params = json.loads(request.body)
         student = Student.objects.get(pk=request.session['student_id'])
@@ -63,7 +49,22 @@ class DiscussionView(RestServiceMixin, View):
         return HttpResponse(status=200)
 
 
-class CommentView(RestServiceMixin, View):
+class CommentsView(RestServiceMixin, View):
+
+    def get(self, request, pk=None, **kwargs):
+        discussionId = request.GET.get('discussion', None)
+        if discussionId:
+            comments = DiscussionComment.objects.filter(
+                discussion__id=discussionId)
+        elif pk:
+            comments = DiscussionComment.objects.get(
+                pk=pk)
+        else:
+            comments = DiscussionComment.objects.all()
+        commentSerialize = ModelSerializer(comments)
+
+        return JsonResponse(
+            commentSerialize.dictModel, safe=False, status=201)
 
     def post(self, request, *args, **kwargs):
         params = json.loads(request.body)

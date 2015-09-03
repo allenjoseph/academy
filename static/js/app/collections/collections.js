@@ -4,12 +4,12 @@ module.exports = {
 
     Courses: Backbone.Collection.extend({
         model: _model.Course,
-        url: '/courses/?format=json'
+        url: '/courses'
     }),
 
     Discussions: Backbone.Collection.extend({
         model: _model.Discussion,
-        url: '/discussions/?format=json',
+        url: '/discussions',
         comparator: function(model){
             return -model.get('id');
         }

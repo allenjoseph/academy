@@ -22088,8 +22088,7 @@ module.exports = React.createClass({
     componentDidMount: function(){
         comments.fetch({
             data: $.param({
-                format : 'json',
-                id: this.props.discussionId
+                discussion: this.props.discussionId
             })
         });
     },
@@ -22147,7 +22146,7 @@ module.exports = React.createClass({
 
     render: function() {
         var course = this.props.academyCourse.course,
-            href = '/courses/'+ course.slug;
+            href = '/course/'+ course.slug;
         return (
             React.createElement("li", null, 
                 React.createElement("div", {className: "course-wrapper"}), 
@@ -22232,12 +22231,17 @@ var React = require('react'),
     _collection = window.ACADEMY.backbone.collection.instances;
 
 module.exports = React.createClass({
+
     displayName: 'CourseElementList',
 
     mixins: [Mixins.backboneMixin],
 
     componentDidMount: function(){
-        this.collection.fetch();
+        this.collection.fetch({
+            data: $.param({
+                course: this.props.academyCourse
+            })
+        });
     },
 
     getBackboneModels: function(){
@@ -22258,11 +22262,9 @@ module.exports = React.createClass({
             });
         }
         return(
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "large-12 columns"}, 
-                    React.createElement("ul", {className: "small-block-grid-3 medium-block-grid-6 large-block-grid-6"}, 
-                        elements
-                    )
+            React.createElement("div", {className: "large-12 columns"}, 
+                React.createElement("ul", {className: "small-block-grid-3 medium-block-grid-6 large-block-grid-6"}, 
+                    elements
                 )
             )
         );
@@ -22319,7 +22321,7 @@ var CoursePageBox = React.createClass({
                 React.createElement(CoursePageInfo, {course: academyCourse.course, 
                                 profesor: academyCourse.profesor, 
                                 figures: academyCourse.figures}), 
-                React.createElement(CoursePageContent, null)
+                React.createElement(CoursePageContent, {academyCourse: academyCourse.id})
             )
         );
     }
@@ -22347,7 +22349,7 @@ module.exports = React.createClass({
                     label: 'Compartir exámen',
                     icon: 'fa-camera',
                     action: this.openModalExam,
-                    collection: 'exams'
+                    collection: 'exams',
                 },
                 {
                     title: 'Trabajos',
@@ -22371,7 +22373,7 @@ module.exports = React.createClass({
                     title: 'Preguntas',
                     label: 'Preguntar',
                     icon: 'fa-question',
-                    collection: 'dicussions'
+                    collection: 'discussions'
                 }
             ]
         }
@@ -22395,12 +22397,12 @@ module.exports = React.createClass({
                                     )
                                 )
                             ), 
-                            React.createElement(CourseSectionBox, {elementType: section.collection})
+                            React.createElement(CourseSectionBox, {elementType: section.collection, academyCourse: this.props.academyCourse})
                         )
                     )
                 )
             );
-        });
+        }, this);
     },
 
     render: function(){
@@ -22472,7 +22474,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             React.createElement("div", {className: "row"}, 
-                React.createElement(CourseElementList, {elementType: this.props.elementType})
+                React.createElement(CourseElementList, {elementType: this.props.elementType, academyCourse: this.props.academyCourse})
             )
         );
     }

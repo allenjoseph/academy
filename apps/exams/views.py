@@ -12,11 +12,15 @@ import json
 class ExamView(RestServiceMixin, View):
 
     def get(self, request, pk=None, **kwargs):
-        if pk:
-            exam = Exam.objects.get(pk=pk)
+        courseId = request.GET.get('course', None)
+        if courseId:
+            exams = Exam.objects.filter(
+                academyCourse__id=courseId)
+        elif pk:
+            exams = Exam.objects.get(pk=pk)
         else:
-            exam = Exam.objects.all()
-        examSerialize = ModelSerializer(exam)
+            exams = Exam.objects.all()
+        examSerialize = ModelSerializer(exams)
 
         return JsonResponse(examSerialize.dictModel, safe=False, status=201)
 

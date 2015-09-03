@@ -4,13 +4,17 @@ var React = require('react'),
     _collection = window.ACADEMY.backbone.collection.instances;
 
 module.exports = React.createClass({
-    
+
     displayName: 'CourseElementList',
 
     mixins: [Mixins.backboneMixin],
 
     componentDidMount: function(){
-        this.collection.fetch();
+        this.collection.fetch({
+            data: $.param({
+                course: this.props.academyCourse
+            })
+        });
     },
 
     getBackboneModels: function(){
@@ -31,12 +35,10 @@ module.exports = React.createClass({
             });
         }
         return(
-            <div className="row">
-                <div className="large-12 columns">
-                    <ul className="small-block-grid-3 medium-block-grid-6 large-block-grid-6">
-                        {elements}
-                    </ul>
-                </div>
+            <div className="large-12 columns">
+                <ul className="small-block-grid-3 medium-block-grid-6 large-block-grid-6">
+                    {elements}
+                </ul>
             </div>
         );
     }

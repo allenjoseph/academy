@@ -9,7 +9,7 @@ module.exports = React.createClass({
 
     render: function() {
         var course = this.props.academyCourse.course,
-            href = '/courses/'+ course.slug;
+            href = '/course/'+ course.slug;
         return (
             <li>
                 <div className="course-wrapper"/>

@@ -14,7 +14,7 @@ module.exports = React.createClass({
                     label: 'Compartir exámen',
                     icon: 'fa-camera',
                     action: this.openModalExam,
-                    collection: 'exams'
+                    collection: 'exams',
                 },
                 {
                     title: 'Trabajos',
@@ -38,7 +38,7 @@ module.exports = React.createClass({
                     title: 'Preguntas',
                     label: 'Preguntar',
                     icon: 'fa-question',
-                    collection: 'dicussions'
+                    collection: 'discussions'
                 }
             ]
         }
@@ -62,12 +62,12 @@ module.exports = React.createClass({
                                     </a>
                                 </h2>
                             </header>
-                            <CourseSectionBox elementType={section.collection}/>
+                            <CourseSectionBox elementType={section.collection} academyCourse={this.props.academyCourse}/>
                         </div>
                     </div>
                 </div>
             );
-        });
+        }, this);
     },
 
     render: function(){

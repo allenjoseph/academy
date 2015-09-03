@@ -5,9 +5,7 @@ from django.conf.urls.i18n import i18n_patterns
 from apps.courses.views import CoursesView, CourseView
 from apps.home.views import IndexView, UploadFile, DeleteUploadedFile
 from apps.discussions.views import DiscussionsView
-from apps.discussions.views import DiscussionCommentsView
-from apps.discussions.views import DiscussionView
-from apps.discussions.views import CommentView
+from apps.discussions.views import CommentsView
 from apps.exams.views import ExamView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -17,15 +15,14 @@ urlpatterns = patterns(
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^courses/$', CoursesView.as_view(), name='courses'),
-    url(r'^courses/(?P<slug>[-\w]+)/$', CourseView.as_view(), name='course'),
+    url(r'^course/(?P<slug>[-\w]+)/$', CourseView.as_view(), name='course'),
 
-    url(r'^discussions/', DiscussionsView.as_view(), name='discussions'),
-    url(r'^discussion/?$', DiscussionView.as_view()),
-
-    url(r'^comments/', DiscussionCommentsView.as_view(), name='comments'),
-    url(r'^comment/?$', CommentView.as_view()),
-
+    url(r'^courses/?$', CoursesView.as_view()),
+    url(r'^courses/(?P<pk>\d+)/?$', CoursesView.as_view()),
+    url(r'^discussions/?$', DiscussionsView.as_view()),
+    url(r'^discussions/(?P<pk>\d+)/?$', DiscussionsView.as_view()),
+    url(r'^comments/?$', CommentsView.as_view()),
+    url(r'^comments/(?P<pk>\d+)/?$', CommentsView.as_view()),
     url(r'^exams/?$', ExamView.as_view()),
     url(r'^exams/(?P<pk>\d+)/?$', ExamView.as_view()),
 

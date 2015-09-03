@@ -1,21 +1,23 @@
 # -*- encoding: utf-8 -*-
-from django.views.generic import TemplateView
-from academy.mixins import JsonResponseMixin
+from django.http import JsonResponse
+from django.views.generic import View, TemplateView
+from academy.mixins import RestServiceMixin
 from academy.serializers import ModelSerializer
 from models import AcademyCourse
 from django.core.exceptions import MultipleObjectsReturned
 
 
-class CoursesView(JsonResponseMixin, TemplateView):
-    template_name = 'home/404.html'
+class CoursesView(RestServiceMixin, View):
 
-    def get(self, request, *args, **kwargs):
-        return self.response_handler()
+    def get(self, request, pk=None, **kwargs):
+        if pk:
+            courses = AcademyCourse.objects.get(pk=pk)
+        else:
+            courses = AcademyCourse.objects.all()
+        academyCourseSerialize = ModelSerializer(courses)
 
-    def get_data(self):
-        academyCourses = AcademyCourse.objects.all()
-        academyCourseSerialize = ModelSerializer(academyCourses)
-        return academyCourseSerialize.getJSON()
+        return JsonResponse(
+            academyCourseSerialize.dictModel, safe=False, status=201)
 
 
 class CourseView(TemplateView):

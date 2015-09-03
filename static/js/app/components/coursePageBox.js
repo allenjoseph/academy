@@ -13,7 +13,7 @@ var CoursePageBox = React.createClass({
                 <CoursePageInfo course={academyCourse.course}
                                 profesor={academyCourse.profesor}
                                 figures={academyCourse.figures}/>
-                <CoursePageContent />
+                <CoursePageContent academyCourse={academyCourse.id}/>
             </div>
         );
     }

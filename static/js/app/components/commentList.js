@@ -12,8 +12,7 @@ module.exports = React.createClass({
     componentDidMount: function(){
         comments.fetch({
             data: $.param({
-                format : 'json',
-                id: this.props.discussionId
+                discussion: this.props.discussionId
             })
         });
     },
