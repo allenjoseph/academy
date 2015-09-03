@@ -1,7 +1,5 @@
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
-    CoursePageContent = require('./coursePageContent'),
-    CourseSectionBox = require('./courseSectionBox'),
     CourseElementList = require('./courseElementList'),
     academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
 
