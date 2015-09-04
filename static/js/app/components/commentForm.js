@@ -12,15 +12,7 @@ module.exports = React.createClass({
         }
     },
 
-    componentDidMount: function(){
-        window.addEventListener('cleanCommentForm', this.cleanCommentForm);
-    },
-
-    componentWilUnmount: function(){
-        window.removeEventListener('cleanCommentForm', this.cleanCommentForm);
-    },
-
-    cleanCommentForm: function(){
+    clear: function(){
         this.setState(this.getInitialState());
     },
 
@@ -65,7 +57,7 @@ module.exports = React.createClass({
                     discussionId: self.props.discussionId,
                     comment: comment
                 });
-                self.cleanCommentForm();
+                self.clear();
             },
             error : function(){
             }

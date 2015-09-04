@@ -10,12 +10,10 @@ var ExamBox = React.createClass({
 
     componentDidMount: function(){
         window.addEventListener('openModalExam', this.openModalExam);
-        window.addEventListener('closeModalExam', this.closeModalExam);
     },
 
     componentWilUnmount: function(){
         window.removeEventListener('openModalExam', this.openModalExam);
-        window.removeEventListener('closeModalExam', this.closeModalExam);
     },
 
     openModalExam: function(data){
@@ -26,16 +24,14 @@ var ExamBox = React.createClass({
         this.setState(newState);
     },
 
-    closeModalExam: function(){
-        window.dispatchEvent(new Event('cleanExamForm'));
-        window.dispatchEvent(new Event('offFileupload'));
+    close: function(){
+        this.refs.examForm.clear();
         this.setState(this.getInitialState());
     },
 
-    cleanExamForm: function(){
-        window.dispatchEvent(new Event('cleanExamForm'));
-        window.dispatchEvent(new Event('removeAllFiles'));
-        this.closeModalExam();
+    cancel: function(){
+        this.refs.examForm.removeFiles();
+        this.close();
     },
 
     render: function(){
@@ -44,8 +40,12 @@ var ExamBox = React.createClass({
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
                     <section className="modal modal-exam">
-                        <a className="modal-close" onClick={this.cleanExamForm}></a>
-                        <ExamForm isOpen={!!this.state.openModalClass} courseAcademy={this.state.courseAcademy} />
+                        <a className="modal-close" onClick={this.cancel}></a>
+                        <ExamForm
+                            ref={'examForm'}
+                            isOpen={!!this.state.openModalClass}
+                            courseAcademy={this.state.courseAcademy}
+                            close={this.close}/>
                     </section>
                 </div>
             </div>

@@ -8,41 +8,25 @@ module.exports = React.createClass({
         return { files: [] };
     },
 
-    componentDidMount: function() {
-        window.addEventListener('addFile', this.addFile);//File por subir
-        window.addEventListener('doneFile', this.addFile);//File subido
-        window.addEventListener('removeFile', this.removeFile);
-        window.addEventListener('removeAllFiles', this.removeAllFiles);
-        window.addEventListener('resetFileUpload', this.resetComponent);
-    },
-
-    componentWillUnmount: function(){
-        window.removeEventListener('addFile', this.addFile);
-        window.removeEventListener('doneFile', this.addFile);
-        window.removeEventListener('removeFile', this.removeFile);
-        window.removeEventListener('removeAllFiles', this.removeAllFiles);
-        window.removeEventListener('resetFileUpload', this.resetComponent);
-    },
-
-    addFile: function(data){
+    addFile: function(file){
         var newState = React.addons.update(this.state, {
-            files: { $push: [data.detail]}
+            files: { $push: [file]}
         });
         this.setState(newState);
     },
 
-    removeFile: function(data){
-        if(data.id){
-            window.dispatchEvent(new CustomEvent('removeFileFromExam', { detail: data.id }));
+    removeFile: function(file){
+        if(file.id){
+            this.props.removeFileId(file.id);
         }
-        var pos = this.state.files.indexOf(data.detail || data);
+        var pos = this.state.files.indexOf(file);
         var newState = React.addons.update(this.state, {
             files: { $splice: [[pos,1]]}
         });
         this.setState(newState);
     },
 
-    removeAllFiles: function(){
+    removeFiles: function(){
         var cont = 0;
         this.state.files.map(function(file){
             ++cont;
@@ -52,7 +36,7 @@ module.exports = React.createClass({
         },this);
     },
 
-    resetComponent: function(){
+    reset: function(){
         this.setState(this.getInitialState());
     },
 
@@ -62,7 +46,7 @@ module.exports = React.createClass({
         $.post(constans.HOST + '/delete/'+file.id)
         .success(function(){
             if(isLast){
-                self.resetComponent();
+                self.reset();
             }
         })
         .fail(function(){

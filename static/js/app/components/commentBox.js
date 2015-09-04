@@ -15,18 +15,16 @@ var CommentBox = React.createClass({
     },
 
     componentDidMount: function(){
-        window.addEventListener('openModalComment', this.openModalComment);
-        window.addEventListener('closeModalComment', this.closeModalComment);
-        window.addEventListener('updateCommentsCount', this.updateCommentsCount);
+        window.addEventListener('openModalComment', this.open);
+        window.addEventListener('updateCommentsCount', this.updateCount);
     },
 
     componentWilUnmount: function(){
-        window.removeEventListener('openModalComment', this.openModalComment);
-        window.removeEventListener('closeModalComment', this.closeModalComment);
-        window.removeEventListener('updateCommentsCount', this.updateCommentsCount);
+        window.removeEventListener('openModalComment', this.open);
+        window.removeEventListener('updateCommentsCount', this.updateCount);
     },
 
-    openModalComment: function(data){
+    open: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
             discussion: { $set: data.detail }
@@ -34,7 +32,7 @@ var CommentBox = React.createClass({
         this.setState(newState);
     },
 
-    updateCommentsCount: function(data){
+    updateCount: function(data){
         if(data.detail.discussionId !== this.state.discussion.id) return;
         comments.add(data.detail.comment);
         var newState = React.addons.update(this.state,{
@@ -43,8 +41,8 @@ var CommentBox = React.createClass({
         this.setState(newState);
     },
 
-    closeModalComment: function(){
-        window.dispatchEvent(new Event('cleanCommentForm'));
+    close: function(){
+        this.refs.commentForm.clear();
         this.setState(this.getInitialState());
     },
 
@@ -54,7 +52,7 @@ var CommentBox = React.createClass({
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
                     <section className="modal modal-comment">
-                        <a className="modal-close" onClick={this.closeModalComment}></a>
+                        <a className="modal-close" onClick={this.close}></a>
                         <div className="comment-wrapper">
                             <div className="comment-header">
                                 <div className="row comment-header-top">
@@ -90,7 +88,7 @@ var CommentBox = React.createClass({
                                 !this.state.discussion.id ? '' :
                                     <CommentList discussionId={this.state.discussion.id}/>
                             }
-                            <CommentForm discussionId={this.state.discussion.id}/>
+                            <CommentForm ref={'commentForm'} discussionId={this.state.discussion.id}/>
                         </div>
                     </section>
                 </div>

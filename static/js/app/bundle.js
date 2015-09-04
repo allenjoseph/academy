@@ -21881,18 +21881,16 @@ var CommentBox = React.createClass({
     },
 
     componentDidMount: function(){
-        window.addEventListener('openModalComment', this.openModalComment);
-        window.addEventListener('closeModalComment', this.closeModalComment);
-        window.addEventListener('updateCommentsCount', this.updateCommentsCount);
+        window.addEventListener('openModalComment', this.open);
+        window.addEventListener('updateCommentsCount', this.updateCount);
     },
 
     componentWilUnmount: function(){
-        window.removeEventListener('openModalComment', this.openModalComment);
-        window.removeEventListener('closeModalComment', this.closeModalComment);
-        window.removeEventListener('updateCommentsCount', this.updateCommentsCount);
+        window.removeEventListener('openModalComment', this.open);
+        window.removeEventListener('updateCommentsCount', this.updateCount);
     },
 
-    openModalComment: function(data){
+    open: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
             discussion: { $set: data.detail }
@@ -21900,7 +21898,7 @@ var CommentBox = React.createClass({
         this.setState(newState);
     },
 
-    updateCommentsCount: function(data){
+    updateCount: function(data){
         if(data.detail.discussionId !== this.state.discussion.id) return;
         comments.add(data.detail.comment);
         var newState = React.addons.update(this.state,{
@@ -21909,8 +21907,8 @@ var CommentBox = React.createClass({
         this.setState(newState);
     },
 
-    closeModalComment: function(){
-        window.dispatchEvent(new Event('cleanCommentForm'));
+    close: function(){
+        this.refs.commentForm.clear();
         this.setState(this.getInitialState());
     },
 
@@ -21920,7 +21918,7 @@ var CommentBox = React.createClass({
                 React.createElement("div", {className: "modal-overlay"}), 
                 React.createElement("div", {className: "modal-wrapper"}, 
                     React.createElement("section", {className: "modal modal-comment"}, 
-                        React.createElement("a", {className: "modal-close", onClick: this.closeModalComment}), 
+                        React.createElement("a", {className: "modal-close", onClick: this.close}), 
                         React.createElement("div", {className: "comment-wrapper"}, 
                             React.createElement("div", {className: "comment-header"}, 
                                 React.createElement("div", {className: "row comment-header-top"}, 
@@ -21956,7 +21954,7 @@ var CommentBox = React.createClass({
                                 !this.state.discussion.id ? '' :
                                     React.createElement(CommentList, {discussionId: this.state.discussion.id}), 
                             
-                            React.createElement(CommentForm, {discussionId: this.state.discussion.id})
+                            React.createElement(CommentForm, {ref: 'commentForm', discussionId: this.state.discussion.id})
                         )
                     )
                 )
@@ -21985,15 +21983,7 @@ module.exports = React.createClass({
         }
     },
 
-    componentDidMount: function(){
-        window.addEventListener('cleanCommentForm', this.cleanCommentForm);
-    },
-
-    componentWilUnmount: function(){
-        window.removeEventListener('cleanCommentForm', this.cleanCommentForm);
-    },
-
-    cleanCommentForm: function(){
+    clear: function(){
         this.setState(this.getInitialState());
     },
 
@@ -22038,7 +22028,7 @@ module.exports = React.createClass({
                     discussionId: self.props.discussionId,
                     comment: comment
                 });
-                self.cleanCommentForm();
+                self.clear();
             },
             error : function(){
             }
@@ -22283,10 +22273,8 @@ module.exports = React.createClass({
             }, this);
         }
         return(
-            React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "large-12 columns"}, 
-                    elements
-                )
+            React.createElement("div", {className: "large-12 columns"}, 
+                elements
             )
         );
     }
@@ -22702,12 +22690,10 @@ var ExamBox = React.createClass({
 
     componentDidMount: function(){
         window.addEventListener('openModalExam', this.openModalExam);
-        window.addEventListener('closeModalExam', this.closeModalExam);
     },
 
     componentWilUnmount: function(){
         window.removeEventListener('openModalExam', this.openModalExam);
-        window.removeEventListener('closeModalExam', this.closeModalExam);
     },
 
     openModalExam: function(data){
@@ -22718,16 +22704,14 @@ var ExamBox = React.createClass({
         this.setState(newState);
     },
 
-    closeModalExam: function(){
-        window.dispatchEvent(new Event('cleanExamForm'));
-        window.dispatchEvent(new Event('offFileupload'));
+    close: function(){
+        this.refs.examForm.clear();
         this.setState(this.getInitialState());
     },
 
-    cleanExamForm: function(){
-        window.dispatchEvent(new Event('cleanExamForm'));
-        window.dispatchEvent(new Event('removeAllFiles'));
-        this.closeModalExam();
+    cancel: function(){
+        this.refs.examForm.removeFiles();
+        this.close();
     },
 
     render: function(){
@@ -22736,8 +22720,12 @@ var ExamBox = React.createClass({
                 React.createElement("div", {className: "modal-overlay"}), 
                 React.createElement("div", {className: "modal-wrapper"}, 
                     React.createElement("section", {className: "modal modal-exam"}, 
-                        React.createElement("a", {className: "modal-close", onClick: this.cleanExamForm}), 
-                        React.createElement(ExamForm, {isOpen: !!this.state.openModalClass, courseAcademy: this.state.courseAcademy})
+                        React.createElement("a", {className: "modal-close", onClick: this.cancel}), 
+                        React.createElement(ExamForm, {
+                            ref: 'examForm', 
+                            isOpen: !!this.state.openModalClass, 
+                            courseAcademy: this.state.courseAcademy, 
+                            close: this.close})
                     )
                 )
             )
@@ -22768,41 +22756,34 @@ module.exports = React.createClass({
         };
     },
 
-    componentDidMount: function(){
-        window.addEventListener('doneFile', this.doneFile);
-        window.addEventListener('cleanExamForm', this.cleanExamForm);
-        window.addEventListener('removeFileFromExam', this.removeFile);
-    },
-
-    componentWillUnmount: function(){
-        window.removeEventListener('doneFile', this.doneFile);
-        window.removeEventListener('cleanExamForm', this.cleanExamForm);
-        window.removeEventListener('removeFileFromExam', this.removeFile);
-    },
-
     componentDidUpdate: function(){
         if(this.props.isOpen){
             React.findDOMNode(this.refs.description).focus();
         }
     },
 
-    doneFile: function(data){
-        if(data.detail && data.detail.id){
-            this.files.push(data.detail.id);
+    addFileId: function(fileId){
+        if(fileId){
+            this.files.push(fileId);
         }
     },
 
-    removeFile: function(data){
-        if(data && data.detail){//data.detail = fileId
-            var pos = this.files.indexOf(data.detail);
+    removeFileId: function(fileId){
+        if(fileId){
+            var pos = this.files.indexOf(fileId);
             this.files.splice(pos,1);
         }
     },
 
-    cleanExamForm: function(){
-        window.dispatchEvent(new Event('resetFileUpload'));
+    clear: function(){
+        this.refs.fileupload.offEvents();
+
         this.files = [];
         this.setState(this.getInitialState());
+    },
+
+    removeFiles: function(){
+        this.refs.fileupload.removeFiles();
     },
 
     changeDescription: function(e){
@@ -22833,7 +22814,8 @@ module.exports = React.createClass({
         exam.set('files', this.files);
         exam.save(null,{
             success : function(exam, response){
-                window.dispatchEvent(new Event('closeModalExam'));
+                self.props.close();
+
                 window.ACADEMY.socket.emit('addExam',{
                     level:'success',
                     title:'Nuevo Examen Subido!',
@@ -22863,7 +22845,9 @@ module.exports = React.createClass({
                 ), 
                 React.createElement("article", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns fileupload-content"}, 
-                        React.createElement(Fileupload, null)
+                        React.createElement(Fileupload, {ref: 'fileupload', 
+                            removeFileId:  this.removeFileId, 
+                            addFileId:  this.addFileId})
                     )
                 ), 
                 React.createElement("footer", {className: "row"}, 
@@ -22891,41 +22875,25 @@ module.exports = React.createClass({
         return { files: [] };
     },
 
-    componentDidMount: function() {
-        window.addEventListener('addFile', this.addFile);//File por subir
-        window.addEventListener('doneFile', this.addFile);//File subido
-        window.addEventListener('removeFile', this.removeFile);
-        window.addEventListener('removeAllFiles', this.removeAllFiles);
-        window.addEventListener('resetFileUpload', this.resetComponent);
-    },
-
-    componentWillUnmount: function(){
-        window.removeEventListener('addFile', this.addFile);
-        window.removeEventListener('doneFile', this.addFile);
-        window.removeEventListener('removeFile', this.removeFile);
-        window.removeEventListener('removeAllFiles', this.removeAllFiles);
-        window.removeEventListener('resetFileUpload', this.resetComponent);
-    },
-
-    addFile: function(data){
+    addFile: function(file){
         var newState = React.addons.update(this.state, {
-            files: { $push: [data.detail]}
+            files: { $push: [file]}
         });
         this.setState(newState);
     },
 
-    removeFile: function(data){
-        if(data.id){
-            window.dispatchEvent(new CustomEvent('removeFileFromExam', { detail: data.id }));
+    removeFile: function(file){
+        if(file.id){
+            this.props.removeFileId(file.id);
         }
-        var pos = this.state.files.indexOf(data.detail || data);
+        var pos = this.state.files.indexOf(file);
         var newState = React.addons.update(this.state, {
             files: { $splice: [[pos,1]]}
         });
         this.setState(newState);
     },
 
-    removeAllFiles: function(){
+    removeFiles: function(){
         var cont = 0;
         this.state.files.map(function(file){
             ++cont;
@@ -22935,7 +22903,7 @@ module.exports = React.createClass({
         },this);
     },
 
-    resetComponent: function(){
+    reset: function(){
         this.setState(this.getInitialState());
     },
 
@@ -22945,7 +22913,7 @@ module.exports = React.createClass({
         $.post(constans.HOST + '/delete/'+file.id)
         .success(function(){
             if(isLast){
-                self.resetComponent();
+                self.reset();
             }
         })
         .fail(function(){
@@ -22989,26 +22957,18 @@ var React = require('react/addons'),
 module.exports = React.createClass({
     displayName: 'Fileupload',
 
-    componentDidMount: function(){
-        window.addEventListener('offFileupload', this.offEvents);
-    },
-
-    componentWillUnmount: function(){
-        window.removeEventListener('offFileupload', this.offEvents);
-    },
-
-    addFile: function(e,data){
+    addFile: function(e, data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
             file.guid = 'file-' + $.guid++;
-            window.dispatchEvent(new CustomEvent('addFile', { detail: file }));
+            this.refs.fileList.addFile(file);
         }
     },
 
     processAlwaysFile: function(e, data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
-            window.dispatchEvent(new CustomEvent('removeFile', { detail: file }));
+            this.refs.fileList.removeFile(file);
             if (file.error) {
                 console.warn('Fileupload fail',file.name,':',file.error);
             }
@@ -23016,7 +22976,8 @@ module.exports = React.createClass({
     },
 
     doneFile: function(e, data){
-        window.dispatchEvent(new CustomEvent('doneFile', { detail: data.result }));
+        this.refs.fileList.addFile(data.result);
+        this.props.addFileId(data.result.id);
     },
 
     openFileExplorer: function(){
@@ -23037,6 +22998,8 @@ module.exports = React.createClass({
     },
 
     offEvents: function(){
+        this.refs.fileList.reset();
+
         var $fileUpload = $(React.findDOMNode(this.refs.fileButton));
         $fileUpload
         .off('fileuploadadd', this.addFile)
@@ -23044,12 +23007,18 @@ module.exports = React.createClass({
         .off('fileuploaddone', this.doneFile)
     },
 
+    removeFiles: function(){
+        this.refs.fileList.removeFiles();
+    },
+
     render: function(){
         return(
             React.createElement("div", {className: "fileupload-component"}, 
                 React.createElement("input", {accept: "image/*", className: "fileupload hide", type: "file", name: "file", ref: "fileButton", multiple: true}), 
                 React.createElement("button", {className: "button tiny cancel", onClick: this.openFileExplorer}, "Seleccionar fotos del examen"), 
-                React.createElement(FileList, null)
+                React.createElement(FileList, {ref: 'fileList', 
+                    removeFileId:  this.props.removeFileId, 
+                    addFileId:  this.props.addFileId})
             )
         );
     }

@@ -15,41 +15,34 @@ module.exports = React.createClass({
         };
     },
 
-    componentDidMount: function(){
-        window.addEventListener('doneFile', this.doneFile);
-        window.addEventListener('cleanExamForm', this.cleanExamForm);
-        window.addEventListener('removeFileFromExam', this.removeFile);
-    },
-
-    componentWillUnmount: function(){
-        window.removeEventListener('doneFile', this.doneFile);
-        window.removeEventListener('cleanExamForm', this.cleanExamForm);
-        window.removeEventListener('removeFileFromExam', this.removeFile);
-    },
-
     componentDidUpdate: function(){
         if(this.props.isOpen){
             React.findDOMNode(this.refs.description).focus();
         }
     },
 
-    doneFile: function(data){
-        if(data.detail && data.detail.id){
-            this.files.push(data.detail.id);
+    addFileId: function(fileId){
+        if(fileId){
+            this.files.push(fileId);
         }
     },
 
-    removeFile: function(data){
-        if(data && data.detail){//data.detail = fileId
-            var pos = this.files.indexOf(data.detail);
+    removeFileId: function(fileId){
+        if(fileId){
+            var pos = this.files.indexOf(fileId);
             this.files.splice(pos,1);
         }
     },
 
-    cleanExamForm: function(){
-        window.dispatchEvent(new Event('resetFileUpload'));
+    clear: function(){
+        this.refs.fileupload.offEvents();
+
         this.files = [];
         this.setState(this.getInitialState());
+    },
+
+    removeFiles: function(){
+        this.refs.fileupload.removeFiles();
     },
 
     changeDescription: function(e){
@@ -80,7 +73,8 @@ module.exports = React.createClass({
         exam.set('files', this.files);
         exam.save(null,{
             success : function(exam, response){
-                window.dispatchEvent(new Event('closeModalExam'));
+                self.props.close();
+
                 window.ACADEMY.socket.emit('addExam',{
                     level:'success',
                     title:'Nuevo Examen Subido!',
@@ -110,7 +104,9 @@ module.exports = React.createClass({
                 </header>
                 <article className="row">
                     <div className="small-12 columns fileupload-content">
-                        <Fileupload/>
+                        <Fileupload ref={'fileupload'}
+                            removeFileId={ this.removeFileId }
+                            addFileId={ this.addFileId }/>
                     </div>
                 </article>
                 <footer className="row">

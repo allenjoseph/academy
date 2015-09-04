@@ -5,26 +5,18 @@ var React = require('react/addons'),
 module.exports = React.createClass({
     displayName: 'Fileupload',
 
-    componentDidMount: function(){
-        window.addEventListener('offFileupload', this.offEvents);
-    },
-
-    componentWillUnmount: function(){
-        window.removeEventListener('offFileupload', this.offEvents);
-    },
-
-    addFile: function(e,data){
+    addFile: function(e, data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
             file.guid = 'file-' + $.guid++;
-            window.dispatchEvent(new CustomEvent('addFile', { detail: file }));
+            this.refs.fileList.addFile(file);
         }
     },
 
     processAlwaysFile: function(e, data){
         var file = data.files && data.files.length ? data.files[0] : null;
         if(file){
-            window.dispatchEvent(new CustomEvent('removeFile', { detail: file }));
+            this.refs.fileList.removeFile(file);
             if (file.error) {
                 console.warn('Fileupload fail',file.name,':',file.error);
             }
@@ -32,7 +24,8 @@ module.exports = React.createClass({
     },
 
     doneFile: function(e, data){
-        window.dispatchEvent(new CustomEvent('doneFile', { detail: data.result }));
+        this.refs.fileList.addFile(data.result);
+        this.props.addFileId(data.result.id);
     },
 
     openFileExplorer: function(){
@@ -53,6 +46,8 @@ module.exports = React.createClass({
     },
 
     offEvents: function(){
+        this.refs.fileList.reset();
+
         var $fileUpload = $(React.findDOMNode(this.refs.fileButton));
         $fileUpload
         .off('fileuploadadd', this.addFile)
@@ -60,12 +55,18 @@ module.exports = React.createClass({
         .off('fileuploaddone', this.doneFile)
     },
 
+    removeFiles: function(){
+        this.refs.fileList.removeFiles();
+    },
+
     render: function(){
         return(
             <div className="fileupload-component">
                 <input accept="image/*" className="fileupload hide" type="file" name="file" ref="fileButton" multiple/>
                 <button className="button tiny cancel" onClick={this.openFileExplorer}>Seleccionar fotos del examen</button>
-                <FileList />
+                <FileList ref={'fileList'}
+                    removeFileId={ this.props.removeFileId }
+                    addFileId={ this.props.addFileId }/>
             </div>
         );
     }

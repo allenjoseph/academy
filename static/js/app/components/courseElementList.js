@@ -35,10 +35,8 @@ module.exports = React.createClass({
             }, this);
         }
         return(
-            <div className="row">
-                <div className="large-12 columns">
-                    {elements}
-                </div>
+            <div className="large-12 columns">
+                {elements}
             </div>
         );
     }
