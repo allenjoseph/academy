@@ -22217,8 +22217,11 @@ module.exports = React.createClass({
                     React.createElement("strong", null, Utilities.day(exam.dateCreation)), 
                     React.createElement("small", null, Utilities.largeMonth(exam.dateCreation))
                 ), 
-                React.createElement("div", {className: "medium-11 columns"}, 
+                React.createElement("div", {className: "medium-10 columns"}, 
                     exam.description
+                ), 
+                React.createElement("div", {className: "medium-1 columns"}, 
+                    React.createElement("strong", null, exam.files, " files")
                 )
             )
         );

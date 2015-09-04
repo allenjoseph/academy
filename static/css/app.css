@@ -552,6 +552,10 @@ a,
 .pln {
   padding-left: 1em !important;
 }
+.pvs {
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+}
 .pts {
   padding-top: 0.5em !important;
 }
@@ -598,7 +602,11 @@ a,
   padding: 0 115px 0 0.5em !important;
 }
 .simple-row {
-  padding: 0.2em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   border-bottom: 1px solid #f2f2f2;
+}
+.simple-row:last-child {
+  border-bottom: none;
 }
 

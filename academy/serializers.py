@@ -1,5 +1,5 @@
 from django.core.serializers.python import Serializer
-from apps.exams.models import Exam
+from apps.exams.models import Exam, ExamAttachment
 from apps.discussions.models import Discussion, DiscussionComment
 from apps.courses.models import AcademyCourse
 from django.utils import timezone
@@ -25,6 +25,8 @@ class ModelSerializer(ObjectSerializer):
 
     def getExam(self):
         self.dictModel['student'] = self.serialize([self.model.student])[0]
+        self.dictModel['files'] = ExamAttachment.objects.filter(
+            exam__id=self.dictModel['id']).count()
 
     def getDiscussion(self):
         self.dictModel['student'] = self.serialize([self.model.student])[0]

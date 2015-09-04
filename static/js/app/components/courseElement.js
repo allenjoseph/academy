@@ -12,8 +12,11 @@ module.exports = React.createClass({
                     <strong>{Utilities.day(exam.dateCreation)}</strong>
                     <small>{Utilities.largeMonth(exam.dateCreation)}</small>
                 </div>
-                <div className="medium-11 columns">
+                <div className="medium-10 columns">
                     {exam.description}
+                </div>
+                <div className="medium-1 columns">
+                    <strong>{exam.files} files</strong>
                 </div>
             </div>
         );
