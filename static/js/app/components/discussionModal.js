@@ -1,22 +1,22 @@
 var React = require('react/addons'),
-    ExamForm = require('./examForm');
+    DiscussionModalForm = require('./discussionModalForm');
 
-var ExamBox = React.createClass({
-    displayName: 'ExamBox',
+var DiscussionModal = React.createClass({
+    displayName: 'DiscussionModal',
 
     getInitialState: function(){
         return {openModalClass: '', academyCourse: {}};
     },
 
     componentDidMount: function(){
-        window.addEventListener('openModalExam', this.openModalExam);
+        window.addEventListener('openModalDiscussion', this.openModal);
     },
 
     componentWilUnmount: function(){
-        window.removeEventListener('openModalExam', this.openModalExam);
+        window.removeEventListener('openModalDiscussion', this.openModal);
     },
 
-    openModalExam: function(data){
+    openModal: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
             academyCourse: { $set: data.detail }
@@ -25,13 +25,7 @@ var ExamBox = React.createClass({
     },
 
     close: function(){
-        this.refs.examForm.clear();
         this.setState(this.getInitialState());
-    },
-
-    cancel: function(){
-        this.refs.examForm.removeFiles();
-        this.close();
     },
 
     render: function(){
@@ -40,9 +34,9 @@ var ExamBox = React.createClass({
                 <div className="modal-overlay"></div>
                 <div className="modal-wrapper">
                     <section className="modal modal-exam">
-                        <a className="modal-close" onClick={this.cancel}></a>
-                        <ExamForm
-                            ref={'examForm'}
+                        <a className="modal-close" onClick={this.close}></a>
+                        <DiscussionModalForm
+                            ref={'discussionModalForm'}
                             isOpen={!!this.state.openModalClass}
                             academyCourse={this.state.academyCourse}
                             close={this.close}/>
@@ -54,6 +48,6 @@ var ExamBox = React.createClass({
 });
 
 React.render(
-  <ExamBox />,
-  document.getElementById('examBox')
+  <DiscussionModal />,
+  document.getElementById('discussionModal')
 );

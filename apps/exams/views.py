@@ -30,7 +30,7 @@ class ExamView(RestServiceMixin, View):
         student = Student.objects.get(
             pk=request.session['student_id'])
         academyCourse = AcademyCourse.objects.get(
-            pk=params.get('courseAcademy'))
+            pk=params.get('academyCourse'))
         files = params.get('files')
 
         exam = Exam.objects.create(

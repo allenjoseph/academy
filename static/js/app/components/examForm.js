@@ -65,11 +65,11 @@ module.exports = React.createClass({
     },
 
     shareExam: function(){
-        var course = this.props.courseAcademy.course;
+        var course = this.props.academyCourse.course;
         var self = this;
 
         var exam = new Exam(this.state);
-        exam.set('courseAcademy', this.props.courseAcademy.id);
+        exam.set('academyCourse', this.props.academyCourse.id);
         exam.set('files', this.files);
         exam.save(null,{
             success : function(exam, response){
@@ -99,7 +99,7 @@ module.exports = React.createClass({
             <div className="exam-wrapper">
                 <header className="row">
                     <div className="small-12 columns">
-                        <h3 className="modal-title">Compartir Examen</h3>
+                        <h3 className="modal-title text-uppercase">Compartir Examen</h3>
                     </div>
                 </header>
                 <article className="row">

@@ -62,6 +62,7 @@ module.exports = function(grunt) {
         },
 
         watch:{
+            options: {livereload: true},
             browserify: {
                 files: [
                     'static/js/app/app.js',

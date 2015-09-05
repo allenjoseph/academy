@@ -14,8 +14,8 @@ var CoursePageBox = React.createClass({
                     title: 'Exámenes',
                     label: 'Compartir exámen',
                     icon: 'fa-camera',
-                    action: this.openModalExam,
                     collection: 'exams',
+                    action: this.openModalExam
                 },
                 {
                     title: 'Trabajos',
@@ -39,7 +39,8 @@ var CoursePageBox = React.createClass({
                     title: 'Preguntas',
                     label: 'Preguntar',
                     icon: 'fa-question',
-                    collection: 'discussions'
+                    collection: 'discussions',
+                    action: this.openModalDiscussion
                 }
             ]
         }
@@ -47,6 +48,10 @@ var CoursePageBox = React.createClass({
 
     openModalExam: function(e){
         window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
+    },
+
+    openModalDiscussion: function(e){
+        window.dispatchEvent(new CustomEvent('openModalDiscussion', { detail: academyCourse }));
     },
 
     getFigures: function(){

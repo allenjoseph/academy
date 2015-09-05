@@ -411,20 +411,22 @@ a,
 .menu-item a {
   color: #fcfdfd;
   display: block;
+  text-transform: uppercase;
   text-shadow: 0 2px 5px rgba(0,0,0,0.6);
-}
-.menu-item-user {
-  padding-right: 80px;
-  text-align: right;
 }
 .menu-item-user img {
   height: 45px;
-  margin-top: auto;
   position: absolute;
-  right: 1em;
+  right: 0;
+  top: 3px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+}
+@media only screen and (max-width: 40em) {
+  .menu-item-user img {
+    display: none;
+  }
 }
 
 
@@ -449,6 +451,9 @@ a,
 .modal-content .modal-wrapper .modal .modal-title {
   color: #fcfdfd;
   font-weight: bolder;
+}
+.modal-content .modal-wrapper .modal footer span {
+  color: #fcfdfd;
 }
 
 #notificationBox {
@@ -581,6 +586,9 @@ a,
 }
 .watermark {
   color: rgba(0,0,0,0.3);
+}
+.text-uppercase {
+  text-transform: uppercase;
 }
 .button-inner {
   position: relative !important;

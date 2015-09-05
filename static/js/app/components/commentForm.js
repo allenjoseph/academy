@@ -24,14 +24,14 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    onKeyPress: function(event){
-        if(event.which === 13){
-            this.validateComment(event);
+    onKeyPress: function(e){
+        if(e.which === 13){
+            e.preventDefault();
+            this.validateComment();
         }
     },
 
-    validateComment: function(event){
-        event.preventDefault();
+    validateComment: function(){
         if(!this.state.comment) return;
         if(!this.state.confirm){
             var newState = React.addons.update(this.state, {

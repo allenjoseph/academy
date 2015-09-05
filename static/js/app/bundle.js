@@ -21995,14 +21995,14 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    onKeyPress: function(event){
-        if(event.which === 13){
-            this.validateComment(event);
+    onKeyPress: function(e){
+        if(e.which === 13){
+            e.preventDefault();
+            this.validateComment();
         }
     },
 
-    validateComment: function(event){
-        event.preventDefault();
+    validateComment: function(){
         if(!this.state.comment) return;
         if(!this.state.confirm){
             var newState = React.addons.update(this.state, {
@@ -22124,7 +22124,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./mixins":193,"react":174}],178:[function(require,module,exports){
+},{"./mixins":195,"react":174}],178:[function(require,module,exports){
 var React = require('react/addons');
 
 module.exports = React.createClass({
@@ -22212,16 +22212,34 @@ module.exports = React.createClass({
     exams: function(){
         var exam = this.props.properties;
         return(
-            React.createElement("div", {className: "row simple-row"}, 
+            React.createElement("div", {className: "row simple-row", key: exam.cid}, 
                 React.createElement("div", {className: "medium-1 columns"}, 
                     React.createElement("strong", null, Utilities.day(exam.dateCreation)), 
-                    React.createElement("small", null, Utilities.largeMonth(exam.dateCreation))
+                    React.createElement("span", null, " ", Utilities.largeMonth(exam.dateCreation))
                 ), 
                 React.createElement("div", {className: "medium-10 columns"}, 
                     exam.description
                 ), 
-                React.createElement("div", {className: "medium-1 columns"}, 
+                React.createElement("div", {className: "medium-1 columns text-right"}, 
                     React.createElement("strong", null, exam.files, " files")
+                )
+            )
+        );
+    },
+
+    discussions: function(){
+        var discussion = this.props.properties;
+        return(
+            React.createElement("div", {className: "row simple-row", key: discussion.cid}, 
+                React.createElement("div", {className: "medium-1 columns"}, 
+                    React.createElement("strong", null, Utilities.day(discussion.dateCreation)), 
+                    React.createElement("span", null, " ", Utilities.largeMonth(discussion.dateCreation))
+                ), 
+                React.createElement("div", {className: "medium-9 columns"}, 
+                    discussion.question
+                ), 
+                React.createElement("div", {className: "medium-2 columns text-right"}, 
+                    React.createElement("strong", null, discussion.comments, " comments")
                 )
             )
         );
@@ -22283,7 +22301,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./courseElement":180,"./mixins":193,"react":174}],182:[function(require,module,exports){
+},{"./courseElement":180,"./mixins":195,"react":174}],182:[function(require,module,exports){
 var React = require('react/addons');
 var Course = require('./course');
 var Mixins = require('./mixins');
@@ -22317,7 +22335,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./course":178,"./mixins":193,"react/addons":2}],183:[function(require,module,exports){
+},{"./course":178,"./mixins":195,"react/addons":2}],183:[function(require,module,exports){
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
     CourseElementList = require('./courseElementList'),
@@ -22334,8 +22352,8 @@ var CoursePageBox = React.createClass({
                     title: 'Exámenes',
                     label: 'Compartir exámen',
                     icon: 'fa-camera',
-                    action: this.openModalExam,
                     collection: 'exams',
+                    action: this.openModalExam
                 },
                 {
                     title: 'Trabajos',
@@ -22359,7 +22377,8 @@ var CoursePageBox = React.createClass({
                     title: 'Preguntas',
                     label: 'Preguntar',
                     icon: 'fa-question',
-                    collection: 'discussions'
+                    collection: 'discussions',
+                    action: this.openModalDiscussion
                 }
             ]
         }
@@ -22367,6 +22386,10 @@ var CoursePageBox = React.createClass({
 
     openModalExam: function(e){
         window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
+    },
+
+    openModalDiscussion: function(e){
+        window.dispatchEvent(new CustomEvent('openModalDiscussion', { detail: academyCourse }));
     },
 
     getFigures: function(){
@@ -22634,7 +22657,8 @@ module.exports = React.createClass({
                 React.createElement("div", {className: "small-12 columns"}, 
                     React.createElement("span", {className: "input-add-discussion button-inner"}, 
                         React.createElement("input", {type: "text", className: "input", value: this.state.question, 
-                            onChange: this.changeDiscussion}), 
+                            onChange: this.changeDiscussion, 
+                            placeholder: "Escribe lo que quieres preguntarle a otros estudiantes."}), 
                         React.createElement("button", {className: buttonClass, onClick: this.validateQuestion}, buttonText)
                     )
                 )
@@ -22680,7 +22704,170 @@ module.exports = React.createClass({
     }
 });
 
-},{"./discussion":185,"./mixins":193,"react/addons":2}],189:[function(require,module,exports){
+},{"./discussion":185,"./mixins":195,"react/addons":2}],189:[function(require,module,exports){
+var React = require('react/addons'),
+    DiscussionModalForm = require('./discussionModalForm');
+
+var DiscussionModal = React.createClass({
+    displayName: 'DiscussionModal',
+
+    getInitialState: function(){
+        return {openModalClass: '', academyCourse: {}};
+    },
+
+    componentDidMount: function(){
+        window.addEventListener('openModalDiscussion', this.openModal);
+    },
+
+    componentWilUnmount: function(){
+        window.removeEventListener('openModalDiscussion', this.openModal);
+    },
+
+    openModal: function(data){
+        var newState = React.addons.update(this.state,{
+            openModalClass: { $set: 'modal-is-active' },
+            academyCourse: { $set: data.detail }
+        });
+        this.setState(newState);
+    },
+
+    close: function(){
+        this.setState(this.getInitialState());
+    },
+
+    render: function(){
+        return (
+            React.createElement("div", {className: 'modal-content ' + this.state.openModalClass}, 
+                React.createElement("div", {className: "modal-overlay"}), 
+                React.createElement("div", {className: "modal-wrapper"}, 
+                    React.createElement("section", {className: "modal modal-exam"}, 
+                        React.createElement("a", {className: "modal-close", onClick: this.close}), 
+                        React.createElement(DiscussionModalForm, {
+                            ref: 'discussionModalForm', 
+                            isOpen: !!this.state.openModalClass, 
+                            academyCourse: this.state.academyCourse, 
+                            close: this.close})
+                    )
+                )
+            )
+        );
+    }
+});
+
+React.render(
+  React.createElement(DiscussionModal, null),
+  document.getElementById('discussionModal')
+);
+
+},{"./discussionModalForm":190,"react/addons":2}],190:[function(require,module,exports){
+var React = require('react/addons'),
+    Discussion = window.ACADEMY.backbone.model.constructors.Discussion;
+
+module.exports = React.createClass({
+    displayName: 'DiscussionModalForm',
+
+    getInitialState: function(){
+        return {
+            question: '',
+            counter: 150,
+            confirm: false
+        };
+    },
+
+    componentDidUpdate: function(){
+        if(this.props.isOpen){
+            React.findDOMNode(this.refs.question).focus();
+        }
+    },
+
+    clear: function(){
+        this.setState(this.getInitialState());
+    },
+
+    changeQuestion: function(e){
+        var newState = React.addons.update(this.state, {
+            question: { $set : e.target.value },
+            counter: { $set: 150 - e.target.value.length }
+        });
+        this.setState(newState);
+    },
+
+    onKeyPress: function(e){
+        if(e.which === 13){
+            e.preventDefault();
+            this.validateQuestion();
+        }
+    },
+
+    validateQuestion: function(){
+        if(!this.state.question) return;
+        if(!this.state.confirm){
+            var newState = React.addons.update(this.state, {
+                confirm: { $set: true }
+            });
+            this.setState(newState);
+            return;
+        }
+        this.shareDicussion();
+    },
+
+    shareDicussion: function(){
+        var course = this.props.academyCourse.course;
+        var self = this;
+
+        var discussion = new Discussion(this.state);
+        discussion.save(null,{
+            success : function(discussion, response){
+                self.props.close();
+
+                window.ACADEMY.socket.emit('newDiscussion',{
+                    notification: {
+                        level:'success',
+                        title:'Se agregó nueva pregunta en <strong>'+ course.name +'</strong>',
+                        message: '<strong class="uppercase">'+ discussion.attributes.question +'</strong>'
+                    },
+                    discussion: discussion
+                });
+            },
+            error : function(){
+                debugger;
+            }
+        });
+    },
+
+    render: function(){
+        var buttonClass = 'button tiny in',
+            buttonText = 'Compartir';
+
+        if(this.state.confirm){
+            buttonClass += ' confirm';
+            buttonText = 'Confirmar';
+        }
+        return (
+            React.createElement("div", {className: "exam-wrapper"}, 
+                React.createElement("header", {className: "row"}, 
+                    React.createElement("div", {className: "small-12 columns"}, 
+                        React.createElement("h3", {className: "modal-title text-uppercase"}, "Escribe tu pregunta")
+                    )
+                ), 
+
+                React.createElement("footer", {className: "row"}, 
+                    React.createElement("div", {className: "small-12 columns"}, 
+                        React.createElement("span", {className: "counter right"}, this.state.counter), 
+                        React.createElement("div", {className: "button-inner"}, 
+                            React.createElement("textarea", {ref: "question", className: "textarea", 
+                                maxLength: 150, value: this.state.question, 
+                                onChange: this.changeQuestion, onKeyPress: this.onKeyPress}), 
+                            React.createElement("button", {className: buttonClass, onClick: this.validateQuestion}, buttonText)
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+},{"react/addons":2}],191:[function(require,module,exports){
 var React = require('react/addons'),
     ExamForm = require('./examForm');
 
@@ -22688,7 +22875,7 @@ var ExamBox = React.createClass({
     displayName: 'ExamBox',
 
     getInitialState: function(){
-        return {openModalClass: '', courseAcademy: {}};
+        return {openModalClass: '', academyCourse: {}};
     },
 
     componentDidMount: function(){
@@ -22702,7 +22889,7 @@ var ExamBox = React.createClass({
     openModalExam: function(data){
         var newState = React.addons.update(this.state,{
             openModalClass: { $set: 'modal-is-active' },
-            courseAcademy: { $set: data.detail }
+            academyCourse: { $set: data.detail }
         });
         this.setState(newState);
     },
@@ -22727,7 +22914,7 @@ var ExamBox = React.createClass({
                         React.createElement(ExamForm, {
                             ref: 'examForm', 
                             isOpen: !!this.state.openModalClass, 
-                            courseAcademy: this.state.courseAcademy, 
+                            academyCourse: this.state.academyCourse, 
                             close: this.close})
                     )
                 )
@@ -22741,7 +22928,7 @@ React.render(
   document.getElementById('examBox')
 );
 
-},{"./examForm":190,"react/addons":2}],190:[function(require,module,exports){
+},{"./examForm":192,"react/addons":2}],192:[function(require,module,exports){
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
     Exam = window.ACADEMY.backbone.model.constructors.Exam;
@@ -22809,11 +22996,11 @@ module.exports = React.createClass({
     },
 
     shareExam: function(){
-        var course = this.props.courseAcademy.course;
+        var course = this.props.academyCourse.course;
         var self = this;
 
         var exam = new Exam(this.state);
-        exam.set('courseAcademy', this.props.courseAcademy.id);
+        exam.set('academyCourse', this.props.academyCourse.id);
         exam.set('files', this.files);
         exam.save(null,{
             success : function(exam, response){
@@ -22843,7 +23030,7 @@ module.exports = React.createClass({
             React.createElement("div", {className: "exam-wrapper"}, 
                 React.createElement("header", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns"}, 
-                        React.createElement("h3", {className: "modal-title"}, "Compartir Examen")
+                        React.createElement("h3", {className: "modal-title text-uppercase"}, "Compartir Examen")
                     )
                 ), 
                 React.createElement("article", {className: "row"}, 
@@ -22867,7 +23054,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileupload":192,"react/addons":2}],191:[function(require,module,exports){
+},{"./fileupload":194,"react/addons":2}],193:[function(require,module,exports){
 var React = require('react/addons'),
     constans = window.ACADEMY.constans;
 
@@ -22952,7 +23139,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"react/addons":2}],192:[function(require,module,exports){
+},{"react/addons":2}],194:[function(require,module,exports){
 var React = require('react/addons'),
     FileList = require('./fileList'),
     constans = window.ACADEMY.constans;
@@ -23027,7 +23214,7 @@ module.exports = React.createClass({
     }
 });
 
-},{"./fileList":191,"react/addons":2}],193:[function(require,module,exports){
+},{"./fileList":193,"react/addons":2}],195:[function(require,module,exports){
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -23056,7 +23243,7 @@ module.exports = {
     }
 };
 
-},{}],194:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 var React = require('react/addons');
 
 var NotificationBox = React.createClass({
@@ -23092,7 +23279,7 @@ var NotificationBox = React.createClass({
         var content;
         if(this.state.visible){
             content = React.createElement("div", null, 
-                        React.createElement("span", {className: "title"}, this.state.data.title + ' '), 
+                        React.createElement("span", {className: "title", dangerouslySetInnerHTML: {__html: this.state.data.title + ' '}}), 
                         React.createElement("span", {className: "message", dangerouslySetInnerHTML: {__html: this.state.data.message}}), 
                         React.createElement("span", {className: "close", onClick: this.closeNotification})
                     );
@@ -23110,4 +23297,4 @@ React.render(
     document.getElementById('notificationBox')
 );
 
-},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194]);
+},{"react/addons":2}]},{},[175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196]);

@@ -19,7 +19,8 @@ class DiscussionsView(RestServiceMixin, View):
         elif pk:
             discussions = Discussion.objects.get(pk=pk)
         else:
-            discussions = Discussion.objects.all()
+            discussions = Discussion.objects.filter(
+                academyCourse=None)
         discussionSerialize = ModelSerializer(discussions)
 
         return JsonResponse(

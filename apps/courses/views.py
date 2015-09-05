@@ -44,6 +44,9 @@ class CourseView(TemplateView):
             }
 
             context['academyCourseInfo'] = academyCourseSerialize.getJSON()
+            if self.request is not None:
+                academyCourse_id = academyCourseSerialize.dictModel['id']
+                self.request.session['academyCourse_id'] = academyCourse_id
 
         except MultipleObjectsReturned:
             print('academyCourse problem')

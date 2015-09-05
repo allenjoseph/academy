@@ -77,7 +77,8 @@ module.exports = React.createClass({
                 <div className="small-12 columns">
                     <span className="input-add-discussion button-inner">
                         <input type="text" className="input" value={this.state.question}
-                            onChange={this.changeDiscussion}/>
+                            onChange={this.changeDiscussion}
+                            placeholder="Escribe lo que quieres preguntarle a otros estudiantes."/>
                         <button className={buttonClass} onClick={this.validateQuestion}>{buttonText}</button>
                     </span>
                 </div>

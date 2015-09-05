@@ -33,7 +33,7 @@ var NotificationBox = React.createClass({
         var content;
         if(this.state.visible){
             content = <div>
-                        <span className="title">{this.state.data.title + ' '}</span>
+                        <span className="title" dangerouslySetInnerHTML={{__html: this.state.data.title + ' '}}></span>
                         <span className="message" dangerouslySetInnerHTML={{__html: this.state.data.message}}></span>
                         <span className="close" onClick={this.closeNotification}/>
                     </div>;
