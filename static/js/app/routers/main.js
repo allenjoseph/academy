@@ -3,24 +3,20 @@ var _Collection = window.ACADEMY.backbone.collection.constructors,
 
 var Router = Backbone.Router.extend({
 
-    routes : {
+    routes: {
         'home': 'home',
         'course': 'course',
         '*otherRoute': 'default'
     },
 
-    initialize : function(){
-        //..
-    },
-
-    home : function(){
+    home: () => {
         this.navigate('');
         _collection.courses = new _Collection.Courses();
         _collection.discussions = new _Collection.Discussions();
         _collection.comments = new _Collection.Comments();
     },
 
-    course : function(){
+    course: () => {
         this.navigate('');
         _collection.exams = new _Collection.Exams();
         _collection.discussions = new _Collection.Discussions();
@@ -29,9 +25,7 @@ var Router = Backbone.Router.extend({
         _collection.aids = new _Collection.Aids();
     },
 
-    default : function(otherRoute){
-        this.navigate('');
-    }
+    default: (otherRoute) => this.navigate('')
 });
 
 window.ACADEMY.router = new Router();
