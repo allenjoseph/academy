@@ -30,10 +30,12 @@ class DiscussionsView(RestServiceMixin, View):
         params = json.loads(request.body)
         student = Student.objects.get(pk=request.session['student_id'])
         state = Parameter.objects.get(pk=int(StateEnum.ACTIVO))
+
         academyCourse = None
-        if 'academyCourse_id' in request.session:
+        academyCourse_id = params.get('academyCourse')
+        if academyCourse_id is not None:
             academyCourse = AcademyCourse.objects.get(
-                pk=request.session['academyCourse_id'])
+                pk=academyCourse_id)
 
         discussion = Discussion.objects.create(
             question=params.get('question'),

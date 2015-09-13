@@ -18,9 +18,11 @@ module.exports = React.createClass({
 
     render: function(){
         var discussionNodes = discussions.map(function (discussion){
-            return(
-                <Discussion key={discussion.cid} discussion={discussion.attributes}/>
-            );
+            if(!discussion.attributes.academyCourse){
+                return(
+                    <Discussion key={discussion.cid} discussion={discussion.attributes}/>
+                );
+            }
         });
         return(
             <div className="row">

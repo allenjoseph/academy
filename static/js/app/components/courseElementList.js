@@ -29,9 +29,13 @@ module.exports = React.createClass({
         var elements;
         if(this.collection && this.collection.map){
             elements = this.collection.map(function (element){
-                return(
-                    <CourseElement key={element.cid} properties={element.attributes} collection={this.props.collection}/>
-                );
+                if(element.attributes.academyCourse){
+                    return(
+                        <CourseElement key={element.cid}
+                            properties={element.attributes}
+                            collection={this.props.collection}/>
+                    );
+                }
             }, this);
         }
         return(

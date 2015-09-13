@@ -21,7 +21,7 @@ module.exports = {
                 requestChange: function(value){
                     model.set(key, value);
                 }.bind(this)
-            }
+            };
         }
     }
 };

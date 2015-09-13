@@ -9,7 +9,7 @@ module.exports = React.createClass({
         return {
             question: '',
             confirm: false
-        }
+        };
     },
 
     changeDiscussion: function(e){
@@ -78,7 +78,7 @@ module.exports = React.createClass({
                     <span className="input-add-discussion button-inner">
                         <input type="text" className="input" value={this.state.question}
                             onChange={this.changeDiscussion}
-                            placeholder="Escribe lo que quieres preguntarle a otros estudiantes."/>
+                            placeholder="Que deseas preguntar a otros estudiantes."/>
                         <button className={buttonClass} onClick={this.validateQuestion}>{buttonText}</button>
                     </span>
                 </div>

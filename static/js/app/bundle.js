@@ -22288,9 +22288,13 @@ module.exports = React.createClass({
         var elements;
         if(this.collection && this.collection.map){
             elements = this.collection.map(function (element){
-                return(
-                    React.createElement(CourseElement, {key: element.cid, properties: element.attributes, collection: this.props.collection})
-                );
+                if(element.attributes.academyCourse){
+                    return(
+                        React.createElement(CourseElement, {key: element.cid, 
+                            properties: element.attributes, 
+                            collection: this.props.collection})
+                    );
+                }
             }, this);
         }
         return(
@@ -22589,7 +22593,7 @@ module.exports = React.createClass({
         return {
             question: '',
             confirm: false
-        }
+        };
     },
 
     changeDiscussion: function(e){
@@ -22658,7 +22662,7 @@ module.exports = React.createClass({
                     React.createElement("span", {className: "input-add-discussion button-inner"}, 
                         React.createElement("input", {type: "text", className: "input", value: this.state.question, 
                             onChange: this.changeDiscussion, 
-                            placeholder: "Escribe lo que quieres preguntarle a otros estudiantes."}), 
+                            placeholder: "Que deseas preguntar a otros estudiantes."}), 
                         React.createElement("button", {className: buttonClass, onClick: this.validateQuestion}, buttonText)
                     )
                 )
@@ -22688,9 +22692,11 @@ module.exports = React.createClass({
 
     render: function(){
         var discussionNodes = discussions.map(function (discussion){
-            return(
-                React.createElement(Discussion, {key: discussion.cid, discussion: discussion.attributes})
-            );
+            if(!discussion.attributes.academyCourse){
+                return(
+                    React.createElement(Discussion, {key: discussion.cid, discussion: discussion.attributes})
+                );
+            }
         });
         return(
             React.createElement("div", {className: "row"}, 
@@ -22815,7 +22821,9 @@ module.exports = React.createClass({
         var course = this.props.academyCourse.course;
         var self = this;
 
-        var discussion = new Discussion(this.state);
+        var discussion = new Discussion();
+        discussion.set('question', this.state.question);
+        discussion.set('academyCourse', this.props.academyCourse.id);
         discussion.save(null,{
             success : function(discussion, response){
                 self.props.close();
@@ -22830,24 +22838,32 @@ module.exports = React.createClass({
                 });
             },
             error : function(){
-                debugger;
+                //..
             }
         });
     },
 
     render: function(){
         var buttonClass = 'button tiny in',
-            buttonText = 'Compartir';
+            buttonText = 'Compartir',
+            courseName;
 
         if(this.state.confirm){
             buttonClass += ' confirm';
             buttonText = 'Confirmar';
         }
+
+        if(this.props.academyCourse && this.props.academyCourse.course){
+            courseName = this.props.academyCourse.course.name;
+        }
+
         return (
             React.createElement("div", {className: "exam-wrapper"}, 
                 React.createElement("header", {className: "row"}, 
                     React.createElement("div", {className: "small-12 columns"}, 
-                        React.createElement("h3", {className: "modal-title text-uppercase"}, "Escribe tu pregunta")
+                        React.createElement("h3", {className: "modal-title"}, 
+                            "Que deseas preguntar a otros estudiantes de ", courseName, "."
+                        )
                     )
                 ), 
 
@@ -23238,7 +23254,7 @@ module.exports = {
                 requestChange: function(value){
                     model.set(key, value);
                 }.bind(this)
-            }
+            };
         }
     }
 };

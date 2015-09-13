@@ -138,7 +138,7 @@ var Router = Backbone.Router.extend({
     },
 
     initialize : function(){
-        console.log('init Route');
+        //..
     },
 
     home : function(){

@@ -53,7 +53,9 @@ module.exports = React.createClass({
         var course = this.props.academyCourse.course;
         var self = this;
 
-        var discussion = new Discussion(this.state);
+        var discussion = new Discussion();
+        discussion.set('question', this.state.question);
+        discussion.set('academyCourse', this.props.academyCourse.id);
         discussion.save(null,{
             success : function(discussion, response){
                 self.props.close();
@@ -68,24 +70,32 @@ module.exports = React.createClass({
                 });
             },
             error : function(){
-                debugger;
+                //..
             }
         });
     },
 
     render: function(){
         var buttonClass = 'button tiny in',
-            buttonText = 'Compartir';
+            buttonText = 'Compartir',
+            courseName;
 
         if(this.state.confirm){
             buttonClass += ' confirm';
             buttonText = 'Confirmar';
         }
+
+        if(this.props.academyCourse && this.props.academyCourse.course){
+            courseName = this.props.academyCourse.course.name;
+        }
+
         return (
             <div className="exam-wrapper">
                 <header className="row">
                     <div className="small-12 columns">
-                        <h3 className="modal-title text-uppercase">Escribe tu pregunta</h3>
+                        <h3 className="modal-title">
+                            Que deseas preguntar a otros estudiantes de {courseName}.
+                        </h3>
                     </div>
                 </header>
 
