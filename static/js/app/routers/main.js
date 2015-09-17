@@ -9,14 +9,14 @@ var Router = Backbone.Router.extend({
         '*otherRoute': 'default'
     },
 
-    home: () => {
+    home() {
         this.navigate('');
         _collection.courses = new _Collection.Courses();
         _collection.discussions = new _Collection.Discussions();
         _collection.comments = new _Collection.Comments();
     },
 
-    course: () => {
+    course() {
         this.navigate('');
         _collection.exams = new _Collection.Exams();
         _collection.discussions = new _Collection.Discussions();
@@ -25,7 +25,9 @@ var Router = Backbone.Router.extend({
         _collection.aids = new _Collection.Aids();
     },
 
-    default: (otherRoute) => this.navigate('')
+    default(otherRoute) {
+        this.navigate('');
+    }
 });
 
 window.ACADEMY.router = new Router();

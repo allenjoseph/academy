@@ -55,6 +55,7 @@ target/
 
 */migrations/
 apps/**/migrations/
+*.db
 
 .bowerrc
 

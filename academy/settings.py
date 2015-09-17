@@ -65,12 +65,8 @@ WSGI_APPLICATION = 'academy.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'academy',
-        'USER': 'root',
-        'PASSWORD': '@llen',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR + '/academy.db'
     }
 }
 
