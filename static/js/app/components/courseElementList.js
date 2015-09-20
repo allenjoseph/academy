@@ -1,7 +1,9 @@
 var React = require('react'),
+    $ = require('jquery'),
     CourseElement = require('./courseElement'),
     Mixins = require('./mixins'),
-    _collection = window.ACADEMY.backbone.collection.instances;
+    Collections = require('../collections/collections');
+
 
 module.exports = React.createClass({
 
@@ -19,7 +21,7 @@ module.exports = React.createClass({
 
     getBackboneModels: function(){
         if(this.props.collection){
-            this.collection =  _collection[this.props.collection];
+            this.collection =  new Collections[this.props.collection]();
         }
         return [this.collection];
     },

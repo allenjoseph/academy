@@ -12,13 +12,13 @@
 {% block contentJs %}
 <script>
     (function(){
+        window.ACADEMY = window.ACADEMY || {};
+        window.ACADEMY.models = window.ACADEMY.models || {};
+        window.ACADEMY.state = 'course';
 
         {% autoescape off %}
-        window.ACADEMY.backbone.model.instances.academyCourse = {{ academyCourseInfo }};
+        window.ACADEMY.models.academyCourse = {{ academyCourseInfo }};
         {% endautoescape %}
-
-        window.ACADEMY.router.navigate('course', {trigger: true});
-
     })();
 </script>
 {% endblock %}

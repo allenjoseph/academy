@@ -26,9 +26,8 @@
 {% block contentJs %}
 <script>
     (function(){
-
-        window.ACADEMY.router.navigate('home', {trigger: true});
-
+        window.ACADEMY = window.ACADEMY || {};
+        window.ACADEMY.state = 'home';
     })();
 </script>
 {% endblock %}

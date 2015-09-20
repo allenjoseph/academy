@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var Course = require('./course');
 var Mixins = require('./mixins');
 
@@ -16,7 +16,6 @@ module.exports = React.createClass({
     },
 
     render: function() {
-
         var courseNodes = this.props.courses.map(function (course) {
             return (
                 <Course key={course.cid} academyCourse={course.toJSON()} figures={ {} } />

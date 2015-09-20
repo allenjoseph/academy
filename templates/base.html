@@ -5,14 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Academy</title>
-    <link rel="stylesheet" type="text/css" href="{% static "vendor-bower/css/font-awesome.min.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/base.css"%}"/>
-    <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/modal.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/app.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/academy.min.css"%}">
     <script src="http://127.0.0.1:3333/socket.io/socket.io.js"></script>
-    <!-- Dev for c9.io -->
-    <!--<script src="http://socket.allenjoseph.pe/socket.io/socket.io.js"></script>-->
     <script src="//127.0.0.1:35729/livereload.js"></script>
 </head>
 <body class="layout">
@@ -53,22 +47,7 @@
     <div id="meetingBox"></div>
     <div id="notificationBox"></div>
 
-    <script src="{% static "vendor-bower/js/jquery/jquery.min.js"%}"></script>
-    <script src="{% static "vendor-bower/js/jquery-ui/jquery-ui.js"%}"></script>
-    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload.js"%}"></script>
-    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload-process.js"%}"></script>
-    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.fileupload-validate.js"%}"></script>
-    <script src="{% static "vendor-bower/js/blueimp-file-upload/jquery.iframe-transport.js"%}"></script>
-    <script src="{% static "vendor-bower/js/moment/moment-with-locales.min.js"%}"></script>
-    <script src="{% static "vendor-bower/js/underscore/underscore.js"%}"></script>
-    <script src="{% static "vendor-bower/js/backbone/backbone.js"%}"></script>
-    <script src="{% static "vendor-bower/js/backbone.unclassified/backbone.unclassified.js"%}"></script>
-
-    <script src="{% static "js/app/bundleApp.js"%}"></script>
-    <script>
-        window.ACADEMY.constans.STATIC='{% static ""%}';
-    </script>
     {% block contentJs %}{% endblock %}
-    <script src="{% static "js/app/bundle.js"%}"></script>
+    <script src="{% static "js/academy.js"%}"></script>
 </body>
 </html>

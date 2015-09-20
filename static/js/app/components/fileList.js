@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-    constans = window.ACADEMY.constans;
+    constans = require('../commons/constans');
 
 module.exports = React.createClass({
     displayName: 'FileList',

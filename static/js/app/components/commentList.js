@@ -1,8 +1,10 @@
 var React = require('react');
-var constans = window.ACADEMY.constans;
-var comments = window.ACADEMY.backbone.collection.instances.comments;
+var $ = require('jquery');
+var constans = require('../commons/constans');
+var Collection = require('../collections/collections');
+var comments = new Collection.Comments();
 var Mixins = require('./mixins');
-var Utilities = window.ACADEMY.utilities;
+var Utilities = require('../commons/utilities');
 
 module.exports = React.createClass({
     displayName: 'CommentList',

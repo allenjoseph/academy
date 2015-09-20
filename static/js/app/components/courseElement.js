@@ -1,5 +1,5 @@
 var React = require('react'),
-    Utilities = window.ACADEMY.utilities;
+    Utilities = require('../commons/utilities');
 
 module.exports = React.createClass({
     displayName: 'CourseElement',

@@ -1,6 +1,7 @@
 var React = require('react/addons'),
     CourseList = require('./courseList'),
-    courses = window.ACADEMY.backbone.collection.instances.courses;
+    Collection = require('../collections/collections'),
+    courses =  new Collection.Courses();
 
 var CourseBox = React.createClass({
     displayName : 'CourseBox',

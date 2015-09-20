@@ -53,17 +53,25 @@ docs/_build/
 # PyBuilder
 target/
 
+#django orm
 */migrations/
 apps/**/migrations/
 *.db
 
+#generates files
 .bowerrc
-
 node_modules
 bower_modules
-static/vendor-bower
-media/
 bower_components/
-.idea/
+static/vendor
+static/js/academy.js
+static/js/academy.min.js
+static/css/academy.min.css
 
+#media files
+media/
+.idea/
 .DS_Store
+
+# generate files
+

@@ -1,9 +1,10 @@
 var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
-var constans = window.ACADEMY.constans;
-var Utilities = window.ACADEMY.utilities;
-var comments = window.ACADEMY.backbone.collection.instances.comments;
+var Utilities = require('../commons/utilities');
+var constans = require('../commons/constans');
+var Collection = require('../collections/collections');
+var comments = new Collection.Comments();
 
 var CommentBox = React.createClass({
     displayName: 'CommentBox',

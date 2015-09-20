@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-    Discussion = window.ACADEMY.backbone.model.constructors.Discussion;
+    Models = require('../models/models');
 
 module.exports = React.createClass({
     displayName: 'DiscussionModalForm',
@@ -53,7 +53,7 @@ module.exports = React.createClass({
         var course = this.props.academyCourse.course;
         var self = this;
 
-        var discussion = new Discussion();
+        var discussion = new Models.Discussion();
         discussion.set('question', this.state.question);
         discussion.set('academyCourse', this.props.academyCourse.id);
         discussion.save(null,{

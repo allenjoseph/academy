@@ -1,14 +1,15 @@
-var _model = require('../models/models');
+var Backbone = require('backbone'),
+    Model = require('../models/models');
 
 module.exports = {
 
     Courses: Backbone.Collection.extend({
-        model: _model.Course,
+        model: Model.Course,
         url: '/courses'
     }),
 
     Discussions: Backbone.Collection.extend({
-        model: _model.Discussion,
+        model: Model.Discussion,
         url: '/discussions',
         comparator: function(model){
             return -model.get('id');
@@ -16,7 +17,7 @@ module.exports = {
     }),
 
     Comments: Backbone.Collection.extend({
-        model: _model.Comment,
+        model: Model.Comment,
         url: '/comments',
         comparator: function(model){
             return -model.get('id');
@@ -24,27 +25,26 @@ module.exports = {
     }),
 
     Attachments: Backbone.Collection.extend({
-        model: _model.Attachment
+        model: Model.Attachment
     }),
 
     Exams: Backbone.Collection.extend({
-        model: _model.Exam,
+        model: Model.Exam,
         url: '/exams'
     }),
 
     Homeworks: Backbone.Collection.extend({
-        model: _model.Homework,
+        model: Model.Homework,
         url: '/homeworks'
     }),
 
     Meetings: Backbone.Collection.extend({
-        model: _model.Meeting,
+        model: Model.Meeting,
         url: '/meetings'
     }),
 
     Aids: Backbone.Collection.extend({
-        model: _model.Aid,
+        model: Model.Aid,
         url: '/aids'
     })
-
 };

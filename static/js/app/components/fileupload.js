@@ -1,6 +1,6 @@
 var React = require('react/addons'),
     FileList = require('./fileList'),
-    constans = window.ACADEMY.constans;
+    constans = require('../commons/constans');
 
 module.exports = React.createClass({
     displayName: 'Fileupload',

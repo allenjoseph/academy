@@ -1,6 +1,6 @@
 var React = require('react/addons'),
     Fileupload = require('./fileupload'),
-    Exam = window.ACADEMY.backbone.model.constructors.Exam;
+    Models = require('../models/models');
 
 module.exports = React.createClass({
     displayName: 'ExamForm',
@@ -68,7 +68,7 @@ module.exports = React.createClass({
         var course = this.props.academyCourse.course;
         var self = this;
 
-        var exam = new Exam(this.state);
+        var exam = new Models.Exam(this.state);
         exam.set('academyCourse', this.props.academyCourse.id);
         exam.set('files', this.files);
         exam.save(null,{

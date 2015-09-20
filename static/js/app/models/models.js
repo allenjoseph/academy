@@ -1,3 +1,5 @@
+var Backbone = require('backbone');
+
 module.exports = {
 
     Course: Backbone.Model.extend(),

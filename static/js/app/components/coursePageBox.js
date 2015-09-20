@@ -1,7 +1,7 @@
 var React = require('react'),
     CoursePageInfo = require('./coursePageInfo'),
     CourseElementList = require('./courseElementList'),
-    academyCourse = window.ACADEMY.backbone.model.instances.academyCourse;
+    academyCourse = window.ACADEMY.models.academyCourse;
 
 var CoursePageBox = React.createClass({
 
@@ -14,32 +14,32 @@ var CoursePageBox = React.createClass({
                     title: 'Exámenes',
                     label: 'Compartir exámen',
                     icon: 'fa-camera',
-                    collection: 'exams',
+                    collection: 'Exams',
                     action: this.openModalExam
                 },
                 {
                     title: 'Trabajos',
                     label: 'Compartir trabajo',
                     icon: 'fa-file-text',
-                    collection: 'homeworks'
+                    collection: 'Homeworks'
                 },
                 {
                     title: 'Reuniones programadas',
                     label: 'Asistir',
                     icon: 'fa-users',
-                    collection: 'meetings'
+                    collection: 'Meetings'
                 },
                 {
                     title: 'Pendientes de ayuda',
                     label: 'Ayudar',
                     icon: 'fa-child',
-                    collection: 'aids'
+                    collection: 'Aids'
                 },
                 {
                     title: 'Preguntas',
                     label: 'Preguntar',
                     icon: 'fa-question',
-                    collection: 'discussions',
+                    collection: 'Discussions',
                     action: this.openModalDiscussion
                 }
             ]

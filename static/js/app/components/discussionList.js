@@ -1,7 +1,8 @@
 var React = require('react/addons');
 var Discussion = require('./discussion');
 var Mixins = require('./mixins');
-var discussions = window.ACADEMY.backbone.collection.instances.discussions;
+var Collection = require('../collections/collections');
+var discussions = new Collection.Discussions;
 
 module.exports = React.createClass({
     displayName: 'DiscussionList',

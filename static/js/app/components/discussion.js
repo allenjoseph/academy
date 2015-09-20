@@ -1,6 +1,6 @@
-var React = require('react/addons');
-var constans = window.ACADEMY.constans;
-var Utilities = window.ACADEMY.utilities;
+var React = require('react/addons'),
+    constans = require('../commons/constans'),
+    Utilities = require('../commons/utilities');
 
 module.exports = React.createClass({
     displayName: 'Discussion',

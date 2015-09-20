@@ -1,6 +1,7 @@
 var React = require('react/addons'),
-    Discussion = window.ACADEMY.backbone.model.constructors.Discussion,
-    discussions = window.ACADEMY.backbone.collection.instances.discussions;
+    Models = require('../models/models'),
+    Collection = require('../collections/collections'),
+    discussions = new Collection.Discussions();
 
 module.exports = React.createClass({
     displayName: 'DiscussionForm',
@@ -34,7 +35,7 @@ module.exports = React.createClass({
 
     sendSubmit: function(){
         var self = this,
-            discussion = new Discussion();
+            discussion = new Models.Discussion();
 
         discussion.set('question', this.state.question);
         discussion.save(null,{

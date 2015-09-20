@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-    Comment = window.ACADEMY.backbone.model.constructors.Comment;
+    Models = require('../models/models');
 
 module.exports = React.createClass({
     displayName: 'CommentForm',
@@ -46,7 +46,7 @@ module.exports = React.createClass({
     sendSubmit: function(){
         var self = this;
         //creo un modelo Commentario
-        var comment = new Comment();
+        var comment = new Models.Comment();
         comment.set('comment', this.state.comment);
         comment.set('discussion', this.props.discussionId);
         //guardo el comentario
