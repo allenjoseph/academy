@@ -5,6 +5,7 @@
   "author": "Allen Joseph",
   "devDependencies": {
     "babelify": "^6.3.0",
+    "blueimp-file-upload": "^9.11.2",
     "grunt": "~0.4.5",
     "grunt-bower": "^0.20.0",
     "grunt-bower-task": "^0.4.0",

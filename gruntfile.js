@@ -89,17 +89,13 @@ module.exports = function(grunt) {
         watch:{
             options: {livereload: true},
             browserify: {
-                files: [
-                    'static/js/app/app.js',
-                    'static/js/app/**/*.js',
-                    'static/js/app/router.js',
-                ],
-                tasks: ['browserify']
+                files: ['static/js/app/**/*.js'],
+                tasks: ['browserify', 'uglify']
             },
             css: {
                 files: [
                     'static/css/stylus/*.styl',
-                    'static/css/*.css',
+                    'static/css/**/*.css',
                 ],
                 tasks: ['stylus:compile','cssmin']
             }
@@ -116,12 +112,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', [
         'bower:install',
+        'copy:fonts',
         'stylus:compile',
+        'cssmin',
         'browserify',
         'uglify',
-        'cssmin',
-        'copy:fonts',
     ]);
-    grunt.registerTask('vendor', ['bower:install']);
     grunt.registerTask('default', ['watch']);
 };

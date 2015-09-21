@@ -1,4 +1,5 @@
 var React = require('react/addons'),
+    $ = require('jquery'),
     FileList = require('./fileList'),
     constans = require('../commons/constans');
 
