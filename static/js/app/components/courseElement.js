@@ -4,7 +4,7 @@ var React = require('react'),
 module.exports = React.createClass({
     displayName: 'CourseElement',
 
-    exams: function(){
+    Exams: function(){
         var exam = this.props.properties;
         return(
             <div className="row simple-row" key={exam.cid}>
@@ -22,7 +22,7 @@ module.exports = React.createClass({
         );
     },
 
-    discussions: function(){
+    Discussions: function(){
         var discussion = this.props.properties;
         return(
             <div className="row simple-row" key={discussion.cid}>
