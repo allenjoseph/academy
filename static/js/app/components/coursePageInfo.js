@@ -1,29 +1,24 @@
-var React = require('react');
+var React = require('react'),
+    studentFigures = {
+        studentsEnrolled: 'Alumnos inscritos.',
+        studentsOnline: 'Alumnos en linea.'
+    };
 
 module.exports = React.createClass({
 
     displayName: 'CoursePageInfo',
-
-    getInitialState: function(){
-        return {
-            figures:{
-                studentsEnrolled: 'Alumnos inscritos.',
-                studentsOnline: 'Alumnos en linea.'
-            }
-        }
-    },
 
     getFigures: function(){
         var figures = [];
         for(var key in this.props.figures){
 
             if( this.props.figures.hasOwnProperty(key) &&
-                this.state.figures.hasOwnProperty(key)){
+                studentFigures.hasOwnProperty(key)){
 
                 figures.push(
                     <div className="item" key={key}>
                         <span className="figure">{ this.props.figures[key] }</span>
-                        <span className="description">{ this.state.figures[key] }</span>
+                        studentFigures[key] }</span>
                     </div>
                 );
             }

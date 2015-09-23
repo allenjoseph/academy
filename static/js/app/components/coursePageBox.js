@@ -47,14 +47,20 @@ var CoursePageBox = React.createClass({
     },
 
     openModalExam: function(e){
-        window.dispatchEvent(new CustomEvent('openModalExam', { detail: academyCourse }));
+        window.dispatchEvent(new CustomEvent(
+            'openModalExam',
+            { detail: academyCourse }
+        ));
     },
 
     openModalDiscussion: function(e){
-        window.dispatchEvent(new CustomEvent('openModalDiscussion', { detail: academyCourse }));
+        window.dispatchEvent(new CustomEvent(
+            'openModalDiscussion',
+            { detail: academyCourse }
+        ));
     },
 
-    getFigures: function(){
+    getSections: function(){
         var cont = 0;
         return this.state.sections.map(function(section){
             return (
@@ -67,7 +73,9 @@ var CoursePageBox = React.createClass({
                                 </a>
                             </h2>
                         </header>
-                        <CourseElementList collection={section.collection} academyCourse={academyCourse.id}/>
+                        <CourseElementList
+                            collection={section.collection}
+                            academyCourse={academyCourse.id} />
                     </div>
                 </div>
             );
@@ -77,16 +85,17 @@ var CoursePageBox = React.createClass({
     render: function(){
         return(
             <div className="large-12 columns">
-                <CoursePageInfo course={academyCourse.course}
-                                profesor={academyCourse.profesor}
-                                figures={academyCourse.figures}/>
-                {this.getFigures()}
+                <CoursePageInfo
+                    course={academyCourse.course}
+                    profesor={academyCourse.profesor}
+                    figures={academyCourse.figures}/>
+                {this.getSections()}
             </div>
         );
     }
 });
 
 var $coursePageBox = document.getElementById('coursePageBox');
-if (!!$coursePageBox){
+if ($coursePageBox){
     React.render(<CoursePageBox />, $coursePageBox);
 }
