@@ -44,10 +44,6 @@ module.exports = function(grunt) {
             default: {
                 files: { 'static/js/academy.min.js': [
                         'static/vendor-bower/js/jquery-ui/jquery-ui.js',
-                        'static/vendor-bower/js/blueimp-file-upload/jquery.fileupload.js',
-                        'static/vendor-bower/js/blueimp-file-upload/jquery.fileupload-process.js',
-                        'static/vendor-bower/js/blueimp-file-upload/jquery.fileupload-validate.js',
-                        'static/vendor-bower/js/blueimp-file-upload/jquery.iframe-transport.js',
                         'static/js/academy.js'
                     ]
                 }

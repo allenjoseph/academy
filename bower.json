@@ -1,26 +1,16 @@
 {
-    "name": "academy",
-    "version": "0.0.1",
-    "description": "academy",
-    "author": "Allen Joseph",
-    "dependencies": {
-        "jquery": null,
-        "jquery-ui": null,
-        "underscore": null,
-        "backbone": null,
-        "blueimp-file-upload": null,
-        "remodal": null,
-        "font-awesome": null,
-        "backbone.unclassified": null
-    },
-    "exportsOverride": {
-        "*":{
-            "js":"**/*.js",
-            "css":"**/*.css",
-            "fonts":"fonts/*.*"
-        },
-        "jquery":{
-            "js":"**/*.min.js"
-        }
+  "name": "academy",
+  "version": "0.0.1",
+  "description": "academy",
+  "author": "Allen Joseph",
+  "dependencies": {
+    "font-awesome": "~4.4.0"
+  },
+  "exportsOverride": {
+    "*": {
+      "js": "**/*.js",
+      "css": "**/*.css",
+      "fonts": "fonts/*.*"
     }
+  }
 }

@@ -29,7 +29,7 @@ module.exports = React.createClass({
     render: function(){
 
         var elements;
-        if(this.collection && this.collection.map){
+        if(this.collection && this.collection.length){
             elements = this.collection.map(function (element){
                 if(element.attributes.academyCourse){
                     return(
@@ -39,6 +39,8 @@ module.exports = React.createClass({
                     );
                 }
             }, this);
+        }else{
+            elements = <span>Sin registros</span>;
         }
         return(
             <div className="large-12 columns">

@@ -58,7 +58,7 @@ var CoursePageBox = React.createClass({
         var cont = 0;
         return this.state.sections.map(function(section){
             return (
-                <div className="row box mvn" key={++cont}>
+                <div className="row box mvn pbn" key={++cont}>
                     <div className="large-12 columns">
                         <header>
                             <h2>{section.title}

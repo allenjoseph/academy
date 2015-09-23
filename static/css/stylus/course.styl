@@ -7,30 +7,31 @@
             cursor default
             .row-separator
                 background-color #18A6D5
-            .course-wrapper 
+            .course-wrapper
                 &:after, &:before
                     border-top-color #18A6D5
-            .row-links 
+            .row-links
                 .link-icon
                     color rgba(0,0,0,0.4)
     h3
         max-height 2.5
         overflow hidden
-    a
+    a, a:hover
         color whitePalette
         {textShadowForWhite}
+
     .course-wrapper
         margin 10px auto
         display table
         width 260px
-        &:before 
+        &:before
             content ''
             display block
             border-left 25px solid transparent
             border-right 25px solid transparent
             border-top 260px solid #1085AA
             width 260px
-        &:after 
+        &:after
             content ''
             display block
             border-left 105px solid transparent
@@ -97,4 +98,4 @@
                 &:hover
                     color: whitePalette
                     {textShadowIconHover}
-    
+

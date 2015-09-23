@@ -200,7 +200,8 @@ a,
   max-height: 2.5;
   overflow: hidden;
 }
-.content-courses a {
+.content-courses a,
+.content-courses a:hover {
   color: #fcfdfd;
   text-shadow: 0 2px 5px rgba(0,0,0,0.6);
 }
@@ -408,7 +409,8 @@ a,
 .menu-item:hover {
   border-bottom-color: #f44336;
 }
-.menu-item a {
+.menu-item a,
+.menu-item a:hover {
   color: #fcfdfd;
   display: block;
   text-transform: uppercase;
@@ -557,6 +559,9 @@ a,
 .pln {
   padding-left: 1em !important;
 }
+.pbn {
+  padding-bottom: 1em !important;
+}
 .pvs {
   padding-top: 0.5em !important;
   padding-bottom: 0.5em !important;
@@ -613,6 +618,9 @@ a,
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border-bottom: 1px solid #f2f2f2;
+}
+.simple-row:hover {
+  background-color: #dee4f6;
 }
 .simple-row:last-child {
   border-bottom: none;
