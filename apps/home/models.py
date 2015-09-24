@@ -67,7 +67,10 @@ class Department(models.Model):
 
 
 def get_image_path(instance, filename):
-    return os.path.join('student', str(instance.provider)+'_'+str(instance.providerKey), filename)
+    return os.path.join(
+        'student',
+        str(instance.provider)+'_'+str(instance.providerKey),
+        filename)
 
 
 class Student(models.Model):
@@ -80,6 +83,9 @@ class Student(models.Model):
     department = models.ForeignKey(Department)
     dateCreation = models.DateTimeField(auto_now_add=True)
     dateLastSeen = models.DateTimeField(blank=True, null=True)
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=50)
+    email = models.EmailField(max_length=100)
 
     def __unicode__(self):
         return u'%s %s' % (self.name, self.lastname)

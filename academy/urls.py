@@ -2,8 +2,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
-from apps.courses.views import CoursesView, CourseView
-from apps.home.views import IndexView, UploadFile, DeleteUploadedFile
+from apps.courses.views import CoursesView
+from apps.home.views import UploadFile, DeleteUploadedFile
+from apps.pages.viewIndex import IndexView
+from apps.pages.viewCourse import CourseView
+from apps.pages.viewLogin import LoginView
 from apps.discussions.views import DiscussionsView
 from apps.discussions.views import CommentsView
 from apps.exams.views import ExamView
@@ -14,6 +17,8 @@ urlpatterns = patterns(
     '',
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^login/', LoginView.as_view(), name='login'),
 
     url(r'^course/(?P<slug>[-\w]+)/$', CourseView.as_view(), name='course'),
 

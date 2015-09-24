@@ -2,25 +2,25 @@
 @import "mixins"
 
 .red
-    background-color redHighlightPalette
+    background-color redHighlightPalette !important
     color whitePalette !important
 .pink
-    background-color pinkMaterial
+    background-color pinkMaterial !important
     color whitePalette !important
 .brown
-    background-color brownMaterial
+    background-color brownMaterial !important
     color whitePalette !important
 .orange
-    background-color orangeMaterial
+    background-color orangeMaterial !important
     color whitePalette !important
 .lime
-    background-color limeMaterial
+    background-color limeMaterial !important
     color whitePalette !important
 .cyan
-    background-color cyanMaterial
+    background-color cyanMaterial !important
     color whitePalette !important
 .blue
-    background-color blueStrongPalette
+    background-color blueStrongPalette !important
     color whitePalette !important
 
 .fa-10x
@@ -97,3 +97,16 @@
         background-color blueLowPalette
     &:last-child
         border-bottom none
+
+.centered-wrapper
+    display table
+    width 100%
+    height 100%
+    .centered
+        display table-cell
+        text-align center
+        vertical-align middle
+
+.bg-grayLow
+    background-color grayLowPalette
+

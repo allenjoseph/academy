@@ -14,7 +14,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # print(BASE_DIR)
 
-# BASE_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__),os.pardir))
 # print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'apps.pages',
     'apps.home',
     'apps.courses',
     'apps.discussions',

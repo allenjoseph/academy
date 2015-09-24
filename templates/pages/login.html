@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Academy</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/academy.min.css"%}">
+</head>
+<body class="bg-grayLow">
+    <div class="centered-wrapper">
+        <form class="centered">
+            <div class="row">
+                <div class="medium-6 medium-centered columns">
+                    <div class="button-inner">
+                        <input type="text" class="input" placeholder="Usuario"/>
+                        <button class="button lime tiny in"><i class="fa fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-6 medium-centered columns">
+                    <div class="button-inner">
+                        <input type="email" class="input" placeholder="Email"/>
+                        <button class="button tiny in">OK</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-6 medium-centered columns">
+                    <div class="button-inner">
+                        <input type="password" class="input" placeholder="Contraseña"/>
+                        <button class="button tiny in">Registrarse</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

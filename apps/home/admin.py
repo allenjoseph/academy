@@ -1,5 +1,7 @@
 from django.contrib import admin
-from models import AcademyYear, University, Faculty, Department, Student, Profesor, Parameter, Master, Attachment
+from models import AcademyYear, University, Faculty
+from models import Department, Student, Profesor
+from models import Parameter, Master, Attachment
 
 
 @admin.register(AcademyYear)
@@ -26,7 +28,17 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'provider', 'providerKey', 'name', 'lastname', 'photo', 'department',)
+    list_display = (
+        'id',
+        'provider',
+        'providerKey',
+        'name',
+        'lastname',
+        'photo',
+        'department',
+        'username',
+        'password',
+        'email',)
     list_filter = ('department__faculty', 'department',)
 
 

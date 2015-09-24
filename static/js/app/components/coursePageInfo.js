@@ -13,12 +13,12 @@ module.exports = React.createClass({
         for(var key in this.props.figures){
 
             if( this.props.figures.hasOwnProperty(key) &&
-                studentFigures.hasOwnProperty(key)){
+                studentFigures.hasOwnProperty(key) ){
 
                 figures.push(
                     <div className="item" key={key}>
                         <span className="figure">{ this.props.figures[key] }</span>
-                        studentFigures[key] }</span>
+                        <span>{ studentFigures[key] }</span>
                     </div>
                 );
             }
