@@ -98,7 +98,7 @@ var CommentBox = React.createClass({
     }
 });
 
-React.render(
-    <CommentBox />,
-    document.getElementById('commentBox')
-);
+var $commentBox = document.getElementById('commentBox');
+if($commentBox){
+    React.render(<CommentBox />, $commentBox);
+}

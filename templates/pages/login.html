@@ -6,35 +6,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>Academy</title>
     <link rel="stylesheet" type="text/css" href="{% static "css/academy.min.css"%}">
+    <script src="http://127.0.0.1:3333/socket.io/socket.io.js"></script>
+    <script src="//127.0.0.1:35729/livereload.js"></script>
 </head>
 <body class="bg-grayLow">
-    <div class="centered-wrapper">
-        <form class="centered">
-            <div class="row">
-                <div class="medium-6 medium-centered columns">
-                    <div class="button-inner">
-                        <input type="text" class="input" placeholder="Usuario"/>
-                        <button class="button lime tiny in"><i class="fa fa-check"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="medium-6 medium-centered columns">
-                    <div class="button-inner">
-                        <input type="email" class="input" placeholder="Email"/>
-                        <button class="button tiny in">OK</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="medium-6 medium-centered columns">
-                    <div class="button-inner">
-                        <input type="password" class="input" placeholder="Contraseña"/>
-                        <button class="button tiny in">Registrarse</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+    <div id="loginForm" class="centered-wrapper"></div>
+    <script src="{% static "js/academy.js"%}"></script>
 </body>
 </html>

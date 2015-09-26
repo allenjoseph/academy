@@ -25,7 +25,8 @@
 
 .fa-10x
     font-size 10em !important
-
+.mte//margin top empty
+    margin-top 0 !important
 .man//margin all normal
     margin 1em !important
 .mvn//margin vertical normal
@@ -65,10 +66,21 @@
         position absolute
         right 5px
         bottom 5px
+    &.default
         background-color amberMaterial
         {textShadowForWhite}
+        &:hover, &:focus
+            background-color amberMaterial
+        &[disabled]
+            background-color amberMaterial
+            &:hover
+                background-color amberMaterial
         &.confirm
             background-color redHighlightPalette
+    &.transparent
+        background-color transparent !important
+        box-shadow none
+        color grayPalette !important
 
 .watermark
     color rgba(0, 0, 0, 0.3)
@@ -80,6 +92,7 @@
     position relative !important
     .input
         height 48px !important
+
     .textarea
         height 72px !important
     .input, .textarea
@@ -88,6 +101,8 @@
         color grayPalette !important
         font-size 1.5em !important
         padding 0 115px 0 .5em !important
+    button[disabled]:hover
+        box-shadow none
 
 .simple-row
     padding-top .5em

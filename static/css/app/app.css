@@ -534,6 +534,9 @@ a,
 .fa-10x {
   font-size: 10em !important;
 }
+.mte {
+  margin-top: 0 !important;
+}
 .man {
   margin: 1em !important;
 }
@@ -583,11 +586,30 @@ a,
   position: absolute;
   right: 5px;
   bottom: 5px;
+}
+.button.default {
   background-color: #ffc107;
   text-shadow: 0 2px 5px rgba(0,0,0,0.6);
 }
-.button.in.confirm {
+.button.default:hover,
+.button.default:focus {
+  background-color: #ffc107;
+}
+.button.default[disabled] {
+  background-color: #ffc107;
+}
+.button.default[disabled]:hover {
+  background-color: #ffc107;
+}
+.button.default.confirm {
   background-color: #f1687b;
+}
+.button.transparent {
+  background-color: transparent !important;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: #444 !important;
 }
 .watermark {
   color: rgba(0,0,0,0.3);
@@ -613,6 +635,11 @@ a,
   color: #444 !important;
   font-size: 1.5em !important;
   padding: 0 115px 0 0.5em !important;
+}
+.button-inner button[disabled]:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .simple-row {
   padding-top: 0.5em;

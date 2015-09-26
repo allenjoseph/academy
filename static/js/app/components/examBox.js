@@ -53,7 +53,7 @@ var ExamBox = React.createClass({
     }
 });
 
-React.render(
-  <ExamBox />,
-  document.getElementById('examBox')
-);
+var $examBox = document.getElementById('examBox');
+if($examBox){
+    React.render(<ExamBox />, document.getElementById('examBox'));
+}

@@ -46,7 +46,7 @@ var NotificationBox = React.createClass({
     }
 });
 
-React.render(
-    <NotificationBox />,
-    document.getElementById('notificationBox')
-);
+var $notificationBox = document.getElementById('notificationBox');
+if($notificationBox){
+    React.render(<NotificationBox />, document.getElementById('notificationBox'));
+}

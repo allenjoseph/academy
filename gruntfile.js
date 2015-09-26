@@ -34,7 +34,7 @@ module.exports = function(grunt) {
                         'static/js/app/models/*.js',
                         'static/js/app/collections/*.js',
                         'static/js/app/router.js',
-                        'static/js/app/components/*.js',
+                        'static/js/app/components/**/*.js',
                     ]
                 }
             },
