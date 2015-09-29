@@ -1,22 +1,6 @@
 var React = require('react/addons'),
+    ButtonIn = require('../commons/buttonIn'),
     isValid = false;
-    
-var ButtonIn = React.createClass({
-    displayName: 'ButtonText',
-    render(){
-        var className = 'button tiny in ' + 
-            (this.props.type || 'default') + ' ' + 
-            (this.props.type !== 'text' ? '' : (this.props.valid ? 'success' : 'fail'));
-        return(
-            <button type="button" 
-                className={className} 
-                disabled={this.props.disabled}
-                onClick={this.props.onClick}>
-                {this.props.label && this.props.type !== 'text' ? this.props.label : (this.props.disabled ? '???' : (this.props.valid ? 'valido' : 'invalido'))}
-            </button>
-        );
-    }
-});
 
 var LoginForm = React.createClass({
 
@@ -30,7 +14,8 @@ var LoginForm = React.createClass({
             message: 'Si no tienes un nombre de usuario, escribe el que quisieras tener y presiona continuar.',
             showRegister: false,
             validUser: true,
-            validEmail: false
+            validEmail: false,
+            validPassword: true,
         }
     },
 
@@ -84,12 +69,12 @@ var LoginForm = React.createClass({
                             <input type="text" className="input" placeholder="Usuario"
                             value={this.state.username}
                             onChange={this.changeUsername}/>
-                            
-                            <ButtonIn 
+
+                            <ButtonIn
                                 type={this.state.showRegister ? 'text' : ''}
                                 label='continuar'
                                 valid={this.state.validUser}
-                                disabled={!this.state.username} 
+                                model={this.state.username}
                                 onClick={this.validateUsername}/>
                         </div>
                     </div>
@@ -101,8 +86,10 @@ var LoginForm = React.createClass({
                                 <input type="email" className="input" placeholder="Email"
                                 value={this.state.email}
                                 onChange={this.changeEmail}/>
-                                <button type="button" className="button tiny in text"
-                                disabled={!this.state.validEmail || !this.state.validUser}>OK</button>
+                                <ButtonIn
+                                    type={'text'}
+                                    valid={this.state.validEmail}
+                                    model={this.state.email}/>
                             </div>
                         </div>
                     </div>
@@ -114,8 +101,10 @@ var LoginForm = React.createClass({
                                 <input type="password" className="input" placeholder="Contraseña"
                                 value={this.state.password}
                                 onChange={this.changePassword}/>
-                                <button type="button" className="button tiny in default"
-                                disabled={!this.state.password || !this.state.validEmail || !this.state.validUser}>continuar</button>
+                                <ButtonIn
+                                    label='continuar'
+                                    valid={this.state.validPassword}
+                                    model={this.state.password}/>
                             </div>
                         </div>
                     </div>

@@ -604,12 +604,28 @@ a,
 .button.default.confirm {
   background-color: #f1687b;
 }
-.button.transparent {
+.button.text,
+.button.text:hover {
   background-color: transparent !important;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   color: #444 !important;
+  outline: 0;
+  font-weight: bolder;
+}
+.button.text[disabled],
+.button.text:hover[disabled] {
+  color: rgba(0,0,0,0.3);
+  font-weight: normal;
+}
+.button.text.success,
+.button.text:hover.success {
+  color: #008000 !important;
+}
+.button.text.fail,
+.button.text:hover.fail {
+  color: #f00 !important;
 }
 .watermark {
   color: rgba(0,0,0,0.3);
