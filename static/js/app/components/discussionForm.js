@@ -20,8 +20,8 @@ module.exports = React.createClass({
         this.setState(newState);
     },
 
-    validateQuestion: function(event){
-        event.preventDefault();
+    validateQuestion: function(e){
+        e.preventDefault();
         if(!this.state.question) return;
         if(!this.state.confirm){
             var newState = React.addons.update(this.state, {

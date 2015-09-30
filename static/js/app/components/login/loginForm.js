@@ -1,6 +1,7 @@
 var React = require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
-    isValid = false;
+    LoginActions = require('../../actions/loginActions'),
+    ENTER_KEY_CODE = 13;
 
 var LoginForm = React.createClass({
 
@@ -13,6 +14,7 @@ var LoginForm = React.createClass({
             password: '',
             message: 'Si no tienes un nombre de usuario, escribe el que quisieras tener y presiona continuar.',
             showRegister: false,
+            showPassword: false,
             validUser: true,
             validEmail: false,
             validPassword: true,
@@ -41,13 +43,26 @@ var LoginForm = React.createClass({
     },
 
     validateUsername(){
-        if(isValid){
-            window.location.href = "/";
-        }else{
-            this.setState(React.addons.update(this.state, {
-                showRegister: {$set: true},
-                message: {$set: 'Completa el formulario y presiona continuar para ingresar.'}
-            }));
+        var self = this;
+        LoginActions.search(this.state.username)
+        .then((existUsername) => {
+            if(existUsername){
+                self.setState(React.addons.update(self.state, {
+                    showPassword: {$set: true}
+                }));
+            } else {
+                self.setState(React.addons.update(self.state, {
+                    showRegister: {$set: true},
+                    message: {$set: 'Completa el formulario y presiona continuar para ingresar.'}
+                }));
+            }
+        });
+    },
+
+    onKeyPressUser(e){
+        if(e.which === ENTER_KEY_CODE){
+            e.preventDefault();
+            this.validateUsername();
         }
     },
 
@@ -68,10 +83,11 @@ var LoginForm = React.createClass({
                         <div className="button-inner">
                             <input type="text" className="input" placeholder="Usuario"
                             value={this.state.username}
+                            onKeyPress={this.onKeyPressUser}
                             onChange={this.changeUsername}/>
 
                             <ButtonIn
-                                type={this.state.showRegister ? 'text' : ''}
+                                type={this.state.showRegister || this.state.showPassword ? 'text' : ''}
                                 label='continuar'
                                 valid={this.state.validUser}
                                 model={this.state.username}
@@ -94,7 +110,7 @@ var LoginForm = React.createClass({
                         </div>
                     </div>
                 }
-                { !this.state.showRegister ? '' :
+                { !this.state.showRegister && !this.state.showPassword ? '' :
                     <div className="row">
                         <div className="medium-6 medium-centered columns">
                             <div className="button-inner">
@@ -102,7 +118,7 @@ var LoginForm = React.createClass({
                                 value={this.state.password}
                                 onChange={this.changePassword}/>
                                 <ButtonIn
-                                    label='continuar'
+                                    label={ this.state.showPassword ? 'ingresar' : 'continuar'}
                                     valid={this.state.validPassword}
                                     model={this.state.password}/>
                             </div>
