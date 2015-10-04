@@ -59,59 +59,11 @@
 .uppercase
     text-transform uppercase!important
 
-.button
-    font-weight bolder
-    &.in
-        margin 0
-        position absolute
-        right 5px
-        bottom 5px
-    &.default
-        background-color amberMaterial
-        {textShadowForWhite}
-        &:hover, &:focus
-            background-color amberMaterial
-        &[disabled]
-            background-color amberMaterial
-            &:hover
-                background-color amberMaterial
-        &.confirm
-            background-color redHighlightPalette
-    &.text, &.text:hover
-        background-color transparent !important
-        box-shadow none
-        color grayPalette !important
-        outline 0
-        font-weight bolder
-        &[disabled]
-            color rgba(0, 0, 0, 0.3)
-            font-weight normal
-        &.success
-            color green!important
-        &.fail
-            color red!important
-
 .watermark
     color rgba(0, 0, 0, 0.3)
 
 .text-uppercase
     text-transform uppercase
-
-.button-inner
-    position relative !important
-    .input
-        height 48px !important
-
-    .textarea
-        height 72px !important
-    .input, .textarea
-        border none !important
-        box-shadow-material 1
-        color grayPalette !important
-        font-size 1.5em !important
-        padding 0 115px 0 .5em !important
-    button[disabled]:hover
-        box-shadow none
 
 .simple-row
     padding-top .5em
@@ -133,4 +85,3 @@
 
 .bg-grayLow
     background-color grayLowPalette
-

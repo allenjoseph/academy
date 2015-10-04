@@ -91,7 +91,6 @@ module.exports = function(grunt) {
             css: {
                 files: [
                     'static/css/stylus/*.styl',
-                    'static/css/**/*.css',
                 ],
                 tasks: ['stylus:compile','cssmin']
             }

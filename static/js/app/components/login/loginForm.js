@@ -1,7 +1,10 @@
 var React = require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
     LoginActions = require('../../actions/loginActions'),
-    ENTER_KEY_CODE = 13;
+    ENTER_KEY_CODE = 13,
+    EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+    LOGIN_MESSAGE = 'Si no tienes un nombre de usuario, escribe el que quieres tener y presiona continuar.',
+    REGISTER_MESSAGE = 'Completa el formulario y presiona continuar para ingresar.';
 
 var LoginForm = React.createClass({
 
@@ -12,18 +15,21 @@ var LoginForm = React.createClass({
             username: '',
             email: '',
             password: '',
-            message: 'Si no tienes un nombre de usuario, escribe el que quisieras tener y presiona continuar.',
+            message: LOGIN_MESSAGE,
             showRegister: false,
             showPassword: false,
             validUser: true,
             validEmail: false,
             validPassword: true,
+            loading: false
         }
     },
 
     changeUsername(e){
+        var username = e.target.value.replace(/ /g, '');
+
         this.setState(React.addons.update(this.state, {
-            username: {$set : e.target.value.replace(/ /g, '')}
+            username: {$set : username}
         }));
     },
 
@@ -32,7 +38,7 @@ var LoginForm = React.createClass({
 
         this.setState(React.addons.update(this.state, {
             email: {$set: email},
-            validEmail: {$set: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email)}
+            validEmail: {$set: EMAIL_REGEX.test(email)}
         }));
     },
 
@@ -42,28 +48,52 @@ var LoginForm = React.createClass({
         }));
     },
 
-    validateUsername(){
-        var self = this;
-        LoginActions.search(this.state.username)
-        .then((existUsername) => {
-            if(existUsername){
-                self.setState(React.addons.update(self.state, {
-                    showPassword: {$set: true}
-                }));
-            } else {
-                self.setState(React.addons.update(self.state, {
-                    showRegister: {$set: true},
-                    message: {$set: 'Completa el formulario y presiona continuar para ingresar.'}
-                }));
-            }
-        });
-    },
-
     onKeyPressUser(e){
         if(e.which === ENTER_KEY_CODE){
             e.preventDefault();
             this.validateUsername();
         }
+    },
+
+    validateUsername(){
+        this.setState(React.addons.update(this.state, {
+            loading: {$set: true}
+        }));
+        var self = this;
+        LoginActions.search(this.state.username)
+        .then((existUsername) => {
+            if(existUsername){
+                self.setState(React.addons.update(self.state, {
+                    showPassword: {$set: true},
+                    loading: {$set: false}
+                }));
+            } else {
+                self.setState(React.addons.update(self.state, {
+                    showRegister: {$set: true},
+                    message: {$set: REGISTER_MESSAGE},
+                    loading: {$set: false}
+                }));
+            }
+        });
+    },
+
+    validatePassword(){
+        this.setState(React.addons.update(this.state, {
+            loading: {$set: true}
+        }));
+        LoginActions.login({
+            user: this.state.username,
+            password: this.state.password
+        })
+        .then((userValid) => {
+            if(userValid){
+                window.location.href = '/';
+            }else{
+                this.setState(React.addons.update(this.state, {
+                    loading: {$set: false}
+                }));
+            }
+        });
     },
 
     render(){
@@ -73,9 +103,10 @@ var LoginForm = React.createClass({
         }
         return(
             <form className="centered">
+                <fieldset disabled={this.state.loading}>
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
-                        <h1 className="mte"><a>Academy</a></h1>
+                        <h1 className="mte"><a>{ !this.state.showRegister ? 'Academy' : 'Academy Register' }</a></h1>
                     </div>
                 </div>
                 <div className="row">
@@ -120,19 +151,24 @@ var LoginForm = React.createClass({
                                 <ButtonIn
                                     label={ this.state.showPassword ? 'ingresar' : 'continuar'}
                                     valid={this.state.validPassword}
-                                    model={this.state.password}/>
+                                    model={this.state.password}
+                                    onClick={this.validatePassword}/>
                             </div>
                         </div>
                     </div>
                 }
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
-                        <small>{this.state.message}</small>
+                        <span>{this.state.message}</span>
                     </div>
                 </div>
+                </fieldset>
             </form>
         );
     }
 });
 
-React.render(<LoginForm/>, document.getElementById('loginForm'));
+var $loginForm = document.getElementById('loginForm');
+if($loginForm){
+    React.render(<LoginForm/>, $loginForm);
+}
