@@ -24,5 +24,14 @@ module.exports = {
             return moment(date).format('MMM');
         }
         return '';
+    },
+    showAlert: function(level, message, title){
+        window.dispatchEvent(new CustomEvent('showNotification', {
+            detail: {
+                level: level,
+                message: message,
+                title: title
+            }
+        }));
     }
 };

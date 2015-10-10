@@ -1,9 +1,17 @@
+var $ = require('jquery');
+
 export default {
     search(text){
         return new Promise((resolve, reject) => {
-            window.setTimeout(function(){
-                resolve(text === 'test');
-            }, 1000);
+            $.post('/ExistUsername', {username: text})
+            .done((exist) => {
+                debugger;
+                resolve(exist);
+            })
+            .fail(() => {
+                debugger;
+                reject();
+            });
         });
     },
     login(data){

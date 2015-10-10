@@ -568,7 +568,7 @@ fieldset[disabled] button:hover.text {
 #notificationBox .wrapper.success {
   background-color: #404040;
 }
-#notificationBox .wrapper.fail {
+#notificationBox .wrapper.error {
   background-color: #f44336;
 }
 #notificationBox .wrapper span {

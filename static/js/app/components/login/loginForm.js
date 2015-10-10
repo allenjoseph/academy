@@ -1,6 +1,7 @@
 var React = require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
     LoginActions = require('../../actions/loginActions'),
+    utilities = require('../../commons/utilities'),
     ENTER_KEY_CODE = 13,
     EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
     LOGIN_MESSAGE = 'Si no tienes un nombre de usuario, escribe el que quieres tener y presiona continuar.',
@@ -74,6 +75,9 @@ var LoginForm = React.createClass({
                     loading: {$set: false}
                 }));
             }
+        }, () => {
+            utilities.showAlert('error', 'Something goes wrong! :/');
+            this.cancelRegister();
         });
     },
 
@@ -94,6 +98,10 @@ var LoginForm = React.createClass({
                 }));
             }
         });
+    },
+
+    cancelRegister(){
+        this.setState(this.getInitialState());
     },
 
     render(){
@@ -160,6 +168,7 @@ var LoginForm = React.createClass({
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
                         <span>{this.state.message}</span>
+                        { this.state.showRegister ? <span className="pull-right"><a onClick={this.cancelRegister}>Cancelar</a></span> : '' }
                     </div>
                 </div>
                 </fieldset>
