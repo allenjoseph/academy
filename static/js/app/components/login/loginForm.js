@@ -63,6 +63,7 @@ var LoginForm = React.createClass({
         var self = this;
         LoginActions.search(this.state.username)
         .then((existUsername) => {
+            debugger;
             if(existUsername){
                 self.setState(React.addons.update(self.state, {
                     showPassword: {$set: true},

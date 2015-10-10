@@ -3,13 +3,11 @@ var $ = require('jquery');
 export default {
     search(text){
         return new Promise((resolve, reject) => {
-            $.post('/ExistUsername', {username: text})
-            .done((exist) => {
-                debugger;
-                resolve(exist);
+            $.post('/username', {username: text})
+            .done((data) => {
+                resolve(data.exist);
             })
             .fail(() => {
-                debugger;
                 reject();
             });
         });

@@ -6,7 +6,7 @@ from apps.courses.views import CoursesView
 from apps.home.views import UploadFile, DeleteUploadedFile
 from apps.pages.viewIndex import IndexView
 from apps.pages.viewCourse import CourseView
-from apps.pages.viewLogin import LoginView
+from apps.pages.viewLogin import LoginView, ExistUsername
 from apps.discussions.views import DiscussionsView
 from apps.discussions.views import CommentsView
 from apps.exams.views import ExamView
@@ -31,9 +31,10 @@ urlpatterns = patterns(
     url(r'^exams/?$', ExamView.as_view()),
     url(r'^exams/(?P<pk>\d+)/?$', ExamView.as_view()),
 
-    url(r'^upload/', UploadFile, name='uploadFile'),
+    url(r'^upload/?$', UploadFile, name='uploadFile'),
     url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile,
-        name='deleteUploadedFile')
+        name='deleteUploadedFile'),
+    url(r'username/?$', ExistUsername, name='existUsername')
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(

@@ -2,8 +2,8 @@
 from django.views.generic import TemplateView
 from apps.home.models import Student
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-import json
 
 
 class LoginView(TemplateView):
@@ -15,10 +15,11 @@ class LoginView(TemplateView):
         return self.render_to_response(context)
 
 
+@csrf_exempt
 @require_POST
 def ExistUsername(request):
-    params = json.loads(request.body)
-    username = params.get('username')
+
+    username = request.POST['username']
     exist = False
 
     if username:
