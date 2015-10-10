@@ -1,12 +1,31 @@
 # -*- encoding: utf-8 -*-
-from models import Attachment
+from models import Attachment, Student, Department
 from academy.serializers import ModelSerializer
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import UploadedFile
 from django.http import HttpResponse, JsonResponse
+from django.views.generic import View
+from academy.mixins import RestServiceMixin
 import os
 
+class StudentView(RestServiceMixin, View):
+    def post(self, request, *args, **kwargs):
+        params = json.loads(request.body)
+
+        department = Department.objects.get(
+            pk=params.get('department'))
+
+        student = Student.objects.create(
+            name = params.get('name'),
+            lastname = params.get('lastname'),
+            department = department,
+            username = params.get('username'),
+            password = params.get('password'),
+            email = params.get('email'))
+
+        dictStudent = ModelSerializer(student).dictModel
+        return JsonResponse(dictStudent)
 
 @csrf_exempt
 @require_POST

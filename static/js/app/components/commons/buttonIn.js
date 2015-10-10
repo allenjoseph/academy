@@ -15,7 +15,7 @@ export default React.createClass({
         return(
             <button type="button"
                 className={className}
-                disabled={!this.props.model}
+                disabled={!this.props.model || !this.props.valid}
                 onClick={this.props.onClick}
                 tabIndex={this.props.type === 'text' ? -1 : ''}>
                     { text }
