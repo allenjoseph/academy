@@ -55,6 +55,13 @@ export default React.createClass({
         }
     },
 
+    onKeyPressPassword(e){
+        if(e.which === ENTER_KEY_CODE && this.state.validPassword){
+            e.preventDefault();
+            this.validatePassword();
+        }
+    },
+
     validateUsername(){
         this.props.loading(true);
         var self = this;
@@ -88,7 +95,7 @@ export default React.createClass({
         this.props.loading(true);
         var self = this;
 
-        if(this.state.showRegister){//register user
+        if(this.state.showRegister){
 
             LoginActions.search(this.state.username)
             .then((existUsername) => {
@@ -166,6 +173,7 @@ export default React.createClass({
                                 <input type="email" className="input" placeholder="Email"
                                 value={this.state.email}
                                 onChange={this.changeEmail}/>
+
                                 <ButtonIn
                                     type={'text'}
                                     valid={this.state.validEmail}
@@ -180,7 +188,9 @@ export default React.createClass({
                             <div className="button-inner">
                                 <input type="password" className="input" placeholder="Contraseña min 6 caracteres"
                                 value={this.state.password}
+                                onKeyPress={this.onKeyPressPassword}
                                 onChange={this.changePassword}/>
+
                                 <ButtonIn
                                     label={ this.state.showPassword ? 'ingresar' : 'continuar'}
                                     valid={this.state.validPassword}

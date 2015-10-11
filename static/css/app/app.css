@@ -49,6 +49,24 @@ a,
   background-color: #fcfdfd;
   color: #444;
 }
+.input,
+.select {
+  height: 48px !important;
+}
+.textarea {
+  height: 72px !important;
+}
+.form-light .select,
+.form-light .input {
+  background-color: #fff !important;
+  border: none !important;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  color: #444;
+  font-size: 1.5em !important;
+  margin-bottom: 1rem;
+}
 
 .box {
   background-color: #fcfdfd;
@@ -160,20 +178,8 @@ a,
 .button-inner {
   position: relative !important;
 }
-.button-inner .input {
-  height: 48px !important;
-}
-.button-inner .textarea {
-  height: 72px !important;
-}
 .button-inner .input,
 .button-inner .textarea {
-  border: none !important;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  color: #444;
-  font-size: 1.5em !important;
   padding: 0 115px 0 0.5em !important;
 }
 .button-inner button[disabled]:hover {

@@ -1,4 +1,7 @@
 var React = require('react/addons'),
+    $ = require('jquery'),
+    SelectActions = require('../../actions/selectActions'),
+    utilities = require('../../commons/utilities'),
     ButtonIn = require('../commons/buttonIn'),
     DEPARTMENT_MESSAGE = 'Sólo hace falta tus datos de estudiante para ingresar.';
 
@@ -12,14 +15,35 @@ export default React.createClass({
             lastname: '',
             department: '',
             message: DEPARTMENT_MESSAGE,
+            universities: [],
+            faculties: [],
+            departments: []
         }
+    },
+
+    componentDidMount(){
+
+        SelectActions.universities()
+        .then((data) => {
+
+            if(data.length && this.isMounted()){
+                this.setState(React.addons.update(this.state, {
+                    universities: {$set: data}
+                }));
+            }
+
+        }.bind(this),
+
+        (msg) => {
+            utilities.showAlert('error', msg || 'Something goes wrong! :/');
+        });
     },
 
     changeName(e){
         var name = e.target.value.replace(/ /g, '');
 
         this.setState(React.addons.update(this.state, {
-            name: {$set : name}
+            name: {$set: name}
         }));
     },
 
@@ -42,6 +66,64 @@ export default React.createClass({
         this.props.cancelRegister();
     },
 
+    loadSelect(type){
+        return this.state[type].map((elem) => {
+            return (
+                <option key={elem.id} value={elem.id}>{elem.description}</option>
+            );
+        });
+    },
+
+    changeUniversity(e){
+        if(e.target.value){
+            SelectActions.faculties(e.target.value)
+            .then((data) => {
+
+                this.setState(React.addons.update(this.state, {
+                    faculties: {$set: data},
+                    departments: {$set: []}
+                }));
+
+            }.bind(this),
+
+            (msg) => {
+                utilities.showAlert('error', msg || 'Something goes wrong! :/');
+            });
+        }else{
+            this.setState(React.addons.update(this.state, {
+                faculties: {$set: []},
+                departments: {$set: []}
+            }));
+        }
+    },
+
+    changeFaculty(e){
+        if(e.target.value){
+            SelectActions.departments(e.target.value)
+            .then((data) => {
+
+                this.setState(React.addons.update(this.state, {
+                    departments: {$set: data}
+                }));
+
+            }.bind(this),
+
+            (msg) => {
+                utilities.showAlert('error', msg || 'Something goes wrong! :/');
+            });
+        }else{
+            this.setState(React.addons.update(this.state, {
+                departments: {$set: []}
+            }));
+        }
+    },
+
+    changeDepartment(e){
+        if(e.target.value){
+            //...
+        }
+    },
+
     render(){
         return(
             <div>
@@ -53,11 +135,13 @@ export default React.createClass({
                             onChange={this.changeName}/>
 
                             <ButtonIn
-                                type='text'
+                                type={'text'}
+                                valid={this.state.name}
                                 model={this.state.name} />
                         </div>
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
                         <div className="button-inner">
@@ -67,23 +151,49 @@ export default React.createClass({
 
                             <ButtonIn
                                 type={'text'}
+                                valid={this.state.lastname}
                                 model={this.state.lastname}/>
                         </div>
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
                         <div className="button-inner">
-                            <input type="text" className="input" placeholder="Department"
-                            value={this.state.department}
-                            onChange={this.changeDepartment}/>
-
-                            <ButtonIn
-                                type={'text'}
-                                model={this.state.department}/>
+                            <select className="select" onChange={this.changeUniversity}>
+                                <option value="">Selecciona tu Universidad</option>
+                                { this.loadSelect('universities') }
+                            </select>
                         </div>
                     </div>
                 </div>
+
+                { !this.state.faculties.length ? '' :
+                <div className="row">
+                    <div className="medium-6 medium-centered columns">
+                        <div className="button-inner">
+                            <select className="select" onChange={this.changeFaculty}>
+                                <option value="">Selecciona tu Facultad</option>
+                                { this.loadSelect('faculties') }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                }
+
+                { !this.state.departments.length ? '' :
+                <div className="row">
+                    <div className="medium-6 medium-centered columns">
+                        <div className="button-inner">
+                            <select className="select">
+                                <option value="">Selecciona tu Especialidad</option>
+                                { this.loadSelect('departments') }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                }
+
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
                         <span>{this.state.message}</span>

@@ -71,8 +71,9 @@ var LoginForm = React.createClass({
                         </div>
         }
         return(
-            <form className="centered">
+            <form className="centered form-light">
                 <fieldset disabled={this.state.loading}>
+
                     <div className="row">
                         <div className="medium-6 medium-centered columns">
                             <h1 className="mte"><a>{ title }</a></h1>

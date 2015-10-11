@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
 from apps.courses.views import CoursesView
 from apps.home.views import UploadFile, DeleteUploadedFile
+from apps.home.views import Universities, Faculties, Departments
 from apps.pages.viewIndex import IndexView
 from apps.pages.viewCourse import CourseView
 from apps.pages.viewLogin import LoginView, ExistUsername
@@ -36,8 +37,18 @@ urlpatterns = patterns(
     url(r'^students/(?P<pk>\d+)/?$', StudentView.as_view()),
 
     url(r'^upload/?$', UploadFile, name='uploadFile'),
+
     url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile,
         name='deleteUploadedFile'),
+
+    url(r'^universities/?$', Universities, name='universities'),
+
+    url(r'^faculties/(?P<university>\d+)/?$', Faculties,
+        name='faculties'),
+
+    url(r'^departments/(?P<faculty>\d+)/?$', Departments,
+        name='departments'),
+
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
