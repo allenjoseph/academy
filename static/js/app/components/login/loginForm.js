@@ -1,11 +1,9 @@
-var React = require('react/addons'),
+var React =  require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
     LoginActions = require('../../actions/loginActions'),
     utilities = require('../../commons/utilities'),
     UserRegisterForm = require('./userRegisterForm'),
     StudentRegisterForm = require('./studentRegisterForm'),
-    ENTER_KEY_CODE = 13,
-    EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
     LOGIN_MESSAGE = 'Si no tienes un nombre de usuario, escribe el que quieres tener y presiona continuar.';
 
 var LoginForm = React.createClass({

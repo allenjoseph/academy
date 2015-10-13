@@ -17,7 +17,7 @@ export default React.createClass({
             password: '',
             showRegister: false,
             showPassword: false,
-            validUser: true,
+            validUser: false,
             validEmail: false,
             validPassword: false,
             message: REGISTER_MESSAGE,
@@ -28,7 +28,8 @@ export default React.createClass({
         var username = e.target.value.replace(/ /g, '');
 
         this.setState(React.addons.update(this.state, {
-            username: {$set : username}
+            username: {$set: username},
+            validUser: {$set: !!username}
         }));
     },
 
@@ -51,14 +52,20 @@ export default React.createClass({
     onKeyPressUser(e){
         if(e.which === ENTER_KEY_CODE){
             e.preventDefault();
-            this.validateUsername();
+
+            if(this.state.validUser){
+                this.validateUsername();
+            }
         }
     },
 
     onKeyPressPassword(e){
-        if(e.which === ENTER_KEY_CODE && this.state.validPassword){
+        if(e.which === ENTER_KEY_CODE){
             e.preventDefault();
-            this.validatePassword();
+
+            if(this.state.validPassword){
+                this.validatePassword();
+            }
         }
     },
 
@@ -136,8 +143,10 @@ export default React.createClass({
     },
 
     render(){
-        var message;
+        var message, inputEmail, inputPassowrd;
+
         if(this.state.showRegister){
+
             message =   <div className="row">
                             <div className="medium-6 medium-centered columns">
                                 <span>{this.state.message}</span>
@@ -145,8 +154,44 @@ export default React.createClass({
                                     <a onClick={this.cancelRegister}>Cancelar</a>
                                 </span>
                             </div>
-                        </div>
+                        </div>;
+
+            inputEmail = <div className="row">
+                            <div className="medium-6 medium-centered columns">
+                                <div className="button-inner">
+                                    <input type="email" className="input" placeholder="Email"
+                                    value={this.state.email}
+                                    onChange={this.changeEmail}/>
+
+                                    <ButtonIn
+                                        type={'text'}
+                                        valid={this.state.validEmail}
+                                        model={this.state.email}/>
+                                </div>
+                            </div>
+                        </div>;
         }
+
+        if(this.state.showRegister || this.state.showPassword){
+
+            inputPassowrd = <div className="row">
+                                <div className="medium-6 medium-centered columns">
+                                    <div className="button-inner">
+                                        <input type="password" className="input" placeholder="Contraseña min 6 caracteres"
+                                        value={this.state.password}
+                                        onKeyPress={this.onKeyPressPassword}
+                                        onChange={this.changePassword}/>
+
+                                        <ButtonIn
+                                            label={ this.state.showPassword ? 'ingresar' : 'continuar'}
+                                            valid={this.state.validPassword}
+                                            model={this.state.password}
+                                            onClick={this.validatePassword}/>
+                                    </div>
+                                </div>
+                            </div>;
+        }
+
         return(
             <div>
                 <div className="row">
@@ -166,41 +211,11 @@ export default React.createClass({
                         </div>
                     </div>
                 </div>
-                { !this.state.showRegister ? '' :
-                    <div className="row">
-                        <div className="medium-6 medium-centered columns">
-                            <div className="button-inner">
-                                <input type="email" className="input" placeholder="Email"
-                                value={this.state.email}
-                                onChange={this.changeEmail}/>
 
-                                <ButtonIn
-                                    type={'text'}
-                                    valid={this.state.validEmail}
-                                    model={this.state.email}/>
-                            </div>
-                        </div>
-                    </div>
-                }
-                { !this.state.showRegister && !this.state.showPassword ? '' :
-                    <div className="row">
-                        <div className="medium-6 medium-centered columns">
-                            <div className="button-inner">
-                                <input type="password" className="input" placeholder="Contraseña min 6 caracteres"
-                                value={this.state.password}
-                                onKeyPress={this.onKeyPressPassword}
-                                onChange={this.changePassword}/>
-
-                                <ButtonIn
-                                    label={ this.state.showPassword ? 'ingresar' : 'continuar'}
-                                    valid={this.state.validPassword}
-                                    model={this.state.password}
-                                    onClick={this.validatePassword}/>
-                            </div>
-                        </div>
-                    </div>
-                }
+                { inputEmail }
+                { inputPassowrd }
                 { message }
+
             </div>
         );
     }

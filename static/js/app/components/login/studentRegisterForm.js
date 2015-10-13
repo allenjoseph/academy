@@ -125,6 +125,37 @@ export default React.createClass({
     },
 
     render(){
+
+        var selectFaculty, selectDepartment;
+
+        if(this.state.faculties.length){
+
+            selectFaculty = <div className="row">
+                                <div className="medium-6 medium-centered columns">
+                                    <div className="button-inner">
+                                        <select className="select" onChange={this.changeFaculty}>
+                                            <option value="">Selecciona tu Facultad</option>
+                                            { this.loadSelect('faculties') }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>;
+        }
+
+        if(this.state.departments.length){
+
+            selectDepartment =  <div className="row">
+                                    <div className="medium-6 medium-centered columns">
+                                        <div className="button-inner">
+                                            <select className="select">
+                                                <option value="">Selecciona tu Especialidad</option>
+                                                { this.loadSelect('departments') }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>;
+        }
+
         return(
             <div>
                 <div className="row">
@@ -168,31 +199,8 @@ export default React.createClass({
                     </div>
                 </div>
 
-                { !this.state.faculties.length ? '' :
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
-                        <div className="button-inner">
-                            <select className="select" onChange={this.changeFaculty}>
-                                <option value="">Selecciona tu Facultad</option>
-                                { this.loadSelect('faculties') }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                }
-
-                { !this.state.departments.length ? '' :
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
-                        <div className="button-inner">
-                            <select className="select">
-                                <option value="">Selecciona tu Especialidad</option>
-                                { this.loadSelect('departments') }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                }
+                { selectFaculty }
+                { selectDepartment}
 
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
