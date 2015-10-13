@@ -14,6 +14,8 @@ export default React.createClass({
             name: '',
             lastname: '',
             department: '',
+            faculty: '',
+            university: '',
             message: DEPARTMENT_MESSAGE,
             universities: [],
             faculties: [],
@@ -55,12 +57,6 @@ export default React.createClass({
         }));
     },
 
-    changeDepartment(e){
-        this.setState(React.addons.update(this.state, {
-            department: {$set : e.target.value}
-        }));
-    },
-
     cancelRegister(){
         this.setState(this.getInitialState());
         this.props.cancelRegister();
@@ -75,12 +71,17 @@ export default React.createClass({
     },
 
     changeUniversity(e){
-        if(e.target.value){
-            SelectActions.faculties(e.target.value)
+        var university = e.target.value;
+
+        if(university){
+            SelectActions.faculties(university)
             .then((data) => {
 
                 this.setState(React.addons.update(this.state, {
+                    university: {$set: university},
+                    faculty: {$set: ''},
                     faculties: {$set: data},
+                    department: {$set: ''},
                     departments: {$set: []}
                 }));
 
@@ -91,18 +92,25 @@ export default React.createClass({
             });
         }else{
             this.setState(React.addons.update(this.state, {
+                university: {$set: university},
+                faculty: {$set: ''},
                 faculties: {$set: []},
+                department: {$set: ''},
                 departments: {$set: []}
             }));
         }
     },
 
     changeFaculty(e){
-        if(e.target.value){
-            SelectActions.departments(e.target.value)
+        var faculty = e.target.value;
+
+        if(faculty){
+            SelectActions.departments(faculty)
             .then((data) => {
 
                 this.setState(React.addons.update(this.state, {
+                    faculty: {$set: faculty},
+                    department: {$set: ''},
                     departments: {$set: data}
                 }));
 
@@ -113,20 +121,22 @@ export default React.createClass({
             });
         }else{
             this.setState(React.addons.update(this.state, {
+                faculty: {$set: faculty},
+                department: {$set: ''},
                 departments: {$set: []}
             }));
         }
     },
 
     changeDepartment(e){
-        if(e.target.value){
-            //...
-        }
+        this.setState(React.addons.update(this.state, {
+            department: {$set : e.target.value}
+        }));
     },
 
     render(){
 
-        var selectFaculty, selectDepartment;
+        var selectFaculty, selectDepartment, buttonLogin, message;
 
         if(this.state.faculties.length){
 
@@ -140,6 +150,7 @@ export default React.createClass({
                                     </div>
                                 </div>
                             </div>;
+
         }
 
         if(this.state.departments.length){
@@ -147,13 +158,22 @@ export default React.createClass({
             selectDepartment =  <div className="row">
                                     <div className="medium-6 medium-centered columns">
                                         <div className="button-inner">
-                                            <select className="select">
+                                            <select className="select" onChange={this.changeDepartment}>
                                                 <option value="">Selecciona tu Especialidad</option>
                                                 { this.loadSelect('departments') }
                                             </select>
                                         </div>
                                     </div>
                                 </div>;
+
+        }
+
+        if((this.state.faculty && !this.state.departments.length) || this.state.department){
+
+            buttonLogin = <button type="button" className="button expand tiny">Ingresar</button>;
+        }else{
+
+            message = <span>{this.state.message}</span>
         }
 
         return(
@@ -204,7 +224,8 @@ export default React.createClass({
 
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
-                        <span>{this.state.message}</span>
+                        { message }
+                        { buttonLogin }
                         <span className="pull-right">
                             <a onClick={this.cancelRegister}>Cancelar</a>
                         </span>
