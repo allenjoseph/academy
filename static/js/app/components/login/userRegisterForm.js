@@ -104,13 +104,20 @@ export default React.createClass({
 
         if(this.state.showRegister){
 
+            var partialUser = {
+                username: this.state.username,
+                email: this.state.email,
+                password: this.state.password
+            };
+
             LoginActions.search(this.state.username)
             .then((existUsername) => {
 
                 if(existUsername){
                     utilities.showAlert('error', msg || 'Revise sus datos ingresados y reintente.');
                 } else {
-                    self.props.showDepartments();
+
+                    self.props.showDepartments(partialUser);
                 }
 
                 self.props.loading(false);
@@ -126,13 +133,19 @@ export default React.createClass({
                 user: this.state.username,
                 password: this.state.password
             })
-            .then((userValid) => {
+            .then((token) => {
 
-                if(userValid){
-                    window.location.href = '/';
+                if(token){
+                    window.location.href = '/token';
                 }else{
                     self.props.loading(false);
+                    utilities.showAlert('warning', msg || 'Usuario o contraseña incorrecto! :S');
                 }
+
+            }, (msg) => {
+
+                utilities.showAlert('error', msg || 'Something goes wrong! :/');
+                self.cancelRegister();
             });
         }
     },

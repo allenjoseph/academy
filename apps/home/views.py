@@ -8,6 +8,7 @@ from django.core.files.uploadedfile import UploadedFile
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
 from academy.mixins import RestServiceMixin
+from django.contrib.auth.hashers import make_password
 import os
 import json
 
@@ -19,16 +20,20 @@ class StudentView(RestServiceMixin, View):
         department = Department.objects.get(
             pk=params.get('department'))
 
+        password = make_password(params.get('password'))
+
         student = Student.objects.create(
             name=params.get('name'),
             lastname=params.get('lastname'),
             department=department,
             username=params.get('username'),
-            password=params.get('password'),
+            password=password,
             email=params.get('email'))
+        student.save()
 
-        dictStudent = ModelSerializer(student).dictModel
-        return JsonResponse(dictStudent)
+        token = make_password(password)
+        request.session['token'] = token
+        return JsonResponse({'token': token})
 
 
 @csrf_exempt

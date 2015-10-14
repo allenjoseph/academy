@@ -134,6 +134,17 @@ export default React.createClass({
         }));
     },
 
+    registerUser(){
+        var partialUser = {
+            name: this.state.name,
+            lastname: this.state.lastname,
+            department: this.state.department,
+            faculty: this.state.faculty,
+            university: this.state.university
+        }
+        this.props.registerUser(partialUser);
+    },
+
     render(){
 
         var selectFaculty, selectDepartment, buttonLogin, message;
@@ -170,7 +181,7 @@ export default React.createClass({
 
         if((this.state.faculty && !this.state.departments.length) || this.state.department){
 
-            buttonLogin = <button type="button" className="button expand tiny">Ingresar</button>;
+            buttonLogin = <button type="button" className="button expand tiny" onClick={this.registerUser}>Ingresar</button>;
         }else{
 
             message = <span>{this.state.message}</span>

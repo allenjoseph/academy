@@ -20,10 +20,10 @@ urlpatterns = patterns(
     url(r'^$', IndexView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^login/', LoginView.as_view(), name='login'),
+    url(r'^login/?$', LoginView.as_view(), name='login'),
     url(r'^username/?$', ExistUsername, name='existUsername'),
 
-    url(r'^course/(?P<slug>[-\w]+)/$', CourseView.as_view(), name='course'),
+    url(r'^course/(?P<slug>[-\w]+)/?$', CourseView.as_view(), name='course'),
 
     url(r'^courses/?$', CoursesView.as_view()),
     url(r'^courses/(?P<pk>\d+)/?$', CoursesView.as_view()),
@@ -38,7 +38,7 @@ urlpatterns = patterns(
 
     url(r'^upload/?$', UploadFile, name='uploadFile'),
 
-    url(r'^delete/(?P<pk>\d+)$', DeleteUploadedFile,
+    url(r'^delete/(?P<pk>\d+)/?$', DeleteUploadedFile,
         name='deleteUploadedFile'),
 
     url(r'^universities/?$', Universities, name='universities'),
@@ -49,10 +49,12 @@ urlpatterns = patterns(
     url(r'^departments/(?P<faculty>\d+)/?$', Departments,
         name='departments'),
 
+    url(r'^(?P<token>.*)/?$', IndexView.as_view(), name='index'),
+
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += i18n_patterns(
-    '',
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^admin/', include(admin.site.urls)),
-)
+#urlpatterns += i18n_patterns(
+#    '',
+#    url(r'^$', IndexView.as_view(), name='index'),
+#    url(r'^admin/', include(admin.site.urls)),
+#)

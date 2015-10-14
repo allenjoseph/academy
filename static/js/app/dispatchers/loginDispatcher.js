@@ -14,13 +14,9 @@ export default {
     },
     register(user){
         return new Promise((resolve, reject) => {
-           $.post('/user', user)
-            .done((data) => {
-                if(data.success){
-                    resolve(data);
-                }else {
-                    reject(data.message);
-                }
+           $.post('/students', user)
+            .done((token) => {
+                resolve(token);
             })
             .fail(() => {
                 reject();
@@ -29,9 +25,13 @@ export default {
     },
     login(data){
         return new Promise((resolve, reject) => {
-           window.setTimeout(function(){
-                resolve(data.password === 'test');
-            }, 1000);
+            $.post('/login', data)
+            .done((data) => {
+                resolve(data.success);
+            })
+            .fail(() => {
+                reject();
+            });
         });
     }
 };

@@ -10,7 +10,10 @@ var LoginForm = React.createClass({
 
     displayName: 'LoginForm',
 
+    user: {},
+
     getInitialState(){
+        this.user = {};
         return {
             message: LOGIN_MESSAGE,
             showDepartments: false,
@@ -25,7 +28,8 @@ var LoginForm = React.createClass({
         }));
     },
 
-    showDepartments(){
+    showDepartments(partialUser){
+        this.user = partialUser;
         this.setState(React.addons.update(this.state, {
             showDepartments: {$set : true},
             showRegister: {$set: false}
@@ -40,6 +44,21 @@ var LoginForm = React.createClass({
 
     cancelRegister(){
         this.setState(this.getInitialState());
+    },
+
+    registerUser(partialUser){
+        window.Object.assign(this.user, partialUser);
+
+        LoginActions.register(this.user)
+        .then(()=>{
+
+            window.location.href = '/';
+
+        }, (msg) => {
+
+            utilities.showAlert('error', msg || 'Something goes wrong! :/');
+            self.cancelRegister();
+        });
     },
 
     render(){
@@ -59,7 +78,8 @@ var LoginForm = React.createClass({
 
             title = 'Academy - Registro de estudiante';
             registerForm = <StudentRegisterForm
-                            cancelRegister={this.cancelRegister}/>
+                            cancelRegister={this.cancelRegister}
+                            registerUser={this.registerUser}/>
 
         }else{
             message =   <div className="row">
