@@ -50,9 +50,9 @@ var LoginForm = React.createClass({
         window.Object.assign(this.user, partialUser);
 
         LoginActions.register(this.user)
-        .then(()=>{
+        .then((token)=>{
 
-            window.location.href = '/';
+            window.location.href = '/' + token;
 
         }, (msg) => {
 
@@ -89,7 +89,7 @@ var LoginForm = React.createClass({
                         </div>
         }
         return(
-            <form className="centered form-light">
+            <div className="centered form-light">
                 <fieldset disabled={this.state.loading}>
 
                     <div className="row">
@@ -102,7 +102,7 @@ var LoginForm = React.createClass({
                     { message }
 
                 </fieldset>
-            </form>
+            </div>
         );
     }
 });

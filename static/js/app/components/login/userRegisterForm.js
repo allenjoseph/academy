@@ -130,16 +130,16 @@ export default React.createClass({
         }else{
 
             LoginActions.login({
-                user: this.state.username,
+                username: this.state.username,
                 password: this.state.password
             })
-            .then((token) => {
+            .then((data) => {
 
-                if(token){
-                    window.location.href = '/token';
+                if(data.success){
+                    window.location.href = '/' + data.token;
                 }else{
+                    utilities.showAlert('warning', 'Usuario o contraseña incorrecto! :S');
                     self.props.loading(false);
-                    utilities.showAlert('warning', msg || 'Usuario o contraseña incorrecto! :S');
                 }
 
             }, (msg) => {

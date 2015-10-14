@@ -7,7 +7,7 @@ from apps.home.views import UploadFile, DeleteUploadedFile
 from apps.home.views import Universities, Faculties, Departments
 from apps.pages.viewIndex import IndexView
 from apps.pages.viewCourse import CourseView
-from apps.pages.viewLogin import LoginView, ExistUsername
+from apps.pages.viewLogin import LoginView, ExistUsername, ValidateUser
 from apps.discussions.views import DiscussionsView
 from apps.discussions.views import CommentsView
 from apps.exams.views import ExamView
@@ -21,7 +21,8 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^login/?$', LoginView.as_view(), name='login'),
-    url(r'^username/?$', ExistUsername, name='existUsername'),
+    url(r'^login/validate/?$', ValidateUser, name='validateUser'),
+    url(r'^login/username/?$', ExistUsername, name='existUsername'),
 
     url(r'^course/(?P<slug>[-\w]+)/?$', CourseView.as_view(), name='course'),
 

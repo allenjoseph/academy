@@ -10,12 +10,12 @@ from django.views.generic import View
 from academy.mixins import RestServiceMixin
 from django.contrib.auth.hashers import make_password
 import os
-import json
 
 
 class StudentView(RestServiceMixin, View):
     def post(self, request, *args, **kwargs):
-        params = json.loads(request.body)
+
+        params = request.POST
 
         department = Department.objects.get(
             pk=params.get('department'))

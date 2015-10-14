@@ -3,7 +3,7 @@ var $ = require('jquery');
 export default {
     search(text){
         return new Promise((resolve, reject) => {
-            $.post('/username', {username: text})
+            $.post('/login/username', {username: text})
             .done((data) => {
                 resolve(data.exist);
             })
@@ -15,8 +15,8 @@ export default {
     register(user){
         return new Promise((resolve, reject) => {
            $.post('/students', user)
-            .done((token) => {
-                resolve(token);
+            .done((data) => {
+                resolve(data.token);
             })
             .fail(() => {
                 reject();
@@ -25,9 +25,9 @@ export default {
     },
     login(data){
         return new Promise((resolve, reject) => {
-            $.post('/login', data)
+            $.post('/login/validate', data)
             .done((data) => {
-                resolve(data.success);
+                resolve(data);
             })
             .fail(() => {
                 reject();
