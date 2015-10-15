@@ -1,8 +1,8 @@
 var React = require('react'),
     $ = require('jquery'),
     CourseElement = require('./courseElement'),
-    Mixins = require('./mixins'),
-    Collections = require('../collections/collections');
+    Mixins = require('../commons/mixins'),
+    Collections = require('../../collections/collections');
 
 
 module.exports = React.createClass({

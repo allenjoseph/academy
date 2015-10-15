@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-    Models = require('../models/models');
+    Models = require('../../models/models');
 
 module.exports = React.createClass({
     displayName: 'DiscussionModalForm',

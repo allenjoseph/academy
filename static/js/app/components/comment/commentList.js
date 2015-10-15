@@ -1,10 +1,10 @@
 var React = require('react');
 var $ = require('jquery');
-var constans = require('../commons/constans');
-var Collection = require('../collections/collections');
+var constans = require('../../commons/constans');
+var Collection = require('../../collections/collections');
 var comments = new Collection.Comments();
-var Mixins = require('./mixins');
-var Utilities = require('../commons/utilities');
+var Mixins = require('../commons/mixins');
+var Utilities = require('../../commons/utilities');
 
 module.exports = React.createClass({
     displayName: 'CommentList',

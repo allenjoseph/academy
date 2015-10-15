@@ -1,9 +1,9 @@
 var React = require('react');
 var CommentForm = require('./commentForm');
 var CommentList = require('./commentList');
-var Utilities = require('../commons/utilities');
-var constans = require('../commons/constans');
-var Collection = require('../collections/collections');
+var Utilities = require('../../commons/utilities');
+var constans = require('../../commons/constans');
+var Collection = require('../../collections/collections');
 var comments = new Collection.Comments();
 
 var CommentBox = React.createClass({

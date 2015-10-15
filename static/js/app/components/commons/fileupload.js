@@ -2,7 +2,7 @@ var React = require('react/addons'),
     $ = require('jquery'),
     blueimpFileupload = require('blueimp-file-upload'),
     FileList = require('./fileList'),
-    constans = require('../commons/constans');
+    constans = require('../../commons/constans');
 
 module.exports = React.createClass({
     displayName: 'Fileupload',

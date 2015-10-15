@@ -1,6 +1,6 @@
 var React = require('react/addons'),
-    Fileupload = require('./fileupload'),
-    Models = require('../models/models');
+    Fileupload = require('../commons/fileupload'),
+    Models = require('../../models/models');
 
 module.exports = React.createClass({
     displayName: 'ExamForm',

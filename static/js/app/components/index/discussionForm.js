@@ -1,6 +1,6 @@
 var React = require('react/addons'),
-    Models = require('../models/models'),
-    Collection = require('../collections/collections'),
+    Models = require('../../models/models'),
+    Collection = require('../../collections/collections'),
     discussions = new Collection.Discussions();
 
 module.exports = React.createClass({

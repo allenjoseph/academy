@@ -1,6 +1,6 @@
 var React = require('react/addons'),
     $ = require('jquery'),
-    constans = require('../commons/constans');
+    constans = require('../../commons/constans');
 
 module.exports = React.createClass({
     displayName: 'FileList',

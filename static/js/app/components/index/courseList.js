@@ -1,6 +1,6 @@
 var React = require('react');
 var Course = require('./course');
-var Mixins = require('./mixins');
+var Mixins = require('../commons/mixins');
 
 module.exports = React.createClass({
     displayName : 'CourseList',

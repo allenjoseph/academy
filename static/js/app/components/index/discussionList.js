@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var Discussion = require('./discussion');
-var Mixins = require('./mixins');
-var Collection = require('../collections/collections');
+var Mixins = require('../commons/mixins');
+var Collection = require('../../collections/collections');
 var discussions = new Collection.Discussions;
 
 module.exports = React.createClass({
