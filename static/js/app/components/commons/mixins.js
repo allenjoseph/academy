@@ -1,3 +1,5 @@
+var React = require('react/addons');
+
 module.exports = {
     backboneMixin: {
         componentDidMount: function() {
@@ -22,6 +24,27 @@ module.exports = {
                     model.set(key, value);
                 }.bind(this)
             };
+        }
+    },
+    focusMixin: {
+
+        setFocus(){
+            if(this.elementToFocus && this.refs[this.elementToFocus]){
+                var element = React.findDOMNode(this.refs[this.elementToFocus]);
+                element.focus();
+
+                if(element === document.activeElement){//check focus
+                    this.elementToFocus = '';
+                }
+            }
+        },
+
+        componentDidMount(){
+            this.setFocus();
+        },
+
+        componentDidUpdate(){
+            this.setFocus();
         }
     }
 };

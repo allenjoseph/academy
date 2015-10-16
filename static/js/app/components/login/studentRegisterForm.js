@@ -2,12 +2,17 @@ var React = require('react/addons'),
     $ = require('jquery'),
     SelectActions = require('../../actions/selectActions'),
     utilities = require('../../commons/utilities'),
+    mixins = require('../commons/mixins'),
     ButtonIn = require('../commons/buttonIn'),
     DEPARTMENT_MESSAGE = 'Sólo hace falta tus datos de estudiante para ingresar.';
 
 export default React.createClass({
 
     displayName: 'StudentRegisterForm',
+
+    mixins:[mixins.focusMixin],
+
+    elementToFocus: 'nameInput',
 
     getInitialState(){
         return {
@@ -154,7 +159,8 @@ export default React.createClass({
             selectFaculty = <div className="row">
                                 <div className="medium-6 medium-centered columns">
                                     <div className="button-inner">
-                                        <select className="select" onChange={this.changeFaculty}>
+                                        <select className="select"
+                                        onChange={this.changeFaculty}>
                                             <option value="">Selecciona tu Facultad</option>
                                             { this.loadSelect('faculties') }
                                         </select>
@@ -169,7 +175,8 @@ export default React.createClass({
             selectDepartment =  <div className="row">
                                     <div className="medium-6 medium-centered columns">
                                         <div className="button-inner">
-                                            <select className="select" onChange={this.changeDepartment}>
+                                            <select className="select"
+                                            onChange={this.changeDepartment}>
                                                 <option value="">Selecciona tu Especialidad</option>
                                                 { this.loadSelect('departments') }
                                             </select>
@@ -181,7 +188,9 @@ export default React.createClass({
 
         if((this.state.faculty && !this.state.departments.length) || this.state.department){
 
-            buttonLogin = <button type="button" className="button expand tiny" onClick={this.registerUser}>Ingresar</button>;
+            buttonLogin = <button type="button"
+                            className="button expand tiny"
+                            onClick={this.registerUser}>Ingresar</button>;
         }else{
 
             message = <span>{this.state.message}</span>
@@ -192,7 +201,7 @@ export default React.createClass({
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
                         <div className="button-inner">
-                            <input type="text" className="input" placeholder="Name"
+                            <input type="text" className="input" placeholder="Name" ref="nameInput"
                             value={this.state.name}
                             onChange={this.changeName}/>
 

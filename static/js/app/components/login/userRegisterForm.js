@@ -2,6 +2,7 @@ var React = require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
     LoginActions = require('../../actions/loginActions'),
     utilities = require('../../commons/utilities'),
+    mixins = require('../commons/mixins'),
     ENTER_KEY_CODE = 13,
     EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
     REGISTER_MESSAGE = 'Completa el formulario y presiona continuar para ingresar.';
@@ -9,6 +10,10 @@ var React = require('react/addons'),
 export default React.createClass({
 
     displayName: 'UserRegisterForm',
+
+    mixins:[mixins.focusMixin],
+
+    elementToFocus: 'usernameInput',
 
     getInitialState(){
         return {
@@ -82,12 +87,18 @@ export default React.createClass({
                     showPassword: {$set: true},
                 }));
 
+                this.elementToFocus = 'passwordInput';
+
             } else {
 
                 self.setState(React.addons.update(self.state, {
                     showRegister: {$set: true},
                 }));
+
                 self.props.showRegister(true);
+
+                this.elementToFocus = 'emailInput';
+
             }
             self.props.loading(false);
 
@@ -172,7 +183,7 @@ export default React.createClass({
             inputEmail = <div className="row">
                             <div className="medium-6 medium-centered columns">
                                 <div className="button-inner">
-                                    <input type="email" className="input" placeholder="Email"
+                                    <input type="email" className="input" placeholder="Email" ref="emailInput"
                                     value={this.state.email}
                                     onChange={this.changeEmail}/>
 
@@ -190,7 +201,8 @@ export default React.createClass({
             inputPassowrd = <div className="row">
                                 <div className="medium-6 medium-centered columns">
                                     <div className="button-inner">
-                                        <input type="password" className="input" placeholder="Contraseña min 6 caracteres"
+                                        <input type="password" className="input" ref="passwordInput"
+                                        placeholder="Contraseña min 6 caracteres"
                                         value={this.state.password}
                                         onKeyPress={this.onKeyPressPassword}
                                         onChange={this.changePassword}/>
@@ -210,7 +222,7 @@ export default React.createClass({
                 <div className="row">
                     <div className="medium-6 medium-centered columns">
                         <div className="button-inner">
-                            <input type="text" className="input" placeholder="Usuario"
+                            <input type="text" className="input" placeholder="Usuario" ref="usernameInput"
                             value={this.state.username}
                             onKeyPress={this.onKeyPressUser}
                             onChange={this.changeUsername}/>
