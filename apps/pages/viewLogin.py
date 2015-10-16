@@ -40,6 +40,7 @@ def ValidateUser(request):
             if check_password(password, encoded):
                 success = True
                 token = make_password(encoded)
+                request.session['token'] = token
         except:
             pass
 

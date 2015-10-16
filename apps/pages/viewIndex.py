@@ -8,16 +8,12 @@ class IndexView(TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        print kwargs.get('token', False)
-        print request.session.get('token', False)
-
         redirect = True
+        client_token = kwargs.get('token', False)
+        session_token = request.session.get('token', False)
 
-        if request.session.get('token', False):
-            token = request.session.get('token')
-
-            if kwargs.get('token', False):
-                redirect = kwargs.get('token') != token
+        if client_token and session_token:
+            redirect = client_token != session_token
 
         if redirect:
             return HttpResponseRedirect('/login')
