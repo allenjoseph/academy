@@ -1,4 +1,4 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -10,13 +10,23 @@ class StateEnum(IntEnum):
     ACTIVO = 1
 
 
-class LoginRequired(funct):
+def LoginRequired(funct):
+    
+    def validate(self, request, *args, **kwargs):
+        redirect = True
+        client_token = kwargs.get('token', False)
+        session_token = request.session.get('token', False)
 
-    def dispatch(self, request, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(
-            request, *args, **kwargs)
+        if client_token and session_token and 'user' in request.session:
+            redirect = client_token != session_token
 
-        return dispatch()
+        if redirect:
+            return HttpResponseRedirect('/login')
+            
+        return funct(self, request, *args, **kwargs)
+        
+    return validate
+    
 
 class JsonResponseMixin(object):
 
