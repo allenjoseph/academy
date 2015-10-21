@@ -33,6 +33,7 @@ class StudentView(RestServiceMixin, View):
 
         token = make_password(password)
         request.session['token'] = token
+        request.session['user'] = ModelSerializer(student).getJSON()
         return JsonResponse({'token': token})
 
 

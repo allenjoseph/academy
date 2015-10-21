@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.views.generic import TemplateView
+from academy.serializers import ModelSerializer
 from apps.home.models import Student
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -41,6 +42,7 @@ def ValidateUser(request):
                 success = True
                 token = make_password(encoded)
                 request.session['token'] = token
+                request.session['user'] = ModelSerializer(student).getJSON()
         except:
             pass
 

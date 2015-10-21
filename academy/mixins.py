@@ -10,13 +10,13 @@ class StateEnum(IntEnum):
     ACTIVO = 1
 
 
-class LoginRequiredMixin(object):
+class LoginRequired(funct):
 
-    @method_decorator(login_required(login_url='/login/'))
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(
             request, *args, **kwargs)
 
+        return dispatch()
 
 class JsonResponseMixin(object):
 
