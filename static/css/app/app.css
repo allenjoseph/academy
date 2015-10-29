@@ -124,18 +124,18 @@ a,
   bottom: 5px;
 }
 .button.default {
-  background-color: #ffc107;
+  background-color: amberMaterial;
   text-shadow: 0 2px 5px rgba(0,0,0,0.6);
 }
 .button.default:hover,
 .button.default:focus {
-  background-color: #ffc107;
+  background-color: amberMaterial;
 }
 .button.default[disabled] {
-  background-color: #ffc107;
+  background-color: amberMaterial;
 }
 .button.default[disabled]:hover {
-  background-color: #ffc107;
+  background-color: amberMaterial;
 }
 .button.default.confirm {
   background-color: #f1687b;
@@ -511,7 +511,7 @@ fieldset[disabled] button:hover.text {
   text-align: center;
 }
 .menu-item:hover {
-  border-bottom-color: #f44336;
+  border-bottom-color: redMaterial;
 }
 .menu-item a,
 .menu-item a:hover {
@@ -576,13 +576,13 @@ fieldset[disabled] button:hover.text {
   position: relative;
 }
 #notificationBox .wrapper.success {
-  background-color: #404040;
+  background-color: blackMaterial;
 }
 #notificationBox .wrapper.warning {
-  background-color: #ff5722;
+  background-color: orangeMaterial;
 }
 #notificationBox .wrapper.error {
-  background-color: #f44336;
+  background-color: redMaterial;
 }
 #notificationBox .wrapper span {
   color: #fcfdfd !important;
@@ -615,23 +615,23 @@ fieldset[disabled] button:hover.text {
   color: #fcfdfd !important;
 }
 .pink {
-  background-color: #e91e63 !important;
+  background-color: pinkMaterial !important;
   color: #fcfdfd !important;
 }
 .brown {
-  background-color: #795548 !important;
+  background-color: brownMaterial !important;
   color: #fcfdfd !important;
 }
 .orange {
-  background-color: #ff5722 !important;
+  background-color: orangeMaterial !important;
   color: #fcfdfd !important;
 }
 .lime {
-  background-color: #cddc39 !important;
+  background-color: limeMaterial !important;
   color: #fcfdfd !important;
 }
 .cyan {
-  background-color: #00bcd4 !important;
+  background-color: cyanMaterial !important;
   color: #fcfdfd !important;
 }
 .blue {
