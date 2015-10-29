@@ -1,3 +1,4 @@
+import {Row, Column} from '../commons/grid';
 var React = require('react/addons'),
     $ = require('jquery'),
     SelectActions = require('../../actions/selectActions'),
@@ -156,8 +157,8 @@ export default React.createClass({
 
         if(this.state.faculties.length){
 
-            selectFaculty = <div className="row">
-                                <div className="medium-6 medium-centered columns">
+            selectFaculty = <Row>
+                                <Column styles="medium-6 medium-centered">
                                     <div className="button-inner">
                                         <select className="select"
                                         onChange={this.changeFaculty}>
@@ -165,15 +166,15 @@ export default React.createClass({
                                             { this.loadSelect('faculties') }
                                         </select>
                                     </div>
-                                </div>
-                            </div>;
+                                </Column>
+                            </Row>;
 
         }
 
         if(this.state.departments.length){
 
-            selectDepartment =  <div className="row">
-                                    <div className="medium-6 medium-centered columns">
+            selectDepartment =  <Row>
+                                    <Column styles="medium-6 medium-centered">
                                         <div className="button-inner">
                                             <select className="select"
                                             onChange={this.changeDepartment}>
@@ -181,8 +182,8 @@ export default React.createClass({
                                                 { this.loadSelect('departments') }
                                             </select>
                                         </div>
-                                    </div>
-                                </div>;
+                                    </Column>
+                                </Row>;
 
         }
 
@@ -198,8 +199,8 @@ export default React.createClass({
 
         return(
             <div>
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
+                <Row>
+                    <Column styles="medium-6 medium-centered">
                         <div className="button-inner">
                             <input type="text" className="input" placeholder="Name" ref="nameInput"
                             value={this.state.name}
@@ -210,11 +211,11 @@ export default React.createClass({
                                 valid={this.state.name}
                                 model={this.state.name} />
                         </div>
-                    </div>
-                </div>
+                    </Column>
+                </Row>
 
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
+                <Row>
+                    <Column styles="medium-6 medium-centered">
                         <div className="button-inner">
                             <input type="text" className="input" placeholder="Lastname"
                             value={this.state.lastname}
@@ -225,32 +226,32 @@ export default React.createClass({
                                 valid={this.state.lastname}
                                 model={this.state.lastname}/>
                         </div>
-                    </div>
-                </div>
+                    </Column>
+                </Row>
 
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
+                <Row>
+                    <Column styles="medium-6 medium-centered">
                         <div className="button-inner">
                             <select className="select" onChange={this.changeUniversity}>
                                 <option value="">Selecciona tu Universidad</option>
                                 { this.loadSelect('universities') }
                             </select>
                         </div>
-                    </div>
-                </div>
+                    </Column>
+                </Row>
 
                 { selectFaculty }
                 { selectDepartment}
 
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
+                <Row>
+                    <Column styles="medium-6 medium-centered">
                         { message }
                         { buttonLogin }
                         <span className="pull-right">
                             <a onClick={this.cancelRegister}>Cancelar</a>
                         </span>
-                    </div>
-                </div>
+                    </Column>
+                </Row>
             </div>
         );
     }

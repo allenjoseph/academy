@@ -1,3 +1,4 @@
+import {Row, Column} from '../commons/grid';
 var React = require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
     LoginActions = require('../../actions/loginActions'),
@@ -171,17 +172,17 @@ export default React.createClass({
 
         if(this.state.showRegister){
 
-            message =   <div className="row">
-                            <div className="medium-6 medium-centered columns">
+            message =   <Row>
+                            <Column styles="medium-6 medium-centered">
                                 <span>{this.state.message}</span>
                                 <span className="pull-right">
                                     <a onClick={this.cancelRegister}>Cancelar</a>
                                 </span>
-                            </div>
-                        </div>;
+                            </Column>
+                        </Row>;
 
-            inputEmail = <div className="row">
-                            <div className="medium-6 medium-centered columns">
+            inputEmail = <Row>
+                            <Column styles="medium-6 medium-centered">
                                 <div className="button-inner">
                                     <input type="email" className="input" placeholder="Email" ref="emailInput"
                                     value={this.state.email}
@@ -192,14 +193,14 @@ export default React.createClass({
                                         valid={this.state.validEmail}
                                         model={this.state.email}/>
                                 </div>
-                            </div>
-                        </div>;
+                            </Column>
+                        </Row>;
         }
 
         if(this.state.showRegister || this.state.showPassword){
 
-            inputPassowrd = <div className="row">
-                                <div className="medium-6 medium-centered columns">
+            inputPassowrd = <Row>
+                                <Column styles="medium-6 medium-centered">
                                     <div className="button-inner">
                                         <input type="password" className="input" ref="passwordInput"
                                         placeholder="Contraseña min 6 caracteres"
@@ -213,14 +214,14 @@ export default React.createClass({
                                             model={this.state.password}
                                             onClick={this.validatePassword}/>
                                     </div>
-                                </div>
-                            </div>;
+                                </Column>
+                            </Row>;
         }
 
         return(
             <div>
-                <div className="row">
-                    <div className="medium-6 medium-centered columns">
+                <Row>
+                    <Column styles="medium-6 medium-centered">
                         <div className="button-inner">
                             <input type="text" className="input" placeholder="Usuario" ref="usernameInput"
                             value={this.state.username}
@@ -234,8 +235,8 @@ export default React.createClass({
                                 model={this.state.username}
                                 onClick={this.validateUsername}/>
                         </div>
-                    </div>
-                </div>
+                    </Column>
+                </Row>
 
                 { inputEmail }
                 { inputPassowrd }

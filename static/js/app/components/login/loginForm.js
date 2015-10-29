@@ -1,3 +1,4 @@
+import {Row, Column} from '../commons/grid';
 var React =  require('react/addons'),
     ButtonIn = require('../commons/buttonIn'),
     LoginActions = require('../../actions/loginActions'),
@@ -82,21 +83,21 @@ var LoginForm = React.createClass({
                             registerUser={this.registerUser}/>
 
         }else{
-            message =   <div className="row">
-                            <div className="medium-6 medium-centered columns">
-                                <span>{this.state.message}</span>
-                            </div>
-                        </div>
+            message =   <Row>
+                            <Column styles="medium-6 medium-centered">
+                                    <span>{this.state.message}</span>
+                            </Column>
+                        </Row>;
         }
         return(
             <div className="centered form-light">
                 <fieldset disabled={this.state.loading}>
 
-                    <div className="row">
-                        <div className="medium-6 medium-centered columns">
+                    <Row>
+                        <Column styles="medium-6 medium-centered">
                             <h1 className="mte"><a>{ title }</a></h1>
-                        </div>
-                    </div>
+                        </Column>
+                    </Row>
 
                     { registerForm }
                     { message }
