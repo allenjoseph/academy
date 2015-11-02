@@ -5,8 +5,8 @@
 }
 html {
   height: 100%;
-  overflow-y: scroll !important;
   width: 100%;
+  overflow-y: scroll !important;
 }
 body {
   height: 100%;
@@ -28,25 +28,6 @@ a,
 .side-nav,
 .label {
   font-family: OpenSans !important;
-}
-.button {
-  text-transform: uppercase !important;
-}
-.button.tiny {
-  padding: 0.5rem 1.25rem !important;
-  font-size: 1rem !important;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-.button.tiny:hover {
-  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-.button.cancel {
-  background-color: #fcfdfd;
-  color: #444;
 }
 .input,
 .select {
@@ -116,12 +97,29 @@ a,
 
 .button {
   font-weight: bolder;
+  text-transform: uppercase !important;
 }
 .button.in {
   margin: 0;
   position: absolute;
   right: 5px;
   bottom: 5px;
+}
+.button.tiny {
+  padding: 0.5rem 1.25rem !important;
+  font-size: 1rem !important;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.button.tiny:hover {
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.button.cancel {
+  background-color: #fcfdfd;
+  color: #444;
 }
 .button.default {
   background-color: amberMaterial;
@@ -473,16 +471,16 @@ fieldset[disabled] button:hover.text {
   color: #ddd !important;
 }
 
-.layout {
-  display: table !important;
-  background-color: #4f6ec6;
-  color: #fcfdfd;
-}
-.layout .layout-header {
-  display: table-header-group !important;
+.layout .layout-menu {
+  background-color: #2196f3;
+  position: fixed;
+  right: 0;
+  width: 300px;
+  height: 100%;
 }
 .layout .layout-main {
-  display: table-row-group !important;
+  position: relative;
+  margin-right: 300px;
 }
 .layout .layout-main h1,
 .layout .layout-main h2,
@@ -493,46 +491,52 @@ fieldset[disabled] button:hover.text {
   color: #4f6ec6;
   font-weight: bolder;
 }
-.layout .layout-main .layout-main-first {
-  background-color: #f2f2f2;
+.layout.menu-tiny .layout-menu {
+  width: 50px;
 }
-.layout .layout-footer {
-  display: table-footer-group !important;
+.layout.menu-tiny .layout-menu .menu-item-text {
+  display: none;
 }
-
-.menu-item {
-  border-bottom: 4px solid transparent;
-  -webkit-transition: 100ms background-color;
-  -o-transition: 100ms background-color;
-  -moz-transition: 100ms background-color;
-  -ms-transition: 100ms background-color;
-  -kthtml-transition: 100ms background-color;
-  transition: 100ms background-color;
-  text-align: center;
-}
-.menu-item:hover {
-  border-bottom-color: redMaterial;
-}
-.menu-item a,
-.menu-item a:hover {
-  color: #fcfdfd;
-  display: block;
-  text-transform: uppercase;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.6);
-}
-.menu-item-user img {
-  height: 45px;
-  position: absolute;
-  right: 0;
-  top: 3px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
+.layout.menu-tiny .layout-main {
+  margin-right: 50px;
 }
 @media only screen and (max-width: 40em) {
-  .menu-item-user img {
+  .layout-menu {
     display: none;
   }
+  .layout-main {
+    margin-right: 0;
+  }
+}
+@media only screen and (min-width: 40.063em) and (max-width: 64em) {
+  .layout-menu {
+    width: 50px !important;
+  }
+  .layout-menu .menu-item-text {
+    display: none;
+  }
+  .layout-main {
+    margin-right: 50px !important;
+  }
+}
+
+.menu-wrapper ul {
+  list-style: none;
+  margin: 0;
+}
+.menu-wrapper ul li {
+  border-top: solid 1px #3da3f5;
+}
+.menu-wrapper ul li a {
+  color: #fff;
+  display: block;
+  padding: 0.5em;
+}
+.menu-wrapper ul li:hover {
+  background-color: #0d89ec;
+}
+.menu-item-icon {
+  padding: 0 0.5em;
 }
 
 

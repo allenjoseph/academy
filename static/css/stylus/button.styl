@@ -3,11 +3,21 @@
 
 .button
     font-weight bolder
+    text-transform uppercase !important
     &.in
         margin 0
         position absolute
         right 5px
         bottom 5px
+    &.tiny
+        padding .5rem 1.25rem !important
+        font-size 1rem !important
+        box-shadow-material 1
+        &:hover
+            box-shadow-material 2
+    &.cancel
+        background-color whitePalette
+        color grayPalette
     &.default
         background-color amberMaterial
         {textShadowForWhite}

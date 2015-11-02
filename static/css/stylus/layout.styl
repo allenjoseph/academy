@@ -1,17 +1,48 @@
 @import "variables"
 
 .layout
-    display table!important
-    background-color blueStrongPalette
-    color whitePalette
-    .layout-header
-        display table-header-group!important
+
+    .layout-menu
+        background-color MENU_BG_COLOR
+        position fixed
+        right 0
+        width 300px
+        height 100%
+        
     .layout-main
-        display table-row-group!important
+        position relative
+        margin-right 300px
+        
         h1, h2, h3, h4, h5, h6
             color blueStrongPalette
             font-weight bolder
-        .layout-main-first
-            background-color grayLowPalette
-    .layout-footer
-        display table-footer-group!important
+            
+    &.menu-tiny
+    
+        .layout-menu
+            width 50px
+            
+            .menu-item-text
+                display none
+                
+        .layout-main
+            margin-right 50px
+
+@media only screen and (max-width: 40em)
+
+    .layout-menu
+        display none
+        
+    .layout-main
+            margin-right 0
+
+@media only screen and (min-width: 40.063em) and (max-width: 64em) 
+
+    .layout-menu
+        width 50px!important
+        
+        .menu-item-text
+            display none
+            
+    .layout-main
+        margin-right 50px!important

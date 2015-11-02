@@ -10,33 +10,34 @@
     <script src="//127.0.0.1:35729/livereload.js"></script>
 </head>
 <body class="layout">
-
-    <div class="layout-header">
-        <div class="row">
-            {% include "header.html" %}
-        </div>
-        <div class="row">
-            {% include "news.html" %}
+    
+    <div class="layout-menu">
+        <div class="menu-wrapper">
+            <ul>
+                <li>
+                    <a>
+                        <span class="menu-item-icon"><i class="fa fa-graduation-cap"></i></span>
+                        <span class="menu-item-text">Menu item 1</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span class="menu-item-icon"><i class="fa fa-graduation-cap"></i></span>
+                        <span class="menu-item-text">Menu item 2</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <span class="menu-item-icon"><i class="fa fa-graduation-cap"></i></span>
+                        <span class="menu-item-text">Menu item 3</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 
     <div class="layout-main">
-        <div class="layout-main-first">
-            <div class="row">
-                {% block contentFirst %}{% endblock %}
-            </div>
-        </div>
-        <div class="layout-main-second">
-            <div class="row">
-                {% block contentSecond %}{% endblock %}
-            </div>
-        </div>
-    </div>
-
-    <div class="layout-footer">
-        <div class="row">
-            {% include "footer.html" %}
-        </div>
+        {% block content %}{% endblock %}
     </div>
 
     <div id="examBox"></div>

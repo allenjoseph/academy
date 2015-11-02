@@ -1,26 +1,18 @@
 @import "variables"
 @import "mixins"
 
-.menu-item
-    border-bottom 4px solid transparent
-    transition 100ms background-color
-    text-align center
-    &:hover
-        border-bottom-color redMaterial
-    a, a:hover
-        color whitePalette
-        display block
-        text-transform uppercase
-        {textShadowForWhite}
-.menu-item-user
-    img
-        height 45px
-        position absolute
-        right 0
-        top 3px
-        border-radius 50%
-
-@media only screen and (max-width: 40em)
-    .menu-item-user
-        img
-            display none
+.menu-wrapper
+    ul
+        list-style none
+        margin 0
+        li
+            border-top solid 1px lightness(MENU_BG_COLOR, 60%)
+            a
+                color MENU_COLOR
+                display block
+                padding .5em
+            &:hover
+                background-color darken(MENU_BG_COLOR, 10%)
+                
+.menu-item-icon
+    padding 0 .5em

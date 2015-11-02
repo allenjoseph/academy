@@ -2,25 +2,26 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{% block contentFirst %}
-<div class="large-12 columns">
-    <div class="row">
-        <div class="small-12 columns text-center">
-            <h3>
-                <a href="#!"><i class="fa fa-chevron-left fa-fw"></i></a>
-                <strong>IV CICLO / 2020 - I</strong>
-                <a href="#!"><i class="fa fa-chevron-right fa-fw"></i></a>
-            </h3>
+{% block content %}
+<div class="row">
+    <div class="large-12 columns">
+        <div class="row">
+            <div class="small-12 columns text-center">
+                <h3>
+                    <a href="#!"><i class="fa fa-chevron-left fa-fw"></i></a>
+                    <strong>IV CICLO / 2020 - I</strong>
+                    <a href="#!"><i class="fa fa-chevron-right fa-fw"></i></a>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns" id="courseBox"></div>
         </div>
     </div>
-    <div class="row">
-        <div class="large-12 columns" id="courseBox"></div>
-    </div>
 </div>
-{% endblock %}
-
-{% block contentSecond %}
-<div class="large-12 columns" id="discussionBox"></div>
+<div class="row">
+    <div class="large-12 columns" id="discussionBox"></div>
+</div>
 {% endblock %}
 
 {% block contentJs %}
