@@ -49,5 +49,5 @@ var DiscussionModal = React.createClass({
 
 var $discussionModal = document.getElementById('discussionModal');
 if($discussionModal){
-    React.render(<DiscussionModal />, document.getElementById('discussionModal'));
+    React.render(<DiscussionModal />, $discussionModal);
 }
