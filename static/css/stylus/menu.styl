@@ -11,8 +11,15 @@
                 color MENU_COLOR
                 display block
                 padding .5em
+                .menu-item-icon
+                    padding 0 .5em
+                
             &:hover
                 background-color darken(MENU_BG_COLOR, 10%)
                 
-.menu-item-icon
-    padding 0 .5em
+            &.menu-item-header
+                background-color darken(MENU_BG_COLOR, 5%)
+                a
+                    font-weight bolder
+                
+

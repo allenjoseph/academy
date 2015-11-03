@@ -11,6 +11,7 @@ html {
 body {
   height: 100%;
   width: 100%;
+  background-color: #ebebeb !important;
 }
 body,
 button,
@@ -532,11 +533,17 @@ fieldset[disabled] button:hover.text {
   display: block;
   padding: 0.5em;
 }
+.menu-wrapper ul li a .menu-item-icon {
+  padding: 0 0.5em;
+}
 .menu-wrapper ul li:hover {
   background-color: #0d89ec;
 }
-.menu-item-icon {
-  padding: 0 0.5em;
+.menu-wrapper ul li.menu-item-header {
+  background-color: #1490f2;
+}
+.menu-wrapper ul li.menu-item-header a {
+  font-weight: bolder;
 }
 
 
